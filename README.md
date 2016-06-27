@@ -1,0 +1,35 @@
+### react-native-dropdownalert
+A nice way to display information to your user without being intrusive. 
+### Types 
+* Info
+
+* Warning
+
+* Error 
+
+* Custom
+
+### Props
+
+| Props name | Type | Description | Platform | Default
+| ------------ | ------------- | ------------ |------------ |------------ |
+| closeInterval | Number  | Dismiss alert at a certain interval | Both | -1
+| backgroundColor | String  | background color | Both | 'steelblue'
+| imageUri | String  | source uri for network image | Both | ''
+| imageSrc | String  | source for local image | Both | ''
+| textColor | String  | title & message text color | Both | 'white'
+
+### Future
+npm module
+
+
+
+
+
+
+
+
+
+
+
+Inspired by: https://github.com/cwRichardKim/RKDropdownAlert
