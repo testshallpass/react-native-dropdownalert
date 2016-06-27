@@ -22,5 +22,6 @@ A nice way to display information to your user without being intrusive.
 * npm module
 * demo gif
 * fontFamily prop
+* usage example
 
 Inspired by: https://github.com/cwRichardKim/RKDropdownAlert
