@@ -1,14 +1,7 @@
 ### react-native-dropdownalert
 A nice way to display information to your user without being intrusive. 
 ### Types 
-* Info
-
-* Warning
-
-* Error 
-
-* Custom
-
+![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/info.png)![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/warning.png)![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/error.png)![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/custom.png)
 ### Props
 
 | Props name | Type | Description | Platform | Default
@@ -21,15 +14,7 @@ A nice way to display information to your user without being intrusive.
 
 ### Future
 npm module
-
-
-
-
-
-
-
-
-
-
+demo gif
+fontFamily prop
 
 Inspired by: https://github.com/cwRichardKim/RKDropdownAlert
