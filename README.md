@@ -35,4 +35,4 @@ Inspired by: https://github.com/cwRichardKim/RKDropdownAlert
 
 ### License
 
-[MIT](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/mit.md)
+[MIT](https://raw.github.com/devBrian/react-native-dropdownalert/master/LICENSE)
