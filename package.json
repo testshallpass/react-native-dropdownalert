@@ -1,12 +1,26 @@
 {
-  "name": "DropDownAlert",
-  "version": "0.0.1",
-  "private": true,
+  "name": "react-native-dropdownalert",
+  "version": "1.0.0",
+  "description": "A dropdown alert that allows you to display bits of information to your user.",
+  "main": "DropdownAlert.js",
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "react": "15.1.0",
-    "react-native": "^0.28.0"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devBrian/react-native-dropdownalert.git"
+  },
+  "keywords": [
+    "dropdown",
+    "alert",
+    "error",
+    "info",
+    "warning"
+  ],
+  "author": "Brian Sinnicke",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devBrian/react-native-dropdownalert/issues"
+  },
+  "homepage": "https://github.com/devBrian/react-native-dropdownalert#readme"
 }
