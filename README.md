@@ -6,6 +6,28 @@ A dropdown alert that allows you to display bits of information to your user. Tr
 
 ![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/demo.gif)
 
+### Usage
+
+	import DropdownAlert from 'DropdownAlert'
+	// ...
+	render() {
+		return (
+			<View> 
+				<DropdownAlert ref={"dropdownalert"} />
+				<TouchableHighlight onPress={() => this.showAlert}>
+            		<Text>
+              			{'Show Alert'}
+            		</Text>
+        		</TouchableHighlight>
+			</View>
+		)
+	}
+	// ...
+	showAlert: function() {
+		this.refs.dropdownalert.alert('info', 'Info', 'Chicago Cubs won the World Series!')
+	}
+	// ...
+
 
 ### Types 
 
@@ -29,7 +51,7 @@ A dropdown alert that allows you to display bits of information to your user. Tr
 * ~~npm module~~
 * ~~demo gif~~
 * ~~fontFamily prop~~
-* usage example
+* ~~usage example~~
 
 Inspired by: https://github.com/cwRichardKim/RKDropdownAlert
 
