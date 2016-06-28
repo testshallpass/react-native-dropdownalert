@@ -18,8 +18,8 @@ class Main extends Component {
   }
   render() {
     return (
-      <View>
-      <DropdownAlert ref={"dropdownalert"} backgroundColor={'darkcyan'} imageUri={'https://facebook.github.io/react/img/logo_og.png'} />
+      <View style={{flex: 1}}>
+      <DropdownAlert ref={"dropdownalert"} backgroundColor={'darkcyan'} imageUri={'https://facebook.github.io/react/img/logo_og.png'} fontFamily={'Gill Sans'} closeInterval={5000} />
       <ScrollView>
       <Text style={[styles.welcome, {marginTop: 22}]}> {'Dropdown Alerts'}</Text>
         <TouchableHighlight style={styles.container} onPress={() => this.openAlert('info')} underlayColor={'lightgray'}>

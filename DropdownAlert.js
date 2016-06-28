@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableHighlight,
   Animated,
+  Modal,
   StatusBar,
   Image
 } from "react-native";
@@ -20,6 +21,9 @@ var DropdownAlert = React.createClass({
       imageUri: '',
       imageSrc: '',
       textColor: 'white',
+      fontFamily: 'HelveticaNeue',
+      startDelta: -100,
+      endDelta: 0
     }
   },
   getInitialState: function() {
@@ -37,7 +41,7 @@ var DropdownAlert = React.createClass({
     if (this.state.title.length > 0) {
       var style = styles.title
       if (this.state.type == 'custom') {
-        style = [styles.title, {color: this.props.textColor}]
+        style = [styles.title, {color: this.props.textColor, fontFamily: this.props.fontFamily}]
       }
       return (
         <Text style={style} numberOfLines={(this.state.message.length > 0) ? 1 : 3}>
@@ -51,7 +55,7 @@ var DropdownAlert = React.createClass({
     if (this.state.message.length > 0) {
       var style = styles.message
       if (this.state.type == 'custom') {
-        style = [styles.message, {color: this.props.textColor}]
+        style = [styles.message, {color: this.props.textColor, fontFamily: this.props.fontFamily}]
       }
       return (
         <Text style={style} numberOfLines={(this.state.title.length > 0) ? 2 : 3}>
@@ -67,10 +71,12 @@ var DropdownAlert = React.createClass({
       return (
         <Image style={[styles.image, {width: 36, height: 36}]} source={{uri: uri}} />
       )
-    } else {
+    } else if (src != null) {
       return (
         <Image style={styles.image} source={src} />
       )
+    } else {
+      return null
     }
   },
   renderDropDown: function() {
@@ -97,26 +103,28 @@ var DropdownAlert = React.createClass({
       }
 
       return (
-        <Animated.View style={{
-            opacity: this.state.fadeAnim,
-            transform: [{
-              translateY: this.state.fadeAnim.interpolate({
-                inputRange: [0, 1],
-                outputRange: [-100, 0]
-              }),
-            }],
-          }}>
-          <StatusBar barStyle="light-content" />
-          <TouchableHighlight onPress={this.dismiss} underlayColor={'lightgray'}>
-            <View style={style}>
-              {this.renderImage(source)}
-              <View style={styles.titleMsgContainer}>
-                {this.renderTitle()}
-                {this.renderMessage()}
+        <Modal transparent={true} onRequestClose={() => this.dismiss}>
+          <Animated.View style={{
+              opacity: this.state.fadeAnim,
+              transform: [{
+                translateY: this.state.fadeAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [this.props.startDelta, this.props.endDelta]
+                }),
+              }],
+            }}>
+            <StatusBar barStyle="light-content" />
+            <TouchableHighlight onPress={this.dismiss} underlayColor={'lightgray'}>
+              <View style={style}>
+                {this.renderImage(source)}
+                <View style={styles.titleMsgContainer}>
+                  {this.renderTitle()}
+                  {this.renderMessage()}
+                </View>
               </View>
-            </View>
-          </TouchableHighlight>
-        </Animated.View>
+            </TouchableHighlight>
+          </Animated.View>
+      </Modal>
       )
     } else {
       return (<View />)
