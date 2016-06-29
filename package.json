@@ -15,7 +15,10 @@
     "alert",
     "error",
     "info",
-    "warning"
+    "warning",
+    "react-native",
+    "react",
+    "native"
   ],
   "author": "Brian Sinnicke",
   "license": "MIT",

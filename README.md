@@ -41,21 +41,17 @@ A dropdown alert that allows you to display bits of information to your user. Tr
 ![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/custom.png)
 
 ### Props
+
 | Props name | Type | Description | Platform | Default
 | ------------ | ------------- | ------------ |------------ |------------ |
-| closeInterval | Number  | Dismiss alert at a certain interval | Both | -1
+| closeInterval | Number  | Dismiss alert at a certain interval | Both | 4000
 | backgroundColor | String  | background color | Both | steelblue
 | imageUri | String  | source uri for network image | Both | ''
 | imageSrc | String  | source for local image | Both | ''
-| textColor | String  | title & message text color | Both | white
-| fontFamily | String  | font for title & messsage | Both | HelveticaNeue
+| textColor | String  | color for title and message | Both | white
+| fontFamily | String  | font for title and messsage | Both | HelveticaNeue
 | startDelta | Number  | where view animation starts | Both | -100
 | endDelta | Number  | where view animation ends | Both | 0
-### Future
-* ~~npm module~~
-* ~~demo gif~~
-* ~~fontFamily prop~~
-* ~~usage example~~
 
 Inspired by: https://github.com/cwRichardKim/RKDropdownAlert
 

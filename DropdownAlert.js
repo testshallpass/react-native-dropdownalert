@@ -16,7 +16,7 @@ var closeTimeoutId
 var DropdownAlert = React.createClass({
   getDefaultProps: function() {
     return {
-      closeInterval: -1,
+      closeInterval: 4000,
       backgroundColor: 'steelblue',
       imageUri: '',
       imageSrc: '',
