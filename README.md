@@ -53,7 +53,7 @@ showAlert() {
 | startDelta | Number  | where view animation starts | Both | -100
 | endDelta | Number  | where view animation ends | Both | 0
 
-Inspired by: https://github.com/cwRichardKim/RKDropdownAlert
+Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
 
 ### License
 
