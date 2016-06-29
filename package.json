@@ -1,6 +1,6 @@
 {
   "name": "react-native-dropdownalert",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A dropdown alert that allows you to display bits of information to your user.",
   "main": "DropdownAlert.js",
   "scripts": {
