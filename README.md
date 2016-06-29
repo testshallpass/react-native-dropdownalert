@@ -8,30 +8,30 @@ A dropdown alert that allows you to display bits of information to your user. Tr
 
 ### Usage
 
-	import DropdownAlert from 'react-native-dropdownalert'
-	// ...
-	constructor(props) {
-    	super(props);
-    	this.showAlert = this.showAlert.bind(this)
-  	}
-	render() {
-		return (
-			<View> 
-				<DropdownAlert ref={"dropdownalert"} />
-				<TouchableHighlight onPress={this.showAlert}>
-            		<Text>
-              			{'Show Alert'}
-            		</Text>
-        		</TouchableHighlight>
-			</View>
-		)
-	}
-	// ...
-	showAlert() {
-		this.refs.dropdownalert.alert('info', 'Info', 'Chicago Cubs won the World Series!')
-	}
-	// ...
+```javascript
 
+import DropdownAlert from 'react-native-dropdownalert'
+// ...
+constructor(props) {
+  super(props);
+  this.showAlert = this.showAlert.bind(this)
+}
+render() {
+  return (
+    <View>
+      <DropdownAlert ref={"dropdownalert"} />
+      <TouchableHighlight onPress={this.showAlert}>
+        <Text> {'Show Alert'} </Text>
+      </TouchableHighlight>
+    </View>
+  )
+}
+showAlert() {
+  this.refs.dropdownalert.alert('info', 'Info', 'Chicago Cubs won the World Series!')
+}
+// ...
+
+```
 
 ### Types 
 
