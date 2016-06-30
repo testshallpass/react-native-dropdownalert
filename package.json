@@ -17,8 +17,9 @@
     "info",
     "warning",
     "react-native",
-    "react",
-    "native"
+    "ios",
+    "android",
+    "react-component"
   ],
   "author": "Brian Sinnicke",
   "license": "MIT",
