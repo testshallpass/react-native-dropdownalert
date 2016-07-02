@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   View,
   Text,
@@ -9,17 +9,27 @@ import {
   Modal,
   StatusBar,
   Image
-} from "react-native";
+} from "react-native"
 
 var closeTimeoutId
 
 var DropdownAlert = React.createClass({
+  propTypes: {
+    closeInterval: React.PropTypes.number,
+    backgroundColor: React.PropTypes.string,
+    imageUri: React.PropTypes.string,
+    imageSrc: React.PropTypes.number,
+    textColor: React.PropTypes.string,
+    fontFamily: React.PropTypes.string,
+    startDelta: React.PropTypes.number,
+    endDelta: React.PropTypes.number
+  },
   getDefaultProps: function() {
     return {
       closeInterval: 4000,
       backgroundColor: 'steelblue',
       imageUri: '',
-      imageSrc: '',
+      imageSrc: null,
       textColor: 'white',
       fontFamily: 'HelveticaNeue',
       startDelta: -100,
@@ -103,9 +113,8 @@ var DropdownAlert = React.createClass({
       }
 
       return (
-        <Modal transparent={true} onRequestClose={() => this.dismiss}>
+        <Modal animationType='fade' transparent={true} visible={this.state.visible} onRequestClose={() => this.dismiss}>
           <Animated.View style={{
-              opacity: this.state.fadeAnim,
               transform: [{
                 translateY: this.state.fadeAnim.interpolate({
                   inputRange: [0, 1],
@@ -136,6 +145,14 @@ var DropdownAlert = React.createClass({
     )
   },
   alert: function(type, title, message) {
+    if (type.length === 0 || type === null ) {
+      console.warn('Missing DropdownAlert type. Available types: info, warn, error or custom')
+      return
+    }
+    if (type != 'info' && type != 'warn' && type != 'error' && type != 'custom') {
+      console.warn('Invalid DropdownAlert type. Available types: info, warn, error or custom')
+      return
+    }
     if (this.state.isOpen) {
       this.dismiss()
       return
