@@ -50,11 +50,12 @@ showAlert() {
 | closeInterval | Number  | Dismiss alert at a certain interval | Both | 4000
 | backgroundColor | String  | background color | Both | steelblue
 | imageUri | String  | source uri for network image | Both | ''
-| imageSrc | String  | source for local image | Both | ''
+| imageSrc | Number  | source for local image | Both | null
 | textColor | String  | color for title and message | Both | white
 | fontFamily | String  | font for title and messsage | Both | HelveticaNeue
 | startDelta | Number  | where view animation starts | Both | -100
 | endDelta | Number  | where view animation ends | Both | 0
+
 
 Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
 
