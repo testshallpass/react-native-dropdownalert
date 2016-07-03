@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
-DropDownAlertExample/
+Example/
 screenshots/
 npm-debug.log
+.travis.yml
