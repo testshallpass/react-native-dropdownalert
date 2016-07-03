@@ -4,3 +4,6 @@ Example/
 screenshots/
 npm-debug.log
 .travis.yml
+README.md
+node_modules
+.babelrc

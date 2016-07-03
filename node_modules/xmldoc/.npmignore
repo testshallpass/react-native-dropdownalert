@@ -1,0 +1,9 @@
+# Ignore dependencies
+node_modules
+
+# IntelliJ
+.idea
+*.iml
+
+# NPM Cruft
+npm-debug.log

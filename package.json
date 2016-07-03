@@ -4,7 +4,7 @@
   "description": "A dropdown alert that allows you to display bits of information to your user.",
   "main": "DropdownAlert.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --require react-native-mock/mock.js --compilers js:babel-core/register --recursive test/*.js"
   },
   "repository": {
     "type": "git",
@@ -26,5 +26,18 @@
   "bugs": {
     "url": "https://github.com/devBrian/react-native-dropdownalert/issues"
   },
-  "homepage": "https://github.com/devBrian/react-native-dropdownalert#readme"
+  "homepage": "https://github.com/devBrian/react-native-dropdownalert#readme",
+  "devDependencies": {
+    "babel-core": "^6.10.4",
+    "babel-preset-es2015": "^6.9.0",
+    "chai": "^3.5.0",
+    "enzyme": "^2.3.0",
+    "mocha": "^2.5.3",
+    "react": "^15.2.0",
+    "react-addons-test-utils": "^15.2.0",
+    "react-dom": "^15.2.0",
+    "react-native": "^0.28.0",
+    "react-native-mock": "^0.2.4",
+    "should": "^9.0.2"
+  }
 }
