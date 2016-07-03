@@ -2,6 +2,7 @@
 
 [![npm version](http://img.shields.io/npm/v/react-native-dropdownalert.svg?style=flat-square)](https://www.npmjs.com/package/react-native-dropdownalert "View this project on npm")
 [![npm version](http://img.shields.io/npm/dm/react-native-dropdownalert.svg?style=flat-square)](https://www.npmjs.com/package/react-native-dropdownalert "View this project on npm")
+[![Build Status](https://travis-ci.org/devBrian/react-native-dropdownalert.svg?branch=master)](https://travis-ci.org/devBrian/react-native-dropdownalert)
 
 A dropdown alert that allows you to display bits of information to your user. Try 1 of 3 types or roll your own custom type (see props below). Tap the alert to close or provide a time interval to close automatically.
 
