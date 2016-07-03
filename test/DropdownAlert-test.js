@@ -1,4 +1,4 @@
-const React = require('React')
+const React = require('react')
 const should = require('should')
 const { shallow } = require('enzyme')
 const DropdownAlert = require('../DropdownAlert')
