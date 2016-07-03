@@ -7,3 +7,4 @@ npm-debug.log
 README.md
 node_modules
 .babelrc
+test/
