@@ -1,9 +1,9 @@
 const React = require('react')
 const should = require('should')
 const { shallow } = require('enzyme')
-const DropdownAlert = require('../DropdownAlert')
 const { expect } = require('chai')
 
+import DropdownAlert from '../DropdownAlert'
 import {
   View,
   Text,
@@ -22,8 +22,5 @@ describe('DropdownAlert', () => {
   })
   it('should exist', () => {
     DropdownAlert.should.be.ok
-  })
-  it('should equal DropdownAlert', () => {
-     dropdownAlert.unrendered.type.displayName.should.equal('DropdownAlert')
   })
 })

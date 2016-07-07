@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react'
+import React, {Component, PropTypes} from 'react'
 import {
   View,
   Text,
@@ -13,8 +13,8 @@ import {
 
 var closeTimeoutId
 
-var DropdownAlert = React.createClass({
-  propTypes: {
+export default class DropdownAlert extends Component {
+  static propTypes = {
     closeInterval: React.PropTypes.number,
     backgroundColor: React.PropTypes.string,
     imageUri: React.PropTypes.string,
@@ -22,22 +22,23 @@ var DropdownAlert = React.createClass({
     textColor: React.PropTypes.string,
     fontFamily: React.PropTypes.string,
     startDelta: React.PropTypes.number,
-    endDelta: React.PropTypes.number
-  },
-  getDefaultProps: function() {
-    return {
-      closeInterval: 4000,
-      backgroundColor: 'steelblue',
-      imageUri: '',
-      imageSrc: null,
-      textColor: 'white',
-      fontFamily: 'HelveticaNeue',
-      startDelta: -100,
-      endDelta: 0
-    }
-  },
-  getInitialState: function() {
-    return {
+    endDelta: React.PropTypes.number,
+    statusBarHidden: React.PropTypes.bool
+  }
+  static defaultProps =  {
+    closeInterval: 4000,
+    backgroundColor: 'steelblue',
+    imageUri: '',
+    imageSrc: null,
+    textColor: 'white',
+    fontFamily: 'HelveticaNeue',
+    startDelta: -100,
+    endDelta: 0,
+    statusBarHidden: false
+  }
+  constructor(props) {
+    super(props)
+    this.state = {
       fadeAnim: new Animated.Value(0),
       duration: 450,
       visible: false,
@@ -46,12 +47,21 @@ var DropdownAlert = React.createClass({
       title: '',
       isOpen: false
     }
-  },
-  renderTitle: function() {
+    this.renderTitle = this.renderTitle.bind(this)
+    this.renderMessage = this.renderMessage.bind(this)
+    this.renderImage = this.renderImage.bind(this)
+    this.renderDropDown = this.renderDropDown.bind(this)
+    this.alert = this.alert.bind(this)
+    this.dismiss = this.dismiss.bind(this)
+  }
+  renderTitle() {
     if (this.state.title.length > 0) {
       var style = styles.title
       if (this.state.type == 'custom') {
-        style = [styles.title, {color: this.props.textColor, fontFamily: this.props.fontFamily}]
+        style = [styles.title, {
+          color: this.props.textColor,
+          fontFamily: this.props.fontFamily
+        }]
       }
       return (
         <Text style={style} numberOfLines={(this.state.message.length > 0) ? 1 : 3}>
@@ -60,12 +70,15 @@ var DropdownAlert = React.createClass({
       )
     }
     return null
-  },
-  renderMessage: function() {
+  }
+  renderMessage() {
     if (this.state.message.length > 0) {
       var style = styles.message
       if (this.state.type == 'custom') {
-        style = [styles.message, {color: this.props.textColor, fontFamily: this.props.fontFamily}]
+        style = [styles.message, {
+          color: this.props.textColor,
+          fontFamily: this.props.fontFamily
+        }]
       }
       return (
         <Text style={style} numberOfLines={(this.state.title.length > 0) ? 2 : 3}>
@@ -74,12 +87,15 @@ var DropdownAlert = React.createClass({
       )
     }
     return null
-  },
-  renderImage: function(src) {
+  }
+  renderImage(src) {
     if (this.state.type == 'custom' && this.props.imageUri.length > 0) {
       var uri = this.props.imageUri
       return (
-        <Image style={[styles.image, {width: 36, height: 36}]} source={{uri: uri}} />
+        <Image style={[styles.image, {
+          width: 36,
+          height: 36
+        }]} source={{uri: uri}} />
       )
     } else if (src != null) {
       return (
@@ -88,8 +104,8 @@ var DropdownAlert = React.createClass({
     } else {
       return null
     }
-  },
-  renderDropDown: function() {
+  }
+  renderDropDown() {
     if (this.state.visible) {
       var style
       var source
@@ -111,9 +127,8 @@ var DropdownAlert = React.createClass({
           source = this.props.imageSrc
         default:
       }
-
       return (
-        <Modal animationType='fade' transparent={true} visible={this.state.visible} onRequestClose={() => this.dismiss}>
+        <Modal animationType='fade' transparent={true} visible={this.state.visible} onRequestClose={this.dismiss}>
           <Animated.View style={{
               transform: [{
                 translateY: this.state.fadeAnim.interpolate({
@@ -122,7 +137,7 @@ var DropdownAlert = React.createClass({
                 }),
               }],
             }}>
-            <StatusBar barStyle="light-content" />
+            <StatusBar hidden={this.props.statusBarHidden} barStyle={(this.props.textColor === 'white' || this.state.type != 'custom') ? "light-content" : "default"} />
             <TouchableHighlight onPress={this.dismiss} underlayColor={'lightgray'}>
               <View style={style}>
                 {this.renderImage(source)}
@@ -138,13 +153,13 @@ var DropdownAlert = React.createClass({
     } else {
       return (<View />)
     }
-  },
+  }
   render() {
     return (
       this.renderDropDown()
     )
-  },
-  alert: function(type, title, message) {
+  }
+  alert(type, title, message) {
     if (type.length === 0 || type === null ) {
       console.warn('Missing DropdownAlert type. Available types: info, warn, error or custom')
       return
@@ -177,8 +192,8 @@ var DropdownAlert = React.createClass({
         this.dismiss()
       }.bind(this), this.props.closeInterval)
     }
-  },
-  dismiss: function() {
+  }
+  dismiss() {
     if (this.state.isOpen) {
       if (closeTimeoutId != null) {
         clearTimeout(closeTimeoutId)
@@ -198,8 +213,8 @@ var DropdownAlert = React.createClass({
         }
       }.bind(this), (this.state.duration))
     }
-  },
-})
+  }
+}
 
 var styles = StyleSheet.create({
   infoContainer: {
@@ -247,4 +262,3 @@ var styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
 })
-module.exports = DropdownAlert
