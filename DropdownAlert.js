@@ -53,6 +53,8 @@ export default class DropdownAlert extends Component {
     this.renderDropDown = this.renderDropDown.bind(this)
     this.alert = this.alert.bind(this)
     this.dismiss = this.dismiss.bind(this)
+    this.animate = this.animate.bind(this)
+    this.validateType = this.validateType.bind(this)
   }
   renderTitle() {
     if (this.state.title.length > 0) {
@@ -160,12 +162,7 @@ export default class DropdownAlert extends Component {
     )
   }
   alert(type, title, message) {
-    if (type.length === 0 || type === null ) {
-      console.warn('Missing DropdownAlert type. Available types: info, warn, error or custom')
-      return
-    }
-    if (type != 'info' && type != 'warn' && type != 'error' && type != 'custom') {
-      console.warn('Invalid DropdownAlert type. Available types: info, warn, error or custom')
+    if (this.validateType(type) == false) {
       return
     }
     if (this.state.isOpen) {
@@ -181,12 +178,7 @@ export default class DropdownAlert extends Component {
         isOpen: true
       })
     }
-    Animated.timing(
-      this.state.fadeAnim, {
-        toValue: 1,
-        duration: this.state.duration
-      }
-    ).start()
+    this.animate(1)
      if (this.props.closeInterval > 1) {
       closeTimeoutId = setTimeout(function() {
         this.dismiss()
@@ -198,12 +190,7 @@ export default class DropdownAlert extends Component {
       if (closeTimeoutId != null) {
         clearTimeout(closeTimeoutId)
       }
-      Animated.timing(
-        this.state.fadeAnim, {
-          toValue: 0,
-          duration: this.state.duration
-        }
-      ).start()
+      this.animate(0)
       setTimeout(function() {
         if (this.state.visible) {
           this.setState({
@@ -213,6 +200,25 @@ export default class DropdownAlert extends Component {
         }
       }.bind(this), (this.state.duration))
     }
+  }
+  animate(toValue) {
+    Animated.timing(
+      this.state.fadeAnim, {
+        toValue: toValue,
+        duration: this.state.duration
+      }
+    ).start()
+  }
+  validateType(type) {
+    if (type.length === 0 || type === null) {
+      console.warn('Missing DropdownAlert type. Available types: info, warn, error or custom')
+      return false
+    }
+    if (type != 'info' && type != 'warn' && type != 'error' && type != 'custom') {
+      console.warn('Invalid DropdownAlert type. Available types: info, warn, error or custom')
+      return false
+    }
+    return true
   }
 }
 
