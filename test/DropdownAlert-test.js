@@ -16,11 +16,26 @@ import {
 } from "react-native"
 
 describe('DropdownAlert', () => {
-  let dropdownAlert
-  before(() => {
-    dropdownAlert = shallow(<DropdownAlert />)
-  })
   it('should exist', () => {
-    DropdownAlert.should.be.ok
+    let wrapper = shallow(<DropdownAlert />)
+    should.exist(wrapper)
+  })
+  it('should find custom sub components', () => {
+    let wrapper = shallow(<DropdownAlert imageUri={'https://facebook.github.io/react/img/logo_og.png'} />)
+    wrapper.instance().alert('custom', 'Title', 'Message')
+    wrapper.update()
+    expect(wrapper.find(Modal)).to.have.length(1)
+    expect(wrapper.find(StatusBar)).to.have.length(1)
+    expect(wrapper.find(View)).to.have.length(2)
+    expect(wrapper.find(Animated.View)).to.have.length(1)
+    expect(wrapper.find(TouchableHighlight)).to.have.length(1)
+    expect(wrapper.find(Text)).to.have.length(2)
+    expect(wrapper.find(Image)).to.have.length(1)
+  })
+  it('should dismiss', () => {
+    let wrapper = shallow(<DropdownAlert />)
+    wrapper.instance().dismiss()
+    wrapper.update()
+    wrapper.instance().should.be.ok
   })
 })
