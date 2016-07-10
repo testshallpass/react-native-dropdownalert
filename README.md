@@ -3,6 +3,7 @@
 [![npm version](http://img.shields.io/npm/v/react-native-dropdownalert.svg?style=flat-square)](https://www.npmjs.com/package/react-native-dropdownalert "View this project on npm")
 [![npm version](http://img.shields.io/npm/dm/react-native-dropdownalert.svg?style=flat-square)](https://www.npmjs.com/package/react-native-dropdownalert "View this project on npm")
 [![Build Status](https://travis-ci.org/devBrian/react-native-dropdownalert.svg?branch=master)](https://travis-ci.org/devBrian/react-native-dropdownalert)
+[![License](https://img.shields.io/dub/l/vibe-d.svg)](https://raw.github.com/devBrian/react-native-dropdownalert/master/LICENSE)
 
 A dropdown alert that allows you to display bits of information to your users. Try 1 of 3 pre-defined types or roll your own custom type (see props below). The user can tap the alert to close it or it will close automatically after 4 seconds or you can choose how long (see closeInterval prop).
 
@@ -21,20 +22,23 @@ import DropdownAlert from 'react-native-dropdownalert'
 render() {
   return (
     <View>
-      <DropdownAlert ref={"dropdownalert"} />
+      <DropdownAlert ref={'dropdown'} />
     </View>
   )
 }
 // ...
 handleServerResponse(err, response) {
-  this.refs.dropdownalert.alert('error', 'Error', 'Sorry, there was an unexpected problem. Please try again.')
+  if (err != null) {
+    // Inform the user of the error.
+    this.refs.dropdown.alert('error', 'Error', err)
+  }
 }
 // ...
 
 ```
 
 ### Types
---- 
+---
 
 ![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/info.png)
 ![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/warning.png)
@@ -57,8 +61,3 @@ handleServerResponse(err, response) {
 | ```statusBarHidden``` | Boolean  | status bar visibility | false
 
 Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
-
-### License
----
-
-[MIT](https://raw.github.com/devBrian/react-native-dropdownalert/master/LICENSE)
