@@ -1,9 +1,10 @@
 ### react-native-dropdownalert
 
-[![npm version](http://img.shields.io/npm/v/react-native-dropdownalert.svg?style=flat-square)](https://www.npmjs.com/package/react-native-dropdownalert "View this project on npm")
-[![npm version](http://img.shields.io/npm/dm/react-native-dropdownalert.svg?style=flat-square)](https://www.npmjs.com/package/react-native-dropdownalert "View this project on npm")
+[![Platform](https://img.shields.io/badge/platform-react--native-lightgrey.svg)](http://facebook.github.io/react-native/)
+[![npm version](http://img.shields.io/npm/v/react-native-dropdownalert.svg)](https://www.npmjs.com/package/react-native-dropdownalert)
+[![npm version](http://img.shields.io/npm/dm/react-native-dropdownalert.svg)](https://www.npmjs.com/package/react-native-dropdownalert)
 [![Build Status](https://travis-ci.org/devBrian/react-native-dropdownalert.svg?branch=master)](https://travis-ci.org/devBrian/react-native-dropdownalert)
-[![License](https://img.shields.io/dub/l/vibe-d.svg)](https://raw.github.com/devBrian/react-native-dropdownalert/master/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/devBrian/react-native-dropdownalert/master/LICENSE)
 
 A dropdown alert that allows you to display bits of information to your users. Try 1 of 3 pre-defined types or roll your own custom type (see props below). The user can tap the alert to close it or it will close automatically after 4 seconds or you can choose how long (see closeInterval prop).
 
