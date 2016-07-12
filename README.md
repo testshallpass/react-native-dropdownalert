@@ -1,4 +1,4 @@
-### react-native-dropdownalert
+## react-native-dropdownalert
 
 [![Platform](https://img.shields.io/badge/platform-react--native-lightgrey.svg)](http://facebook.github.io/react-native/)
 [![npm version](http://img.shields.io/npm/v/react-native-dropdownalert.svg)](https://www.npmjs.com/package/react-native-dropdownalert)
@@ -7,6 +7,12 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/devBrian/react-native-dropdownalert/master/LICENSE)
 
 A dropdown alert that allows you to display bits of information to your users. Try 1 of 3 pre-defined types or roll your own custom type (see props below). The user can tap the alert to close it or it will close automatically after 4 seconds or you can choose how long (see closeInterval prop).
+
+### Installation
+---
+```bash
+npm i react-native-dropdownalert --save
+```
 
 ### Demo
 ---
@@ -61,4 +67,4 @@ handleServerResponse(err, response) {
 | ```endDelta``` | Number  | where view ends at | 0
 | ```statusBarHidden``` | Boolean  | status bar visibility | false
 
-Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
+> Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
