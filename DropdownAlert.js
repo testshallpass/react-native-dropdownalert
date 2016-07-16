@@ -15,6 +15,7 @@ var closeTimeoutId
 
 export default class DropdownAlert extends Component {
   static propTypes = {
+    onClose: React.PropTypes.func,
     closeInterval: React.PropTypes.number,
     backgroundColor: React.PropTypes.string,
     imageUri: React.PropTypes.string,
@@ -26,6 +27,7 @@ export default class DropdownAlert extends Component {
     statusBarHidden: React.PropTypes.bool
   }
   static defaultProps =  {
+    onClose: null,
     closeInterval: 4000,
     backgroundColor: 'steelblue',
     imageUri: '',
@@ -197,6 +199,14 @@ export default class DropdownAlert extends Component {
             visible: false,
             isOpen: false
           })
+          if (this.props.onClose) {
+            var data = {
+              type: this.state.type,
+              title: this.state.title,
+              message: this.state.message
+            }
+            this.props.onClose(data)
+          }
         }
       }.bind(this), (this.state.duration))
     }

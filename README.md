@@ -29,7 +29,7 @@ import DropdownAlert from 'react-native-dropdownalert'
 render() {
   return (
     <View>
-      <DropdownAlert ref={'dropdown'} />
+      <DropdownAlert ref={'dropdown'} onClose={this.onClose} />
     </View>
   )
 }
@@ -39,6 +39,10 @@ handleServerResponse(err, response) {
     // Inform the user of the error.
     this.refs.dropdown.alert('error', 'Error', err)
   }
+}
+// ...
+onClose(data) {
+  // data = {type, title, message}
 }
 // ...
 
@@ -66,5 +70,6 @@ handleServerResponse(err, response) {
 | ```startDelta``` | Number  | where view starts at | -100
 | ```endDelta``` | Number  | where view ends at | 0
 | ```statusBarHidden``` | Boolean  | status bar visibility | false
+| ```onClose``` | Function  | Fires when alert dismisses either by user or ```closeInterval``` & will pass this: ```data = {type, title, message}```  | null
 
 > Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
