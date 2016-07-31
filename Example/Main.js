@@ -18,7 +18,9 @@ class Main extends Component {
   render() {
     return (
       <View style={{flex: 1, backgroundColor: 'beige'}}>
-        <DropdownAlert ref={'dropdown'} backgroundColor={'darkcyan'} imageUri={'https://facebook.github.io/react/img/logo_og.png'} fontFamily={'AvenirNext-Regular'} closeInterval={0} />
+        <DropdownAlert ref={'dropdown'}
+                       imageUri={'https://facebook.github.io/react/img/logo_og.png'}
+                       />
         <ScrollView contentContainerStyle={styles.container}>
             <TouchableHighlight style={styles.button} onPress={() => this.showAlert('info')} underlayColor={'lightgray'}>
               <Text style={styles.text}>
@@ -56,7 +58,7 @@ class Main extends Component {
         this.refs.dropdown.alert(type, 'Error', 'Sorry, we\'re having some technical difficulties. Our team will get this fixed for you ASAP.')
       break;
       case 'custom':
-        this.refs.dropdown.alert(type, 'Custom', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis ante a mauris.')
+        this.refs.dropdown.alert(type, 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis ante a mauris.consectetur adipiscing elit. Donec convallis ante a mauris.consectetur adipiscing elit. Donec convallis ante a mauris.')
       break;
     }
   }

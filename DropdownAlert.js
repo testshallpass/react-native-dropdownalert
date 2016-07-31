@@ -8,35 +8,64 @@ import {
   Animated,
   Modal,
   StatusBar,
+  Platform,
+  Dimensions,
   Image
 } from "react-native"
 
 var closeTimeoutId
+const DEFAULT_IMAGE_DIMENSIONS = 36
+const WINDOW = Dimensions.get('window')
 
 export default class DropdownAlert extends Component {
   static propTypes = {
     onClose: React.PropTypes.func,
     closeInterval: React.PropTypes.number,
-    backgroundColor: React.PropTypes.string,
     imageUri: React.PropTypes.string,
     imageSrc: React.PropTypes.number,
-    textColor: React.PropTypes.string,
-    fontFamily: React.PropTypes.string,
     startDelta: React.PropTypes.number,
     endDelta: React.PropTypes.number,
-    statusBarHidden: React.PropTypes.bool
+    messageStyle: Text.propTypes.style,
+    titleStyle: Text.propTypes.style,
+    imageStyle: Image.propTypes.style,
+    containerStyle: View.propTypes.style,
+    titleNumOfLines: React.PropTypes.number,
+    messageNumOfLines: React.PropTypes.number,
   }
   static defaultProps =  {
     onClose: null,
     closeInterval: 4000,
-    backgroundColor: 'steelblue',
     imageUri: '',
     imageSrc: null,
-    textColor: 'white',
-    fontFamily: 'HelveticaNeue',
-    startDelta: -100,
+    startDelta: -200,
     endDelta: 0,
-    statusBarHidden: false
+    titleNumOfLines: 1,
+    messageNumOfLines: 3,
+    titleStyle: {
+      fontSize: 16,
+      textAlign: 'left',
+      fontWeight: 'bold',
+      color: 'white',
+      backgroundColor: 'transparent'
+    },
+    messageStyle: {
+      fontSize: 14,
+      textAlign: 'left',
+      fontWeight: 'normal',
+      color: 'white',
+      backgroundColor: 'transparent'
+    },
+    imageStyle: {
+      padding: 8,
+      width: DEFAULT_IMAGE_DIMENSIONS,
+      height: DEFAULT_IMAGE_DIMENSIONS
+    },
+    containerStyle: {
+      padding: 12,
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: 'dimgray'
+    }
   }
   constructor(props) {
     super(props)
@@ -47,7 +76,9 @@ export default class DropdownAlert extends Component {
       type: 'info',
       message: '',
       title: '',
-      isOpen: false
+      isOpen: false,
+      startDelta: props.startDelta,
+      endDelta: props.endDelta
     }
     this.renderTitle = this.renderTitle.bind(this)
     this.renderMessage = this.renderMessage.bind(this)
@@ -57,18 +88,13 @@ export default class DropdownAlert extends Component {
     this.dismiss = this.dismiss.bind(this)
     this.animate = this.animate.bind(this)
     this.validateType = this.validateType.bind(this)
+    this.renderStatusBar = this.renderStatusBar.bind(this)
+    this.onLayoutEvent = this.onLayoutEvent.bind(this)
   }
   renderTitle() {
     if (this.state.title.length > 0) {
-      var style = styles.title
-      if (this.state.type == 'custom') {
-        style = [styles.title, {
-          color: this.props.textColor,
-          fontFamily: this.props.fontFamily
-        }]
-      }
       return (
-        <Text style={style} numberOfLines={(this.state.message.length > 0) ? 1 : 3}>
+        <Text style={this.props.titleStyle} numberOfLines={this.props.titleNumOfLines}>
           {this.state.title}
         </Text>
       )
@@ -77,15 +103,8 @@ export default class DropdownAlert extends Component {
   }
   renderMessage() {
     if (this.state.message.length > 0) {
-      var style = styles.message
-      if (this.state.type == 'custom') {
-        style = [styles.message, {
-          color: this.props.textColor,
-          fontFamily: this.props.fontFamily
-        }]
-      }
       return (
-        <Text style={style} numberOfLines={(this.state.title.length > 0) ? 2 : 3}>
+        <Text style={this.props.messageStyle} numberOfLines={this.props.messageNumOfLines}>
           {this.state.message}
         </Text>
       )
@@ -95,41 +114,57 @@ export default class DropdownAlert extends Component {
   renderImage(src) {
     if (this.state.type == 'custom' && this.props.imageUri.length > 0) {
       var uri = this.props.imageUri
+      var style = this.props.imageStyle
+      if (!style['width']) {
+        style['width'] = DEFAULT_IMAGE_DIMENSIONS
+      }
+      if (!style['height']) {
+        style['height'] = DEFAULT_IMAGE_DIMENSIONS
+      }
       return (
-        <Image style={[styles.image, {
-          width: 36,
-          height: 36
-        }]} source={{uri: uri}} />
+        <Image style={style} source={{uri: uri}} />
       )
     } else if (src != null) {
       return (
-        <Image style={styles.image} source={src} />
+        <Image style={this.props.imageStyle} source={src} />
       )
     } else {
       return null
     }
   }
+  renderStatusBar(bgColor) {
+    if (Platform.OS === 'android' || this.state.type != 'custom') {
+      return (
+        <StatusBar barStyle="light-content" backgroundColor={bgColor} />
+      )
+    }
+    return null
+  }
   renderDropDown() {
     if (this.state.visible) {
-      var style
-      var source
+      var style = this.props.containerStyle
+      if (!style['flexDirection'] && !style['alignItems']) {
+        // Try to help keep somewhat organized if these styles were not given.
+        style = [this.props.containerStyle, styles.customContainer]
+      }
+      var source = this.props.imageSrc
+      var statusBarBackgroundColor = this.props.backgroundColor
       switch (this.state.type) {
         case 'info':
           style = styles.infoContainer
           source = require('./assets/info.png')
+          statusBarBackgroundColor = 'steelblue'
           break;
         case 'warn':
           style = styles.warnContainer
           source = require('./assets/warn.png')
+          statusBarBackgroundColor = 'peru'
           break;
         case 'error':
           style = styles.errorContainer
           source = require('./assets/error.png')
+          statusBarBackgroundColor = '#cc3232'
           break;
-        case 'custom':
-          style = [styles.customContainer, {backgroundColor: this.props.backgroundColor}]
-          source = this.props.imageSrc
-        default:
       }
       return (
         <Modal animationType='fade' transparent={true} visible={this.state.visible} onRequestClose={this.dismiss}>
@@ -137,22 +172,22 @@ export default class DropdownAlert extends Component {
               transform: [{
                 translateY: this.state.fadeAnim.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [this.props.startDelta, this.props.endDelta]
+                  outputRange: [this.state.startDelta, this.state.endDelta]
                 }),
               }],
             }}>
-            <StatusBar hidden={this.props.statusBarHidden} barStyle={(this.props.textColor === 'white' || this.state.type != 'custom') ? "light-content" : "default"} />
-            <TouchableHighlight onPress={this.dismiss} underlayColor={'lightgray'}>
+            {this.renderStatusBar(statusBarBackgroundColor)}
+            <TouchableHighlight onPress={this.dismiss} underlayColor={'lightgray'} onLayout={(event) => this.onLayoutEvent(event)}>
               <View style={style}>
                 {this.renderImage(source)}
-                <View style={styles.titleMsgContainer}>
+                <View style={styles.textContainer}>
                   {this.renderTitle()}
                   {this.renderMessage()}
                 </View>
               </View>
             </TouchableHighlight>
           </Animated.View>
-      </Modal>
+        </Modal>
       )
     } else {
       return (<View />)
@@ -162,6 +197,33 @@ export default class DropdownAlert extends Component {
     return (
       this.renderDropDown()
     )
+  }
+  onLayoutEvent(event) {
+    var {x, y, width, height} = event.nativeEvent.layout
+    var actualStartDelta = this.state.startDelta
+    var actualEndDelta = this.state.endDelta
+    // Prevent it from going off screen.
+    if (this.props.startDelta < 0) {
+      var delta = 0 - height
+      if (delta != this.props.startDelta) {
+        actualStartDelta = delta
+      }
+    } else if (this.props.startDelta > WINDOW.height) {
+      actualStartDelta = WINDOW.height + height
+    }
+    if (this.props.endDelta < 0) {
+      actualEndDelta = 0
+    } else if (this.props.endDelta > WINDOW.height) {
+      actualEndDelta = WINDOW.height - height
+    }
+    var heightDelta = WINDOW.height - this.props.endDelta - height
+    if (heightDelta < 0) {
+      actualEndDelta = this.props.endDelta + heightDelta
+    }
+    this.setState({
+      startDelta: actualStartDelta,
+      endDelta: actualEndDelta
+    })
   }
   alert(type, title, message) {
     if (this.validateType(type) == false) {
@@ -256,25 +318,8 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  titleMsgContainer: {
+  textContainer: {
     flex: 1,
     padding: 8
-  },
-  image: {
-    padding: 8,
-  },
-  title: {
-    fontSize: 16,
-    textAlign: 'left',
-    fontWeight: 'bold',
-    color: 'white',
-    backgroundColor: 'transparent'
-  },
-  message: {
-    fontSize: 14,
-    textAlign: 'left',
-    fontWeight: 'normal',
-    color: 'white',
-    backgroundColor: 'transparent'
   },
 })
