@@ -17,10 +17,7 @@ class Main extends Component {
   }
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: 'beige'}}>
-        <DropdownAlert ref={'dropdown'}
-                       imageUri={'https://facebook.github.io/react/img/logo_og.png'}
-                       />
+      <View>
         <ScrollView contentContainerStyle={styles.container}>
             <TouchableHighlight style={styles.button} onPress={() => this.showAlert('info')} underlayColor={'lightgray'}>
               <Text style={styles.text}>
@@ -43,22 +40,30 @@ class Main extends Component {
               </Text>
             </TouchableHighlight>
         </ScrollView>
+        <DropdownAlert
+        ref={(ref) => this.dropdown = ref}
+        containerStyle={{backgroundColor: 'darkcyan'}}
+        messageNumOfLines={0}
+        messageStyle={{fontFamily: 'AvenirNext-Regular', fontSize: 17, color: 'white'}}
+        titleStyle={{fontFamily: 'AvenirNext-Bold', fontSize: 17, color: 'white'}}
+        imageUri={'https://facebook.github.io/react/img/logo_og.png'}
+        />
       </View>
     );
   }
   showAlert(type) {
     switch (type) {
       case 'info':
-        this.refs.dropdown.alert(type, 'Info', 'System is going down at midnight tonight. We\'ll notify you when it\'s back up.')
+        this.dropdown.alert(type, 'Info', 'System is going down at midnight tonight. We\'ll notify you when it\'s back up.')
       break;
       case 'warn':
-        this.refs.dropdown.alert(type, 'Warning', 'You are about to reach capacity for uploaded files. Please archive unused files.')
+        this.dropdown.alert(type, 'Warning', 'You are about to reach capacity for uploaded files. Please archive unused files.')
       break;
       case 'error':
-        this.refs.dropdown.alert(type, 'Error', 'Sorry, we\'re having some technical difficulties. Our team will get this fixed for you ASAP.')
+        this.dropdown.alert(type, 'Error', 'Sorry, we\'re having some technical difficulties. Our team will get this fixed for you ASAP.')
       break;
       case 'custom':
-        this.refs.dropdown.alert(type, 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis ante a mauris.consectetur adipiscing elit. Donec convallis ante a mauris.consectetur adipiscing elit. Donec convallis ante a mauris.')
+        this.dropdown.alert(type, 'Lorem ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis ante a mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis ante a mauris.')
       break;
     }
   }
@@ -67,7 +72,8 @@ class Main extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 20
+    backgroundColor: 'beige',
+    marginTop: 22,
   },
   button: {
     backgroundColor: 'powderblue',

@@ -72,7 +72,6 @@ export default class DropdownAlert extends Component {
     this.state = {
       fadeAnim: new Animated.Value(0),
       duration: 450,
-      visible: false,
       type: 'info',
       message: '',
       title: '',
@@ -141,7 +140,7 @@ export default class DropdownAlert extends Component {
     return null
   }
   renderDropDown() {
-    if (this.state.visible) {
+    if (this.state.isOpen) {
       var style = this.props.containerStyle
       if (!style['flexDirection'] && !style['alignItems']) {
         // Try to help keep somewhat organized if these styles were not given.
@@ -167,7 +166,6 @@ export default class DropdownAlert extends Component {
           break;
       }
       return (
-        <Modal animationType='fade' transparent={true} visible={this.state.visible} onRequestClose={this.dismiss}>
           <Animated.View style={{
               transform: [{
                 translateY: this.state.fadeAnim.interpolate({
@@ -175,6 +173,10 @@ export default class DropdownAlert extends Component {
                   outputRange: [this.state.startDelta, this.state.endDelta]
                 }),
               }],
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0
             }}>
             {this.renderStatusBar(statusBarBackgroundColor)}
             <TouchableHighlight onPress={this.dismiss} underlayColor={'lightgray'} onLayout={(event) => this.onLayoutEvent(event)}>
@@ -187,10 +189,9 @@ export default class DropdownAlert extends Component {
               </View>
             </TouchableHighlight>
           </Animated.View>
-        </Modal>
       )
     } else {
-      return (<View />)
+      return null
     }
   }
   render() {
@@ -233,9 +234,8 @@ export default class DropdownAlert extends Component {
       this.dismiss()
       return
     }
-    if (this.state.visible == false) {
+    if (this.state.isOpen == false) {
       this.setState({
-        visible: true,
         type: type,
         message: message,
         title: title,
@@ -256,9 +256,8 @@ export default class DropdownAlert extends Component {
       }
       this.animate(0)
       setTimeout(function() {
-        if (this.state.visible) {
+        if (this.state.isOpen) {
           this.setState({
-            visible: false,
             isOpen: false
           })
           if (this.props.onClose) {
