@@ -24,7 +24,6 @@ describe('DropdownAlert', () => {
     let wrapper = shallow(<DropdownAlert imageUri={'https://facebook.github.io/react/img/logo_og.png'} />)
     wrapper.instance().alert('custom', 'Title', 'Message')
     wrapper.update()
-    expect(wrapper.find(Modal)).to.have.length(1)
     expect(wrapper.find(StatusBar)).to.have.length(0)
     expect(wrapper.find(View)).to.have.length(2)
     expect(wrapper.find(Animated.View)).to.have.length(1)
