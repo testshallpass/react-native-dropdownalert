@@ -10,7 +10,8 @@ A way to display bits of information to your users. You can try 1 of 3 pre-defin
 
 ### Installation
 ```
-npm i react-native-dropdownalert --save ```
+npm i react-native-dropdownalert --save
+```
 
 ### Demo
 ![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/demo.gif)
