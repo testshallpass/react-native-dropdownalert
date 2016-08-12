@@ -20,7 +20,7 @@ describe('DropdownAlert', () => {
     let wrapper = shallow(<DropdownAlert />)
     should.exist(wrapper)
   })
-  it('should find custom sub components', () => {
+  it('should find custom type\'s components', () => {
     let wrapper = shallow(<DropdownAlert imageUri={'https://facebook.github.io/react/img/logo_og.png'} />)
     wrapper.instance().alert('custom', 'Title', 'Message')
     wrapper.update()
@@ -36,5 +36,20 @@ describe('DropdownAlert', () => {
     wrapper.instance().dismiss()
     wrapper.update()
     wrapper.instance().should.be.ok
+  })
+  it('should alert', () => {
+    let wrapper = shallow(<DropdownAlert />)
+    wrapper.instance().alert('custom', 'Title', 'Message')
+    wrapper.update()
+    wrapper.instance().should.be.ok
+  })
+  it('should detect isOpen state change', () => {
+    let wrapper = shallow(<DropdownAlert imageUri={'https://facebook.github.io/react/img/logo_og.png'}  />)
+    wrapper.instance().alert('custom', 'Title', 'Message')
+    wrapper.update()
+    wrapper.setState({ isOpen: false })
+    expect(wrapper.find(Animated.View)).to.have.length(0)
+    wrapper.setState({ isOpen: true })
+    expect(wrapper.find(Animated.View)).to.have.length(1)
   })
 })
