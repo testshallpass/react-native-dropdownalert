@@ -8,6 +8,6 @@
   "dependencies": {
     "react": "15.1.0",
     "react-native": "^0.28.0",
-    "react-native-dropdownalert": "^1.8.0"
+    "react-native-dropdownalert": "^1.10.0"
   }
 }

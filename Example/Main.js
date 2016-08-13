@@ -14,39 +14,44 @@ class Main extends Component {
   constructor(props) {
     super(props)
     this.showAlert = this.showAlert.bind(this)
+    this.dismissAlert = this.dismissAlert.bind(this)
   }
   render() {
     return (
-      <View>
-        <ScrollView contentContainerStyle={styles.container}>
-            <TouchableHighlight style={styles.button} onPress={() => this.showAlert('info')} underlayColor={'lightgray'}>
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+            <TouchableHighlight style={[styles.button, {backgroundColor: 'steelblue'}]} onPress={() => this.showAlert('info')} underlayColor={'lightgray'}>
               <Text style={styles.text}>
-                {'Info'}
+                {'info'}
               </Text>
             </TouchableHighlight>
-            <TouchableHighlight style={styles.button} onPress={() => this.showAlert('warn')} underlayColor={'lightgray'}>
+            <TouchableHighlight style={[styles.button, {backgroundColor: 'peru'}]} onPress={() => this.showAlert('warn')} underlayColor={'lightgray'}>
               <Text style={styles.text}>
-                {'Warning'}
+                {'warn'}
               </Text>
             </TouchableHighlight>
-            <TouchableHighlight style={styles.button} onPress={() => this.showAlert('error')} underlayColor={'lightgray'}>
+            <TouchableHighlight style={[styles.button, {backgroundColor: '#cc3232'}] } onPress={() => this.showAlert('error')} underlayColor={'lightgray'}>
               <Text style={styles.text}>
-                {'Error'}
+                {'error'}
               </Text>
             </TouchableHighlight>
-            <TouchableHighlight style={styles.button} onPress={() => this.showAlert('custom')} underlayColor={'lightgray'}>
+            <TouchableHighlight style={[styles.button, {backgroundColor: 'darkcyan'}]} onPress={() => this.showAlert('custom')} underlayColor={'lightgray'}>
               <Text style={styles.text}>
-                {'Custom'}
+                {'custom'}
+              </Text>
+            </TouchableHighlight>
+            <TouchableHighlight style={styles.button} onPress={() => this.dismissAlert()} underlayColor={'lightgray'}>
+              <Text style={styles.text}>
+                {'dismiss alert'}
               </Text>
             </TouchableHighlight>
         </ScrollView>
         <DropdownAlert
-        ref={(ref) => this.dropdown = ref}
-        containerStyle={{backgroundColor: 'darkcyan'}}
-        messageNumOfLines={0}
-        messageStyle={{fontFamily: 'AvenirNext-Regular', fontSize: 17, color: 'white'}}
-        titleStyle={{fontFamily: 'AvenirNext-Bold', fontSize: 17, color: 'white'}}
-        imageUri={'https://facebook.github.io/react/img/logo_og.png'}
+          ref={(ref) => this.dropdown = ref}
+          titleStyle={{fontSize: 16, color: 'white', fontWeight: 'bold'}}
+          messageStyle={{fontSize: 14, color: 'white'}}
+          containerStyle={{backgroundColor: 'darkcyan'}}
+          imageUri={'https://facebook.github.io/react/img/logo_og.png'}
         />
       </View>
     );
@@ -63,31 +68,35 @@ class Main extends Component {
         this.dropdown.alert(type, 'Error', 'Sorry, we\'re having some technical difficulties. Our team will get this fixed for you ASAP.')
       break;
       case 'custom':
-        this.dropdown.alert(type, 'Lorem ipsum', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis ante a mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis ante a mauris.')
+        this.dropdown.alert(type, 'Lorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis ante a mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis ante a mauris.')
       break;
     }
+  }
+  dismissAlert() {
+    this.dropdown.dismiss()
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'beige',
+    backgroundColor: 'honeydew'
+  },
+  contentContainer: {
     marginTop: 22,
   },
   button: {
-    backgroundColor: 'powderblue',
+    backgroundColor: 'gray',
     margin: 8,
     padding: 10,
     borderWidth: 1,
     borderColor: 'black',
-    borderRadius: 5
+    borderRadius: 8
   },
   text: {
     fontSize: 20,
     textAlign: 'center',
-    color: '#333333',
-    fontFamily: 'Avenir'
+    color: 'white'
   },
 });
 
