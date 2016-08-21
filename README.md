@@ -25,15 +25,14 @@ render() {
   return (
     <View>
       // !!! Make sure it's the last component in your document tree.
-      <DropdownAlert ref={(ref) => this.dropdown = ref} onClose={this.onClose} />
+      <DropdownAlert ref={(ref) => this.dropdown = ref} onClose={(data) => this.onClose(data)} />
     </View>
   )
 }
 // ...
 handleServerResponse(err, response) {
   if (err != null) {
-    // Inform the user of the error.
-    this.dropdown.alert('error', 'Error', err)
+    this.dropdown.alert('error', 'Server Error', err)
   }
 }
 // ...
@@ -53,17 +52,17 @@ onClose(data) {
 | Name | Type | Description | Default
 | ------------ | ------------- | ------------ |------------ |------------ |
 | ```closeInterval``` | Number  | dismiss alert at a certain time in milliseconds | 4000
-| ```imageUri``` | String  | network image | ''
-| ```imageSrc``` | Number  | local image | null
-| ```startDelta``` | Number  | where view starts at | -200
-| ```endDelta``` | Number  | where view ends at | 0
-| ```onClose``` | Function  | Fires when alert dismisses either by user or ```closeInterval``` & will pass this: ```data = {type, title, message}```  | null
-| ```containerStyle``` | View.propTypes.style  | look & feel of container for custom type only | ```{ padding: 12, flexDirection: 'row', alignItems: 'center', backgroundColor: 'dimgray' }```
-| ```titleStyle``` | Text.propTypes.style  | look & feel of title for all types | ```{       fontSize: 16, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
-| ```messageStyle``` | Text.propTypes.style  | look & feel of message for all types | ```{ fontSize: 14, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
-| ```imageStyle``` | Image.propTypes.style  | look & feel of image for all types | ```{    padding: 8, width: 36, height: 36 }```
-| ```titleNumOfLines``` | Number  | number of lines (set to 0 for unlimited) | 1
-| ```messageNumOfLines``` | Number  | number of lines (set to 0 for unlimited) | 3
+| ```imageUri``` | String  | network image, for example: ```'https://facebook.github.io/react/img/logo_og.png'``` | ''
+| ```imageSrc``` | Number  | local image, for example: ```require(./path/to/image/image.png)``` | null
+| ```startDelta``` | Number  | where the container starts (changes based on container height onLayout) | -200
+| ```endDelta``` | Number  | where the container ends | 0
+| ```onClose``` | Function  | Fires when alert closes either by user or  ```closeInterval``` Returns: ```data = {type, title, message}```  | null
+| ```containerStyle``` | View.propTypes.style  | styles for container for custom type only | ```{ padding: 12, flexDirection: 'row', alignItems: 'center', backgroundColor: 'dimgray' }```
+| ```titleStyle``` | Text.propTypes.style  | styles for title for all types | ```{       fontSize: 16, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
+| ```messageStyle``` | Text.propTypes.style  | styles for message for all types | ```{ fontSize: 14, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
+| ```imageStyle``` | Image.propTypes.style  | styles for image for all types | ```{    padding: 8, width: 36, height: 36 }```
+| ```titleNumOfLines``` | Number  | number of lines | 1
+| ```messageNumOfLines``` | Number  | number of lines | 3
 
 
 > Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
