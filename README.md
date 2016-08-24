@@ -50,10 +50,10 @@ onClose(data) {
 
 ### Props
 | Name | Type | Description | Default
-| ------------ | ------------- | ------------ |------------ |------------ |
+| ---- | ---- | ------------ | --------- |
 | ```closeInterval``` | Number  | dismiss alert at a certain time in milliseconds | 4000
-| ```imageUri``` | String  | network image, for example: ```'https://facebook.github.io/react/img/logo_og.png'``` | ''
-| ```imageSrc``` | Number  | local image, for example: ```require(./path/to/image/image.png)``` | null
+| ```imageUri``` | String  | URL | ''
+| ```imageSrc``` | Number  | local source, like ```require(./path/to/image/image.png)``` | null
 | ```startDelta``` | Number  | where the container starts (changes based on container height onLayout) | -200
 | ```endDelta``` | Number  | where the container ends | 0
 | ```onClose``` | Function  | Fires when alert closes either by user or  ```closeInterval``` Returns: ```data = {type, title, message}```  | null
