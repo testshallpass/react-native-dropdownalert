@@ -6,6 +6,7 @@ screenshots/
 npm-debug.log
 .travis.yml
 README.md
+ISSUE_TEMPLATE.md
 .babelrc
 babelrc
 test/
