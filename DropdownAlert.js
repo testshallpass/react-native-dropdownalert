@@ -150,7 +150,7 @@ export default class DropdownAlert extends Component {
     this.animate(1)
      if (this.props.closeInterval > 1) {
       closeTimeoutId = setTimeout(function() {
-        this.dismiss()
+        this.onClose()
       }.bind(this), this.props.closeInterval)
     }
   }
