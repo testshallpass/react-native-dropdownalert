@@ -40,7 +40,9 @@ export default class DropdownAlert extends Component {
     messageNumOfLines: PropTypes.number,
     onClose: PropTypes.func,
     onCancel: PropTypes.func,
-    showCancel: PropTypes.bool
+    showCancel: PropTypes.bool,
+    tapToCloseEnabled: PropTypes.bool,
+    panResponderEnabled: PropTypes.bool
   }
   static defaultProps =  {
     onClose: null,
@@ -53,6 +55,8 @@ export default class DropdownAlert extends Component {
     imageSrc: null,
     cancelBtnImageSrc: require('./assets/cancel.png'),
     showCancel: false,
+    tapToCloseEnabled: true,
+    panResponderEnabled: true,
     containerStyle: {
       padding: 16,
       flexDirection: 'row'
@@ -111,6 +115,8 @@ export default class DropdownAlert extends Component {
     // Pan Responder
     this.handlePanResponderMove = this.handlePanResponderMove.bind(this)
     this.handlePanResponderEnd = this.handlePanResponderEnd.bind(this)
+    this.handleMoveShouldSetPanResponder = this.handleMoveShouldSetPanResponder.bind(this)
+    this.handleStartShouldSetPanResponder = this.handleMoveShouldSetPanResponder.bind(this)
   }
   componentWillMount() {
     panResponder = PanResponder.create({
@@ -233,10 +239,10 @@ export default class DropdownAlert extends Component {
     return true
   }
   handleStartShouldSetPanResponder(e: Object, gestureState: Object): boolean {
-    return true
+    return this.props.panResponderEnabled
   }
   handleMoveShouldSetPanResponder(e: Object, gestureState: Object): boolean {
-    return true
+    return gestureState.dx !== 0 && gestureState.dy !== 0 && this.props.panResponderEnabled
   }
   handlePanResponderMove(e: Object, gestureState: Object) {
     if (gestureState.dy < 0) {
@@ -311,7 +317,7 @@ export default class DropdownAlert extends Component {
   }
   renderDropDown(isOpen) {
     if (isOpen == true) {
-      var style = [this.props.containerStyle, styles.defaultContainer]
+      var style = [styles.defaultContainer, this.props.containerStyle]
       var source = this.props.imageSrc
       var backgroundColor = this.props.containerStyle.backgroundColor
       switch (this.state.type) {
@@ -351,6 +357,7 @@ export default class DropdownAlert extends Component {
             <TouchableHighlight
                 onPress={(this.props.showCancel) ? null : this.onClose}
                 underlayColor={backgroundColor}
+                disabled={!this.props.tapToCloseEnabled}
                 onLayout={(event) => this.onLayoutEvent(event)}>
               <View style={style}>
                 {this.renderImage(source, this.props.imageStyle)}

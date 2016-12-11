@@ -43,8 +43,8 @@ class Main extends Component {
         </ScrollView>
         <DropdownAlert
           ref={(ref) => this.dropdown = ref}
-          titleNumOfLines={Number.MAX_SAFE_INTEGER}
-          messageNumOfLines={Number.MAX_SAFE_INTEGER}
+          titleNumOfLines={2}
+          messageNumOfLines={5}
           closeInterval={0}
           containerStyle={{
             backgroundColor: MAIN_CUSTOM_COLOR,
