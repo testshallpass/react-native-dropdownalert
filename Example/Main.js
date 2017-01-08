@@ -1,4 +1,4 @@
-import DropdownAlert from './DropdownAlert'
+import DropdownAlert from 'react-native-dropdownalert'
 import React, { Component } from 'react'
 
 import {

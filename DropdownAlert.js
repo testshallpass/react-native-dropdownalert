@@ -68,7 +68,15 @@ export default class DropdownAlert extends Component {
       console.warn('Warning DropdownAlert:  Detected data parameter is null or undefined.')
       return
     }
-    if (this.state.isOpen == true) {
+    if (typeof title !== 'string') {
+      title = title.toString()
+      console.warn('DropdownAlert: Title is not a string.')
+    }
+    if (typeof message !== 'string') {
+      message = message.toString()
+      console.warn('DropdownAlert: Message is not a string.')
+    }
+    if (this.state.isOpen) {
       this.dismiss()
       return
     }
@@ -177,7 +185,6 @@ export default class DropdownAlert extends Component {
     if (gestureState.dy < delta) {
       if (this.state.callback != null) {
         this.dismiss(this.state.callback)
-      }
     }
   }
   render() {
