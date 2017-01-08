@@ -140,6 +140,14 @@ export default class DropdownAlert extends Component {
     if (this.validateType(type) == false) {
       return
     }
+    if (typeof title !== 'string') {
+      title = title.toString()
+      console.warn('DropdownAlert: Title is not a string.')
+    }
+    if (typeof message !== 'string') {
+      message = message.toString()
+      console.warn('DropdownAlert: Message is not a string.')
+    }
     if (this.state.isOpen) {
       this.dismiss()
       return
@@ -260,15 +268,9 @@ export default class DropdownAlert extends Component {
   renderText(text, style, numberOfLines) {
     if (text != null) {
       if (text.length > 0) {
-        if (Platform.OS === 'android') { // Using numberOfLines for Android causes a crash.
-          return (
-            <Text style={style}>{text}</Text>
-          )
-        } else {
-          return (
-            <Text style={style} numberOfLines={numberOfLines}>{text}</Text>
-          )
-        }
+        return (
+          <Text style={style} numberOfLines={numberOfLines}>{text}</Text>
+        )
       }
     }
     return null
