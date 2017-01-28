@@ -11,9 +11,10 @@ import {
 const DEFAULT_IMAGE_DIMENSIONS = 36
 const WINDOW = Dimensions.get('window')
 // Colors
-const MAIN_INFO_COLOR = '#4682b4'
+const MAIN_INFO_COLOR = '#2B73B6'
 const MAIN_WARN_COLOR = '#cd853f'
 const MAIN_ERROR_COLOR = '#cc3232'
+const MAIN_SUCCESS_COLOR = '#32A54A'
 
 var closeTimeoutId = null
 var panResponder
@@ -42,7 +43,8 @@ export default class DropdownAlert extends Component {
     onCancel: PropTypes.func,
     showCancel: PropTypes.bool,
     tapToCloseEnabled: PropTypes.bool,
-    panResponderEnabled: PropTypes.bool
+    panResponderEnabled: PropTypes.bool,
+    replaceEnabled: PropTypes.bool
   }
   static defaultProps =  {
     onClose: null,
@@ -57,6 +59,7 @@ export default class DropdownAlert extends Component {
     showCancel: false,
     tapToCloseEnabled: true,
     panResponderEnabled: true,
+    replaceEnabled: true,
     containerStyle: {
       padding: 16,
       flexDirection: 'row'
@@ -93,7 +96,7 @@ export default class DropdownAlert extends Component {
     this.state = {
       animationValue: new Animated.Value(0),
       duration: 450,
-      type: 'info',
+      type: '',
       message: '',
       title: '',
       isOpen: false,
@@ -148,11 +151,7 @@ export default class DropdownAlert extends Component {
       message = message.toString()
       console.warn('DropdownAlert: Message is not a string.')
     }
-    if (this.state.isOpen) {
-      this.dismiss()
-      return
-    }
-    if (this.state.isOpen == false) {
+    if (this.props.replaceEnabled == false) {
       this.setState({
         type: type,
         message: message,
@@ -160,13 +159,42 @@ export default class DropdownAlert extends Component {
         isOpen: true,
         topValue: 0
       })
-    }
-    this.animate(1)
-     if (this.props.closeInterval > 1) {
-      closeTimeoutId = setTimeout(function() {
-        this.onClose()
-      }.bind(this), this.props.closeInterval)
-    }
+      if (this.state.isOpen == false) {
+        this.animate(1)
+      }
+      if (this.props.closeInterval > 1) {
+        if (closeTimeoutId != null) {
+          clearTimeout(closeTimeoutId)
+       }
+       closeTimeoutId = setTimeout(function() {
+         this.onClose()
+       }.bind(this), this.props.closeInterval)
+     }
+   } else {
+     var delayInMilliSeconds = 0
+     if (this.state.isOpen == true) {
+       delayInMilliSeconds = 475
+       this.dismiss()
+     }
+      var self = this
+      setTimeout(function() {
+        if (self.state.isOpen == false) {
+          self.setState({
+            type: type,
+            message: message,
+            title: title,
+            isOpen: true,
+            topValue: 0
+          })
+        }
+        self.animate(1)
+        if (self.props.closeInterval > 1) {
+         closeTimeoutId = setTimeout(function() {
+           self.onClose()
+         }.bind(self), self.props.closeInterval)
+       }
+      }.bind(this), delayInMilliSeconds)
+   }
   }
   dismiss(onDismiss) {
     if (this.state.isOpen) {
@@ -176,9 +204,7 @@ export default class DropdownAlert extends Component {
       this.animate(0)
       setTimeout(function() {
         if (this.state.isOpen) {
-          this.setState({
-            isOpen: false
-          })
+          this.state.isOpen = false
           if (onDismiss) {
             var data = {
               type: this.state.type,
@@ -240,8 +266,8 @@ export default class DropdownAlert extends Component {
       console.warn('Missing DropdownAlert type. Available types: info, warn, error or custom')
       return false
     }
-    if (type != 'info' && type != 'warn' && type != 'error' && type != 'custom') {
-      console.warn('Invalid DropdownAlert type. Available types: info, warn, error or custom')
+    if (type != 'info' && type != 'warn' && type != 'error' && type != 'custom' && type != 'success') {
+      console.warn('Invalid DropdownAlert type. Available types: info, warn, error, success, or custom')
       return false
     }
     return true
@@ -337,6 +363,11 @@ export default class DropdownAlert extends Component {
           style = [styles.defaultContainer, {backgroundColor: MAIN_ERROR_COLOR}]
           source = require('./assets/error.png')
           backgroundColor = MAIN_ERROR_COLOR
+          break;
+        case 'success':
+          style = [styles.defaultContainer, {backgroundColor: MAIN_SUCCESS_COLOR}]
+          source = require('./assets/success.png')
+          backgroundColor = MAIN_SUCCESS_COLOR
           break;
       }
       return (

@@ -6,7 +6,7 @@
 [![Build Status](https://travis-ci.org/devBrian/react-native-dropdownalert.svg?branch=master)](https://travis-ci.org/devBrian/react-native-dropdownalert)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/devBrian/react-native-dropdownalert/master/LICENSE)
 
-A way to display bits of information to users. You can try 1 of 3 pre-defined types or roll your own. The user can tap the alert to close it or pan gesture up or close automatically after 4 seconds, see ```closeInterval``` prop.
+A simple way display an alert message without blocking ui. Try out 1 of 4 pre-defined types or customize your own with props below. There are 3 styles of dismissal: tap alert, timed, cancel, pan gesture up or programmatically. 
 
 ### Installation
 ```
@@ -25,12 +25,14 @@ render() {
   return (
     <View>
       // !!! Make sure it's the last component in your document tree.
-      <DropdownAlert ref={(ref) => this.dropdown = ref} onClose={(data) => this.onClose(data)} />
+      <DropdownAlert
+        ref={(ref) => this.dropdown = ref}
+        onClose={(data) => this.onClose(data)} />
     </View>
   )
 }
 // ...
-handleServerResponse(err, response) {
+handleRequestCallback(err, response) {
   if (err != null) {
     this.dropdown.alertWithType('error', 'Error', err)
   }
@@ -44,9 +46,9 @@ onClose(data) {
 
 ### Types
 
-| info | warn | error | custom
-| ------------ | ------------- | ------------ |------------ |------------ |
-|![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/info.png) |![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/warning.png) |![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/error.png)|![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/custom.png)
+| info | warn | error | success | custom
+| ------------ | ------------- | ------------ |------------ |------------ |------------ |
+|![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/info.png) |![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/warning.png) |![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/error.png)|![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/success.png)|![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/custom.png)
 
 ### Props
 | Name | Type | Description | Default
@@ -63,6 +65,7 @@ onClose(data) {
 | ```showCancel``` | Bool  | whether or not to show cancel button | false
 | ```tapToCloseEnabled``` | Bool  | enable close with tap | true
 | ```panResponderEnabled``` | Bool  | enable close with pan responder | true
+| ```replaceEnabled``` | Bool  | enables the alert to either state change without dismissal or go to next alert with dismissal | true
 | ```containerStyle``` | View.propTypes.style  | styles for container for custom type only | ```{ padding: 16, flexDirection: 'row' }```
 | ```titleStyle``` | Text.propTypes.style  | styles for title for all types | ```{       fontSize: 16, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
 | ```messageStyle``` | Text.propTypes.style  | styles for message for all types | ```{ fontSize: 14, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
