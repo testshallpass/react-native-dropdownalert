@@ -40,6 +40,9 @@ export default class DropdownAlert extends Component {
     titleNumOfLines: PropTypes.number,
     messageNumOfLines: PropTypes.number,
     onClose: PropTypes.func,
+    onPressClose: PropTypes.func,
+    onTimeoutClose: PropTypes.func,
+    onPanClose: PropTypes.func,
     onCancel: PropTypes.func,
     showCancel: PropTypes.bool,
     tapToCloseEnabled: PropTypes.bool,
@@ -48,6 +51,9 @@ export default class DropdownAlert extends Component {
   }
   static defaultProps =  {
     onClose: null,
+    onPressClose: null,
+    onTimeoutClose: null,
+    onPanClose: null,
     onCancel: null,
     closeInterval: 4000,
     startDelta: -100,
@@ -112,7 +118,6 @@ export default class DropdownAlert extends Component {
     this.alertWithType = this.alertWithType.bind(this)
     this.dismiss = this.dismiss.bind(this)
     this.onCancel = this.onCancel.bind(this)
-    this.onClose = this.onClose.bind(this)
     // Util
     this.animate = this.animate.bind(this)
     // Pan Responder
@@ -196,7 +201,7 @@ export default class DropdownAlert extends Component {
       }.bind(this), delayInMilliSeconds)
    }
   }
-  dismiss(onDismiss, method) {
+  dismiss(onDismiss) {
     if (this.state.isOpen) {
       if (closeTimeoutId != null) {
         clearTimeout(closeTimeoutId)
@@ -205,24 +210,28 @@ export default class DropdownAlert extends Component {
       setTimeout(function() {
         if (this.state.isOpen) {
           this.state.isOpen = false
-          if (onDismiss) {
-            var data = {
-              type: this.state.type,
-              title: this.state.title,
-              message: this.state.message,
-              method
-            }
-            onDismiss(data)
+          var data = {
+            type: this.state.type,
+            title: this.state.title,
+            message: this.state.message,
           }
+          this.props.onClose && this.props.onClose(data)
+          onDismiss && onDismiss(data)
         }
       }.bind(this), (this.state.duration))
     }
   }
-  onClose(method) {
-    this.dismiss(this.props.onClose, method)
+  onPanClose() {
+    this.dismiss(this.props.onPanClose)
+  }
+  onTimeoutClose() {
+    this.dismiss(this.props.onTimeoutClose)
+  }
+  onPressClose() {
+    this.dismiss(this.props.onPressClose)
   }
   onCancel() {
-    this.dismiss(this.props.onCancel, 'cancel')
+    this.dismiss(this.props.onCancel)
   }
   animate(toValue) {
     Animated.spring (
@@ -289,7 +298,7 @@ export default class DropdownAlert extends Component {
   handlePanResponderEnd(e: Object, gestureState: Object) {
     const delta = this.state.startDelta / 5
     if (gestureState.dy < delta) {
-      this.dismiss(this.props.onClose, 'pan')
+      this.dismiss(this.props.onPanClose)
     }
   }
   renderText(text, style, numberOfLines) {
@@ -389,7 +398,7 @@ export default class DropdownAlert extends Component {
             }}>
             {this.renderStatusBar(this.state.type, backgroundColor)}
             <TouchableHighlight
-                onPress={(this.props.showCancel) ? null : () => this.onClose('press') }
+                onPress={(this.props.showCancel) ? null : this.dismiss(this.props.onPress) }
                 underlayColor={backgroundColor}
                 disabled={!this.props.tapToCloseEnabled}
                 onLayout={(event) => this.onLayoutEvent(event)}>
