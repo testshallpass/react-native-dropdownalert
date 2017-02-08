@@ -1,5 +1,7 @@
 ## react-native-dropdownalert
 
+[![Join the chat at https://gitter.im/react-native-dropdownalert/Lobby](https://badges.gitter.im/react-native-dropdownalert/Lobby.svg)](https://gitter.im/react-native-dropdownalert/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Platform](https://img.shields.io/badge/platform-react--native-lightgrey.svg)](http://facebook.github.io/react-native/)
 [![npm version](http://img.shields.io/npm/v/react-native-dropdownalert.svg)](https://www.npmjs.com/package/react-native-dropdownalert)
 [![npm version](http://img.shields.io/npm/dm/react-native-dropdownalert.svg)](https://www.npmjs.com/package/react-native-dropdownalert)
