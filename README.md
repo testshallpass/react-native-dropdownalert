@@ -1,14 +1,13 @@
 ## react-native-dropdownalert
 
-[![Join the chat at https://gitter.im/react-native-dropdownalert/Lobby](https://badges.gitter.im/react-native-dropdownalert/Lobby.svg)](https://gitter.im/react-native-dropdownalert/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 [![Platform](https://img.shields.io/badge/platform-react--native-lightgrey.svg)](http://facebook.github.io/react-native/)
 [![npm version](http://img.shields.io/npm/v/react-native-dropdownalert.svg)](https://www.npmjs.com/package/react-native-dropdownalert)
 [![npm version](http://img.shields.io/npm/dm/react-native-dropdownalert.svg)](https://www.npmjs.com/package/react-native-dropdownalert)
 [![Build Status](https://travis-ci.org/devBrian/react-native-dropdownalert.svg?branch=master)](https://travis-ci.org/devBrian/react-native-dropdownalert)
+[![Join the chat at https://gitter.im/react-native-dropdownalert/Lobby](https://badges.gitter.im/react-native-dropdownalert/Lobby.svg)](https://gitter.im/react-native-dropdownalert/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/devBrian/react-native-dropdownalert/master/LICENSE)
 
-A simple way display an alert message without blocking ui. Try out 1 of 4 pre-defined types or customize your own with props below. There are 3 styles of dismissal: tap alert, timed, cancel, pan gesture up or programmatically. 
+A simple way to display an alert message. Try out 1 of 4 pre-defined types or go custom with the props below. The alert can be dismissed by press, cancel button, closeInterval, pan responder up or programmatically.
 
 ### Installation
 ```
