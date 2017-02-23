@@ -3,9 +3,9 @@
 [![Platform](https://img.shields.io/badge/platform-react--native-lightgrey.svg)](http://facebook.github.io/react-native/)
 [![npm version](http://img.shields.io/npm/v/react-native-dropdownalert.svg)](https://www.npmjs.com/package/react-native-dropdownalert)
 [![npm version](http://img.shields.io/npm/dm/react-native-dropdownalert.svg)](https://www.npmjs.com/package/react-native-dropdownalert)
-[![Build Status](https://travis-ci.org/devBrian/react-native-dropdownalert.svg?branch=master)](https://travis-ci.org/devBrian/react-native-dropdownalert)
+[![Build Status](https://travis-ci.org/testshallpass/react-native-dropdownalert.svg?branch=master)](https://travis-ci.org/testshallpass/react-native-dropdownalert)
 [![Join the chat at https://gitter.im/react-native-dropdownalert/Lobby](https://badges.gitter.im/react-native-dropdownalert/Lobby.svg)](https://gitter.im/react-native-dropdownalert/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/devBrian/react-native-dropdownalert/master/LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/testshallpass/react-native-dropdownalert/master/LICENSE)
 
 A simple way to display an alert message. Try out 1 of 4 pre-defined types or go custom with the props below. The alert can be dismissed by press, cancel button, closeInterval, pan responder up or programmatically.
 
@@ -15,7 +15,7 @@ npm i react-native-dropdownalert --save
 ```
 
 ### Demo
-![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/demo.gif)
+![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/demo.gif)
 
 ### Usage
 ```javascript
@@ -49,7 +49,7 @@ onClose(data) {
 
 | info | warn | error | success | custom
 | ------------ | ------------- | ------------ |------------ |------------ |------------ |
-|![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/info.png) |![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/warning.png) |![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/error.png)|![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/success.png)|![screenshot](https://raw.github.com/devBrian/react-native-dropdownalert/master/screenshots/custom.png)
+|![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/info.png) |![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/warning.png) |![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/error.png)|![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/success.png)|![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/custom.png)
 
 ### Props
 | Name | Type | Description | Default
