@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devBrian/react-native-dropdownalert.git"
+    "url": "git+https://github.com/testshallpass/react-native-dropdownalert.git"
   },
   "keywords": [
     "dropdown",
@@ -24,9 +24,9 @@
   "author": "Brian Sinnicke",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/devBrian/react-native-dropdownalert/issues"
+    "url": "https://github.com/testshallpass/react-native-dropdownalert/issues"
   },
-  "homepage": "https://github.com/devBrian/react-native-dropdownalert#readme",
+  "homepage": "https://github.com/testshallpass/react-native-dropdownalert#readme",
   "devDependencies": {
     "babel-core": "^6.10.4",
     "babel-preset-es2015": "^6.9.0",
