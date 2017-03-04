@@ -10,11 +10,6 @@ import {
 // Sizes
 const DEFAULT_IMAGE_DIMENSIONS = 36
 const WINDOW = Dimensions.get('window')
-// Colors
-const MAIN_INFO_COLOR = '#2B73B6'
-const MAIN_WARN_COLOR = '#cd853f'
-const MAIN_ERROR_COLOR = '#cc3232'
-const MAIN_SUCCESS_COLOR = '#32A54A'
 
 var closeTimeoutId = null
 var panResponder
@@ -29,6 +24,10 @@ export default class DropdownAlert extends Component {
       PropTypes.string,
       PropTypes.number
     ]),
+    infoColor: PropTypes.string,
+    warnColor: PropTypes.string,
+    errorColor: PropTypes.string,
+    successColor: PropTypes.string,
     closeInterval: PropTypes.number,
     startDelta: PropTypes.number,
     endDelta: PropTypes.number,
@@ -56,6 +55,10 @@ export default class DropdownAlert extends Component {
     messageNumOfLines: 3,
     imageSrc: null,
     cancelBtnImageSrc: require('./assets/cancel.png'),
+    infoColor: '#2B73B6',
+    warnColor: '#cd853f',
+    errorColor: '#cc3232',
+    successColor: '#32A54A',
     showCancel: false,
     tapToCloseEnabled: true,
     panResponderEnabled: true,
@@ -350,24 +353,24 @@ export default class DropdownAlert extends Component {
       var backgroundColor = this.props.containerStyle.backgroundColor
       switch (this.state.type) {
         case 'info':
-          style = [styles.defaultContainer, {backgroundColor: MAIN_INFO_COLOR}]
+          style = [styles.defaultContainer, {backgroundColor: this.props.infoColor}]
           source = require('./assets/info.png')
-          backgroundColor = MAIN_INFO_COLOR
+          backgroundColor = this.props.infoColor
           break;
         case 'warn':
-          style = [styles.defaultContainer, {backgroundColor: MAIN_WARN_COLOR}]
+          style = [styles.defaultContainer, {backgroundColor: this.props.warnColor}]
           source = require('./assets/warn.png')
-          backgroundColor = MAIN_WARN_COLOR
+          backgroundColor = this.props.warnColor
           break;
         case 'error':
-          style = [styles.defaultContainer, {backgroundColor: MAIN_ERROR_COLOR}]
+          style = [styles.defaultContainer, {backgroundColor: this.props.errorColor}]
           source = require('./assets/error.png')
-          backgroundColor = MAIN_ERROR_COLOR
+          backgroundColor = this.props.errorColor
           break;
         case 'success':
-          style = [styles.defaultContainer, {backgroundColor: MAIN_SUCCESS_COLOR}]
+          style = [styles.defaultContainer, {backgroundColor: this.props.successColor}]
           source = require('./assets/success.png')
-          backgroundColor = MAIN_SUCCESS_COLOR
+          backgroundColor = this.props.successColor
           break;
       }
       return (

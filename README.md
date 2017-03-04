@@ -72,6 +72,10 @@ onClose(data) {
 | ```messageStyle``` | Text.propTypes.style  | styles for message for all types | ```{ fontSize: 14, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
 | ```imageStyle``` | Image.propTypes.style  | styles for image for all types | ```{    padding: 8, width: 36, height: 36, alignSelf: 'center' }```
 | ```cancelBtnImageStyle``` | Image.propTypes.style  | styles for image for all types | ```{    padding: 8, width: 36, height: 36, alignSelf: 'center' }```
+| ```successColor``` | String  | Default background color of success message | #32A54A
+| ```infoColor``` | String  | Default background color of info message | #2B73B6
+| ```warnColor``` | String  | Default background color of warn message | #cd853f
+| ```errorColor``` | String  | Default background color of error message | #cc3232
 
 
 > Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
