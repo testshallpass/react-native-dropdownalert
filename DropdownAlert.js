@@ -204,7 +204,7 @@ export default class DropdownAlert extends Component {
       this.animate(0)
       setTimeout(function() {
         if (this.state.isOpen) {
-          this.state.isOpen = false
+          this.setState({isOpen: false});
           if (onDismiss) {
             var data = {
               type: this.state.type,
