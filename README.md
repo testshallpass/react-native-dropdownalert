@@ -7,7 +7,7 @@
 [![Join the chat at https://gitter.im/react-native-dropdownalert/Lobby](https://badges.gitter.im/react-native-dropdownalert/Lobby.svg)](https://gitter.im/react-native-dropdownalert/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/testshallpass/react-native-dropdownalert/master/LICENSE)
 
-A simple way to display an alert message. Try out 1 of 4 pre-defined types or go custom with the props below. The alert can be dismissed by press, cancel button, closeInterval, pan responder up or programmatically.
+A simple alert to notify users about new chat messages, something went wrong or everything is ok. It can be dismissed by onPress, cancel onPress, automatically with `closeInterval` prop, pan responder up gesture or programmatically.
 
 ### Installation
 ```
@@ -76,6 +76,5 @@ onClose(data) {
 | ```infoColor``` | String  | Default background color of info message | #2B73B6
 | ```warnColor``` | String  | Default background color of warn message | #cd853f
 | ```errorColor``` | String  | Default background color of error message | #cc3232
-
 
 > Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
