@@ -40,7 +40,8 @@ handleRequestCallback(err, response) {
 }
 // ...
 onClose(data) {
-  // data = {type, title, message}
+  // data = {type, title, message, action}
+  // action means how the alert was dismissed. returns: automatic, programmatic, tap, pan or cancel
 }
 // ...
 ```
@@ -58,14 +59,14 @@ onClose(data) {
 | ```imageSrc``` | String or Number  | local or network source | null
 | ```startDelta``` | Number  | where the container starts (changes based on container height onLayout) | -100
 | ```endDelta``` | Number  | where the container ends | 0
-| ```onClose``` | Function  | Fires when alert closes either by user or  ```closeInterval``` Returns: ```data = {type, title, message}```  | null
+| ```onClose``` | Function  | Invoked when alert is closed Returns: ```data = {type, title, message, action}```  | null
 | ```cancelBtnImageSrc``` | String or Number | local or network source | ```require('./assets/cancel.png')``` |
 | ```titleNumOfLines``` | Number  | number of lines | 1
 | ```messageNumOfLines``` | Number  | number of lines | 3
-| ```onCancel``` | Function  | Cancel button action. Returns: ```data = {type, title, message}``` | null
+| ```onCancel``` | Function  | Cancel button action. Returns: ```data = {type, title, message, action}``` | null
 | ```showCancel``` | Bool  | whether or not to show cancel button | false
-| ```tapToCloseEnabled``` | Bool  | enable close with tap | true
-| ```panResponderEnabled``` | Bool  | enable close with pan responder | true
+| ```tapToCloseEnabled``` | Bool  | enable/disable close with tap | true
+| ```panResponderEnabled``` | Bool  | enable/disable close with pan responder | true
 | ```replaceEnabled``` | Bool  | enables the alert to either state change without dismissal or go to next alert with dismissal | true
 | ```containerStyle``` | View.propTypes.style  | styles for container for custom type only | ```{ padding: 16, flexDirection: 'row' }```
 | ```titleStyle``` | Text.propTypes.style  | styles for title for all types | ```{       fontSize: 16, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
