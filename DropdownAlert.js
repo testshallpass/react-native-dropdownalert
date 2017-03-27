@@ -43,7 +43,8 @@ export default class DropdownAlert extends Component {
     showCancel: PropTypes.bool,
     tapToCloseEnabled: PropTypes.bool,
     panResponderEnabled: PropTypes.bool,
-    replaceEnabled: PropTypes.bool
+    replaceEnabled: PropTypes.bool,
+    preserveTapToClose: PropTypes.bool
   }
   static defaultProps =  {
     onClose: null,
@@ -63,6 +64,7 @@ export default class DropdownAlert extends Component {
     tapToCloseEnabled: true,
     panResponderEnabled: true,
     replaceEnabled: true,
+    preserveTapToClose: false,
     containerStyle: {
       padding: 16,
       flexDirection: 'row'
@@ -397,7 +399,7 @@ export default class DropdownAlert extends Component {
             }}>
             {this.renderStatusBar(this.state.type, backgroundColor)}
             <TouchableHighlight
-                onPress={(this.props.showCancel) ? null : () => this.onClose('tap')}
+                onPress={(this.props.showCancel && !this.props.preserveTapToClose) ? null : () => this.onClose('tap')}
                 underlayColor={backgroundColor}
                 disabled={!this.props.tapToCloseEnabled}
                 onLayout={(event) => this.onLayoutEvent(event)}>
