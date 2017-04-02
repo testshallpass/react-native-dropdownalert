@@ -46,15 +46,15 @@ onClose(data) {
 // ...
 ```
 
-### Types
+### Predefined Types
 
-| info | warn | error | success | custom
-| ------------ | ------------- | ------------ |------------ |------------ |------------ |
-|![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/info.png) |![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/warning.png) |![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/error.png)|![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/success.png)|![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/custom.png)
+| info | warn | error | success |
+| :---: | :---: | :---: | :---: |
+|![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/info.png) |![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/warning.png) |![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/error.png)|![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/success.png)
 
 ### Props
-| Name | Type | Description | Default
-| ---- | ---- | ------------ | --------- |
+| Name | Type | Description | Default |
+| ---- | :---: | --- | --- |
 | ```closeInterval``` | Number  | dismiss alert at a certain time in milliseconds | 4000
 | ```imageSrc``` | String or Number  | local or network source | null
 | ```startDelta``` | Number  | where the container starts (changes based on container height onLayout) | -100
