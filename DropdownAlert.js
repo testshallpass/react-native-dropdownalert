@@ -12,7 +12,7 @@ const DEFAULT_IMAGE_DIMENSIONS = 36
 const WINDOW = Dimensions.get('window')
 
 var closeTimeoutId = null
-var dismissTimeoutId = null
+var dismissTimeoutIds = []
 var panResponder
 
 export default class DropdownAlert extends Component {
@@ -135,9 +135,9 @@ export default class DropdownAlert extends Component {
     })
   }
   componentWillUnmount() {
-	if (dismissTimeoutId) {
-	  clearTimeout(dismissTimeoutId)
-	}
+	  dismissTimeoutIds.forEach(function(Id) {
+		clearTimeout(Id);
+	  })
   }
   alert(title, message) {
     if (title == undefined) {
@@ -211,7 +211,7 @@ export default class DropdownAlert extends Component {
         clearTimeout(closeTimeoutId)
       }
       this.animate(0)
-      dismissTimeoutId = setTimeout(function() {
+      dismissTimeoutIds.push(setTimeout(function() {
         if (this.state.isOpen) {
           this.setState({
             isOpen: false
@@ -226,7 +226,7 @@ export default class DropdownAlert extends Component {
             onDismiss(data)
           }
         }
-      }.bind(this), (this.state.duration))
+      }.bind(this), (this.state.duration)))
     }
   }
   onClose(action) {
