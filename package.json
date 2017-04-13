@@ -38,6 +38,7 @@
     "react-dom": "^15.2.0",
     "react-native": "^0.28.0",
     "react-native-mock": "^0.2.4",
+    "react-test-renderer": "^15.5.4",
     "should": "^9.0.2"
   }
 }
