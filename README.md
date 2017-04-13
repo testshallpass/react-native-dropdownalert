@@ -68,6 +68,7 @@ onClose(data) {
 | ```tapToCloseEnabled``` | Bool  | enable/disable close with tap | true
 | ```panResponderEnabled``` | Bool  | enable/disable close with pan responder | true
 | ```replaceEnabled``` | Bool  | enables the alert to either state change without dismissal or go to next alert with dismissal | true
+| ```translucent``` | Bool  | StatusBar prop  | false
 | ```containerStyle``` | View.propTypes.style  | styles for container for custom type only | ```{ padding: 16, flexDirection: 'row' }```
 | ```titleStyle``` | Text.propTypes.style  | styles for title for all types | ```{       fontSize: 16, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
 | ```messageStyle``` | Text.propTypes.style  | styles for message for all types | ```{ fontSize: 14, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
