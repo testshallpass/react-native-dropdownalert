@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Text, StyleSheet,TouchableHighlight, Animated, StatusBar,Platform, Dimensions, Image, PanResponder} from "react-native"
+import {View, Text, StyleSheet, TouchableHighlight, Animated, StatusBar, Platform, Dimensions, Image, PanResponder} from "react-native"
 import Label from './Label'
 import Icon from './Icon'
 import Cancel from './Cancel'

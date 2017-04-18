@@ -1,4 +1,4 @@
-import DropdownAlert from 'react-native-dropdownalert'
+import DropdownAlert from './DropdownAlert'
 import React, { Component } from 'react'
 
 import {
@@ -20,7 +20,12 @@ const MAIN_SUCCESS_COLOR = '#32A54A'
 class Main extends Component {
   constructor(props) {
     super(props)
-    this.showAlert = this.showAlert.bind(this)
+    this.state = {
+      visible: false,
+      type: '',
+      title: '',
+      message: ''
+    }
   }
   render() {
     return (
@@ -46,9 +51,12 @@ class Main extends Component {
             </TouchableHighlight>
         </ScrollView>
         <DropdownAlert
-          ref={(ref) => this.dropdown = ref}
-          titleNumOfLines={0}
-          messageNumOfLines={0}
+          visible={this.state.visible}
+          type={this.state.type}
+          title={this.state.title}
+          message={this.state.message}
+          titleNumOfLines={1}
+          messageNumOfLines={3}
           closeInterval={4000}
           containerStyle={{
             backgroundColor: MAIN_CUSTOM_COLOR,
@@ -61,31 +69,51 @@ class Main extends Component {
       </View>
     );
   }
-  showAlert(type) {
+  showAlert = (type) => {
     var randomNum = Math.floor((Math.random() * 1000) + 1)
+    var title = ''
+    var message = ''
     switch (type) {
       case 'info':
-        this.dropdown.alertWithType(type, 'Info #'+ randomNum, 'System is going down at 12 AM tonight for routine maintenance. We\'ll notify you when the system is back online.')
+        title = 'Info #' + randomNum
+        message = 'System is going down at 12 AM tonight for routine maintenance. We\'ll notify you when the system is back online.'
       break;
       case 'warn':
-        this.dropdown.alertWithType(type, 'Warning #'+ randomNum, 'Your cloud drive is about to reach capacity. Please consider upgrading to premium plan.')
+        title = 'Warning #' + randomNum
+        message = 'Your cloud drive is about to reach capacity. Please consider upgrading to premium plan.'
       break;
       case 'error':
-        this.dropdown.alertWithType(type, 'Error #'+ randomNum, 'Sorry, we\'re having some technical difficulties. Our team will get this fixed for you ASAP.')
+        title = 'Error #' + randomNum
+        message = 'Sorry, we\'re having some technical difficulties. Our team will get this fixed for you ASAP.'
       break;
       case 'success':
-        this.dropdown.alertWithType(type, 'Success #'+ randomNum, 'Thank you for your order. We will email and charge you when it\'s on it\'s way.')
+        title = 'Success #' + randomNum
+        message = 'Thank you for your order. We will email and charge you when it\'s on it\'s way.'
       break;
       case 'custom':
-        this.dropdown.alert('Lorem ipsum dolor sit amet, consectetur adipisicing elit #'+ randomNum, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')
+        title = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit #' + randomNum
+        message = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
       break;
     }
+    const {visible} = this.state
+    this.setState({
+      visible: (visible) ? false : true,
+      type: type,
+      title: title,
+      message: message
+    })
   }
   closeAlert() {
-    this.dropdown.onClose()
+    // FIXME: Does not work when change type in sequence
+    this.setState({
+      visible: false,
+    })
   }
   onClose(data) {
     console.log(data)
+    this.setState({
+      visible: false,
+    })
   }
 }
 
