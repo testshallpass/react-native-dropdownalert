@@ -44,7 +44,7 @@ export default class DropdownAlert extends Component {
     tapToCloseEnabled: PropTypes.bool,
     panResponderEnabled: PropTypes.bool,
     replaceEnabled: PropTypes.bool,
-    preserveTapToClose: PropTypes.bool
+    preserveTapToClose: PropTypes.bool,
     translucent: PropTypes.bool
   }
   static defaultProps =  {
