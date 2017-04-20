@@ -1,6 +1,6 @@
 {
   "name": "react-native-dropdownalert",
-  "version": "2.6.2",
+  "version": "2.7.1",
   "description": "A simple alert to notify users about new chat messages, something went wrong or everything is ok.",
   "main": "DropdownAlert.js",
   "scripts": {
@@ -38,6 +38,7 @@
     "react-dom": "^15.2.0",
     "react-native": "^0.28.0",
     "react-native-mock": "^0.2.4",
+    "react-test-renderer": "^15.5.4",
     "should": "^9.0.2"
   }
 }

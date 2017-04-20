@@ -45,6 +45,7 @@ export default class DropdownAlert extends Component {
     panResponderEnabled: PropTypes.bool,
     replaceEnabled: PropTypes.bool,
     preserveTapToClose: PropTypes.bool
+    translucent: PropTypes.bool
   }
   static defaultProps =  {
     onClose: null,
@@ -94,7 +95,8 @@ export default class DropdownAlert extends Component {
       width: DEFAULT_IMAGE_DIMENSIONS,
       height: DEFAULT_IMAGE_DIMENSIONS,
       alignSelf: 'center'
-    }
+    },
+    translucent: false
   }
   constructor(props) {
     super(props)
@@ -381,6 +383,11 @@ export default class DropdownAlert extends Component {
           backgroundColor = this.props.successColor
           break;
       }
+
+      if (Platform.OS === 'android' && this.props.translucent) {
+        style = [style, { paddingTop: StatusBar.currentHeight }]
+      }
+
       return (
           <Animated.View
            ref={(ref) => this.mainView = ref}
