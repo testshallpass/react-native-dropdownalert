@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Text, StyleSheet, TouchableHighlight, Animated, StatusBar, Platform, Dimensions, Image, PanResponder} from "react-native"
+import {View, Text, StyleSheet, TouchableHighlight, Animated, StatusBar, Platform, Dimensions, Image, Alert, PanResponder} from "react-native"
 import Label from './Label'
 import Icon from './Icon'
 import Cancel from './Cancel'
@@ -108,7 +108,9 @@ export default class DropdownAlert extends Component {
       isOpen: false,
       startDelta: props.startDelta,
       endDelta: props.endDelta,
-      topValue: 0
+      topValue: 0,
+      barStyle: StatusBar._defaultProps.barStyle.value,
+      statusBarBackgroundColor: StatusBar._defaultProps.backgroundColor.value
     }
     // Action
     this.alert = this.alert.bind(this)
@@ -319,15 +321,15 @@ export default class DropdownAlert extends Component {
       this.dismiss(this.props.onClose, 'pan')
     }
   }
-  renderStatusBar(type, backgroundColor) {
+  renderStatusBar(type, backgroundColor, visible, barStyle) {
     if (Platform.OS === 'android') {
-      return (
-        <StatusBar backgroundColor={backgroundColor} />
-      )
-    } else if (type != 'custom') {
-      return (
-        <StatusBar barStyle="light-content" />
-      )
+      StatusBar.setBackgroundColor(backgroundColor, true)
+    } else if (type !== 'custom') {
+      if (visible) {
+        StatusBar.setBarStyle('light-content', true)
+      } else {
+        StatusBar.setBarStyle(barStyle, true)
+      }
     }
     return null
   }
@@ -360,6 +362,10 @@ export default class DropdownAlert extends Component {
     if (Platform.OS === 'android' && this.props.translucent) {
       style = [style, {paddingTop: StatusBar.currentHeight}]
     }
+    var statusBarBackgroundColor = this.state.statusBarBackgroundColor
+    if (this.props.visible) {
+      statusBarBackgroundColor = backgroundColor
+    }
     return (
       <Animated.View
       ref={(ref) => this.mainView = ref}
@@ -376,7 +382,7 @@ export default class DropdownAlert extends Component {
         left: 0,
         right: 0
       }}>
-      {this.renderStatusBar(this.state.type, backgroundColor)}
+      {this.renderStatusBar(this.state.type, statusBarBackgroundColor, this.props.visible, this.state.barStyle, true)}
       <TouchableHighlight
         onPress={(this.props.showCancel) ? null : () => this.onClose('tap')}
         underlayColor={backgroundColor}

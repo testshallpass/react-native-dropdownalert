@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   ScrollView,
   Image,
+  StatusBar,
   View
 } from 'react-native'
 
@@ -31,6 +32,7 @@ class Main extends Component {
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
+            <StatusBar barStyle="default" />
             <TouchableHighlight style={[styles.button, {backgroundColor: MAIN_INFO_COLOR}]} onPress={() => this.showAlert('info')} underlayColor={'lightgray'}>
               <Text style={styles.text}>{'info'}</Text>
             </TouchableHighlight>
@@ -105,8 +107,9 @@ class Main extends Component {
   }
   closeAlert() {
     // FIXME: Does not work when change type in sequence
+    const {visible} = this.state
     this.setState({
-      visible: false,
+      visible: (visible) ? false : true,
     })
   }
   onClose(data) {
