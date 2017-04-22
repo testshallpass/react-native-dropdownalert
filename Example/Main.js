@@ -8,6 +8,7 @@ import {
   TouchableHighlight,
   ScrollView,
   Image,
+  StatusBar,
   View
 } from 'react-native'
 
@@ -25,6 +26,7 @@ class Main extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <StatusBar barStyle="default" translucent={true} />
         <ScrollView contentContainerStyle={styles.contentContainer}>
             <TouchableHighlight style={[styles.button, {backgroundColor: MAIN_INFO_COLOR}]} onPress={() => this.showAlert('info')} underlayColor={'lightgray'}>
               <Text style={styles.text}>{'info'}</Text>
@@ -57,6 +59,7 @@ class Main extends Component {
           onCancel={(data) => this.onClose(data)}
           showCancel={false}
           imageSrc={'https://facebook.github.io/react/img/logo_og.png'}
+          translucent={true}
         />
       </View>
     );
