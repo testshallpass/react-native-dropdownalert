@@ -1,4 +1,3 @@
-
 import React, { Component, PropTypes } from 'react'
 import {
   View, Text, StyleSheet,
@@ -44,7 +43,9 @@ export default class DropdownAlert extends Component {
     tapToCloseEnabled: PropTypes.bool,
     panResponderEnabled: PropTypes.bool,
     replaceEnabled: PropTypes.bool,
-    translucent: PropTypes.bool
+    translucent: PropTypes.bool,
+    statusBarStyle: PropTypes.string,
+    statusBarBackgroundColor: PropTypes.string
   }
   static defaultProps =  {
     onClose: null,
@@ -94,7 +95,9 @@ export default class DropdownAlert extends Component {
       height: DEFAULT_IMAGE_DIMENSIONS,
       alignSelf: 'center'
     },
-    translucent: false
+    translucent: false,
+    statusBarStyle: StatusBar._defaultProps.barStyle.value,
+    statusBarBackgroundColor: StatusBar._defaultProps.backgroundColor.value
   }
   constructor(props) {
     super(props)
@@ -107,7 +110,7 @@ export default class DropdownAlert extends Component {
       isOpen: false,
       startDelta: props.startDelta,
       endDelta: props.endDelta,
-      topValue: 0
+      topValue: 0,
     }
     // Render
     this.renderButton = this.renderButton.bind(this)
@@ -212,6 +215,12 @@ export default class DropdownAlert extends Component {
           this.setState({
             isOpen: false
           })
+          if (Platform.OS == 'android') {
+            StatusBar.setBackgroundColor(this.props.statusBarBackgroundColor, true)
+            StatusBar.setTranslucent(this.props.translucent)
+          } else {
+            StatusBar.setBarStyle(this.props.statusBarStyle, true)
+          }
           if (onDismiss) {
             var data = {
               type: this.state.type,
@@ -332,17 +341,19 @@ export default class DropdownAlert extends Component {
     }
     return null
   }
-  renderStatusBar(type, backgroundColor) {
+  renderStatusBar(type, visible, backgroundColor, barStyle, translucent) {
     if (Platform.OS === 'android') {
-      return (
-        <StatusBar backgroundColor={backgroundColor} />
-      )
-    } else if (type != 'custom') {
-      return (
-        <StatusBar barStyle="light-content" />
-      )
+      StatusBar.setBackgroundColor(backgroundColor, true)
+      StatusBar.setTranslucent(translucent)
+    } else if (Platform.OS === 'ios') {
+      if (visible) {
+        if (type !== 'custom') {
+          StatusBar.setBarStyle('light-content', true)
+        } else {
+          StatusBar.setBarStyle(barStyle, true)
+        }
+      }
     }
-    return null
   }
   renderButton(source, style, onPress, underlayColor, isRendered) {
     if (source != null && isRendered) {
@@ -381,11 +392,10 @@ export default class DropdownAlert extends Component {
           backgroundColor = this.props.successColor
           break;
       }
-
       if (Platform.OS === 'android' && this.props.translucent) {
         style = [style, { paddingTop: StatusBar.currentHeight }]
       }
-
+      this.renderStatusBar(this.state.type, this.state.isOpen, backgroundColor, this.props.statusBarStyle, this.props.translucent)
       return (
           <Animated.View
            ref={(ref) => this.mainView = ref}
@@ -402,7 +412,7 @@ export default class DropdownAlert extends Component {
               left: 0,
               right: 0
             }}>
-            {this.renderStatusBar(this.state.type, backgroundColor)}
+            <StatusBar />
             <TouchableHighlight
                 onPress={(this.props.showCancel) ? null : () => this.onClose('tap')}
                 underlayColor={backgroundColor}
