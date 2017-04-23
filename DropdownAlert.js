@@ -38,8 +38,10 @@ export default class DropdownAlert extends Component {
     panResponderEnabled: PropTypes.bool,
     replaceEnabled: PropTypes.bool,
     translucent: PropTypes.bool,
-    fallbackStatusBarStyle: PropTypes.string,
-    fallbackStatusBarBackgroundColor: PropTypes.string
+    activeStatusBarStyle: PropTypes.string,
+    activeStatusBarBackgroundColor: PropTypes.string,
+    inactiveStatusBarStyle: PropTypes.string,
+    inactiveStatusBarBackgroundColor: PropTypes.string
   }
   static defaultProps =  {
     onClose: null,
