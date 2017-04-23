@@ -1,15 +1,9 @@
 import React, { Component, PropTypes } from 'react'
-import {
-  View, Text, StyleSheet,
-  TouchableHighlight, Animated, StatusBar,
-  Platform, Dimensions, Image, PanResponder
-} from "react-native"
-
-// Constants
-// Sizes
+import {StyleSheet, View, Text, TouchableHighlight, Animated, StatusBar, Platform, Dimensions, Image, PanResponder} from "react-native"
+const StatusBarDefaultBarStyle = StatusBar._defaultProps.barStyle.value
+const StatusBarDefaultBackgroundColor = StatusBar._defaultProps.backgroundColor.value
 const DEFAULT_IMAGE_DIMENSIONS = 36
 const WINDOW = Dimensions.get('window')
-
 var closeTimeoutId = null
 var panResponder
 
@@ -96,8 +90,8 @@ export default class DropdownAlert extends Component {
       alignSelf: 'center'
     },
     translucent: false,
-    statusBarStyle: StatusBar._defaultProps.barStyle.value,
-    statusBarBackgroundColor: StatusBar._defaultProps.backgroundColor.value
+    statusBarStyle: StatusBarDefaultBarStyle,
+    statusBarBackgroundColor: StatusBarDefaultBackgroundColor
   }
   constructor(props) {
     super(props)
