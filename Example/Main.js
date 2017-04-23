@@ -27,9 +27,7 @@ export default class Main extends Component {
   renderItem = ({item}) => {
     return (
       <TouchableOpacity style={[styles.button, {backgroundColor: item.backgroundColor}]} onPress={() => this.showAlert(item)}>
-        <View>
-          <Text style={styles.text}>{item.title}</Text>
-        </View>
+        <Text style={styles.text}>{item.title}</Text>
       </TouchableOpacity>
     )
   }

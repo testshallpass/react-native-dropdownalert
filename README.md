@@ -69,8 +69,10 @@ onClose(data) {
 | ```panResponderEnabled``` | Bool  | enable/disable close with pan responder | true
 | ```replaceEnabled``` | Bool  | enables the alert to either state change without dismissal or go to next alert with dismissal | true
 | ```translucent``` | Bool  | StatusBar prop  | false
-| ```statusBarStyle``` | Bool  | StatusBar barStyle | `StatusBar._defaultProps.barStyle.value`
-| ```statusBarBackgroundColor``` | Bool  | StatusBar backgroundColor | `StatusBar._defaultProps.backgroundColor.value`
+| ```activeStatusBarStyle``` | Bool  | StatusBar barStyle when alert is open | `light-content`
+| ```activeStatusBarBackgroundColor``` | Bool  | StatusBar backgroundColor when alert is open | It takes on the backgroundColor of alert if predefined else default or provided prop
+| ```inactiveStatusBarStyle``` | Bool  | StatusBar barStyle when alert dismisses | `StatusBar._defaultProps.barStyle.value`
+| ```inactiveStatusBarBackgroundColor``` | Bool  | StatusBar backgroundColor when alert dismisses | `StatusBar._defaultProps.backgroundColor.value`
 | ```containerStyle``` | View.propTypes.style  | styles for container for custom type only | ```{ padding: 16, flexDirection: 'row' }```
 | ```titleStyle``` | Text.propTypes.style  | styles for title for all types | ```{       fontSize: 16, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
 | ```messageStyle``` | Text.propTypes.style  | styles for message for all types | ```{ fontSize: 14, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
