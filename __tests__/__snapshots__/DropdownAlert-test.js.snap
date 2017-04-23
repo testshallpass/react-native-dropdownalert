@@ -28,10 +28,6 @@ exports[`renders custom alert correctly 1`] = `
     }
   }
 >
-  <StatusBar
-    animated={false}
-    showHideTransition="fade"
-  />
   <TouchableHighlight
     activeOpacity={0.85}
     disabled={false}
@@ -145,10 +141,6 @@ exports[`renders custom alert with cancel correctly 1`] = `
     }
   }
 >
-  <StatusBar
-    animated={false}
-    showHideTransition="fade"
-  />
   <TouchableHighlight
     activeOpacity={0.85}
     disabled={false}
@@ -286,10 +278,6 @@ exports[`renders error alert correctly 1`] = `
     }
   }
 >
-  <StatusBar
-    animated={false}
-    showHideTransition="fade"
-  />
   <TouchableHighlight
     activeOpacity={0.85}
     disabled={false}
@@ -398,10 +386,6 @@ exports[`renders info alert correctly 1`] = `
     }
   }
 >
-  <StatusBar
-    animated={false}
-    showHideTransition="fade"
-  />
   <TouchableHighlight
     activeOpacity={0.85}
     disabled={false}
@@ -510,10 +494,6 @@ exports[`renders success alert correctly 1`] = `
     }
   }
 >
-  <StatusBar
-    animated={false}
-    showHideTransition="fade"
-  />
   <TouchableHighlight
     activeOpacity={0.85}
     disabled={false}
@@ -622,10 +602,6 @@ exports[`renders warn alert correctly 1`] = `
     }
   }
 >
-  <StatusBar
-    animated={false}
-    showHideTransition="fade"
-  />
   <TouchableHighlight
     activeOpacity={0.85}
     disabled={false}
