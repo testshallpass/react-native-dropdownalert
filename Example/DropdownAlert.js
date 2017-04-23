@@ -358,7 +358,7 @@ export default class DropdownAlert extends Component {
   }
   renderDropDown(isOpen) {
     if (isOpen == true) {
-      var style = [styles.defaultContainer, StyleSheet.flatten(this.props.containerStyle)]
+      var style = [styles.defaultContainer, this.props.containerStyle]
       var source = this.props.imageSrc
       var backgroundColor = this.props.containerStyle.backgroundColor
       switch (this.state.type) {
@@ -415,12 +415,12 @@ export default class DropdownAlert extends Component {
                 disabled={!this.props.tapToCloseEnabled}
                 onLayout={(event) => this.onLayoutEvent(event)}>
               <View style={style}>
-                {this.renderImage(source, StyleSheet.flatten(this.props.imageStyle))}
+                {this.renderImage(source, this.props.imageStyle)}
                 <View style={styles.textContainer}>
-                  {this.renderText(this.state.title, StyleSheet.flatten(this.props.titleStyle), this.props.titleNumOfLines)}
-                  {this.renderText(this.state.message, StyleSheet.flatten(this.props.messageStyle), this.props.messageNumOfLines)}
+                  {this.renderText(this.state.title, this.props.titleStyle, this.props.titleNumOfLines)}
+                  {this.renderText(this.state.message, this.props.messageStyle, this.props.messageNumOfLines)}
                 </View>
-                {this.renderButton(this.props.cancelBtnImageSrc, StyleSheet.flatten(this.props.cancelBtnImageStyle), this.onCancel, backgroundColor, this.props.showCancel)}
+                {this.renderButton(this.props.cancelBtnImageSrc, this.props.cancelBtnImageStyle, this.onCancel, backgroundColor, this.props.showCancel)}
               </View>
             </TouchableHighlight>
           </Animated.View>
