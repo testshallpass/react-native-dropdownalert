@@ -1,15 +1,7 @@
 import DropdownAlert from './DropdownAlert'
-import React, { Component } from 'react'
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  ScrollView,
-  Image,
-  StatusBar,
-  View
-} from 'react-native'
+import React, { Component, PropTypes } from 'react'
+import {StyleSheet, Text, TouchableOpacity, FlatList, Image, StatusBar, View} from 'react-native'
+// Colors
 const MAIN_INFO_COLOR = '#2B73B6'
 const MAIN_WARN_COLOR = '#cd853f'
 const MAIN_ERROR_COLOR = '#cc3232'
@@ -20,46 +12,43 @@ const MAIN_DISMISS_COLOR = '#748182'
 export default class Main extends Component {
   constructor(props) {
     super(props)
+    const items = [
+      {key: 0, backgroundColor: MAIN_INFO_COLOR, type: 'info', title: 'Info', message: 'System is going down at 12 AM tonight for routine maintenance. We\'ll notify you when the system is back online.'},
+      {key: 1, backgroundColor: MAIN_WARN_COLOR, type: 'warn', title: 'Warning', message: 'Your cloud drive is about to reach capacity. Please consider upgrading to premium plan.'},
+      {key: 2, backgroundColor: MAIN_ERROR_COLOR, type: 'error', title: 'Error', message: 'Sorry, we\'re having some technical difficulties. Our team will get this fixed for you ASAP.'},
+      {key: 3, backgroundColor: MAIN_SUCCESS_COLOR, type: 'success', title: 'Success', message: 'Thank you for your order. We will email and charge you when it\'s on it\'s way.'},
+      {key: 4, backgroundColor: MAIN_CUSTOM_COLOR, type: 'custom', title: 'Custom', message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'},
+      {key: 5, backgroundColor: MAIN_DISMISS_COLOR, type: 'dismiss', title: 'Dismiss alert'}
+    ]
     this.state = {
+      items: items,
       visible: false,
       type: '',
       title: '',
       message: ''
     }
   }
+  renderItem = ({item}) => {
+    return (
+      <TouchableOpacity style={[styles.button, {backgroundColor: item.backgroundColor}]} onPress={() => this.showAlert(item)}>
+        <Text style={styles.text}>{item.title}</Text>
+      </TouchableOpacity>
+    )
+  }
   render() {
     const {items} = this.state
     return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.contentContainer}>
-            <StatusBar barStyle="default" />
-            <TouchableHighlight style={[styles.button, {backgroundColor: MAIN_INFO_COLOR}]} onPress={() => this.showAlert('info')} underlayColor={'lightgray'}>
-              <Text style={styles.text}>{'info'}</Text>
-            </TouchableHighlight>
-            <TouchableHighlight style={[styles.button, {backgroundColor: MAIN_WARN_COLOR}]} onPress={() => this.showAlert('warn')} underlayColor={'lightgray'}>
-              <Text style={styles.text}>{'warn'}</Text>
-            </TouchableHighlight>
-            <TouchableHighlight style={[styles.button, {backgroundColor: MAIN_ERROR_COLOR}] } onPress={() => this.showAlert('error')} underlayColor={'lightgray'}>
-              <Text style={styles.text}>{'error'}</Text>
-            </TouchableHighlight>
-            <TouchableHighlight style={[styles.button, {backgroundColor: MAIN_SUCCESS_COLOR}] } onPress={() => this.showAlert('success')} underlayColor={'lightgray'}>
-              <Text style={styles.text}>{'success'}</Text>
-            </TouchableHighlight>
-            <TouchableHighlight style={[styles.button, {backgroundColor: MAIN_CUSTOM_COLOR}]} onPress={() => this.showAlert('custom')} underlayColor={'lightgray'}>
-              <Text style={styles.text}>{'custom'}</Text>
-            </TouchableHighlight>
-            <TouchableHighlight style={styles.button} onPress={() => this.closeAlert()} underlayColor={'lightgray'}>
-              <Text style={styles.text}>{'dismiss alert'}</Text>
-            </TouchableHighlight>
-        </ScrollView>
+        <StatusBar />
+        <FlatList
+          style={styles.listContainer}
+          data={items}
+          renderItem={this.renderItem} />
         <DropdownAlert
           visible={this.state.visible}
           type={this.state.type}
           title={this.state.title}
           message={this.state.message}
-          titleNumOfLines={1}
-          messageNumOfLines={3}
-          closeInterval={4000}
           containerStyle={{
             backgroundColor: MAIN_CUSTOM_COLOR,
           }}
@@ -69,52 +58,26 @@ export default class Main extends Component {
       </View>
     );
   }
-  showAlert = (type) => {
-    var randomNum = Math.floor((Math.random() * 1000) + 1)
-    var title = ''
-    var message = ''
-    switch (type) {
-      case 'info':
-        title = 'Info #' + randomNum
-        message = 'System is going down at 12 AM tonight for routine maintenance. We\'ll notify you when the system is back online.'
-      break;
-      case 'warn':
-        title = 'Warning #' + randomNum
-        message = 'Your cloud drive is about to reach capacity. Please consider upgrading to premium plan.'
-      break;
-      case 'error':
-        title = 'Error #' + randomNum
-        message = 'Sorry, we\'re having some technical difficulties. Our team will get this fixed for you ASAP.'
-      break;
-      case 'success':
-        title = 'Success #' + randomNum
-        message = 'Thank you for your order. We will email and charge you when it\'s on it\'s way.'
-      break;
-      case 'custom':
-        title = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit #' + randomNum
-        message = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-      break;
+  showAlert(item) {
+    if (item.type == 'dismiss') {
+      this.dismissAlert()
+    } else {
+      const random = Math.floor((Math.random() * 1000) + 1)
+      const title = item.title + ' #' + random
+      const {visible} = this.state
+      this.setState({
+        visible: (visible) ? false : true,
+        type: item.type,
+        title: title,
+        message: item.message
+     })           
     }
-    const {visible} = this.state
-    this.setState({
-      visible: (visible) ? false : true,
-      type: type,
-      title: title,
-      message: message
-    })
   }
-  closeAlert() {
-    // FIXME: Does not work when change type in sequence
-    const {visible} = this.state
-    this.setState({
-      visible: (visible) ? false : true,
-    })
+  dismissAlert = () => {
+    this.dropdown.onClose()
   }
   onClose(data) {
-    console.log(data)
-    this.setState({
-      visible: false,
-    })
+    console.log(data);
   }
 }
 

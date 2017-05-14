@@ -335,7 +335,7 @@ export default class DropdownAlert extends Component {
       this.dismiss(this.props.onClose, 'pan')
     }
   }
-  renderStatusBar(type, backgroundColor) {
+  renderStatusBar(backgroundColor, barStyle, translucent) {
     if (Platform.OS === 'android') {
       StatusBar.setBackgroundColor(backgroundColor, true)
       StatusBar.setTranslucent(translucent)
@@ -349,28 +349,37 @@ export default class DropdownAlert extends Component {
     var backgroundColor = this.props.containerStyle.backgroundColor
     switch (this.state.type) {
       case 'info':
-      style = [styles.defaultContainer, {backgroundColor: this.props.infoColor}]
-      source = require('./assets/info.png')
-      backgroundColor = this.props.infoColor
-      break;
+        style = [styles.defaultContainer, {backgroundColor: this.props.infoColor}]
+        source = require('./assets/info.png')
+        backgroundColor = this.props.infoColor
+        break;
       case 'warn':
-      style = [styles.defaultContainer, {backgroundColor: this.props.warnColor}]
-      source = require('./assets/warn.png')
-      backgroundColor = this.props.warnColor
-      break;
+        style = [styles.defaultContainer, {backgroundColor: this.props.warnColor}]
+        source = require('./assets/warn.png')
+        backgroundColor = this.props.warnColor
+        break;
       case 'error':
-      style = [styles.defaultContainer, {backgroundColor: this.props.errorColor}]
-      source = require('./assets/error.png')
-      backgroundColor = this.props.errorColor
-      break;
+        style = [styles.defaultContainer, {backgroundColor: this.props.errorColor}]
+        source = require('./assets/error.png')
+        backgroundColor = this.props.errorColor
+        break;
       case 'success':
-      style = [styles.defaultContainer, {backgroundColor: this.props.successColor}]
-      source = require('./assets/success.png')
-      backgroundColor = this.props.successColor
-      break;
+        style = [styles.defaultContainer, {backgroundColor: this.props.successColor}]
+        source = require('./assets/success.png')
+        backgroundColor = this.props.successColor
+        break;
     }
-    if (Platform.OS === 'android' && this.props.translucent) {
-      style = [style, {paddingTop: StatusBar.currentHeight}]
+    var activeStatusBarBackgroundColor = this.props.activeStatusBarBackgroundColor
+    if (Platform.OS === 'android') {
+      if (this.props.translucent) {
+        style = [style, {paddingTop: StatusBar.currentHeight}]
+      }
+      if (this.state.type !== 'custom') {
+        activeStatusBarBackgroundColor = backgroundColor
+      }
+    }
+    if (this.state.isOpen) {
+      this.renderStatusBar(activeStatusBarBackgroundColor, this.props.activeStatusBarStyle, this.props.translucent)
     }
     return (
       <Animated.View
@@ -388,7 +397,6 @@ export default class DropdownAlert extends Component {
         left: 0,
         right: 0
       }}>
-      {this.renderStatusBar(this.state.type, backgroundColor)}
       <TouchableHighlight
         onPress={(this.props.showCancel) ? null : () => this.onClose('tap')}
         underlayColor={backgroundColor}
