@@ -1,6 +1,5 @@
 import DropdownAlert from './DropdownAlert'
 import React, { Component } from 'react'
-
 import {
   AppRegistry,
   StyleSheet,
@@ -11,14 +10,14 @@ import {
   StatusBar,
   View
 } from 'react-native'
-
 const MAIN_INFO_COLOR = '#2B73B6'
 const MAIN_WARN_COLOR = '#cd853f'
 const MAIN_ERROR_COLOR = '#cc3232'
-const MAIN_CUSTOM_COLOR = '#6441A4'
 const MAIN_SUCCESS_COLOR = '#32A54A'
+const MAIN_CUSTOM_COLOR = '#6441A4'
+const MAIN_DISMISS_COLOR = '#748182'
 
-class Main extends Component {
+export default class Main extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -29,6 +28,7 @@ class Main extends Component {
     }
   }
   render() {
+    const {items} = this.state
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -64,8 +64,6 @@ class Main extends Component {
             backgroundColor: MAIN_CUSTOM_COLOR,
           }}
           onClose={(data) => this.onClose(data)}
-          onCancel={(data) => this.onClose(data)}
-          showCancel={false}
           imageSrc={'https://facebook.github.io/react/img/logo_og.png'}
         />
       </View>
@@ -125,15 +123,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#E9EEEF'
   },
-  contentContainer: {
-    marginTop: 22
+  listContainer: {
+    paddingTop: 22
   },
   button: {
-    backgroundColor: '#748182',
-    margin: 8,
-    borderRadius: 8,
     padding: 8,
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRadius: 8,
+    margin: 8
   },
   text: {
     fontSize: 20,
@@ -141,5 +138,3 @@ const styles = StyleSheet.create({
     color: 'white'
   },
 });
-
-module.exports = Main

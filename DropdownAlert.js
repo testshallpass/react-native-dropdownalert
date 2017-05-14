@@ -1,8 +1,11 @@
 import React, {Component, PropTypes} from 'react'
-import {View, Text, StyleSheet,TouchableHighlight, Animated, StatusBar,Platform, Dimensions, Image, PanResponder} from "react-native"
+import {View, Text, StyleSheet,TouchableHighlight, Animated, StatusBar, Platform, Dimensions, Image, PanResponder} from "react-native"
 import Label from './Label'
 import Icon from './Icon'
 import Cancel from './Cancel'
+const StatusBarDefaultBarStyle = StatusBar._defaultProps.barStyle.value
+const StatusBarDefaultBackgroundColor = StatusBar._defaultProps.backgroundColor.value
+const DEFAULT_IMAGE_DIMENSIONS = 36
 const WINDOW = Dimensions.get('window')
 var closeTimeoutId = null
 var panResponder
@@ -41,7 +44,11 @@ export default class DropdownAlert extends Component {
     tapToCloseEnabled: PropTypes.bool,
     panResponderEnabled: PropTypes.bool,
     replaceEnabled: PropTypes.bool,
-    translucent: PropTypes.bool
+    translucent: PropTypes.bool,
+    activeStatusBarStyle: PropTypes.string,
+    activeStatusBarBackgroundColor: PropTypes.string,
+    inactiveStatusBarStyle: PropTypes.string,
+    inactiveStatusBarBackgroundColor: PropTypes.string
   }
   static defaultProps =  {
     onClose: null,
@@ -95,7 +102,11 @@ export default class DropdownAlert extends Component {
     visible: false,
     type: 'info',
     title: 'Default Title',
-    message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempo exercitation ullamco.'
+    message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempo exercitation ullamco.',
+    activeStatusBarStyle: 'light-content',
+    activeStatusBarBackgroundColor: StatusBarDefaultBackgroundColor,
+    inactiveStatusBarStyle: StatusBarDefaultBarStyle,
+    inactiveStatusBarBackgroundColor: StatusBarDefaultBackgroundColor
   }
   constructor(props) {
     super(props)
@@ -108,7 +119,7 @@ export default class DropdownAlert extends Component {
       isOpen: false,
       startDelta: props.startDelta,
       endDelta: props.endDelta,
-      topValue: 0
+      topValue: 0,
     }
     // Action
     this.alert = this.alert.bind(this)
@@ -229,6 +240,11 @@ export default class DropdownAlert extends Component {
           this.setState({
             isOpen: false
           })
+          if (Platform.OS == 'android') {
+            StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true)
+          } else {
+            StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true)
+          }
           if (onDismiss) {
             var data = {
               type: this.state.type,
@@ -321,15 +337,11 @@ export default class DropdownAlert extends Component {
   }
   renderStatusBar(type, backgroundColor) {
     if (Platform.OS === 'android') {
-      return (
-        <StatusBar backgroundColor={backgroundColor} />
-      )
-    } else if (type != 'custom') {
-      return (
-        <StatusBar barStyle="light-content" />
-      )
+      StatusBar.setBackgroundColor(backgroundColor, true)
+      StatusBar.setTranslucent(translucent)
+    } else if (Platform.OS === 'ios') {
+      StatusBar.setBarStyle(barStyle, true)
     }
-    return null
   }
   render() {
     var style = [styles.defaultContainer, this.props.containerStyle]
