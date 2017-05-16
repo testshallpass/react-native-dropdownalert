@@ -17,6 +17,22 @@ export default class DropdownAlert extends Component {
       PropTypes.string,
       PropTypes.number
     ]),
+    infoImage: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
+    warnImage: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
+    successImage: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
+    errorImage: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
     infoColor: PropTypes.string,
     warnColor: PropTypes.string,
     errorColor: PropTypes.string,
@@ -364,22 +380,22 @@ export default class DropdownAlert extends Component {
       switch (this.state.type) {
         case 'info':
           style = [styles.defaultContainer, {backgroundColor: this.props.infoColor}]
-          source = require('./assets/info.png')
+          source = this.props.infoImage || require('./assets/info.png')
           backgroundColor = this.props.infoColor
           break;
         case 'warn':
           style = [styles.defaultContainer, {backgroundColor: this.props.warnColor}]
-          source = require('./assets/warn.png')
+          source = this.props.warnImage || require('./assets/warn.png')
           backgroundColor = this.props.warnColor
           break;
         case 'error':
           style = [styles.defaultContainer, {backgroundColor: this.props.errorColor}]
-          source = require('./assets/error.png')
+          source = this.props.errorImage || require('./assets/error.png')
           backgroundColor = this.props.errorColor
           break;
         case 'success':
           style = [styles.defaultContainer, {backgroundColor: this.props.successColor}]
-          source = require('./assets/success.png')
+          source = this.props.successImage || require('./assets/success.png')
           backgroundColor = this.props.successColor
           break;
       }
