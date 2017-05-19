@@ -1,4 +1,4 @@
-import DropdownAlert from './DropdownAlert'
+import DropdownAlert from './src/DropdownAlert'
 import React, { Component, PropTypes } from 'react'
 import {StyleSheet, Text, TouchableOpacity, FlatList, Image, StatusBar, View} from 'react-native'
 // Colors
@@ -23,9 +23,9 @@ export default class Main extends Component {
     this.state = {
       items: items,
       visible: false,
-      type: '',
-      title: '',
-      message: ''
+      type: items[0].type,
+      title: items[0].title,
+      message: items[0].message
     }
   }
   renderItem = ({item}) => {
@@ -45,6 +45,7 @@ export default class Main extends Component {
           data={items}
           renderItem={this.renderItem} />
         <DropdownAlert
+          ref={(ref) => this.dropdown = ref}
           visible={this.state.visible}
           type={this.state.type}
           title={this.state.title}
@@ -53,6 +54,7 @@ export default class Main extends Component {
             backgroundColor: MAIN_CUSTOM_COLOR,
           }}
           onClose={(data) => this.onClose(data)}
+          onCancel={(data) => this.onCancel(data)}
           imageSrc={'https://facebook.github.io/react/img/logo_og.png'}
         />
       </View>
@@ -73,11 +75,20 @@ export default class Main extends Component {
      })           
     }
   }
-  dismissAlert = () => {
-    this.dropdown.onClose()
+  dismissAlert() {
+    this.dropdown.dismiss()    
   }
   onClose(data) {
     console.log(data);
+    this.setState({
+      visible: false
+    })
+  }
+  onCancel(data) {
+    console.log(data);
+    this.setState({
+      visible: false
+    })    
   }
 }
 

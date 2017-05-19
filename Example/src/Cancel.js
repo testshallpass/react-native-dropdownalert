@@ -10,6 +10,7 @@ export default class Cancel extends Component {
     onPress: PropTypes.func,
     underlayColor: PropTypes.string,
     visible: PropTypes.bool,
+    callback: PropTypes.func,
     source: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -35,7 +36,7 @@ export default class Cancel extends Component {
   }
   onPress() {
     if (this.props.onPress) {
-      this.props.onPress()
+      this.props.onPress(this.props.callback, 'cancel')
     }
   }
   render() {
