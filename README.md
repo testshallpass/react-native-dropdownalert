@@ -69,6 +69,7 @@ onClose(data) {
 | ```panResponderEnabled``` | Bool  | enable/disable close with pan responder | true
 | ```replaceEnabled``` | Bool  | enables the alert to either state change without dismissal or go to next alert with dismissal | true
 | ```translucent``` | Bool  | StatusBar prop  | false
+| ```updateStatusBar``` | Bool  | whether or not to update status bar styles  | true
 | ```activeStatusBarStyle``` | String  | StatusBar barStyle when alert is open | `light-content`
 | ```activeStatusBarBackgroundColor``` | String | StatusBar backgroundColor when alert is open | It takes on the backgroundColor of alert if predefined else default or provided prop
 | ```inactiveStatusBarStyle``` | String  | StatusBar barStyle when alert dismisses | `StatusBar._defaultProps.barStyle.value`

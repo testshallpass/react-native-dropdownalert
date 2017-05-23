@@ -41,7 +41,8 @@ export default class DropdownAlert extends Component {
     activeStatusBarStyle: PropTypes.string,
     activeStatusBarBackgroundColor: PropTypes.string,
     inactiveStatusBarStyle: PropTypes.string,
-    inactiveStatusBarBackgroundColor: PropTypes.string
+    inactiveStatusBarBackgroundColor: PropTypes.string,
+    updateStatusBar: PropTypes.bool
   }
   static defaultProps =  {
     onClose: null,
@@ -95,7 +96,8 @@ export default class DropdownAlert extends Component {
     activeStatusBarStyle: 'light-content',
     activeStatusBarBackgroundColor: StatusBarDefaultBackgroundColor,
     inactiveStatusBarStyle: StatusBarDefaultBarStyle,
-    inactiveStatusBarBackgroundColor: StatusBarDefaultBackgroundColor
+    inactiveStatusBarBackgroundColor: StatusBarDefaultBackgroundColor,
+    updateStatusBar: true
   }
   constructor(props) {
     super(props)
@@ -213,10 +215,12 @@ export default class DropdownAlert extends Component {
           this.setState({
             isOpen: false
           })
-          if (Platform.OS == 'android') {
-            StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true)
-          } else {
-            StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true)
+          if (this.props.updateStatusBar) {
+            if (Platform.OS == 'android') {
+              StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true)
+            } else {
+              StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true)
+            }                        
           }
           if (onDismiss) {
             var data = {
@@ -392,7 +396,9 @@ export default class DropdownAlert extends Component {
           activeStatusBarBackgroundColor = backgroundColor
         }
       }
-      this.renderStatusBar(activeStatusBarBackgroundColor, this.props.activeStatusBarStyle, this.props.translucent)
+      if (this.props.updateStatusBar) {
+        this.renderStatusBar(activeStatusBarBackgroundColor, this.props.activeStatusBarStyle, this.props.translucent)
+      }
       return (
           <Animated.View
            ref={(ref) => this.mainView = ref}
