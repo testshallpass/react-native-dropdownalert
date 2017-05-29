@@ -1,9 +1,11 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import {StyleSheet, View, Text, TouchableHighlight, Animated, StatusBar, Platform, Dimensions, Image, PanResponder} from "react-native"
+import PropTypes from 'prop-types';
+
 const StatusBarDefaultBarStyle = StatusBar._defaultProps.barStyle.value
 const StatusBarDefaultBackgroundColor = StatusBar._defaultProps.backgroundColor.value
 const DEFAULT_IMAGE_DIMENSIONS = 36
-const WINDOW = Dimensions.get('window')
+const WINDOW = Dimensions.get('window');
 var closeTimeoutId = null
 var panResponder
 
