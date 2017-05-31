@@ -249,7 +249,8 @@ export default class DropdownAlert extends Component {
       this.state.animationValue, {
         toValue: toValue,
         duration: this.state.duration,
-        friction: 9
+        friction: 9,
+        useNativeDriver: true
       }
     ).start()
   }
