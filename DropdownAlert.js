@@ -416,7 +416,8 @@ export default class DropdownAlert extends Component {
               position: 'absolute',
               top: this.state.topValue,
               left: 0,
-              right: 0
+              right: 0,
+              zIndex: 9999
             }}>
             <TouchableHighlight
                 onPress={(this.props.showCancel) ? null : () => this.onClose('tap')}
