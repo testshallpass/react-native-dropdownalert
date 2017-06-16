@@ -1,6 +1,6 @@
 {
   "name": "react-native-dropdownalert",
-  "version": "2.9.0",
+  "version": "2.10.0",
   "description": "A simple alert to notify users about new chat messages, something went wrong or everything is ok.",
   "main": "src/DropdownAlert.js",
   "scripts": {
@@ -36,6 +36,7 @@
     "enzyme": "^2.8.2",
     "enzyme-to-json": "^1.5.1",
     "jest": "^19.0.2",
+    "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-native": "^0.40.0",
