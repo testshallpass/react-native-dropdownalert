@@ -41,6 +41,8 @@ export default class Main extends Component {
           data={items}
           renderItem={this.renderItem} />
         <DropdownAlert
+          infoColor="#404553"
+          showCancel
           ref={(ref) => this.dropdown = ref}
           containerStyle={{
             backgroundColor: MAIN_CUSTOM_COLOR,

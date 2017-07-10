@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 
 const StatusBarDefaultBarStyle = StatusBar._defaultProps.barStyle.value
 const StatusBarDefaultBackgroundColor = StatusBar._defaultProps.backgroundColor.value
-const DEFAULT_IMAGE_DIMENSIONS = 36
+const DEFAULT_IMAGE_DIMENSIONS = 30
+const CANCEL_IMAGE_DIMENSIONS = 20
 const WINDOW = Dimensions.get('window');
 var closeTimeoutId = null
 var panResponder
@@ -55,7 +56,7 @@ export default class DropdownAlert extends Component {
     titleNumOfLines: 1,
     messageNumOfLines: 3,
     imageSrc: null,
-    cancelBtnImageSrc: require('./assets/cancel.png'),
+    cancelBtnImageSrc: require('./assets/close.png'),
     infoColor: '#2B73B6',
     warnColor: '#cd853f',
     errorColor: '#cc3232',
@@ -83,15 +84,15 @@ export default class DropdownAlert extends Component {
       backgroundColor: 'transparent'
     },
     imageStyle: {
-      padding: 8,
+      padding: 10,
       width: DEFAULT_IMAGE_DIMENSIONS,
       height: DEFAULT_IMAGE_DIMENSIONS,
       alignSelf: 'center'
     },
     cancelBtnImageStyle: {
-      padding: 8,
-      width: DEFAULT_IMAGE_DIMENSIONS,
-      height: DEFAULT_IMAGE_DIMENSIONS,
+      padding: 10,
+      width: CANCEL_IMAGE_DIMENSIONS,
+      height: CANCEL_IMAGE_DIMENSIONS,
       alignSelf: 'center'
     },
     translucent: false,
@@ -222,7 +223,7 @@ export default class DropdownAlert extends Component {
               StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true)
             } else {
               StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true)
-            }                        
+            }
           }
           if (onDismiss) {
             var data = {
@@ -371,7 +372,7 @@ export default class DropdownAlert extends Component {
       switch (this.state.type) {
         case 'info':
           style = [styles.defaultContainer, {backgroundColor: this.props.infoColor}]
-          source = require('./assets/info.png')
+          source = require('./assets/yellowTick.png')
           backgroundColor = this.props.infoColor
           break;
         case 'warn':
@@ -381,7 +382,7 @@ export default class DropdownAlert extends Component {
           break;
         case 'error':
           style = [styles.defaultContainer, {backgroundColor: this.props.errorColor}]
-          source = require('./assets/error.png')
+          source = require('./assets/errorRed.png')
           backgroundColor = this.props.errorColor
           break;
         case 'success':
