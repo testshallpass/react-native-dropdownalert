@@ -382,7 +382,7 @@ export default class DropdownAlert extends Component {
           break;
         case 'error':
           style = [styles.defaultContainer, {backgroundColor: this.props.errorColor}]
-          source = require('./assets/error.png')
+          source = require('./assets/errorRed.png')
           backgroundColor = this.props.errorColor
           break;
         case 'success':
