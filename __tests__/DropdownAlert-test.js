@@ -1,7 +1,7 @@
 import 'react-native';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import DropdownAlert from '../DropdownAlert';
+import DropdownAlert from '../src/DropdownAlert';
 import {shallow} from 'enzyme';
 import toJson from 'enzyme-to-json';
 

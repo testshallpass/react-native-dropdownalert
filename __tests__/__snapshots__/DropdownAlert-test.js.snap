@@ -28,12 +28,11 @@ exports[`renders custom alert correctly 1`] = `
     }
   }
 >
-  <TouchableHighlight
-    activeOpacity={0.85}
+  <TouchableOpacity
+    activeOpacity={0.95}
     disabled={false}
     onLayout={[Function]}
     onPress={[Function]}
-    underlayColor="black"
   >
     <View
       style={
@@ -50,18 +49,14 @@ exports[`renders custom alert correctly 1`] = `
         ]
       }
     >
-      <Image
-        source={
-          Object {
-            "uri": "https://facebook.github.io/react/img/logo_og.png",
-          }
-        }
+      <Icon
+        source="https://facebook.github.io/react/img/logo_og.png"
         style={
           Object {
             "alignSelf": "center",
-            "height": 36,
+            "height": 30,
             "padding": 8,
-            "width": 36,
+            "width": 30,
           }
         }
       />
@@ -73,10 +68,7 @@ exports[`renders custom alert correctly 1`] = `
           }
         }
       >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+        <Label
           numberOfLines={1}
           style={
             Object {
@@ -87,13 +79,9 @@ exports[`renders custom alert correctly 1`] = `
               "textAlign": "left",
             }
           }
-        >
-          Hello
-        </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+          text="Hello"
+        />
+        <Label
           numberOfLines={3}
           style={
             Object {
@@ -104,12 +92,26 @@ exports[`renders custom alert correctly 1`] = `
               "textAlign": "left",
             }
           }
-        >
-          World!
-        </Text>
+          text="World!"
+        />
       </View>
+      <Cancel
+        callback={null}
+        onPress={[Function]}
+        source={1}
+        style={
+          Object {
+            "alignSelf": "center",
+            "height": 30,
+            "padding": 8,
+            "width": 30,
+          }
+        }
+        underlayColor="transparent"
+        visible={false}
+      />
     </View>
-  </TouchableHighlight>
+  </TouchableOpacity>
 </AnimatedComponent>
 `;
 
@@ -141,12 +143,11 @@ exports[`renders custom alert with cancel correctly 1`] = `
     }
   }
 >
-  <TouchableHighlight
-    activeOpacity={0.85}
+  <TouchableOpacity
+    activeOpacity={0.95}
     disabled={false}
     onLayout={[Function]}
     onPress={null}
-    underlayColor="black"
   >
     <View
       style={
@@ -163,18 +164,14 @@ exports[`renders custom alert with cancel correctly 1`] = `
         ]
       }
     >
-      <Image
-        source={
-          Object {
-            "uri": "https://facebook.github.io/react/img/logo_og.png",
-          }
-        }
+      <Icon
+        source="https://facebook.github.io/react/img/logo_og.png"
         style={
           Object {
             "alignSelf": "center",
-            "height": 36,
+            "height": 30,
             "padding": 8,
-            "width": 36,
+            "width": 30,
           }
         }
       />
@@ -186,10 +183,7 @@ exports[`renders custom alert with cancel correctly 1`] = `
           }
         }
       >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+        <Label
           numberOfLines={1}
           style={
             Object {
@@ -200,13 +194,9 @@ exports[`renders custom alert with cancel correctly 1`] = `
               "textAlign": "left",
             }
           }
-        >
-          Hello
-        </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+          text="Hello"
+        />
+        <Label
           numberOfLines={3}
           style={
             Object {
@@ -217,36 +207,26 @@ exports[`renders custom alert with cancel correctly 1`] = `
               "textAlign": "left",
             }
           }
-        >
-          World!
-        </Text>
+          text="World!"
+        />
       </View>
-      <TouchableHighlight
-        activeOpacity={0.85}
+      <Cancel
+        callback={null}
         onPress={[Function]}
+        source={1}
         style={
           Object {
             "alignSelf": "center",
-            "height": 36,
-            "width": 36,
+            "height": 30,
+            "padding": 8,
+            "width": 30,
           }
         }
-        underlayColor="black"
-      >
-        <Image
-          source={1}
-          style={
-            Object {
-              "alignSelf": "center",
-              "height": 36,
-              "padding": 8,
-              "width": 36,
-            }
-          }
-        />
-      </TouchableHighlight>
+        underlayColor="transparent"
+        visible={true}
+      />
     </View>
-  </TouchableHighlight>
+  </TouchableOpacity>
 </AnimatedComponent>
 `;
 
@@ -278,12 +258,11 @@ exports[`renders error alert correctly 1`] = `
     }
   }
 >
-  <TouchableHighlight
-    activeOpacity={0.85}
+  <TouchableOpacity
+    activeOpacity={0.95}
     disabled={false}
     onLayout={[Function]}
     onPress={[Function]}
-    underlayColor="#cc3232"
   >
     <View
       style={
@@ -299,14 +278,14 @@ exports[`renders error alert correctly 1`] = `
         ]
       }
     >
-      <Image
+      <Icon
         source={1}
         style={
           Object {
             "alignSelf": "center",
-            "height": 36,
+            "height": 30,
             "padding": 8,
-            "width": 36,
+            "width": 30,
           }
         }
       />
@@ -318,10 +297,7 @@ exports[`renders error alert correctly 1`] = `
           }
         }
       >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+        <Label
           numberOfLines={1}
           style={
             Object {
@@ -332,13 +308,9 @@ exports[`renders error alert correctly 1`] = `
               "textAlign": "left",
             }
           }
-        >
-          Hello
-        </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+          text="Hello"
+        />
+        <Label
           numberOfLines={3}
           style={
             Object {
@@ -349,12 +321,27 @@ exports[`renders error alert correctly 1`] = `
               "textAlign": "left",
             }
           }
-        >
-          World!
-        </Text>
+          text="World!"
+        />
       </View>
+      <Cancel
+        backgroundColor="#cc3232"
+        callback={null}
+        onPress={[Function]}
+        source={1}
+        style={
+          Object {
+            "alignSelf": "center",
+            "height": 30,
+            "padding": 8,
+            "width": 30,
+          }
+        }
+        underlayColor="transparent"
+        visible={false}
+      />
     </View>
-  </TouchableHighlight>
+  </TouchableOpacity>
 </AnimatedComponent>
 `;
 
@@ -386,12 +373,11 @@ exports[`renders info alert correctly 1`] = `
     }
   }
 >
-  <TouchableHighlight
-    activeOpacity={0.85}
+  <TouchableOpacity
+    activeOpacity={0.95}
     disabled={false}
     onLayout={[Function]}
     onPress={[Function]}
-    underlayColor="#2B73B6"
   >
     <View
       style={
@@ -407,14 +393,14 @@ exports[`renders info alert correctly 1`] = `
         ]
       }
     >
-      <Image
+      <Icon
         source={1}
         style={
           Object {
             "alignSelf": "center",
-            "height": 36,
+            "height": 30,
             "padding": 8,
-            "width": 36,
+            "width": 30,
           }
         }
       />
@@ -426,10 +412,7 @@ exports[`renders info alert correctly 1`] = `
           }
         }
       >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+        <Label
           numberOfLines={1}
           style={
             Object {
@@ -440,13 +423,9 @@ exports[`renders info alert correctly 1`] = `
               "textAlign": "left",
             }
           }
-        >
-          Hello
-        </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+          text="Hello"
+        />
+        <Label
           numberOfLines={3}
           style={
             Object {
@@ -457,12 +436,27 @@ exports[`renders info alert correctly 1`] = `
               "textAlign": "left",
             }
           }
-        >
-          World!
-        </Text>
+          text="World!"
+        />
       </View>
+      <Cancel
+        backgroundColor="#2B73B6"
+        callback={null}
+        onPress={[Function]}
+        source={1}
+        style={
+          Object {
+            "alignSelf": "center",
+            "height": 30,
+            "padding": 8,
+            "width": 30,
+          }
+        }
+        underlayColor="transparent"
+        visible={false}
+      />
     </View>
-  </TouchableHighlight>
+  </TouchableOpacity>
 </AnimatedComponent>
 `;
 
@@ -494,12 +488,11 @@ exports[`renders success alert correctly 1`] = `
     }
   }
 >
-  <TouchableHighlight
-    activeOpacity={0.85}
+  <TouchableOpacity
+    activeOpacity={0.95}
     disabled={false}
     onLayout={[Function]}
     onPress={[Function]}
-    underlayColor="#32A54A"
   >
     <View
       style={
@@ -515,14 +508,14 @@ exports[`renders success alert correctly 1`] = `
         ]
       }
     >
-      <Image
+      <Icon
         source={1}
         style={
           Object {
             "alignSelf": "center",
-            "height": 36,
+            "height": 30,
             "padding": 8,
-            "width": 36,
+            "width": 30,
           }
         }
       />
@@ -534,10 +527,7 @@ exports[`renders success alert correctly 1`] = `
           }
         }
       >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+        <Label
           numberOfLines={1}
           style={
             Object {
@@ -548,13 +538,9 @@ exports[`renders success alert correctly 1`] = `
               "textAlign": "left",
             }
           }
-        >
-          Hello
-        </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+          text="Hello"
+        />
+        <Label
           numberOfLines={3}
           style={
             Object {
@@ -565,12 +551,27 @@ exports[`renders success alert correctly 1`] = `
               "textAlign": "left",
             }
           }
-        >
-          World!
-        </Text>
+          text="World!"
+        />
       </View>
+      <Cancel
+        backgroundColor="#32A54A"
+        callback={null}
+        onPress={[Function]}
+        source={1}
+        style={
+          Object {
+            "alignSelf": "center",
+            "height": 30,
+            "padding": 8,
+            "width": 30,
+          }
+        }
+        underlayColor="transparent"
+        visible={false}
+      />
     </View>
-  </TouchableHighlight>
+  </TouchableOpacity>
 </AnimatedComponent>
 `;
 
@@ -602,12 +603,11 @@ exports[`renders warn alert correctly 1`] = `
     }
   }
 >
-  <TouchableHighlight
-    activeOpacity={0.85}
+  <TouchableOpacity
+    activeOpacity={0.95}
     disabled={false}
     onLayout={[Function]}
     onPress={[Function]}
-    underlayColor="#cd853f"
   >
     <View
       style={
@@ -623,14 +623,14 @@ exports[`renders warn alert correctly 1`] = `
         ]
       }
     >
-      <Image
+      <Icon
         source={1}
         style={
           Object {
             "alignSelf": "center",
-            "height": 36,
+            "height": 30,
             "padding": 8,
-            "width": 36,
+            "width": 30,
           }
         }
       />
@@ -642,10 +642,7 @@ exports[`renders warn alert correctly 1`] = `
           }
         }
       >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+        <Label
           numberOfLines={1}
           style={
             Object {
@@ -656,13 +653,9 @@ exports[`renders warn alert correctly 1`] = `
               "textAlign": "left",
             }
           }
-        >
-          Hello
-        </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+          text="Hello"
+        />
+        <Label
           numberOfLines={3}
           style={
             Object {
@@ -673,11 +666,26 @@ exports[`renders warn alert correctly 1`] = `
               "textAlign": "left",
             }
           }
-        >
-          World!
-        </Text>
+          text="World!"
+        />
       </View>
+      <Cancel
+        backgroundColor="#cd853f"
+        callback={null}
+        onPress={[Function]}
+        source={1}
+        style={
+          Object {
+            "alignSelf": "center",
+            "height": 30,
+            "padding": 8,
+            "width": 30,
+          }
+        }
+        underlayColor="transparent"
+        visible={false}
+      />
     </View>
-  </TouchableHighlight>
+  </TouchableOpacity>
 </AnimatedComponent>
 `;

@@ -1,4 +1,4 @@
-import DropdownAlert from './DropdownAlert'
+import DropdownAlert from './src/DropdownAlert'
 import React, { Component, PropTypes } from 'react'
 import {StyleSheet, Text, TouchableOpacity, FlatList, Image, StatusBar, View} from 'react-native'
 // Colors
@@ -21,7 +21,11 @@ export default class Main extends Component {
       {key: 5, backgroundColor: MAIN_DISMISS_COLOR, type: 'dismiss', title: 'Dismiss alert'}
     ]
     this.state = {
-      items: items
+      items: items,
+      visible: false,
+      type: items[0].type,
+      title: items[0].title,
+      message: items[0].message
     }
   }
   renderItem = ({item}) => {
@@ -42,10 +46,15 @@ export default class Main extends Component {
           renderItem={this.renderItem} />
         <DropdownAlert
           ref={(ref) => this.dropdown = ref}
+          visible={this.state.visible}
+          type={this.state.type}
+          title={this.state.title}
+          message={this.state.message}
           containerStyle={{
             backgroundColor: MAIN_CUSTOM_COLOR,
           }}
           onClose={(data) => this.onClose(data)}
+          onCancel={(data) => this.onCancel(data)}
           imageSrc={'https://facebook.github.io/react/img/logo_og.png'}
         />
       </View>
@@ -57,14 +66,29 @@ export default class Main extends Component {
     } else {
       const random = Math.floor((Math.random() * 1000) + 1)
       const title = item.title + ' #' + random
-      this.dropdown.alertWithType(item.type, title, item.message)
+      const {visible} = this.state
+      this.setState({
+        visible: (visible) ? false : true,
+        type: item.type,
+        title: title,
+        message: item.message
+     })           
     }
   }
-  dismissAlert = () => {
-    this.dropdown.onClose()
+  dismissAlert() {
+    this.dropdown.dismiss()    
   }
   onClose(data) {
     console.log(data);
+    this.setState({
+      visible: false
+    })
+  }
+  onCancel(data) {
+    console.log(data);
+    this.setState({
+      visible: false
+    })    
   }
 }
 
