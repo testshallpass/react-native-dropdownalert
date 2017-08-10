@@ -1,12 +1,13 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, Animated, StatusBar, Platform, Dimensions, Image, PanResponder} from "react-native"
+import PropTypes from 'prop-types';
 import Label from './Label'
 import Icon from './Icon'
 import Cancel from './Cancel'
 const StatusBarDefaultBarStyle = StatusBar._defaultProps.barStyle.value
 const StatusBarDefaultBackgroundColor = StatusBar._defaultProps.backgroundColor.value
 const DEFAULT_IMAGE_DIMENSIONS = 36
-const WINDOW = Dimensions.get('window')
+const WINDOW = Dimensions.get('window');
 var closeTimeoutId = null
 var panResponder
 
@@ -257,10 +258,12 @@ export default class DropdownAlert extends Component {
           this.setState({
             isOpen: false
           })
-          if (Platform.OS == 'android') {
-            StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true)
-          } else {
-            StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true)
+          if (this.props.updateStatusBar) {
+            if (Platform.OS == 'android') {
+              StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true)
+            } else {
+              StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true)
+            }
           }
           if (onDismiss) {
             var data = {
@@ -280,7 +283,8 @@ export default class DropdownAlert extends Component {
       this.state.animationValue, {
         toValue: toValue,
         duration: this.state.duration,
-        friction: 9
+        friction: 9,
+        useNativeDriver: (Platform.OS === 'ios')
       }
     ).start()
   }
@@ -380,7 +384,7 @@ export default class DropdownAlert extends Component {
         activeStatusBarBackgroundColor = backgroundColor
       }
     }
-    if (isOpen) {
+    if (this.props.updateStatusBar) {
       this.renderStatusBar(activeStatusBarBackgroundColor, activeStatusBarStyle, translucent)
     }
     return (
