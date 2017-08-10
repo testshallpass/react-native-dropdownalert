@@ -16,6 +16,7 @@ exports[`renders custom alert correctly 1`] = `
   onStartShouldSetResponderCapture={[Function]}
   style={
     Object {
+      "elevation": 1,
       "left": 0,
       "position": "absolute",
       "right": 0,
@@ -129,6 +130,7 @@ exports[`renders custom alert with cancel correctly 1`] = `
   onStartShouldSetResponderCapture={[Function]}
   style={
     Object {
+      "elevation": 1,
       "left": 0,
       "position": "absolute",
       "right": 0,
@@ -266,6 +268,7 @@ exports[`renders error alert correctly 1`] = `
   onStartShouldSetResponderCapture={[Function]}
   style={
     Object {
+      "elevation": 1,
       "left": 0,
       "position": "absolute",
       "right": 0,
@@ -374,6 +377,7 @@ exports[`renders info alert correctly 1`] = `
   onStartShouldSetResponderCapture={[Function]}
   style={
     Object {
+      "elevation": 1,
       "left": 0,
       "position": "absolute",
       "right": 0,
@@ -482,6 +486,7 @@ exports[`renders success alert correctly 1`] = `
   onStartShouldSetResponderCapture={[Function]}
   style={
     Object {
+      "elevation": 1,
       "left": 0,
       "position": "absolute",
       "right": 0,
@@ -590,6 +595,7 @@ exports[`renders warn alert correctly 1`] = `
   onStartShouldSetResponderCapture={[Function]}
   style={
     Object {
+      "elevation": 1,
       "left": 0,
       "position": "absolute",
       "right": 0,
