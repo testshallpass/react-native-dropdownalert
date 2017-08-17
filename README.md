@@ -83,5 +83,6 @@ onClose(data) {
 | ```infoColor``` | String  | Default background color of info message | #2B73B6
 | ```warnColor``` | String  | Default background color of warn message | #cd853f
 | ```errorColor``` | String  | Default background color of error message | #cc3232
+| ```elevation``` | Number  | Animated.View elevation | 1
 
 > Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
