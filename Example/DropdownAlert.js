@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {StyleSheet, View, Text, TouchableHighlight, Animated, StatusBar, Platform, Dimensions, Image, PanResponder} from "react-native"
+import {StyleSheet, View, Text, TouchableHighlight, Animated, StatusBar, Platform, Dimensions, Image, PanResponder, ViewPropTypes} from "react-native"
 import PropTypes from 'prop-types';
 
 const StatusBarDefaultBarStyle = StatusBar._defaultProps.barStyle.value
@@ -26,7 +26,7 @@ export default class DropdownAlert extends Component {
     closeInterval: PropTypes.number,
     startDelta: PropTypes.number,
     endDelta: PropTypes.number,
-    containerStyle: View.propTypes.style,
+    containerStyle: ViewPropTypes.style,
     titleStyle: Text.propTypes.style,
     messageStyle: Text.propTypes.style,
     imageStyle: Image.propTypes.style,
@@ -44,7 +44,8 @@ export default class DropdownAlert extends Component {
     activeStatusBarBackgroundColor: PropTypes.string,
     inactiveStatusBarStyle: PropTypes.string,
     inactiveStatusBarBackgroundColor: PropTypes.string,
-    updateStatusBar: PropTypes.bool
+    updateStatusBar: PropTypes.bool,
+    elevation: PropTypes.number
   }
   static defaultProps =  {
     onClose: null,
@@ -99,7 +100,8 @@ export default class DropdownAlert extends Component {
     activeStatusBarBackgroundColor: StatusBarDefaultBackgroundColor,
     inactiveStatusBarStyle: StatusBarDefaultBarStyle,
     inactiveStatusBarBackgroundColor: StatusBarDefaultBackgroundColor,
-    updateStatusBar: true
+    updateStatusBar: true,
+    elevation: 1,
   }
   constructor(props) {
     super(props)
@@ -222,7 +224,7 @@ export default class DropdownAlert extends Component {
               StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true)
             } else {
               StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true)
-            }                        
+            }
           }
           if (onDismiss) {
             var data = {
@@ -416,7 +418,8 @@ export default class DropdownAlert extends Component {
               position: 'absolute',
               top: this.state.topValue,
               left: 0,
-              right: 0
+              right: 0,
+              elevation: this.props.elevation
             }}>
             <TouchableHighlight
                 onPress={(this.props.showCancel) ? null : () => this.onClose('tap')}

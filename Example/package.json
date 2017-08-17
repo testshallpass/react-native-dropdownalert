@@ -7,8 +7,8 @@
   },
   "dependencies": {
     "prop-types": "^15.5.10",
-    "react": "^16.0.0-alpha.6",
-    "react-native": "^0.43.4",
-    "react-native-dropdownalert": "^2.7.0"
+    "react": "^16.0.0-alpha.12",
+    "react-native": "^0.47.0",
+    "react-native-dropdownalert": "^2.11.0"
   }
 }
