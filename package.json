@@ -33,14 +33,14 @@
   "devDependencies": {
     "babel-jest": "^19.0.0",
     "babel-preset-react-native": "^1.9.1",
-    "enzyme": "^2.9.1",
+    "enzyme": "^2.8.2",
     "enzyme-to-json": "^1.5.1",
     "jest": "^19.0.2",
     "prop-types": "^15.5.10",
-    "react": "^16.0.0-alpha.6",
-    "react-dom": "^15.6.1",
-    "react-native": "^0.44.0",
-    "react-test-renderer": "^15.6.1"
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-native": "^0.45.0",
+    "react-test-renderer": "^15.5.4"
   },
   "dependencies": {
     "prop-types": "^15.5.10"
