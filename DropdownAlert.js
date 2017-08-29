@@ -26,8 +26,7 @@ export default class DropdownAlert extends Component {
     closeInterval: PropTypes.number,
     startDelta: PropTypes.number,
     endDelta: PropTypes.number,
-    containerStyle: View.
-    .style,
+    containerStyle: View.propTypes.style,
     titleStyle: Text.propTypes.style,
     messageStyle: Text.propTypes.style,
     imageStyle: Image.propTypes.style,
