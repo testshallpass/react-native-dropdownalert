@@ -84,5 +84,6 @@ onClose(data) {
 | ```warnColor``` | String  | Default background color of warn message | #cd853f
 | ```errorColor``` | String  | Default background color of error message | #cc3232
 | ```elevation``` | Number  | Animated.View elevation | 1
+| ```onPress``` | func  | when Alert onPress callback  | () => {}
 
 > Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
