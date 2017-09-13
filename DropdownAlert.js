@@ -45,7 +45,8 @@ export default class DropdownAlert extends Component {
     inactiveStatusBarStyle: PropTypes.string,
     inactiveStatusBarBackgroundColor: PropTypes.string,
     updateStatusBar: PropTypes.bool,
-    elevation: PropTypes.number
+    elevation: PropTypes.number,
+    sensitivity: PropTypes.number,
   }
   static defaultProps =  {
     onClose: null,
@@ -102,6 +103,7 @@ export default class DropdownAlert extends Component {
     inactiveStatusBarBackgroundColor: StatusBarDefaultBackgroundColor,
     updateStatusBar: true,
     elevation: 1,
+    sensitivity: 20,
   }
   constructor(props) {
     super(props)
@@ -302,7 +304,7 @@ export default class DropdownAlert extends Component {
     return this.props.panResponderEnabled
   }
   handleMoveShouldSetPanResponder(e: Object, gestureState: Object): boolean {
-    return gestureState.dx !== 0 && gestureState.dy !== 0 && this.props.panResponderEnabled
+    return Math.abs(gestureState.dx) < this.props.sensitivity && Math.abs(gestureState.dy) >= this.props.sensitivity && this.props.panResponderEnabled
   }
   handlePanResponderMove(e: Object, gestureState: Object) {
     if (gestureState.dy < 0) {
