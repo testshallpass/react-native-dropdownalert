@@ -118,6 +118,7 @@ export default class DropdownAlert extends Component {
       startDelta: props.startDelta,
       endDelta: props.endDelta,
       topValue: 0,
+      extra: null,
     }
     // Render
     this.renderButton = this.renderButton.bind(this)
@@ -154,7 +155,7 @@ export default class DropdownAlert extends Component {
     }
     this.alertWithType('custom', title, message)
   }
-  alertWithType(type, title, message) {
+  alertWithType(type, title, message, extra) {
     if (this.validateType(type) == false) {
       return
     }
@@ -165,6 +166,10 @@ export default class DropdownAlert extends Component {
     if (typeof message !== 'string') {
       message = message.toString()
       console.warn('DropdownAlert: Message is not a string.')
+    }
+    if (!React.isValidElement(extra)) {
+      extra = null
+      console.warn('DropdownAlert: Extra is not a React element.')
     }
     if (this.props.replaceEnabled == false) {
       this.setState({
@@ -424,10 +429,6 @@ export default class DropdownAlert extends Component {
       if (this.props.updateStatusBar) {
         this.renderStatusBar(activeStatusBarBackgroundColor, this.props.activeStatusBarStyle, this.props.translucent)
       }
-      var extra = this.props.extra
-      if (!React.isValidElement(extra)) {
-        extra = null
-      }
       return (
           <Animated.View
            ref={(ref) => this.mainView = ref}
@@ -455,7 +456,7 @@ export default class DropdownAlert extends Component {
                 <View style={styles.textContainer}>
                   {this.renderText(this.state.title, StyleSheet.flatten(this.props.titleStyle), this.props.titleNumOfLines)}
                   {this.renderText(this.state.message, StyleSheet.flatten(this.props.messageStyle), this.props.messageNumOfLines)}
-                  {extra}
+                  {this.state.extra}
                 </View>
                 {this.renderButton(this.props.cancelBtnImageSrc, StyleSheet.flatten(this.props.cancelBtnImageStyle), this.onCancel, backgroundColor, this.props.showCancel)}
               </View>
