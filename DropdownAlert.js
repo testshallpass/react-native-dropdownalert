@@ -177,7 +177,8 @@ export default class DropdownAlert extends Component {
         message: message,
         title: title,
         isOpen: true,
-        topValue: 0
+        topValue: 0,
+        extra: extra
       })
       if (this.state.isOpen == false) {
         this.animate(1)
