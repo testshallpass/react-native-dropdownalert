@@ -36,13 +36,12 @@
     "enzyme": "2.9.0",
     "enzyme-to-json": "1.5.1",
     "jest": "19.0.2",
-    "prop-types": "15.5.10",
     "react": "15.6.0",
     "react-addons-test-utils": "15.6.0",
     "react-dom": "15.6.0",
     "react-native": "0.45.0"
   },
   "dependencies": {
-    "prop-types": "15.5.10"
+    "prop-types": "^15.5.10"
   }
 }
