@@ -1,5 +1,6 @@
+import {Animated, Dimensions, Image, PanResponder, Platform, StatusBar, StyleSheet, Text, TouchableHighlight, View} from "react-native"
 import React, { Component } from 'react'
-import {StyleSheet, View, Text, TouchableHighlight, Animated, StatusBar, Platform, Dimensions, Image, PanResponder} from "react-native"
+
 import PropTypes from 'prop-types';
 
 const StatusBarDefaultBarStyle = StatusBar._defaultProps.barStyle.value
@@ -423,6 +424,10 @@ export default class DropdownAlert extends Component {
       if (this.props.updateStatusBar) {
         this.renderStatusBar(activeStatusBarBackgroundColor, this.props.activeStatusBarStyle, this.props.translucent)
       }
+      var extra = this.props.extra
+      if (!React.isValidElement(extra)) {
+        extra = null
+      }
       return (
           <Animated.View
            ref={(ref) => this.mainView = ref}
@@ -450,6 +455,7 @@ export default class DropdownAlert extends Component {
                 <View style={styles.textContainer}>
                   {this.renderText(this.state.title, StyleSheet.flatten(this.props.titleStyle), this.props.titleNumOfLines)}
                   {this.renderText(this.state.message, StyleSheet.flatten(this.props.messageStyle), this.props.messageNumOfLines)}
+                  {extra}
                 </View>
                 {this.renderButton(this.props.cancelBtnImageSrc, StyleSheet.flatten(this.props.cancelBtnImageStyle), this.onCancel, backgroundColor, this.props.showCancel)}
               </View>
