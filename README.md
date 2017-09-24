@@ -4,10 +4,12 @@
 [![npm version](http://img.shields.io/npm/v/react-native-dropdownalert.svg)](https://www.npmjs.com/package/react-native-dropdownalert)
 [![npm version](http://img.shields.io/npm/dm/react-native-dropdownalert.svg)](https://www.npmjs.com/package/react-native-dropdownalert)
 [![Build Status](https://travis-ci.org/testshallpass/react-native-dropdownalert.svg?branch=master)](https://travis-ci.org/testshallpass/react-native-dropdownalert)
-[![Join the chat at https://gitter.im/react-native-dropdownalert/Lobby](https://badges.gitter.im/react-native-dropdownalert/Lobby.svg)](https://gitter.im/react-native-dropdownalert/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/testshallpass/react-native-dropdownalert/master/LICENSE)
 
-A simple alert to notify users about new chat messages, something went wrong or everything is ok. It can be dismissed by onPress, cancel onPress, automatically with `closeInterval` prop, pan responder up gesture or programmatically.
+A simple alert to notify users about new chat messages, something went wrong or everything is ok. It can be dismissed by onPress, cancel onPress, automatically with `closeInterval` prop, pan responder up gesture or programmatically. 
+
+### News
+> v2.13.0 supports ViewPropTypes introduced in react-native **0.44.0**. If you support an earlier react-native version, please use v2.12.0 or earlier.
 
 ### Installation
 ```
