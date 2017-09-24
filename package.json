@@ -3,12 +3,6 @@
   "version": "2.12.0",
   "description": "A simple alert to notify users about new chat messages, something went wrong or everything is ok.",
   "main": "DropdownAlert.js",
-  "scripts": {
-    "test": "jest"
-  },
-  "jest": {
-    "preset": "react-native"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/testshallpass/react-native-dropdownalert.git"
