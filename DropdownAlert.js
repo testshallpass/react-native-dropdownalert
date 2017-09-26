@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
@@ -10,28 +10,18 @@ import {
   Dimensions,
   Image,
   PanResponder,
-  ViewPropTypes
-} from "react-native";
-import PropTypes from "prop-types";
-import {
-  StatusBarDefaultBarStyle,
-  StatusBarDefaultBackgroundColor,
-  DEFAULT_IMAGE_DIMENSIONS,
-  WINDOW,
-  IS_IOS,
-  IS_ANDROID
-} from "./constants";
-import { validateType } from "./functions";
-import Label from "./label";
-import ImageView from "./imageview";
+  ViewPropTypes,
+} from 'react-native';
+import PropTypes from 'prop-types';
+import { StatusBarDefaultBarStyle, StatusBarDefaultBackgroundColor, DEFAULT_IMAGE_DIMENSIONS, WINDOW, IS_IOS, IS_ANDROID } from './constants';
+import { validateType } from './functions';
+import Label from './label';
+import ImageView from './imageview';
 
 export default class DropdownAlert extends Component {
   static propTypes = {
     imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    cancelBtnImageSrc: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number
-    ]),
+    cancelBtnImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     infoColor: PropTypes.string,
     warnColor: PropTypes.string,
     errorColor: PropTypes.string,
@@ -59,7 +49,7 @@ export default class DropdownAlert extends Component {
     inactiveStatusBarBackgroundColor: PropTypes.string,
     updateStatusBar: PropTypes.bool,
     elevation: PropTypes.number,
-    sensitivity: PropTypes.number
+    sensitivity: PropTypes.number,
   };
   static defaultProps = {
     onClose: null,
@@ -70,66 +60,66 @@ export default class DropdownAlert extends Component {
     titleNumOfLines: 1,
     messageNumOfLines: 3,
     imageSrc: null,
-    cancelBtnImageSrc: require("./assets/cancel.png"),
-    infoColor: "#2B73B6",
-    warnColor: "#cd853f",
-    errorColor: "#cc3232",
-    successColor: "#32A54A",
+    cancelBtnImageSrc: require('./assets/cancel.png'),
+    infoColor: '#2B73B6',
+    warnColor: '#cd853f',
+    errorColor: '#cc3232',
+    successColor: '#32A54A',
     showCancel: false,
     tapToCloseEnabled: true,
     panResponderEnabled: true,
     replaceEnabled: true,
     containerStyle: {
       padding: 16,
-      flexDirection: "row"
+      flexDirection: 'row',
     },
     titleStyle: {
       fontSize: 16,
-      textAlign: "left",
-      fontWeight: "bold",
-      color: "white",
-      backgroundColor: "transparent"
+      textAlign: 'left',
+      fontWeight: 'bold',
+      color: 'white',
+      backgroundColor: 'transparent',
     },
     messageStyle: {
       fontSize: 14,
-      textAlign: "left",
-      fontWeight: "normal",
-      color: "white",
-      backgroundColor: "transparent"
+      textAlign: 'left',
+      fontWeight: 'normal',
+      color: 'white',
+      backgroundColor: 'transparent',
     },
     imageStyle: {
       padding: 8,
       width: DEFAULT_IMAGE_DIMENSIONS,
       height: DEFAULT_IMAGE_DIMENSIONS,
-      alignSelf: "center"
+      alignSelf: 'center',
     },
     cancelBtnImageStyle: {
       padding: 8,
       width: DEFAULT_IMAGE_DIMENSIONS,
       height: DEFAULT_IMAGE_DIMENSIONS,
-      alignSelf: "center"
+      alignSelf: 'center',
     },
     translucent: false,
-    activeStatusBarStyle: "light-content",
+    activeStatusBarStyle: 'light-content',
     activeStatusBarBackgroundColor: StatusBarDefaultBackgroundColor,
     inactiveStatusBarStyle: StatusBarDefaultBarStyle,
     inactiveStatusBarBackgroundColor: StatusBarDefaultBackgroundColor,
     updateStatusBar: true,
     elevation: 1,
-    sensitivity: 20
+    sensitivity: 20,
   };
   constructor(props) {
     super(props);
     this.state = {
       animationValue: new Animated.Value(0),
       duration: 450,
-      type: "",
-      message: "",
-      title: "",
+      type: '',
+      message: '',
+      title: '',
       isOpen: false,
       startDelta: props.startDelta,
       endDelta: props.endDelta,
-      topValue: 0
+      topValue: 0,
     };
   }
   componentDidMount() {
@@ -137,7 +127,7 @@ export default class DropdownAlert extends Component {
   }
   componentWillUnmount() {
     if (this.closeTimeoutId != null) {
-      this.clearTimeout(this.closeTimeoutId);
+      this.closeDirectly();
     }
   }
   createPanResponder = () => {
@@ -146,44 +136,40 @@ export default class DropdownAlert extends Component {
         return this.props.panResponderEnabled;
       },
       onMoveShouldSetPanResponder: (evt, gestureState) => {
-        return (
-          Math.abs(gestureState.dx) < this.props.sensitivity &&
-          Math.abs(gestureState.dy) >= this.props.sensitivity &&
-          this.props.panResponderEnabled
-        );
+        return Math.abs(gestureState.dx) < this.props.sensitivity && Math.abs(gestureState.dy) >= this.props.sensitivity && this.props.panResponderEnabled;
       },
       onPanResponderMove: (evt, gestureState) => {
         if (gestureState.dy < 0) {
           this.setState({
-            topValue: gestureState.dy
+            topValue: gestureState.dy,
           });
         }
       },
       onPanResponderRelease: (evt, gestureState) => {
         const delta = this.state.startDelta / 5;
         if (gestureState.dy < delta) {
-          this.close("pan");
+          this.close('pan');
         }
       },
       onPanResponderTerminate: (evt, gestureState) => {
         const delta = this.state.startDelta / 5;
         if (gestureState.dy < delta) {
-          this.close("pan");
+          this.close('pan');
         }
-      }
+      },
     });
   };
   alertWithType = (type, title, message) => {
     if (validateType(type) == false) {
       return;
     }
-    if (typeof title !== "string") {
+    if (typeof title !== 'string') {
       title = title.toString();
-      console.warn("DropdownAlert: Title is not a string.");
+      console.warn('DropdownAlert: Title is not a string.');
     }
-    if (typeof message !== "string") {
+    if (typeof message !== 'string') {
       message = message.toString();
-      console.warn("DropdownAlert: Message is not a string.");
+      console.warn('DropdownAlert: Message is not a string.');
     }
     if (this.props.replaceEnabled == false) {
       this.setState({
@@ -191,7 +177,7 @@ export default class DropdownAlert extends Component {
         message: message,
         title: title,
         isOpen: true,
-        topValue: 0
+        topValue: 0,
       });
       if (this.state.isOpen == false) {
         this.animate(1);
@@ -202,7 +188,7 @@ export default class DropdownAlert extends Component {
         }
         this.closeTimeoutId = setTimeout(
           function() {
-            this.close("automatic");
+            this.close('automatic');
           }.bind(this),
           this.props.closeInterval
         );
@@ -222,14 +208,14 @@ export default class DropdownAlert extends Component {
               message: message,
               title: title,
               isOpen: true,
-              topValue: 0
+              topValue: 0,
             });
           }
           self.animate(1);
           if (self.props.closeInterval > 1) {
             this.closeTimeoutId = setTimeout(
               function() {
-                self.close("automatic");
+                self.close('automatic');
               }.bind(self),
               self.props.closeInterval
             );
@@ -241,10 +227,10 @@ export default class DropdownAlert extends Component {
   };
   close = action => {
     if (action == undefined) {
-      action = "programmatic";
+      action = 'programmatic';
     }
     var onClose = this.props.onClose;
-    if (action == "cancel") {
+    if (action == 'cancel') {
       onClose = this.props.onCancel;
     }
     if (this.state.isOpen) {
@@ -256,14 +242,11 @@ export default class DropdownAlert extends Component {
         function() {
           if (this.state.isOpen) {
             this.setState({
-              isOpen: false
+              isOpen: false,
             });
             if (this.props.updateStatusBar) {
               if (IS_ANDROID) {
-                StatusBar.setBackgroundColor(
-                  this.props.inactiveStatusBarBackgroundColor,
-                  true
-                );
+                StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
               } else {
                 StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
               }
@@ -273,7 +256,7 @@ export default class DropdownAlert extends Component {
                 type: this.state.type,
                 title: this.state.title,
                 message: this.state.message,
-                action: action // !!! How the alert was closed: automatic, programmatic, tap, pan or cancel
+                action: action, // !!! How the alert was closed: automatic, programmatic, tap, pan or cancel
               };
               onClose(data);
             }
@@ -289,14 +272,11 @@ export default class DropdownAlert extends Component {
         clearTimeout(this.closeTimeoutId);
       }
       this.setState({
-        isOpen: false
+        isOpen: false,
       });
       if (this.props.updateStatusBar) {
         if (IS_ANDROID) {
-          StatusBar.setBackgroundColor(
-            this.props.inactiveStatusBarBackgroundColor,
-            true
-          );
+          StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
         } else {
           StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
         }
@@ -308,7 +288,7 @@ export default class DropdownAlert extends Component {
       toValue: toValue,
       duration: this.state.duration,
       friction: 9,
-      useNativeDriver: IS_IOS
+      useNativeDriver: IS_IOS,
     }).start();
   };
   onLayoutEvent(event) {
@@ -333,78 +313,78 @@ export default class DropdownAlert extends Component {
     if (heightDelta < 0) {
       actualEndDelta = this.props.endDelta + heightDelta;
     }
-    if (
-      actualStartDelta != this.state.startDelta ||
-      actualEndDelta != this.state.endDelta
-    ) {
+    if (actualStartDelta != this.state.startDelta || actualEndDelta != this.state.endDelta) {
       this.setState({
         startDelta: actualStartDelta,
-        endDelta: actualEndDelta
+        endDelta: actualEndDelta,
       });
     }
   }
+  getStyleForType(type) {
+    switch (type) {
+      case 'info':
+        return [styles.defaultContainer, { backgroundColor: this.props.infoColor }];
+      case 'warn':
+        return [styles.defaultContainer, { backgroundColor: this.props.warnColor }];
+      case 'error':
+        return [styles.defaultContainer, { backgroundColor: this.props.errorColor }];
+      case 'success':
+        return [styles.defaultContainer, { backgroundColor: this.props.successColor }];
+      default:
+        return [styles.defaultContainer, StyleSheet.flatten(this.props.containerStyle)];
+    }
+  }
+  getSourceForType(type) {
+    switch (type) {
+      case 'info':
+        return require('./assets/info.png');
+      case 'warn':
+        return require('./assets/warn.png');
+      case 'error':
+        return require('./assets/error.png');
+      case 'success':
+        return require('./assets/success.png');
+      default:
+        return this.props.imageSrc;
+    }
+  }
+  getBackgroundColorForType(type) {
+    switch (type) {
+      case 'info':
+        return this.props.infoColor;
+      case 'warn':
+        return this.props.warnColor;
+      case 'error':
+        return this.props.errorColor;
+      case 'success':
+        return this.props.successColor;
+      default:
+        return this.props.containerStyle.backgroundColor;
+    }
+  }
   render() {
-    if (this.state.isOpen) {
-      var style = [
-        styles.defaultContainer,
-        StyleSheet.flatten(this.props.containerStyle)
-      ];
-      var source = this.props.imageSrc;
-      var backgroundColor = this.props.containerStyle.backgroundColor;
-      switch (this.state.type) {
-        case "info":
-          style = [
-            styles.defaultContainer,
-            { backgroundColor: this.props.infoColor }
-          ];
-          source = require("./assets/info.png");
-          backgroundColor = this.props.infoColor;
-          break;
-        case "warn":
-          style = [
-            styles.defaultContainer,
-            { backgroundColor: this.props.warnColor }
-          ];
-          source = require("./assets/warn.png");
-          backgroundColor = this.props.warnColor;
-          break;
-        case "error":
-          style = [
-            styles.defaultContainer,
-            { backgroundColor: this.props.errorColor }
-          ];
-          source = require("./assets/error.png");
-          backgroundColor = this.props.errorColor;
-          break;
-        case "success":
-          style = [
-            styles.defaultContainer,
-            { backgroundColor: this.props.successColor }
-          ];
-          source = require("./assets/success.png");
-          backgroundColor = this.props.successColor;
-          break;
-      }
-      var activeStatusBarBackgroundColor = this.props
-        .activeStatusBarBackgroundColor;
+    const { isOpen, type } = this.state;
+    if (isOpen) {
+      const style = this.getStyleForType(type);
+      const source = this.getSourceForType(type);
+      const backgroundColor = this.getBackgroundColorForType(type);
+      let { activeStatusBarBackgroundColor, translucent, updateStatusBar, activeStatusBarStyle, cancelBtnImageSrc, showCancel } = this.props;
       if (IS_ANDROID) {
-        if (this.props.translucent) {
+        if (translucent) {
           style = [style, { paddingTop: StatusBar.currentHeight }];
         }
-        if (this.state.type !== "custom") {
+        if (type !== 'custom') {
           activeStatusBarBackgroundColor = backgroundColor;
         }
       }
-      if (this.props.updateStatusBar) {
+      if (updateStatusBar) {
         if (IS_ANDROID) {
           StatusBar.setBackgroundColor(activeStatusBarBackgroundColor, true);
-          StatusBar.setTranslucent(this.props.translucent);
+          StatusBar.setTranslucent(translucent);
         } else if (IS_IOS) {
-          StatusBar.setBarStyle(this.props.activeStatusBarStyle, true);
+          StatusBar.setBarStyle(activeStatusBarStyle, true);
         }
       }
-      const showCancel =
-        this.props.cancelBtnImageSrc != null && this.props.showCancel;
       return (
         <Animated.View
           ref={ref => this.mainView = ref}
@@ -414,55 +394,39 @@ export default class DropdownAlert extends Component {
               {
                 translateY: this.state.animationValue.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [this.state.startDelta, this.state.endDelta]
-                })
-              }
+                  outputRange: [this.state.startDelta, this.state.endDelta],
+                }),
+              },
             ],
-            position: "absolute",
+            position: 'absolute',
             top: this.state.topValue,
             left: 0,
             right: 0,
-            elevation: this.props.elevation
+            elevation: this.props.elevation,
           }}
         >
           <TouchableOpacity
-            activeOpacity={
-              !this.props.tapToCloseEnabled || this.props.showCancel ? 1 : 0.95
-            }
-            onPress={this.props.showCancel ? null : () => this.close("tap")}
+            activeOpacity={!this.props.tapToCloseEnabled || showCancel ? 1 : 0.95}
+            onPress={showCancel ? null : () => this.close('tap')}
             disabled={!this.props.tapToCloseEnabled}
             onLayout={event => this.onLayoutEvent(event)}
           >
             <View style={style}>
-              <ImageView
-                style={StyleSheet.flatten(this.props.imageStyle)}
-                source={source}
-              />
+              <ImageView style={StyleSheet.flatten(this.props.imageStyle)} source={source} />
               <View style={styles.textContainer}>
-                <Label
-                  style={StyleSheet.flatten(this.props.titleStyle)}
-                  numberOfLines={this.props.titleNumOfLines}
-                  text={this.state.title}
-                />
-                <Label
-                  style={StyleSheet.flatten(this.props.messageStyle)}
-                  numberOfLines={this.props.messageNumOfLines}
-                  text={this.state.message}
-                />
+                <Label style={StyleSheet.flatten(this.props.titleStyle)} numberOfLines={this.props.titleNumOfLines} text={this.state.title} />
+                <Label style={StyleSheet.flatten(this.props.messageStyle)} numberOfLines={this.props.messageNumOfLines} text={this.state.message} />
               </View>
               {showCancel &&
                 <TouchableOpacity
                   style={{
                     alignSelf: this.props.cancelBtnImageStyle.alignSelf,
                     width: this.props.cancelBtnImageStyle.width,
-                    height: this.props.cancelBtnImageStyle.height
+                    height: this.props.cancelBtnImageStyle.height,
                   }}
-                  onPress={() => this.close("cancel")}
+                  onPress={() => this.close('cancel')}
                 >
-                  <ImageView
-                    style={this.props.cancelBtnImageStyle}
-                    source={this.props.cancelBtnImageSrc}
-                  />
+                  <ImageView style={this.props.cancelBtnImageStyle} source={this.props.cancelBtnImageSrc} />
                 </TouchableOpacity>}
             </View>
           </TouchableOpacity>
@@ -477,10 +441,10 @@ var styles = StyleSheet.create({
   defaultContainer: {
     padding: 8,
     paddingTop: IS_ANDROID ? 0 : 20,
-    flexDirection: "row"
+    flexDirection: 'row',
   },
   textContainer: {
     flex: 1,
-    padding: 8
-  }
+    padding: 8,
+  },
 });
