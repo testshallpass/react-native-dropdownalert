@@ -122,16 +122,16 @@ export default class DropdownAlert extends Component {
       topValue: 0,
     };
   }
-  componentDidMount() {
+  componentWillMount() {
     this.createPanResponder();
   }
   componentWillUnmount() {
-    if (this.closeTimeoutId != null) {
+    if (this._closeTimeoutId != null) {
       this.closeDirectly();
     }
   }
   createPanResponder = () => {
-    this.panResponder = PanResponder.create({
+    this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => {
         return this.props.panResponderEnabled;
       },
@@ -183,10 +183,10 @@ export default class DropdownAlert extends Component {
         this.animate(1);
       }
       if (this.props.closeInterval > 1) {
-        if (this.closeTimeoutId != null) {
-          clearTimeout(this.closeTimeoutId);
+        if (this._closeTimeoutId != null) {
+          clearTimeout(this._closeTimeoutId);
         }
-        this.closeTimeoutId = setTimeout(
+        this._closeTimeoutId = setTimeout(
           function() {
             this.close('automatic');
           }.bind(this),
@@ -213,7 +213,7 @@ export default class DropdownAlert extends Component {
           }
           self.animate(1);
           if (self.props.closeInterval > 1) {
-            this.closeTimeoutId = setTimeout(
+            this._closeTimeoutId = setTimeout(
               function() {
                 self.close('automatic');
               }.bind(self),
@@ -234,8 +234,8 @@ export default class DropdownAlert extends Component {
       onClose = this.props.onCancel;
     }
     if (this.state.isOpen) {
-      if (this.closeTimeoutId != null) {
-        clearTimeout(this.closeTimeoutId);
+      if (this._closeTimeoutId != null) {
+        clearTimeout(this._closeTimeoutId);
       }
       this.animate(0);
       setTimeout(
@@ -268,8 +268,8 @@ export default class DropdownAlert extends Component {
   };
   closeDirectly() {
     if (this.state.isOpen) {
-      if (this.closeTimeoutId != null) {
-        clearTimeout(this.closeTimeoutId);
+      if (this._closeTimeoutId != null) {
+        clearTimeout(this._closeTimeoutId);
       }
       this.setState({
         isOpen: false,
@@ -388,7 +388,7 @@ export default class DropdownAlert extends Component {
       return (
         <Animated.View
           ref={ref => this.mainView = ref}
-          {...this.panResponder.panHandlers}
+          {...this._panResponder.panHandlers}
           style={{
             transform: [
               {
