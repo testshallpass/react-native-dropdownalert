@@ -127,7 +127,7 @@ export default class DropdownAlert extends Component {
   }
   componentWillUnmount() {
     if (this._closeTimeoutId != null) {
-      this.closeDirectly();
+      clearTimeout(this._closeTimeoutId);
     }
   }
   createPanResponder = () => {
@@ -292,26 +292,26 @@ export default class DropdownAlert extends Component {
     }).start();
   };
   onLayoutEvent(event) {
-    var { x, y, width, height } = event.nativeEvent.layout;
+    const { x, y, width, height } = event.nativeEvent.layout;
     var actualStartDelta = this.state.startDelta;
     var actualEndDelta = this.state.endDelta;
-    // Prevent it from going off screen.
-    if (this.props.startDelta < 0) {
-      var delta = 0 - height;
-      if (delta != this.props.startDelta) {
+    const { startDelta, endDelta } = this.props;
+    if (startDelta < 0) {
+      const delta = 0 - height;
+      if (delta != startDelta) {
         actualStartDelta = delta;
       }
-    } else if (this.props.startDelta > WINDOW.height) {
+    } else if (startDelta > WINDOW.height) {
       actualStartDelta = WINDOW.height + height;
     }
-    if (this.props.endDelta < 0) {
+    if (endDelta < 0) {
       actualEndDelta = 0;
-    } else if (this.props.endDelta > WINDOW.height) {
+    } else if (endDelta > WINDOW.height) {
       actualEndDelta = WINDOW.height - height;
     }
-    var heightDelta = WINDOW.height - this.props.endDelta - height;
+    const heightDelta = WINDOW.height - endDelta - height;
     if (heightDelta < 0) {
-      actualEndDelta = this.props.endDelta + heightDelta;
+      actualEndDelta = endDelta + heightDelta;
     }
     if (actualStartDelta != this.state.startDelta || actualEndDelta != this.state.endDelta) {
       this.setState({
