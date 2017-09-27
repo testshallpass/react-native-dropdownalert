@@ -1,4 +1,4 @@
-import DropdownAlert from './DropdownAlert'
+import DropdownAlert from 'react-native-dropdownalert'
 import React, { Component, PropTypes } from 'react'
 import {StyleSheet, Text, TouchableOpacity, FlatList, Image, StatusBar, View} from 'react-native'
 // Colors
@@ -18,7 +18,7 @@ export default class Main extends Component {
       {key: 2, backgroundColor: MAIN_ERROR_COLOR, type: 'error', title: 'Error', message: 'Sorry, we\'re having some technical difficulties. Our team will get this fixed for you ASAP.'},
       {key: 3, backgroundColor: MAIN_SUCCESS_COLOR, type: 'success', title: 'Success', message: 'Thank you for your order. We will email and charge you when it\'s on it\'s way.'},
       {key: 4, backgroundColor: MAIN_CUSTOM_COLOR, type: 'custom', title: 'Custom', message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'},
-      {key: 5, backgroundColor: MAIN_DISMISS_COLOR, type: 'dismiss', title: 'Dismiss alert'}
+      {key: 5, backgroundColor: MAIN_DISMISS_COLOR, type: 'close', title: 'close'}
     ]
     this.state = {
       items: items
@@ -26,8 +26,8 @@ export default class Main extends Component {
   }
   renderItem = ({item}) => {
     return (
-      <TouchableOpacity style={[styles.button, {backgroundColor: item.backgroundColor}]} onPress={() => this.showAlert(item)}>
-        <Text style={styles.text}>{item.title}</Text>
+      <TouchableOpacity style={[styles.button, {borderColor: item.backgroundColor}]} onPress={() => this.showAlert(item)}>
+        <Text style={[styles.text, {color: item.backgroundColor}]}>{item.title}</Text>
       </TouchableOpacity>
     )
   }
@@ -45,23 +45,25 @@ export default class Main extends Component {
           containerStyle={{
             backgroundColor: MAIN_CUSTOM_COLOR,
           }}
+          showCancel={true}
           onClose={(data) => this.onClose(data)}
+          onCancel={(data) => this.onClose(data)}
           imageSrc={'https://facebook.github.io/react/img/logo_og.png'}
         />
       </View>
     );
   }
   showAlert(item) {
-    if (item.type == 'dismiss') {
-      this.dismissAlert()
+    if (item.type == 'close') {
+      this.closeAlert()
     } else {
       const random = Math.floor((Math.random() * 1000) + 1)
       const title = item.title + ' #' + random
       this.dropdown.alertWithType(item.type, title, item.message)
     }
   }
-  dismissAlert = () => {
-    this.dropdown.onClose()
+  closeAlert = () => {
+    this.dropdown.close()
   }
   onClose(data) {
     console.log(data);
@@ -71,7 +73,7 @@ export default class Main extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E9EEEF'
+    backgroundColor: '#222222'
   },
   listContainer: {
     paddingTop: 22
@@ -80,11 +82,14 @@ const styles = StyleSheet.create({
     padding: 8,
     alignItems: 'center',
     borderRadius: 8,
-    margin: 8
+    margin: 8,
+    backgroundColor: '#222222',
+    borderWidth: 1,
   },
   text: {
     fontSize: 20,
     textAlign: 'center',
-    color: 'white'
+    color: 'white',
+    fontWeight: 'bold',
   },
 });
