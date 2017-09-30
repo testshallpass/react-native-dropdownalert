@@ -50,6 +50,8 @@ export default class DropdownAlert extends Component {
     updateStatusBar: PropTypes.bool,
     elevation: PropTypes.number,
     sensitivity: PropTypes.number,
+    defaultContainer: ViewPropTypes.style,
+    defaultTextContainer: ViewPropTypes.style,
   };
   static defaultProps = {
     onClose: null,
@@ -98,6 +100,15 @@ export default class DropdownAlert extends Component {
       width: DEFAULT_IMAGE_DIMENSIONS,
       height: DEFAULT_IMAGE_DIMENSIONS,
       alignSelf: 'center',
+    },
+    defaultContainer: {
+      padding: 8,
+      paddingTop: IS_ANDROID ? 0 : 20,
+      flexDirection: 'row',
+    },
+    defaultTextContainer: {
+      flex: 1,
+      padding: 8,
     },
     translucent: false,
     activeStatusBarStyle: 'light-content',
@@ -321,17 +332,18 @@ export default class DropdownAlert extends Component {
     }
   }
   getStyleForType(type) {
+    const { defaultContainer } = this.props;
     switch (type) {
       case 'info':
-        return [styles.defaultContainer, { backgroundColor: this.props.infoColor }];
+        return [StyleSheet.flatten(defaultContainer), { backgroundColor: this.props.infoColor }];
       case 'warn':
-        return [styles.defaultContainer, { backgroundColor: this.props.warnColor }];
+        return [StyleSheet.flatten(defaultContainer), { backgroundColor: this.props.warnColor }];
       case 'error':
-        return [styles.defaultContainer, { backgroundColor: this.props.errorColor }];
+        return [StyleSheet.flatten(defaultContainer), { backgroundColor: this.props.errorColor }];
       case 'success':
-        return [styles.defaultContainer, { backgroundColor: this.props.successColor }];
+        return [StyleSheet.flatten(defaultContainer), { backgroundColor: this.props.successColor }];
       default:
-        return [styles.defaultContainer, StyleSheet.flatten(this.props.containerStyle)];
+        return [StyleSheet.flatten(defaultContainer), StyleSheet.flatten(this.props.containerStyle)];
     }
   }
   getSourceForType(type) {
@@ -413,7 +425,7 @@ export default class DropdownAlert extends Component {
           >
             <View style={style}>
               <ImageView style={StyleSheet.flatten(this.props.imageStyle)} source={source} />
-              <View style={styles.textContainer}>
+              <View style={StyleSheet.flatten(this.props.defaultTextContainer)}>
                 <Label style={StyleSheet.flatten(this.props.titleStyle)} numberOfLines={this.props.titleNumOfLines} text={this.state.title} />
                 <Label style={StyleSheet.flatten(this.props.messageStyle)} numberOfLines={this.props.messageNumOfLines} text={this.state.message} />
               </View>
@@ -436,15 +448,3 @@ export default class DropdownAlert extends Component {
     return null;
   }
 }
-
-var styles = StyleSheet.create({
-  defaultContainer: {
-    padding: 8,
-    paddingTop: IS_ANDROID ? 0 : 20,
-    flexDirection: 'row',
-  },
-  textContainer: {
-    flex: 1,
-    padding: 8,
-  },
-});
