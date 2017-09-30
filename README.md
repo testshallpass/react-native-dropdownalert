@@ -6,15 +6,16 @@
 [![Build Status](https://travis-ci.org/testshallpass/react-native-dropdownalert.svg?branch=master)](https://travis-ci.org/testshallpass/react-native-dropdownalert)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/testshallpass/react-native-dropdownalert/master/LICENSE)
 
+![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/info.png) ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/warning.png) ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/error.png) ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/success.png)
+
 ### Table of contents
 1. [News](#news)
 2. [Installation](#installation)
 3. [Demo](#demo)
 4. [Usage](#usage)
-5. [Types](#types)
-6. [Props](#props)
+5. [Props](#props)
 
-A simple alert to notify users about new chat messages, something went wrong or everything is ok. It can be dismissed by onPress, cancel onPress, automatically with `closeInterval` prop, pan responder up gesture or programmatically. 
+A simple alert to notify users about new chat messages, something went wrong or everything is ok. It can be closed by tap, cancel button, automatically with `closeInterval`, pan responder up gesture or programmatically. 
 
 ### News
 > v2.13.0 supports ViewPropTypes introduced in react-native **0.44.0**. If you support an earlier react-native version, please use v2.12.0 or earlier.
@@ -29,38 +30,30 @@ npm i react-native-dropdownalert --save
 
 ### Usage
 ```javascript
-
-import DropdownAlert from 'react-native-dropdownalert'
-// ...
-render() {
-  return (
-    <View>
-      // !!! Make sure it's the last component in your document tree.
-      <DropdownAlert
-        ref={(ref) => this.dropdown = ref}
-        onClose={(data) => this.onClose(data)} />
-    </View>
-  )
-}
-// ...
-handleRequestCallback(err, response) {
-  if (err != null) {
-    this.dropdown.alertWithType('error', 'Error', err)
+import DropdownAlert from 'react-native-dropdownalert';
+export default class Example extends Component {
+  // ...
+  onError = error => {
+    if (error) {
+      this.dropdown.alertWithType('error', 'Error', error);
+    }
+  };
+  // ...
+  onClose(data) {
+    // data = {type, title, message, action}
+    // action means how the alert was closed.
+    // returns: automatic, programmatic, tap, pan or cancel
+  }
+  render() {
+    return (
+      <View>
+        // !!! Make sure it's the last component in your document tree.
+        <DropdownAlert ref={ref => this.dropdown = ref} onClose={data => this.onClose(data)} />
+      </View>
+    );
   }
 }
-// ...
-onClose(data) {
-  // data = {type, title, message, action}
-  // action means how the alert was dismissed. returns: automatic, programmatic, tap, pan or cancel
-}
-// ...
 ```
-
-### Types
-
-| info | warn | error | success |
-| :---: | :---: | :---: | :---: |
-|![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/info.png) |![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/warning.png) |![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/error.png)|![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/success.png)
 
 ### Props
 | Name | Type | Description | Default |
