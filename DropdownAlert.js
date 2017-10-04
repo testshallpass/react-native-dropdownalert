@@ -163,7 +163,7 @@ export default class DropdownAlert extends Component {
       title = title.toString()
       console.warn('DropdownAlert: Title is not a string.')
     }
-    if (typeof message !== 'string') {
+    if (typeof message !== 'string' && message !== null) {
       message = message.toString()
       console.warn('DropdownAlert: Message is not a string.')
     }
