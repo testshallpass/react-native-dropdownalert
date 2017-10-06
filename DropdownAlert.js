@@ -49,6 +49,7 @@ export default class DropdownAlert extends Component {
     inactiveStatusBarBackgroundColor: PropTypes.string,
     updateStatusBar: PropTypes.bool,
     elevation: PropTypes.number,
+    zIndex: PropTypes.number,
     sensitivity: PropTypes.number,
     defaultContainer: ViewPropTypes.style,
     defaultTextContainer: ViewPropTypes.style,
@@ -415,6 +416,7 @@ export default class DropdownAlert extends Component {
             left: 0,
             right: 0,
             elevation: this.props.elevation,
+            zIndex: this.props.zIndex,
           }}
         >
           <TouchableOpacity
