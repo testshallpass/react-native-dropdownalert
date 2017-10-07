@@ -49,6 +49,7 @@ export default class DropdownAlert extends Component {
     inactiveStatusBarBackgroundColor: PropTypes.string,
     updateStatusBar: PropTypes.bool,
     elevation: PropTypes.number,
+    zIndex: PropTypes.number,
     sensitivity: PropTypes.number,
     defaultContainer: ViewPropTypes.style,
     defaultTextContainer: ViewPropTypes.style,
@@ -117,6 +118,7 @@ export default class DropdownAlert extends Component {
     inactiveStatusBarBackgroundColor: StatusBarDefaultBackgroundColor,
     updateStatusBar: true,
     elevation: 1,
+    zIndex: null,
     sensitivity: 20,
   };
   constructor(props) {
@@ -397,25 +399,27 @@ export default class DropdownAlert extends Component {
           StatusBar.setBarStyle(activeStatusBarStyle, true);
         }
       }
+      let wrapperStyle = {
+        transform: [
+          {
+            translateY: this.state.animationValue.interpolate({
+              inputRange: [0, 1],
+              outputRange: [this.state.startDelta, this.state.endDelta],
+            }),
+          },
+        ],
+        position: 'absolute',
+        top: this.state.topValue,
+        left: 0,
+        right: 0,
+        elevation: this.props.elevation,
+      };
+      if (this.props.zIndex != null) wrapperStyle['zIndex'] = this.props.zIndex;
       return (
         <Animated.View
           ref={ref => this.mainView = ref}
           {...this._panResponder.panHandlers}
-          style={{
-            transform: [
-              {
-                translateY: this.state.animationValue.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [this.state.startDelta, this.state.endDelta],
-                }),
-              },
-            ],
-            position: 'absolute',
-            top: this.state.topValue,
-            left: 0,
-            right: 0,
-            elevation: this.props.elevation,
-          }}
+          style={wrapperStyle}
         >
           <TouchableOpacity
             activeOpacity={!this.props.tapToCloseEnabled || showCancel ? 1 : 0.95}
