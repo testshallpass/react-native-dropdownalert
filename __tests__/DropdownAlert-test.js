@@ -41,3 +41,9 @@ test('renders custom alert with cancel correctly', () => {
   const tree = toJson(wrapper);
   expect(tree).toMatchSnapshot();
 });
+test('renders alert with zIndex correctly', () => {
+  const wrapper = shallow(<DropdownAlert imageSrc={'https://facebook.github.io/react/img/logo_og.png'} zIndex={99} />);
+  wrapper.setState({isOpen: true, type: 'info', title: 'Hello', message: 'World!'});
+  const tree = toJson(wrapper);
+  expect(tree).toMatchSnapshot();
+});
