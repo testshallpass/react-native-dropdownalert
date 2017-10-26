@@ -48,6 +48,7 @@ export default class DropdownAlert extends Component {
     inactiveStatusBarStyle: PropTypes.string,
     inactiveStatusBarBackgroundColor: PropTypes.string,
     updateStatusBar: PropTypes.bool,
+    textProps: PropTypes.object,
     elevation: PropTypes.number,
     zIndex: PropTypes.number,
     sensitivity: PropTypes.number,
@@ -110,6 +111,9 @@ export default class DropdownAlert extends Component {
     defaultTextContainer: {
       flex: 1,
       padding: 8,
+    },
+    textProps: {
+
     },
     translucent: false,
     activeStatusBarStyle: 'light-content',
@@ -200,7 +204,7 @@ export default class DropdownAlert extends Component {
           clearTimeout(this._closeTimeoutId);
         }
         this._closeTimeoutId = setTimeout(
-          function() {
+          function () {
             this.close('automatic');
           }.bind(this),
           this.props.closeInterval
@@ -214,7 +218,7 @@ export default class DropdownAlert extends Component {
       }
       var self = this;
       setTimeout(
-        function() {
+        function () {
           if (self.state.isOpen == false) {
             self.setState({
               type: type,
@@ -227,7 +231,7 @@ export default class DropdownAlert extends Component {
           self.animate(1);
           if (self.props.closeInterval > 1) {
             this._closeTimeoutId = setTimeout(
-              function() {
+              function () {
                 self.close('automatic');
               }.bind(self),
               self.props.closeInterval
@@ -252,7 +256,7 @@ export default class DropdownAlert extends Component {
       }
       this.animate(0);
       setTimeout(
-        function() {
+        function () {
           if (this.state.isOpen) {
             this.setState({
               isOpen: false,
@@ -430,8 +434,8 @@ export default class DropdownAlert extends Component {
             <View style={style}>
               <ImageView style={StyleSheet.flatten(this.props.imageStyle)} source={source} />
               <View style={StyleSheet.flatten(this.props.defaultTextContainer)}>
-                <Label style={StyleSheet.flatten(this.props.titleStyle)} numberOfLines={this.props.titleNumOfLines} text={this.state.title} />
-                <Label style={StyleSheet.flatten(this.props.messageStyle)} numberOfLines={this.props.messageNumOfLines} text={this.state.message} />
+                <Label textProps={this.props.textProps} style={StyleSheet.flatten(this.props.titleStyle)} numberOfLines={this.props.titleNumOfLines} text={this.state.title} />
+                <Label textProps={this.props.textProps} style={StyleSheet.flatten(this.props.messageStyle)} numberOfLines={this.props.messageNumOfLines} text={this.state.message} />
               </View>
               {showCancel &&
                 <TouchableOpacity
