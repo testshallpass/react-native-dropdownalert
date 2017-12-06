@@ -126,7 +126,7 @@ export default class DropdownAlert extends Component {
     super(props);
     this.state = {
       animationValue: new Animated.Value(0),
-      duration: 450,
+      duration: 250,
       type: '',
       message: '',
       title: '',
