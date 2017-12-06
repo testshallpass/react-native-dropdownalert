@@ -53,6 +53,7 @@ export default class DropdownAlert extends Component {
     sensitivity: PropTypes.number,
     defaultContainer: ViewPropTypes.style,
     defaultTextContainer: ViewPropTypes.style,
+    customComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
   };
   static defaultProps = {
     onClose: null,
@@ -415,6 +416,24 @@ export default class DropdownAlert extends Component {
         elevation: this.props.elevation,
       };
       if (this.props.zIndex != null) wrapperStyle['zIndex'] = this.props.zIndex;
+      if (this.props.customComponent) {
+        return (
+          <Animated.View
+            ref={ref => this.mainView = ref}
+            {...this._panResponder.panHandlers}
+            style={wrapperStyle}
+          >
+            <TouchableOpacity
+              activeOpacity={!this.props.tapToCloseEnabled || showCancel ? 1 : 0.95}
+              onPress={showCancel ? null : () => this.close('tap')}
+              disabled={!this.props.tapToCloseEnabled}
+              onLayout={event => this.onLayoutEvent(event)}
+            >
+              {this.props.customComponent}
+            </TouchableOpacity>
+          </Animated.View>
+        );
+      }
       return (
         <Animated.View
           ref={ref => this.mainView = ref}
