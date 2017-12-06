@@ -53,7 +53,7 @@ export default class DropdownAlert extends Component {
     sensitivity: PropTypes.number,
     defaultContainer: ViewPropTypes.style,
     defaultTextContainer: ViewPropTypes.style,
-    customComponent: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
+    customComponent: PropTypes.func,
   };
   static defaultProps = {
     onClose: null,
@@ -429,7 +429,7 @@ export default class DropdownAlert extends Component {
               disabled={!this.props.tapToCloseEnabled}
               onLayout={event => this.onLayoutEvent(event)}
             >
-              {this.props.customComponent}
+              {this.props.customComponent(() => this.close('cancel'))}
             </TouchableOpacity>
           </Animated.View>
         );
