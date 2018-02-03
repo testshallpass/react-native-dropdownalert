@@ -1,9 +1,9 @@
 
-#### Issue Description
+#### Short Description
 
 [FILL THIS OUT]
 
-#### Steps to Reproduce / Code Snippets
+#### Steps to Reproduce / Code Snippets / Usage
 
 [FILL THIS OUT]
 
@@ -16,3 +16,5 @@
 * React Native version: [FILL THIS OUT]
 * react-native-dropdownalert version: [FILL THIS OUT]
 * Platform(s) (iOS, Android, or both?): [FILL THIS OUT]
+* iOS version: [FILL THIS OUT]
+* Android version: [FILL THIS OUT]
