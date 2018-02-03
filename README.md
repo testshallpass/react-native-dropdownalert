@@ -94,5 +94,9 @@ export default class Example extends Component {
 | ```sensitivity``` | Number  | Sensitivity for the pan responder up gesture | 20
 | ```defaultContainer``` | ViewPropTypes.style  | Style for inner view container (**override paddingTop with this**) | ```{ padding: 8, paddingTop: IS_ANDROID ? 0 : 20, flexDirection: 'row' } ```
 | ```defaultTextContainer``` | ViewPropTypes.style  | Style for inner text container (holds title and message) | ```{ flex: 1, padding: 8 }```
+| ```renderImage``` | Function  | Use to overide the left image component  | undefined
+| ```renderCancel``` | Function  | Use to overide the cancel button component  | undefined
+| ```renderTitle``` | Function  | Use to overide the title component  | undefined
+| ```renderMessage``` | Function  | Use to overide the message component  | undefined
 
 > Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
