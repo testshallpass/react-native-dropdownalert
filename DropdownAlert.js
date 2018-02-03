@@ -423,7 +423,7 @@ export default class DropdownAlert extends Component {
         >
           <TouchableOpacity
             activeOpacity={!this.props.tapToCloseEnabled || showCancel ? 1 : 0.95}
-            onPress={showCancel ? null : () => this.close('tap')}
+            onPress={!this.props.tapToCloseEnabled ? null : () => this.close('tap')}
             disabled={!this.props.tapToCloseEnabled}
             onLayout={event => this.onLayoutEvent(event)}
           >
