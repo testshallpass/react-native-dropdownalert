@@ -1,4 +1,4 @@
-import DropdownAlert from 'react-native-dropdownalert';
+import DropdownAlert from './DropdownAlert';
 import React, { Component, PropTypes } from 'react';
 import { StyleSheet, Text, TouchableOpacity, FlatList, Image, StatusBar, View } from 'react-native';
 // Colors
@@ -52,6 +52,10 @@ export default class Main extends Component {
     ];
     this.state = {
       items: items,
+      visible: false,
+      title: 'Hello World',
+      message: 'Hellow World',
+      backgroundColor: MAIN_CUSTOM_COLOR,
     };
   }
   renderItem = ({ item }) => {
@@ -68,14 +72,12 @@ export default class Main extends Component {
         <StatusBar />
         <FlatList style={styles.listContainer} data={items} renderItem={this.renderItem} />
         <DropdownAlert
-          ref={ref => this.dropdown = ref}
-          containerStyle={{
-            backgroundColor: MAIN_CUSTOM_COLOR,
-          }}
-          showCancel={true}
+          visible={this.state.visible}
+          title={this.state.title}
+          message={this.state.message}
+          backgroundColor={this.state.backgroundColor}
           onClose={data => this.onClose(data)}
-          onCancel={data => this.onClose(data)}
-          imageSrc={'https://facebook.github.io/react/img/logo_og.png'}
+          imageSrc={'https://reactjs.org/logo-og.png'}
         />
       </View>
     );
@@ -86,21 +88,31 @@ export default class Main extends Component {
     } else {
       const random = Math.floor(Math.random() * 1000 + 1);
       const title = item.title + ' #' + random;
-      this.dropdown.alertWithType(item.type, title, item.message);
+      this.setState({
+        visible: true,
+        title: item.title,
+        message: item.message,
+        backgroundColor: item.backgroundColor,
+      });
     }
   }
   closeAlert = () => {
-    this.dropdown.close();
+    this.setState({
+      visible: false,
+    });
   };
   onClose(data) {
     console.log(data);
+    this.setState({
+      visible: false,
+    });
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#222222',
+    backgroundColor: 'white',
   },
   listContainer: {
     paddingTop: 22,
@@ -110,7 +122,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8,
     margin: 8,
-    backgroundColor: '#222222',
+    backgroundColor: 'transparent',
     borderWidth: 1,
   },
   text: {

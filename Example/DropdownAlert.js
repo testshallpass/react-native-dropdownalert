@@ -20,51 +20,56 @@ import ImageView from './imageview';
 
 export default class DropdownAlert extends Component {
   static propTypes = {
+    visible: PropTypes.bool,
+    title: PropTypes.string,
+    message: PropTypes.string,
+
     containerStyle: ViewPropTypes.style,
+    backgroundColor: PropTypes.string,
+
     titleStyle: Text.propTypes.style,
     messageStyle: Text.propTypes.style,
+    textContainerStyle: ViewPropTypes.style,
     imageStyle: Image.propTypes.style,
-    labelContainerStyle: ViewPropTypes.style,
+
     closeInterval: PropTypes.number,
-    activeStatusBarStyle: PropTypes.string,
-    activeStatusBarBackgroundColor: PropTypes.string,
-    inactiveStatusBarStyle: PropTypes.string,
-    inactiveStatusBarBackgroundColor: PropTypes.string,
-    cancelBtnImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    cancelBtnImageStyle: Image.propTypes.style,
-    onCancel: PropTypes.func,
     onClose: PropTypes.func,
+
     imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
     startDelta: PropTypes.number,
     endDelta: PropTypes.number,
+
     titleNumOfLines: PropTypes.number,
     messageNumOfLines: PropTypes.number,
-    onClose: PropTypes.func,
-    onCancel: PropTypes.func,
-    showCancel: PropTypes.bool,
+
     tapToCloseEnabled: PropTypes.bool,
     panResponderEnabled: PropTypes.bool,
     replaceEnabled: PropTypes.bool,
+
     translucent: PropTypes.bool,
     elevation: PropTypes.number,
     zIndex: PropTypes.number,
     sensitivity: PropTypes.number,
-    visible: PropTypes.bool,
-    title: PropTypes.string,
-    message: PropTypes.string,
-    legacyImage: PropTypes.string,
+
+    activeStatusBarStyle: PropTypes.string,
+    activeStatusBarBackgroundColor: PropTypes.string,
+    inactiveStatusBarStyle: PropTypes.string,
+    inactiveStatusBarBackgroundColor: PropTypes.string,
+
+    renderImage: PropTypes.func,
+    renderTitle: PropTypes.func,
+    renderMessage: PropTypes.func,
+    renderStatusBar: PropTypes.func,
   };
   static defaultProps = {
     onClose: null,
-    onCancel: null,
     closeInterval: 4000,
     startDelta: -100,
     endDelta: 0,
     titleNumOfLines: 1,
     messageNumOfLines: 3,
     imageSrc: null,
-    cancelBtnImageSrc: require('./assets/cancel.png'),
-    showCancel: false,
     tapToCloseEnabled: true,
     panResponderEnabled: true,
     replaceEnabled: true,
@@ -72,6 +77,7 @@ export default class DropdownAlert extends Component {
       padding: 8,
       flexDirection: 'row',
       paddingTop: IS_ANDROID ? 0 : 20,
+      backgroundColor: '#cc3232',
     },
     titleStyle: {
       fontSize: 16,
@@ -93,13 +99,7 @@ export default class DropdownAlert extends Component {
       height: DEFAULT_IMAGE_DIMENSIONS,
       alignSelf: 'center',
     },
-    cancelBtnImageStyle: {
-      padding: 8,
-      width: DEFAULT_IMAGE_DIMENSIONS,
-      height: DEFAULT_IMAGE_DIMENSIONS,
-      alignSelf: 'center',
-    },
-    labelContainerStyle: {
+    textContainerStyle: {
       flex: 1,
       padding: 8,
     },
@@ -126,6 +126,7 @@ export default class DropdownAlert extends Component {
       topValue: 0,
     };
     this.visible = props.visible;
+    this.panResponder = null;
   }
   componentWillMount() {
     this.createPanResponder();
@@ -140,11 +141,10 @@ export default class DropdownAlert extends Component {
       if (nextProps.visible) {
         this.alert(nextProps.title, nextProps.message);
       }
-      this.alert(nextProps.title, nextProps.message);
     }
   }
   createPanResponder = () => {
-    this._panResponder = PanResponder.create({
+    this.panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => {
         return this.props.panResponderEnabled;
       },
@@ -207,22 +207,19 @@ export default class DropdownAlert extends Component {
       }.bind(this),
       delayInMilliSeconds
     );
-  };
+  }
   close = action => {
     if (action == undefined) {
       action = 'programmatic';
     }
     var onClose = this.props.onClose;
-    if (action == 'cancel') {
-      onClose = this.props.onCancel;
-    }
     if (this.visible) {
       if (this._closeTimeoutId != null) {
         clearTimeout(this._closeTimeoutId);
       }
-      // this.animate(0);
       setTimeout(
         function() {
+          this.animate(0);
           if (this.visible) {
             if (this.props.updateStatusBar) {
               if (IS_ANDROID) {
@@ -231,13 +228,12 @@ export default class DropdownAlert extends Component {
                 StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
               }
             }
-            this.animate(0);
             this.visible = false;
             if (onClose) {
               let data = {
                 title: this.state.title,
                 message: this.state.message,
-                action: action, // !!! How the alert was closed: automatic, programmatic, tap, pan or cancel
+                action: action, // !!! How the alert was closed: automatic, programmatic, tap, pan
               };
               onClose(data);
             }
@@ -248,19 +244,19 @@ export default class DropdownAlert extends Component {
     }
   };
   closeDirectly() {
-    // if (this.visible) {
-    //   this.visible = false;
-    //   if (this._closeTimeoutId != null) {
-    //     clearTimeout(this._closeTimeoutId);
-    //   }
-    //   if (this.props.updateStatusBar) {
-    //     if (IS_ANDROID) {
-    //       StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
-    //     } else {
-    //       StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
-    //     }
-    //   }
-    // }
+    if (this.visible) {
+      this.visible = false;
+      if (this._closeTimeoutId != null) {
+        clearTimeout(this._closeTimeoutId);
+      }
+      if (this.props.updateStatusBar) {
+        if (IS_ANDROID) {
+          StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
+        } else {
+          StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
+        }
+      }
+    }
   }
   animate = toValue => {
     Animated.spring(this.state.animationValue, {
@@ -300,16 +296,18 @@ export default class DropdownAlert extends Component {
     }
   }
   render() {
-    let { activeStatusBarBackgroundColor, translucent, updateStatusBar, activeStatusBarStyle, cancelBtnImageSrc, showCancel, containerStyle, imageSrc } = this.props;
-    let style = StyleSheet.flatten(this.props.containerStyle);
-    const source = this.props.imageSrc;
-    const backgroundColor = this.props.containerStyle.backgroundColor;
+    console.log('render');
+
+    let { activeStatusBarBackgroundColor, translucent, updateStatusBar, activeStatusBarStyle, containerStyle, imageSrc } = this.props;
+    let style = StyleSheet.flatten(containerStyle);
+    const source = imageSrc;
+    let backgroundColor = containerStyle.backgroundColor;
+    if (this.props.backgroundColor) {
+      backgroundColor = this.props.backgroundColor;
+    }
     if (IS_ANDROID) {
       if (translucent) {
         style = [style, { paddingTop: StatusBar.currentHeight }];
-      }
-      if (type !== 'custom') {
-        activeStatusBarBackgroundColor = backgroundColor;
       }
     }
     if (updateStatusBar) {
@@ -337,34 +335,19 @@ export default class DropdownAlert extends Component {
     };
     if (this.props.zIndex != null) wrapperStyle['zIndex'] = this.props.zIndex;
     return (
-      <Animated.View
-        ref={ref => this.mainView = ref}
-        {...this._panResponder.panHandlers}
-        style={wrapperStyle}
-      >
+      <Animated.View ref={ref => this.mainView = ref} {...this.panResponder.panHandlers} style={wrapperStyle}>
         <TouchableOpacity
-          activeOpacity={!this.props.tapToCloseEnabled || showCancel ? 1 : 0.95}
-          onPress={showCancel ? null : () => this.close('tap')}
+          activeOpacity={!this.props.tapToCloseEnabled ? 1 : 0.95}
+          onPress={() => this.close('tap')}
           disabled={!this.props.tapToCloseEnabled}
           onLayout={event => this.onLayoutEvent(event)}
         >
-          <View style={style}>
-            <ImageView style={StyleSheet.flatten(this.props.imageStyle)} source={source} />
-            <View style={StyleSheet.flatten(this.props.labelContainerStyle)}>
-              <Label style={StyleSheet.flatten(this.props.titleStyle)} numberOfLines={this.props.titleNumOfLines} text={this.props.title} />
-              <Label style={StyleSheet.flatten(this.props.messageStyle)} numberOfLines={this.props.messageNumOfLines} text={this.props.message} />
+          <View style={[style, { backgroundColor: backgroundColor }]}>
+            <ImageView style={this.props.imageStyle} source={source} />
+            <View style={this.props.textContainerStyle}>
+              <Label style={this.props.titleStyle} numberOfLines={this.props.titleNumOfLines} text={this.props.title} />
+              <Label style={this.props.messageStyle} numberOfLines={this.props.messageNumOfLines} text={this.props.message} />
             </View>
-            {showCancel &&
-              <TouchableOpacity
-                style={{
-                  alignSelf: this.props.cancelBtnImageStyle.alignSelf,
-                  width: this.props.cancelBtnImageStyle.width,
-                  height: this.props.cancelBtnImageStyle.height,
-                }}
-                onPress={() => this.close('cancel')}
-              >
-                <ImageView style={this.props.cancelBtnImageStyle} source={this.props.cancelBtnImageSrc} />
-              </TouchableOpacity>}
           </View>
         </TouchableOpacity>
       </Animated.View>
