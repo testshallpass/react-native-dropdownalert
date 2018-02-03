@@ -9,7 +9,7 @@
 ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/info.png) ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/warning.png) ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/error.png) ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/success.png)
 
 ### Table of contents
-1. [News](#news)
+1. [Support](#support)
 2. [Installation](#installation)
 3. [Demo](#demo)
 4. [Usage](#usage)
@@ -17,8 +17,11 @@
 
 A simple alert to notify users about new chat messages, something went wrong or everything is ok. It can be closed by tap, cancel button, automatically with `closeInterval`, pan responder up gesture or programmatically. 
 
-### News
-> v2.13.0 supports ViewPropTypes introduced in react-native **0.44.0**. If you support an earlier react-native version, please use v2.12.0 or earlier.
+### Support
+| react-native version | package version | reason | 
+| ---- | :---: | ---- |
+| 0.50.0 | >=3.2.0 | Added SafeAreaView (iPhone X) |
+| 0.44.0 | >=2.12.0 | Added ViewPropTypes |
 
 ### Installation
 ```
