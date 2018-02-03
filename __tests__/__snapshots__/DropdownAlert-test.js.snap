@@ -244,7 +244,7 @@ exports[`renders custom alert with cancel correctly 1`] = `
     disabled={false}
     focusedOpacity={0.7}
     onLayout={[Function]}
-    onPress={null}
+    onPress={[Function]}
   >
     <View
       style={
