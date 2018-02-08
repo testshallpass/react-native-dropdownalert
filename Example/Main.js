@@ -34,6 +34,11 @@ export default class main extends Component {
       </TouchableOpacity>
     );
   }
+  renderImage(props) {
+    return (
+      <Image style={props.imageStyle} source={{ uri: props.imageSrc }} />
+    );
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -48,6 +53,8 @@ export default class main extends Component {
           onClose={data => this.handleClose(data)}
           onCancel={data => this.handleCancel(data)}
           imageSrc={'https://facebook.github.io/react-native/docs/assets/favicon.png'}
+          renderImage={(props) => this.renderImage(props)}
+          renderCancel={(props) => this.renderImage(props)}
         />
       </View>
     );
