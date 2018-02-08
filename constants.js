@@ -1,7 +1,7 @@
 import { StatusBar, Platform, Dimensions } from 'react-native';
 
-const StatusBarDefaultBarStyle = StatusBar._defaultProps.barStyle.value;
-const StatusBarDefaultBackgroundColor = StatusBar._defaultProps.backgroundColor.value;
+const StatusBarDefaultBarStyle = StatusBar._defaultProps ? StatusBar._defaultProps.barStyle.value : 'default';
+const StatusBarDefaultBackgroundColor = StatusBar._defaultProps ? StatusBar._defaultProps.backgroundColor.value : 'black';
 const DEFAULT_IMAGE_DIMENSIONS = 36;
 const WINDOW = Dimensions.get('window');
 const HEIGHT = WINDOW.height;
