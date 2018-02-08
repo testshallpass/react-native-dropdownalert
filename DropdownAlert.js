@@ -55,6 +55,10 @@ export default class DropdownAlert extends Component {
     sensitivity: PropTypes.number,
     defaultContainer: ViewPropTypes.style,
     defaultTextContainer: ViewPropTypes.style,
+    renderImage: PropTypes.func,
+    renderCancel: PropTypes.func,
+    renderTitle: PropTypes.func,
+    renderMessage: PropTypes.func,
   };
   static defaultProps = {
     onClose: null,
@@ -126,6 +130,10 @@ export default class DropdownAlert extends Component {
     elevation: 1,
     zIndex: null,
     sensitivity: 20,
+    renderImage: undefined,
+    renderCancel: undefined,
+    renderTitle: undefined,
+    renderMessage: undefined,
   };
   constructor(props) {
     super(props);
@@ -382,6 +390,51 @@ export default class DropdownAlert extends Component {
         return this.props.containerStyle.backgroundColor;
     }
   }
+  renderImage(source) {
+    if (this.props.renderImage) {
+      return this.props.renderImage(this.props);
+    }
+    return <ImageView style={StyleSheet.flatten(this.props.imageStyle)} source={source} />;
+  }
+  renderCancel(show) {
+    if (show) {
+      if (this.props.renderCancel) {
+        return this.props.renderCancel(this.props);
+      } else {
+        return (
+          <TouchableOpacity
+            style={{
+              alignSelf: this.props.cancelBtnImageStyle.alignSelf,
+              width: this.props.cancelBtnImageStyle.width,
+              height: this.props.cancelBtnImageStyle.height,
+            }}
+            onPress={() => this.close('cancel')}
+          >
+            <ImageView style={this.props.cancelBtnImageStyle} source={this.props.cancelBtnImageSrc} />
+          </TouchableOpacity>
+        );
+      }
+    }
+    return null;
+  }
+  renderTitle() {
+    if (this.props.renderTitle) {
+      return this.props.renderTitle(this.props);
+    } else {
+      return (
+        <Label style={StyleSheet.flatten(this.props.titleStyle)} numberOfLines={this.props.titleNumOfLines} text={this.state.title} />
+      );
+    }
+  }
+  renderMessage() {
+    if (this.props.renderMessage) {
+      return this.props.renderMessage(this.props);
+    } else {
+      return (
+        <Label style={StyleSheet.flatten(this.props.messageStyle)} numberOfLines={this.props.messageNumOfLines} text={this.state.message} />
+      ); 
+    }
+  }
   render() {
     const { isOpen, type } = this.state;
     if (isOpen) {
@@ -435,23 +488,13 @@ export default class DropdownAlert extends Component {
           >
             <View style={style}>
               <SafeAreaView style={StyleSheet.flatten(this.props.safeAreaStyle)}>
-                <ImageView style={StyleSheet.flatten(this.props.imageStyle)} source={source} />
+                {this.renderImage(source)}
                 <View style={StyleSheet.flatten(this.props.defaultTextContainer)}>
-                  <Label style={StyleSheet.flatten(this.props.titleStyle)} numberOfLines={this.props.titleNumOfLines} text={this.state.title} />
-                  <Label style={StyleSheet.flatten(this.props.messageStyle)} numberOfLines={this.props.messageNumOfLines} text={this.state.message} />
+                  {this.renderTitle()}
+                  {this.renderMessage()}
                 </View>
               </SafeAreaView>
-              {showCancel &&
-                <TouchableOpacity
-                  style={{
-                    alignSelf: this.props.cancelBtnImageStyle.alignSelf,
-                    width: this.props.cancelBtnImageStyle.width,
-                    height: this.props.cancelBtnImageStyle.height,
-                  }}
-                  onPress={() => this.close('cancel')}
-                >
-                  <ImageView style={this.props.cancelBtnImageStyle} source={this.props.cancelBtnImageSrc} />
-                </TouchableOpacity>}
+              {this.renderCancel(showCancel)}
             </View>
           </TouchableOpacity>
         </Animated.View>
