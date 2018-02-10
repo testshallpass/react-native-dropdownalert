@@ -175,7 +175,7 @@ exports[`renders custom alert correctly 1`] = `
       >
         <ImageView
           imageProps={Object {}}
-          source="https://facebook.github.io/react/img/logo_og.png"
+          source="https://facebook.github.io/react-native/docs/assets/favicon.png"
           style={
             Object {
               "alignSelf": "center",
@@ -289,7 +289,7 @@ exports[`renders custom alert with cancel correctly 1`] = `
       >
         <ImageView
           imageProps={Object {}}
-          source="https://facebook.github.io/react/img/logo_og.png"
+          source="https://facebook.github.io/react-native/docs/assets/favicon.png"
           style={
             Object {
               "alignSelf": "center",

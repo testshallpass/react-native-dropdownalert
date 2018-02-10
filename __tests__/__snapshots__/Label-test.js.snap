@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders label with text 1`] = `
+<Text
+  accessible={true}
+  allowFontScaling={true}
+  ellipsizeMode="tail"
+  numberOfLines={1}
+  style={
+    Object {
+      "backgroundColor": "transparent",
+      "color": "white",
+      "fontSize": 16,
+      "fontWeight": "normal",
+      "textAlign": "left",
+    }
+  }
+>
+  Hello World
+</Text>
+`;

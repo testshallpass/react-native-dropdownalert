@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders imageview with number source 1`] = `
+<Image
+  source={1}
+  style={
+    Object {
+      "alignSelf": "center",
+      "height": 36,
+      "padding": 8,
+      "width": 36,
+    }
+  }
+/>
+`;
+
+exports[`renders imageview with uri source 1`] = `
+<Image
+  source={
+    Object {
+      "uri": "https://facebook.github.io/react/img/logo_og.png",
+    }
+  }
+  style={
+    Object {
+      "alignSelf": "center",
+      "height": 36,
+      "padding": 8,
+      "width": 36,
+    }
+  }
+/>
+`;
