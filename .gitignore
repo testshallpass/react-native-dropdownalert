@@ -55,3 +55,4 @@ buck-out/
 # custom
 jsconfig.json
 Example/src
+.vscode/
