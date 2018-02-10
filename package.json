@@ -4,13 +4,16 @@
   "description": "A simple alert to notify users about new chat messages, something went wrong or everything is ok.",
   "main": "DropdownAlert.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:ci": "jest && codecov"
   },
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
       "/Example"
-    ]
+    ],
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   },
   "repository": {
     "type": "git",
