@@ -1,7 +1,7 @@
 import 'react-native';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Label from '../Label';
+import Label from '../label';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
