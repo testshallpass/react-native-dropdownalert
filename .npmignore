@@ -12,3 +12,4 @@ babelrc
 test/
 __tests__/
 coverage/
+.gitattributes
