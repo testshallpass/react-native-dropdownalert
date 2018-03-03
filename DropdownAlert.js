@@ -45,6 +45,7 @@ export default class DropdownAlert extends Component {
     panResponderEnabled: PropTypes.bool,
     replaceEnabled: PropTypes.bool,
     translucent: PropTypes.bool,
+    useNativeDriver: PropTypes.bool,
     activeStatusBarStyle: PropTypes.string,
     activeStatusBarBackgroundColor: PropTypes.string,
     inactiveStatusBarStyle: PropTypes.string,
@@ -127,6 +128,7 @@ export default class DropdownAlert extends Component {
     inactiveStatusBarStyle: StatusBarDefaultBarStyle,
     inactiveStatusBarBackgroundColor: StatusBarDefaultBackgroundColor,
     updateStatusBar: true,
+    useNativeDriver: true,
     elevation: 1,
     zIndex: null,
     sensitivity: 20,
@@ -315,7 +317,7 @@ export default class DropdownAlert extends Component {
       toValue: toValue,
       duration: this.state.duration,
       friction: 9,
-      useNativeDriver: IS_IOS,
+      useNativeDriver: this.props.useNativeDriver,
     }).start();
   };
   onLayoutEvent(event) {
@@ -432,7 +434,7 @@ export default class DropdownAlert extends Component {
     } else {
       return (
         <Label style={StyleSheet.flatten(this.props.messageStyle)} numberOfLines={this.props.messageNumOfLines} text={this.state.message} />
-      ); 
+      );
     }
   }
   render() {
