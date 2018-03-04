@@ -74,10 +74,10 @@ export default class DropdownAlert extends Component {
     titleNumOfLines: 1,
     messageNumOfLines: 3,
     imageSrc: null,
-    infoImageSrc: null,
-    warnImageSrc: null,
-    errorImageSrc: null,
-    successImageSrc: null,
+    infoImageSrc: require('./assets/info.png'),
+    warnImageSrc: require('./assets/warn.png'),
+    errorImageSrc: require('./assets/error.png'),
+    successImageSrc: require('./assets/success.png'),
     cancelBtnImageSrc: require('./assets/cancel.png'),
     infoColor: '#2B73B6',
     warnColor: '#cd853f',
@@ -375,13 +375,13 @@ export default class DropdownAlert extends Component {
   getSourceForType(type) {
     switch (type) {
       case 'info':
-        return this.props.infoImageSrc || require('./assets/info.png');
+        return this.props.infoImageSrc;
       case 'warn':
-        return this.props.warnImageSrc || require('./assets/warn.png');
+        return this.props.warnImageSrc;
       case 'error':
-        return this.props.errorImageSrc || require('./assets/error.png');
+        return this.props.errorImageSrc;
       case 'success':
-        return this.props.successImageSrc || require('./assets/success.png');
+        return this.props.successImageSrc;
       default:
         return this.props.imageSrc;
     }

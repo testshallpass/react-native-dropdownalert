@@ -63,7 +63,11 @@ export default class Example extends Component {
 | Name | Type | Description | Default |
 | ---- | :---: | --- | --- |
 | ```closeInterval``` | Number  | dismiss alert at a certain time in milliseconds | 4000
-| ```imageSrc``` | String or Number  | local or network source | null
+| ```imageSrc``` | String or Number  | local or network source for custom alert type | null
+| ```infoImageSrc``` | String or Number  | local or network source for info alert type | ```require('./assets/info.png')```
+| ```warnImageSrc``` | String or Number  | local or network source for warn alert type | ```require('./assets/warn.png')```
+| ```errorImageSrc``` | String or Number  | local or network source for error alert type | ```require('./assets/error.png')```
+| ```successImageSrc``` | String or Number  | local or network source for success alert type | ```require('./assets/success.png')```
 | ```startDelta``` | Number  | where the container starts (changes based on container height onLayout) | -100
 | ```endDelta``` | Number  | where the container ends | 0
 | ```onClose``` | Function  | Invoked when alert is closed Returns: ```data = {type, title, message, action}```  | null
