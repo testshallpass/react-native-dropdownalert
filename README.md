@@ -16,10 +16,10 @@
 4. [Usage](#usage)
 5. [Props](#props)
 
-A simple alert to notify users about new chat messages, something went wrong or everything is ok. It can be closed by tap, cancel button, automatically with `closeInterval`, pan responder up gesture or programmatically. 
+A simple alert to notify users about new chat messages, something went wrong or everything is ok. It can be closed by tap, cancel button, automatically with `closeInterval`, pan responder up gesture or programmatically.
 
 ### Support
-| react-native version | package version | reason | 
+| react-native version | package version | reason |
 | ---- | :---: | ---- |
 | 0.50.0 | >=3.2.0 | Added SafeAreaView (iPhone X) |
 | 0.44.0 | >=2.12.0 | Added ViewPropTypes |
@@ -76,6 +76,7 @@ export default class Example extends Component {
 | ```panResponderEnabled``` | Bool  | enable/disable close with pan responder | true
 | ```replaceEnabled``` | Bool  | enables the alert to either state change without dismissal or go to next alert with dismissal | true
 | ```translucent``` | Bool  | StatusBar prop  | false
+| ```useNativeDriver``` | Bool  | enable/disable native driver for animations. For android platform, in some older React Native versions, enable useNativeDriver can cause some problems. See [#65](https://github.com/testshallpass/react-native-dropdownalert/issues/65)  | true (iOS) / false (Android)
 | ```updateStatusBar``` | Bool  | whether or not to update status bar styles  | true
 | ```activeStatusBarStyle``` | String  | StatusBar barStyle when alert is open | `light-content`
 | ```activeStatusBarBackgroundColor``` | String | StatusBar backgroundColor when alert is open | It takes on the backgroundColor of alert if predefined else default or provided prop
