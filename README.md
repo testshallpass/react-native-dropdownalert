@@ -76,7 +76,7 @@ export default class Example extends Component {
 | ```panResponderEnabled``` | Bool  | enable/disable close with pan responder | true
 | ```replaceEnabled``` | Bool  | enables the alert to either state change without dismissal or go to next alert with dismissal | true
 | ```translucent``` | Bool  | StatusBar prop  | false
-| ```useNativeDriver``` | Bool  | enable/disable native driver for animations  | true
+| ```useNativeDriver``` | Bool  | enable/disable native driver for animations  | true (iOS) / false (Android)
 | ```updateStatusBar``` | Bool  | whether or not to update status bar styles  | true
 | ```activeStatusBarStyle``` | String  | StatusBar barStyle when alert is open | `light-content`
 | ```activeStatusBarBackgroundColor``` | String | StatusBar backgroundColor when alert is open | It takes on the backgroundColor of alert if predefined else default or provided prop

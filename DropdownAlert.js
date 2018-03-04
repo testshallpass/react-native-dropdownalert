@@ -128,7 +128,7 @@ export default class DropdownAlert extends Component {
     inactiveStatusBarStyle: StatusBarDefaultBarStyle,
     inactiveStatusBarBackgroundColor: StatusBarDefaultBackgroundColor,
     updateStatusBar: true,
-    useNativeDriver: true,
+    useNativeDriver: IS_IOS,
     elevation: 1,
     zIndex: null,
     sensitivity: 20,
