@@ -22,6 +22,10 @@ import ImageView from './imageview';
 export default class DropdownAlert extends Component {
   static propTypes = {
     imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    infoImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    warnImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    errorImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    successImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     cancelBtnImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     infoColor: PropTypes.string,
     warnColor: PropTypes.string,
@@ -70,6 +74,10 @@ export default class DropdownAlert extends Component {
     titleNumOfLines: 1,
     messageNumOfLines: 3,
     imageSrc: null,
+    infoImageSrc: null,
+    warnImageSrc: null,
+    errorImageSrc: null,
+    successImageSrc: null,
     cancelBtnImageSrc: require('./assets/cancel.png'),
     infoColor: '#2B73B6',
     warnColor: '#cd853f',
@@ -367,13 +375,13 @@ export default class DropdownAlert extends Component {
   getSourceForType(type) {
     switch (type) {
       case 'info':
-        return require('./assets/info.png');
+        return this.props.infoImageSrc || require('./assets/info.png');
       case 'warn':
-        return require('./assets/warn.png');
+        return this.props.warnImageSrc || require('./assets/warn.png');
       case 'error':
-        return require('./assets/error.png');
+        return this.props.errorImageSrc || require('./assets/error.png');
       case 'success':
-        return require('./assets/success.png');
+        return this.props.successImageSrc || require('./assets/success.png');
       default:
         return this.props.imageSrc;
     }
