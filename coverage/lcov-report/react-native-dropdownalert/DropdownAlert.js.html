@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for DropdownAlert.js</title>
+    <title>Code coverage report for react-native-dropdownalert/DropdownAlert.js</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="prettify.css" />
-    <link rel="stylesheet" href="base.css" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(sort-arrow-sprite.png);
+            background-image: url(../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -16,13 +16,13 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="index.html">All files</a> DropdownAlert.js
+      <a href="../index.html">All files</a> / <a href="index.html">react-native-dropdownalert</a> DropdownAlert.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">64.24% </span>
+        <span class="strong">63.58% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>97/151</span>
+        <span class='fraction'>96/151</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">53.33% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>64/120</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">60% </span>
+        <span class="strong">56.67% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>18/30</span>
+        <span class='fraction'>17/30</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">64% </span>
+        <span class="strong">63.33% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>96/150</span>
+        <span class='fraction'>95/150</span>
       </div>
     </div>
   </div>
@@ -548,7 +548,27 @@
 503
 504
 505
-506</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1026,7 +1046,7 @@
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1077,6 +1097,10 @@ import ImageView from './imageview';
 export default class DropdownAlert extends Component {
   static propTypes = {
     imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    infoImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    warnImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    errorImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    successImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     cancelBtnImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     infoColor: PropTypes.string,
     warnColor: PropTypes.string,
@@ -1100,6 +1124,7 @@ export default class DropdownAlert extends Component {
     panResponderEnabled: PropTypes.bool,
     replaceEnabled: PropTypes.bool,
     translucent: PropTypes.bool,
+    useNativeDriver: PropTypes.bool,
     activeStatusBarStyle: PropTypes.string,
     activeStatusBarBackgroundColor: PropTypes.string,
     inactiveStatusBarStyle: PropTypes.string,
@@ -1124,6 +1149,10 @@ export default class DropdownAlert extends Component {
     titleNumOfLines: 1,
     messageNumOfLines: 3,
     imageSrc: null,
+    infoImageSrc: require('./assets/info.png'),
+    warnImageSrc: require('./assets/warn.png'),
+    errorImageSrc: require('./assets/error.png'),
+    successImageSrc: require('./assets/success.png'),
     cancelBtnImageSrc: require('./assets/cancel.png'),
     infoColor: '#2B73B6',
     warnColor: '#cd853f',
@@ -1182,6 +1211,7 @@ export default class DropdownAlert extends Component {
     inactiveStatusBarStyle: StatusBarDefaultBarStyle,
     inactiveStatusBarBackgroundColor: StatusBarDefaultBackgroundColor,
     updateStatusBar: true,
+    useNativeDriver: IS_IOS,
     elevation: 1,
     zIndex: null,
     sensitivity: 20,
@@ -1370,7 +1400,7 @@ export default class DropdownAlert extends Component {
       toValue: toValue,
       duration: this.state.duration,
       friction: 9,
-      useNativeDriver: IS_IOS,
+      useNativeDriver: this.props.useNativeDriver,
     }).start();
   };
 <span class="fstat-no" title="function not covered" >  on</span>LayoutEvent(event) {
@@ -1420,13 +1450,13 @@ export default class DropdownAlert extends Component {
   getSourceForType(type) {
     switch (type) {
       case 'info':
-        return require('./assets/info.png');
+        return this.props.infoImageSrc;
       case 'warn':
-        return require('./assets/warn.png');
+        return this.props.warnImageSrc;
       case 'error':
-        return require('./assets/error.png');
+        return this.props.errorImageSrc;
       case 'success':
-        return require('./assets/success.png');
+        return this.props.successImageSrc;
       default:
         return this.props.imageSrc;
     }
@@ -1487,7 +1517,7 @@ export default class DropdownAlert extends Component {
     } else {
       return (
         &lt;Label style={StyleSheet.flatten(this.props.messageStyle)} numberOfLines={this.props.messageNumOfLines} text={this.state.message} /&gt;
-      ); 
+      );
     }
   }
   render() {
@@ -1531,7 +1561,7 @@ export default class DropdownAlert extends Component {
       if (this.props.zIndex != null) wrapperStyle['zIndex'] = this.props.zIndex;
       return (
         &lt;Animated.View
-          ref={ref =&gt; this.mainView = ref}
+          ref={<span class="fstat-no" title="function not covered" >re</span>f =&gt; <span class="cstat-no" title="statement not covered" >this.mainView = ref}</span>
           {...this._panResponder.panHandlers}
           style={wrapperStyle}
         &gt;
@@ -1564,10 +1594,10 @@ export default class DropdownAlert extends Component {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Feb 11 2018 00:01:04 GMT-0500 (EST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Mar 09 2018 23:29:51 GMT-0500 (EST)
 </div>
 </div>
-<script src="prettify.js"></script>
+<script src="../prettify.js"></script>
 <script>
 window.onload = function () {
         if (typeof prettyPrint === 'function') {
@@ -1575,6 +1605,6 @@ window.onload = function () {
         }
 };
 </script>
-<script src="sorter.js"></script>
+<script src="../sorter.js"></script>
 </body>
 </html>

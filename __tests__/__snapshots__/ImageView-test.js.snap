@@ -2,7 +2,11 @@
 
 exports[`renders imageview with number source 1`] = `
 <Image
-  source={1}
+  source={
+    Object {
+      "testUri": "../../../assets/error.png",
+    }
+  }
   style={
     Object {
       "alignSelf": "center",

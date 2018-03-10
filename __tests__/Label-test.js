@@ -13,5 +13,5 @@ test('renders label with text', () => {
 test('renders label without text', () => {
   const wrapper = shallow(<Label text={''} />);
   const tree = toJson(wrapper);
-  expect(tree).toBeNull();
+  expect(tree).toEqual("");
 });

@@ -33,7 +33,6 @@ exports[`renders alert with zIndex correctly 1`] = `
   <TouchableOpacity
     activeOpacity={0.95}
     disabled={false}
-    focusedOpacity={0.7}
     onLayout={[Function]}
     onPress={[Function]}
   >
@@ -51,7 +50,7 @@ exports[`renders alert with zIndex correctly 1`] = `
         ]
       }
     >
-      <undefined
+      <SafeAreaView
         style={
           Object {
             "flex": 1,
@@ -61,7 +60,11 @@ exports[`renders alert with zIndex correctly 1`] = `
       >
         <ImageView
           imageProps={Object {}}
-          source={1}
+          source={
+            Object {
+              "testUri": "../../../assets/info.png",
+            }
+          }
           style={
             Object {
               "alignSelf": "center",
@@ -108,7 +111,7 @@ exports[`renders alert with zIndex correctly 1`] = `
             textProps={Object {}}
           />
         </View>
-      </undefined>
+      </SafeAreaView>
     </View>
   </TouchableOpacity>
 </AnimatedComponent>
@@ -146,7 +149,6 @@ exports[`renders custom alert correctly 1`] = `
   <TouchableOpacity
     activeOpacity={0.95}
     disabled={false}
-    focusedOpacity={0.7}
     onLayout={[Function]}
     onPress={[Function]}
   >
@@ -165,7 +167,7 @@ exports[`renders custom alert correctly 1`] = `
         ]
       }
     >
-      <undefined
+      <SafeAreaView
         style={
           Object {
             "flex": 1,
@@ -222,7 +224,7 @@ exports[`renders custom alert correctly 1`] = `
             textProps={Object {}}
           />
         </View>
-      </undefined>
+      </SafeAreaView>
     </View>
   </TouchableOpacity>
 </AnimatedComponent>
@@ -260,7 +262,6 @@ exports[`renders custom alert with cancel correctly 1`] = `
   <TouchableOpacity
     activeOpacity={1}
     disabled={false}
-    focusedOpacity={0.7}
     onLayout={[Function]}
     onPress={[Function]}
   >
@@ -279,7 +280,7 @@ exports[`renders custom alert with cancel correctly 1`] = `
         ]
       }
     >
-      <undefined
+      <SafeAreaView
         style={
           Object {
             "flex": 1,
@@ -336,10 +337,9 @@ exports[`renders custom alert with cancel correctly 1`] = `
             textProps={Object {}}
           />
         </View>
-      </undefined>
+      </SafeAreaView>
       <TouchableOpacity
         activeOpacity={0.2}
-        focusedOpacity={0.7}
         onPress={[Function]}
         style={
           Object {
@@ -351,7 +351,11 @@ exports[`renders custom alert with cancel correctly 1`] = `
       >
         <ImageView
           imageProps={Object {}}
-          source={1}
+          source={
+            Object {
+              "testUri": "../../../assets/cancel.png",
+            }
+          }
           style={
             Object {
               "alignSelf": "center",
@@ -399,7 +403,6 @@ exports[`renders error alert correctly 1`] = `
   <TouchableOpacity
     activeOpacity={0.95}
     disabled={false}
-    focusedOpacity={0.7}
     onLayout={[Function]}
     onPress={[Function]}
   >
@@ -417,7 +420,7 @@ exports[`renders error alert correctly 1`] = `
         ]
       }
     >
-      <undefined
+      <SafeAreaView
         style={
           Object {
             "flex": 1,
@@ -427,7 +430,11 @@ exports[`renders error alert correctly 1`] = `
       >
         <ImageView
           imageProps={Object {}}
-          source={1}
+          source={
+            Object {
+              "testUri": "../../../assets/error.png",
+            }
+          }
           style={
             Object {
               "alignSelf": "center",
@@ -474,7 +481,7 @@ exports[`renders error alert correctly 1`] = `
             textProps={Object {}}
           />
         </View>
-      </undefined>
+      </SafeAreaView>
     </View>
   </TouchableOpacity>
 </AnimatedComponent>
@@ -512,7 +519,6 @@ exports[`renders info alert correctly 1`] = `
   <TouchableOpacity
     activeOpacity={0.95}
     disabled={false}
-    focusedOpacity={0.7}
     onLayout={[Function]}
     onPress={[Function]}
   >
@@ -530,7 +536,7 @@ exports[`renders info alert correctly 1`] = `
         ]
       }
     >
-      <undefined
+      <SafeAreaView
         style={
           Object {
             "flex": 1,
@@ -540,7 +546,11 @@ exports[`renders info alert correctly 1`] = `
       >
         <ImageView
           imageProps={Object {}}
-          source={1}
+          source={
+            Object {
+              "testUri": "../../../assets/info.png",
+            }
+          }
           style={
             Object {
               "alignSelf": "center",
@@ -587,7 +597,7 @@ exports[`renders info alert correctly 1`] = `
             textProps={Object {}}
           />
         </View>
-      </undefined>
+      </SafeAreaView>
     </View>
   </TouchableOpacity>
 </AnimatedComponent>
@@ -625,7 +635,6 @@ exports[`renders success alert correctly 1`] = `
   <TouchableOpacity
     activeOpacity={0.95}
     disabled={false}
-    focusedOpacity={0.7}
     onLayout={[Function]}
     onPress={[Function]}
   >
@@ -643,7 +652,7 @@ exports[`renders success alert correctly 1`] = `
         ]
       }
     >
-      <undefined
+      <SafeAreaView
         style={
           Object {
             "flex": 1,
@@ -653,7 +662,11 @@ exports[`renders success alert correctly 1`] = `
       >
         <ImageView
           imageProps={Object {}}
-          source={1}
+          source={
+            Object {
+              "testUri": "../../../assets/success.png",
+            }
+          }
           style={
             Object {
               "alignSelf": "center",
@@ -700,7 +713,7 @@ exports[`renders success alert correctly 1`] = `
             textProps={Object {}}
           />
         </View>
-      </undefined>
+      </SafeAreaView>
     </View>
   </TouchableOpacity>
 </AnimatedComponent>
@@ -738,7 +751,6 @@ exports[`renders warn alert correctly 1`] = `
   <TouchableOpacity
     activeOpacity={0.95}
     disabled={false}
-    focusedOpacity={0.7}
     onLayout={[Function]}
     onPress={[Function]}
   >
@@ -756,7 +768,7 @@ exports[`renders warn alert correctly 1`] = `
         ]
       }
     >
-      <undefined
+      <SafeAreaView
         style={
           Object {
             "flex": 1,
@@ -766,7 +778,11 @@ exports[`renders warn alert correctly 1`] = `
       >
         <ImageView
           imageProps={Object {}}
-          source={1}
+          source={
+            Object {
+              "testUri": "../../../assets/warn.png",
+            }
+          }
           style={
             Object {
               "alignSelf": "center",
@@ -813,7 +829,7 @@ exports[`renders warn alert correctly 1`] = `
             textProps={Object {}}
           />
         </View>
-      </undefined>
+      </SafeAreaView>
     </View>
   </TouchableOpacity>
 </AnimatedComponent>

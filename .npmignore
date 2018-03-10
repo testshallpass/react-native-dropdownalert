@@ -13,3 +13,4 @@ test/
 __tests__/
 coverage/
 .gitattributes
+setupTests.js
