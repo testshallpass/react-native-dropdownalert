@@ -85,13 +85,18 @@ exports[`renders alert with zIndex correctly 1`] = `
           <Label
             numberOfLines={1}
             style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 16,
-                "fontWeight": "bold",
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "white",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                  "textAlign": "left",
+                },
+                Object {
+                  "color": "#FFF",
+                },
+              ]
             }
             text="Hello"
             textProps={Object {}}
@@ -99,13 +104,18 @@ exports[`renders alert with zIndex correctly 1`] = `
           <Label
             numberOfLines={3}
             style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 14,
-                "fontWeight": "normal",
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "white",
+                  "fontSize": 14,
+                  "fontWeight": "normal",
+                  "textAlign": "left",
+                },
+                Object {
+                  "color": "#FFF",
+                },
+              ]
             }
             text="World!"
             textProps={Object {}}
@@ -198,13 +208,15 @@ exports[`renders custom alert correctly 1`] = `
           <Label
             numberOfLines={1}
             style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 16,
-                "fontWeight": "bold",
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "white",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                  "textAlign": "left",
+                },
+              ]
             }
             text="Hello"
             textProps={Object {}}
@@ -212,13 +224,15 @@ exports[`renders custom alert correctly 1`] = `
           <Label
             numberOfLines={3}
             style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 14,
-                "fontWeight": "normal",
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "white",
+                  "fontSize": 14,
+                  "fontWeight": "normal",
+                  "textAlign": "left",
+                },
+              ]
             }
             text="World!"
             textProps={Object {}}
@@ -311,13 +325,15 @@ exports[`renders custom alert with cancel correctly 1`] = `
           <Label
             numberOfLines={1}
             style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 16,
-                "fontWeight": "bold",
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "white",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                  "textAlign": "left",
+                },
+              ]
             }
             text="Hello"
             textProps={Object {}}
@@ -325,13 +341,15 @@ exports[`renders custom alert with cancel correctly 1`] = `
           <Label
             numberOfLines={3}
             style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 14,
-                "fontWeight": "normal",
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "white",
+                  "fontSize": 14,
+                  "fontWeight": "normal",
+                  "textAlign": "left",
+                },
+              ]
             }
             text="World!"
             textProps={Object {}}
@@ -455,13 +473,18 @@ exports[`renders error alert correctly 1`] = `
           <Label
             numberOfLines={1}
             style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 16,
-                "fontWeight": "bold",
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "white",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                  "textAlign": "left",
+                },
+                Object {
+                  "color": "#FFF",
+                },
+              ]
             }
             text="Hello"
             textProps={Object {}}
@@ -469,13 +492,18 @@ exports[`renders error alert correctly 1`] = `
           <Label
             numberOfLines={3}
             style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 14,
-                "fontWeight": "normal",
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "white",
+                  "fontSize": 14,
+                  "fontWeight": "normal",
+                  "textAlign": "left",
+                },
+                Object {
+                  "color": "#FFF",
+                },
+              ]
             }
             text="World!"
             textProps={Object {}}
@@ -571,13 +599,18 @@ exports[`renders info alert correctly 1`] = `
           <Label
             numberOfLines={1}
             style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 16,
-                "fontWeight": "bold",
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "white",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                  "textAlign": "left",
+                },
+                Object {
+                  "color": "#FFF",
+                },
+              ]
             }
             text="Hello"
             textProps={Object {}}
@@ -585,13 +618,18 @@ exports[`renders info alert correctly 1`] = `
           <Label
             numberOfLines={3}
             style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 14,
-                "fontWeight": "normal",
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "white",
+                  "fontSize": 14,
+                  "fontWeight": "normal",
+                  "textAlign": "left",
+                },
+                Object {
+                  "color": "#FFF",
+                },
+              ]
             }
             text="World!"
             textProps={Object {}}
@@ -687,13 +725,18 @@ exports[`renders success alert correctly 1`] = `
           <Label
             numberOfLines={1}
             style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 16,
-                "fontWeight": "bold",
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "white",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                  "textAlign": "left",
+                },
+                Object {
+                  "color": "#FFF",
+                },
+              ]
             }
             text="Hello"
             textProps={Object {}}
@@ -701,13 +744,18 @@ exports[`renders success alert correctly 1`] = `
           <Label
             numberOfLines={3}
             style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 14,
-                "fontWeight": "normal",
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "white",
+                  "fontSize": 14,
+                  "fontWeight": "normal",
+                  "textAlign": "left",
+                },
+                Object {
+                  "color": "#FFF",
+                },
+              ]
             }
             text="World!"
             textProps={Object {}}
@@ -803,13 +851,18 @@ exports[`renders warn alert correctly 1`] = `
           <Label
             numberOfLines={1}
             style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 16,
-                "fontWeight": "bold",
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "white",
+                  "fontSize": 16,
+                  "fontWeight": "bold",
+                  "textAlign": "left",
+                },
+                Object {
+                  "color": "#FFF",
+                },
+              ]
             }
             text="Hello"
             textProps={Object {}}
@@ -817,13 +870,18 @@ exports[`renders warn alert correctly 1`] = `
           <Label
             numberOfLines={3}
             style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 14,
-                "fontWeight": "normal",
-                "textAlign": "left",
-              }
+              Array [
+                Object {
+                  "backgroundColor": "transparent",
+                  "color": "white",
+                  "fontSize": 14,
+                  "fontWeight": "normal",
+                  "textAlign": "left",
+                },
+                Object {
+                  "color": "#FFF",
+                },
+              ]
             }
             text="World!"
             textProps={Object {}}
