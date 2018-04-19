@@ -209,6 +209,7 @@ export default class DropdownAlert extends Component {
       console.warn('DropdownAlert: Message is not a string.');
     }
     if (this.props.replaceEnabled == false) {
+      let isOpen=this.state.isOpen;
       this.setState({
         type: type,
         message: message,
@@ -216,7 +217,7 @@ export default class DropdownAlert extends Component {
         isOpen: true,
         topValue: 0,
       });
-      if (this.state.isOpen == false) {
+      if (isOpen == false) {
         this.animate(1);
       }
       if (this.props.closeInterval > 1) {
