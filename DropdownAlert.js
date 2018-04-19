@@ -276,19 +276,19 @@ export default class DropdownAlert extends Component {
         clearTimeout(this._closeTimeoutId);
       }
       this.animate(0);
+      if (this.props.updateStatusBar) {
+        if (IS_ANDROID) {
+          StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
+        } else {
+          StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
+        }
+      }
       setTimeout(
         function() {
           if (this.state.isOpen) {
             this.setState({
               isOpen: false,
             });
-            if (this.props.updateStatusBar) {
-              if (IS_ANDROID) {
-                StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
-              } else {
-                StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
-              }
-            }
             if (onClose) {
               var data = {
                 type: this.state.type,
