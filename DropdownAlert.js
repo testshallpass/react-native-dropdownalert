@@ -135,7 +135,7 @@ export default class DropdownAlert extends Component {
     this.handleMoveShouldSetPanResponder = this.handleMoveShouldSetPanResponder.bind(this)
     this.handleStartShouldSetPanResponder = this.handleMoveShouldSetPanResponder.bind(this)
   }
-  componentWillMount() {
+  componentDidMount() {
     panResponder = PanResponder.create({
       onStartShouldSetPanResponder: this.handleStartShouldSetPanResponder,
       onMoveShouldSetPanResponder: this.handleMoveShouldSetPanResponder,
