@@ -5,7 +5,7 @@ import { DEFAULT_IMAGE_DIMENSIONS } from './constants';
 
 export default class ImageView extends Component {
   static propTypes = {
-    style: __DEV__ ? Image.propTypes.style : PropTypes.any,
+    style: PropTypes.object,
     source: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     imageProps: PropTypes.object,
   };

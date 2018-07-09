@@ -1,18 +1,5 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  SafeAreaView,
-  View,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  Animated,
-  StatusBar,
-  Dimensions,
-  Image,
-  PanResponder,
-  ViewPropTypes,
-} from 'react-native';
+import { StyleSheet, SafeAreaView, View, TouchableOpacity, Animated, StatusBar, PanResponder } from 'react-native';
 import PropTypes from 'prop-types';
 import { StatusBarDefaultBarStyle, StatusBarDefaultBackgroundColor, DEFAULT_IMAGE_DIMENSIONS, WINDOW, IS_IOS, IS_ANDROID } from './constants';
 import { validateType } from './functions';
@@ -34,12 +21,12 @@ export default class DropdownAlert extends Component {
     closeInterval: PropTypes.number,
     startDelta: PropTypes.number,
     endDelta: PropTypes.number,
-    containerStyle: ViewPropTypes.style,
-    safeAreaStyle:ViewPropTypes.style,
-    titleStyle: __DEV__ ? Text.propTypes.style : PropTypes.any,
-    messageStyle: __DEV__ ? Text.propTypes.style : PropTypes.any,
-    imageStyle: __DEV__ ? Image.propTypes.style : PropTypes.any,
-    cancelBtnImageStyle: __DEV__ ? Image.propTypes.style : PropTypes.any,
+    containerStyle: PropTypes.object,
+    safeAreaStyle: PropTypes.object,
+    titleStyle: PropTypes.object,
+    messageStyle: PropTypes.object,
+    imageStyle: PropTypes.object,
+    cancelBtnImageStyle: PropTypes.object,
     titleNumOfLines: PropTypes.number,
     messageNumOfLines: PropTypes.number,
     onClose: PropTypes.func,
@@ -58,8 +45,8 @@ export default class DropdownAlert extends Component {
     elevation: PropTypes.number,
     zIndex: PropTypes.number,
     sensitivity: PropTypes.number,
-    defaultContainer: ViewPropTypes.style,
-    defaultTextContainer: ViewPropTypes.style,
+    defaultContainer: PropTypes.object,
+    defaultTextContainer: PropTypes.object,
     renderImage: PropTypes.func,
     renderCancel: PropTypes.func,
     renderTitle: PropTypes.func,
@@ -91,9 +78,9 @@ export default class DropdownAlert extends Component {
       padding: 16,
       flexDirection: 'row',
     },
-    safeAreaStyle:{
-      flexDirection:'row',
-      flex:1
+    safeAreaStyle: {
+      flexDirection: 'row',
+      flex: 1,
     },
     titleStyle: {
       fontSize: 16,
@@ -431,18 +418,14 @@ export default class DropdownAlert extends Component {
     if (this.props.renderTitle) {
       return this.props.renderTitle(this.props);
     } else {
-      return (
-        <Label style={StyleSheet.flatten(this.props.titleStyle)} numberOfLines={this.props.titleNumOfLines} text={this.state.title} />
-      );
+      return <Label style={StyleSheet.flatten(this.props.titleStyle)} numberOfLines={this.props.titleNumOfLines} text={this.state.title} />;
     }
   }
   renderMessage() {
     if (this.props.renderMessage) {
       return this.props.renderMessage(this.props);
     } else {
-      return (
-        <Label style={StyleSheet.flatten(this.props.messageStyle)} numberOfLines={this.props.messageNumOfLines} text={this.state.message} />
-      );
+      return <Label style={StyleSheet.flatten(this.props.messageStyle)} numberOfLines={this.props.messageNumOfLines} text={this.state.message} />;
     }
   }
   render() {
@@ -485,11 +468,7 @@ export default class DropdownAlert extends Component {
       };
       if (this.props.zIndex != null) wrapperStyle['zIndex'] = this.props.zIndex;
       return (
-        <Animated.View
-          ref={ref => this.mainView = ref}
-          {...this._panResponder.panHandlers}
-          style={wrapperStyle}
-        >
+        <Animated.View ref={ref => this.mainView = ref} {...this._panResponder.panHandlers} style={wrapperStyle}>
           <TouchableOpacity
             activeOpacity={!this.props.tapToCloseEnabled || showCancel ? 1 : 0.95}
             onPress={!this.props.tapToCloseEnabled ? null : () => this.close('tap')}

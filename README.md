@@ -86,20 +86,20 @@ export default class Example extends Component {
 | ```activeStatusBarBackgroundColor``` | String | StatusBar backgroundColor when alert is open | It takes on the backgroundColor of alert if predefined else default or provided prop
 | ```inactiveStatusBarStyle``` | String  | StatusBar barStyle when alert dismisses | `StatusBar._defaultProps.barStyle.value`
 | ```inactiveStatusBarBackgroundColor``` | String  | StatusBar backgroundColor when alert dismisses | `StatusBar._defaultProps.backgroundColor.value`
-| ```containerStyle``` | ViewPropTypes.style  | styles for container for custom type only | ```{ padding: 16, flexDirection: 'row' }```
+| ```containerStyle``` | Object  | styles for container for custom type only | ```{ padding: 16, flexDirection: 'row' }```
 | ```zIndex``` | Number  | zIndex attribute on outermost container | null
-| ```titleStyle``` | Text.propTypes.style  | styles for title for all types | ```{       fontSize: 16, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
-| ```messageStyle``` | Text.propTypes.style  | styles for message for all types | ```{ fontSize: 14, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
-| ```imageStyle``` | Image.propTypes.style  | styles for image for all types | ```{    padding: 8, width: 36, height: 36, alignSelf: 'center' }```
-| ```cancelBtnImageStyle``` | Image.propTypes.style  | styles for image for all types | ```{    padding: 8, width: 36, height: 36, alignSelf: 'center' }```
+| ```titleStyle``` | Object | styles for title for all types | ```{       fontSize: 16, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
+| ```messageStyle``` | Object | styles for message for all types | ```{ fontSize: 14, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
+| ```imageStyle``` | Object | styles for image for all types | ```{    padding: 8, width: 36, height: 36, alignSelf: 'center' }```
+| ```cancelBtnImageStyle``` | Object | styles for image for all types | ```{    padding: 8, width: 36, height: 36, alignSelf: 'center' }```
 | ```successColor``` | String  | Default background color of success message | #32A54A
 | ```infoColor``` | String  | Default background color of info message | #2B73B6
 | ```warnColor``` | String  | Default background color of warn message | #cd853f
 | ```errorColor``` | String  | Default background color of error message | #cc3232
 | ```elevation``` | Number  | Animated.View elevation | 1
 | ```sensitivity``` | Number  | Sensitivity for the pan responder up gesture | 20
-| ```defaultContainer``` | ViewPropTypes.style  | Style for inner view container (**override paddingTop with this**) | ```{ padding: 8, paddingTop: IS_ANDROID ? 0 : 20, flexDirection: 'row' } ```
-| ```defaultTextContainer``` | ViewPropTypes.style  | Style for inner text container (holds title and message) | ```{ flex: 1, padding: 8 }```
+| ```defaultContainer``` | Object  | Style for inner view container (**override paddingTop with this**) | ```{ padding: 8, paddingTop: IS_ANDROID ? 0 : 20, flexDirection: 'row' } ```
+| ```defaultTextContainer``` | Object | Style for inner text container (holds title and message) | ```{ flex: 1, padding: 8 }```
 | ```renderImage``` | Function  | Use to overide the left image component  | undefined
 | ```renderCancel``` | Function  | Use to overide the cancel button component  | undefined
 | ```renderTitle``` | Function  | Use to overide the title component  | undefined
