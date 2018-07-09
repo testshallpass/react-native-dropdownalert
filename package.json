@@ -47,7 +47,7 @@
     "prop-types": "15.5.10",
     "react": "16.0.0",
     "react-dom": "16.0.0",
-    "react-native": "0.50.4",
+    "react-native": "0.54.4",
     "react-test-renderer": "16.0.0"
   },
   "dependencies": {
