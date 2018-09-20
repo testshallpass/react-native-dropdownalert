@@ -15,19 +15,22 @@ exports[`renders alert with zIndex correctly 1`] = `
   onStartShouldSetResponder={[Function]}
   onStartShouldSetResponderCapture={[Function]}
   style={
-    Object {
-      "elevation": 1,
-      "left": 0,
-      "position": "absolute",
-      "right": 0,
-      "top": 0,
-      "transform": Array [
-        Object {
-          "translateY": -100,
-        },
-      ],
-      "zIndex": 99,
-    }
+    Array [
+      Object {
+        "elevation": 1,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "transform": Array [
+          Object {
+            "translateY": -100,
+          },
+        ],
+        "zIndex": 99,
+      },
+      null,
+    ]
   }
 >
   <TouchableOpacity
@@ -132,18 +135,21 @@ exports[`renders custom alert correctly 1`] = `
   onStartShouldSetResponder={[Function]}
   onStartShouldSetResponderCapture={[Function]}
   style={
-    Object {
-      "elevation": 1,
-      "left": 0,
-      "position": "absolute",
-      "right": 0,
-      "top": 0,
-      "transform": Array [
-        Object {
-          "translateY": -100,
-        },
-      ],
-    }
+    Array [
+      Object {
+        "elevation": 1,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "transform": Array [
+          Object {
+            "translateY": -100,
+          },
+        ],
+      },
+      null,
+    ]
   }
 >
   <TouchableOpacity
@@ -245,18 +251,21 @@ exports[`renders custom alert with cancel correctly 1`] = `
   onStartShouldSetResponder={[Function]}
   onStartShouldSetResponderCapture={[Function]}
   style={
-    Object {
-      "elevation": 1,
-      "left": 0,
-      "position": "absolute",
-      "right": 0,
-      "top": 0,
-      "transform": Array [
-        Object {
-          "translateY": -100,
-        },
-      ],
-    }
+    Array [
+      Object {
+        "elevation": 1,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "transform": Array [
+          Object {
+            "translateY": -100,
+          },
+        ],
+      },
+      null,
+    ]
   }
 >
   <TouchableOpacity
@@ -386,18 +395,21 @@ exports[`renders error alert correctly 1`] = `
   onStartShouldSetResponder={[Function]}
   onStartShouldSetResponderCapture={[Function]}
   style={
-    Object {
-      "elevation": 1,
-      "left": 0,
-      "position": "absolute",
-      "right": 0,
-      "top": 0,
-      "transform": Array [
-        Object {
-          "translateY": -100,
-        },
-      ],
-    }
+    Array [
+      Object {
+        "elevation": 1,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "transform": Array [
+          Object {
+            "translateY": -100,
+          },
+        ],
+      },
+      null,
+    ]
   }
 >
   <TouchableOpacity
@@ -502,18 +514,21 @@ exports[`renders info alert correctly 1`] = `
   onStartShouldSetResponder={[Function]}
   onStartShouldSetResponderCapture={[Function]}
   style={
-    Object {
-      "elevation": 1,
-      "left": 0,
-      "position": "absolute",
-      "right": 0,
-      "top": 0,
-      "transform": Array [
-        Object {
-          "translateY": -100,
-        },
-      ],
-    }
+    Array [
+      Object {
+        "elevation": 1,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "transform": Array [
+          Object {
+            "translateY": -100,
+          },
+        ],
+      },
+      null,
+    ]
   }
 >
   <TouchableOpacity
@@ -618,18 +633,21 @@ exports[`renders success alert correctly 1`] = `
   onStartShouldSetResponder={[Function]}
   onStartShouldSetResponderCapture={[Function]}
   style={
-    Object {
-      "elevation": 1,
-      "left": 0,
-      "position": "absolute",
-      "right": 0,
-      "top": 0,
-      "transform": Array [
-        Object {
-          "translateY": -100,
-        },
-      ],
-    }
+    Array [
+      Object {
+        "elevation": 1,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "transform": Array [
+          Object {
+            "translateY": -100,
+          },
+        ],
+      },
+      null,
+    ]
   }
 >
   <TouchableOpacity
@@ -734,18 +752,21 @@ exports[`renders warn alert correctly 1`] = `
   onStartShouldSetResponder={[Function]}
   onStartShouldSetResponderCapture={[Function]}
   style={
-    Object {
-      "elevation": 1,
-      "left": 0,
-      "position": "absolute",
-      "right": 0,
-      "top": 0,
-      "transform": Array [
-        Object {
-          "translateY": -100,
-        },
-      ],
-    }
+    Array [
+      Object {
+        "elevation": 1,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "transform": Array [
+          Object {
+            "translateY": -100,
+          },
+        ],
+      },
+      null,
+    ]
   }
 >
   <TouchableOpacity
