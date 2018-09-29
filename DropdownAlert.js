@@ -21,6 +21,7 @@ export default class DropdownAlert extends Component {
     closeInterval: PropTypes.number,
     startDelta: PropTypes.number,
     endDelta: PropTypes.number,
+    wrapperStyle: PropTypes.object,
     containerStyle: PropTypes.object,
     safeAreaStyle: PropTypes.object,
     titleStyle: PropTypes.object,
@@ -74,6 +75,7 @@ export default class DropdownAlert extends Component {
     tapToCloseEnabled: true,
     panResponderEnabled: true,
     replaceEnabled: true,
+    wrapperStyle: null,
     containerStyle: {
       padding: 16,
       flexDirection: 'row',
@@ -474,7 +476,7 @@ export default class DropdownAlert extends Component {
       };
       if (this.props.zIndex != null) wrapperStyle['zIndex'] = this.props.zIndex;
       return (
-        <Animated.View ref={ref => this.mainView = ref} {...this._panResponder.panHandlers} style={wrapperStyle}>
+        <Animated.View ref={ref => this.mainView = ref} {...this._panResponder.panHandlers} style={[wrapperStyle, this.props.wrapperStyle]}>
           <TouchableOpacity
             activeOpacity={!this.props.tapToCloseEnabled || showCancel ? 1 : 0.95}
             onPress={!this.props.tapToCloseEnabled ? null : () => this.close('tap')}

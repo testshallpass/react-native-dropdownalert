@@ -86,6 +86,7 @@ export default class Example extends Component {
 | ```activeStatusBarBackgroundColor``` | String | StatusBar backgroundColor when alert is open | It takes on the backgroundColor of alert if predefined else default or provided prop
 | ```inactiveStatusBarStyle``` | String  | StatusBar barStyle when alert dismisses | `StatusBar._defaultProps.barStyle.value`
 | ```inactiveStatusBarBackgroundColor``` | String  | StatusBar backgroundColor when alert dismisses | `StatusBar._defaultProps.backgroundColor.value`
+| ```wrapperStyle``` | Object  | styles for the view that wraps the container. For [React Native Web](https://github.com/necolas/react-native-web) support you might want to set this to `{ position: 'fixed' }` | ```null```
 | ```containerStyle``` | Object  | styles for container for custom type only | ```{ padding: 16, flexDirection: 'row' }```
 | ```zIndex``` | Number  | zIndex attribute on outermost container | null
 | ```titleStyle``` | Object | styles for title for all types | ```{       fontSize: 16, textAlign: 'left', fontWeight: 'bold', color: 'white', backgroundColor: 'transparent' }```
