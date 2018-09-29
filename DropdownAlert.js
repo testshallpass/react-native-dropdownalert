@@ -183,7 +183,7 @@ export default class DropdownAlert extends Component {
       },
     });
   };
-  alertWithType = (type, title, message) => {
+  alertWithType = (type, title, message, interval?) => {
     if (validateType(type) == false) {
       return;
     }
@@ -195,6 +195,12 @@ export default class DropdownAlert extends Component {
       message = message.toString();
       console.warn('DropdownAlert: Message is not a string.');
     }
+
+    const closeInterval =
+      typeof interval === "number" && interval > 1
+        ? interval
+        : this.props.closeInterval;
+
     if (this.props.replaceEnabled == false) {
       this.setState({
         type: type,
@@ -206,7 +212,7 @@ export default class DropdownAlert extends Component {
       if (this.state.isOpen == false) {
         this.animate(1);
       }
-      if (this.props.closeInterval > 1) {
+      if (closeInterval > 1) {
         if (this._closeTimeoutId != null) {
           clearTimeout(this._closeTimeoutId);
         }
@@ -214,7 +220,7 @@ export default class DropdownAlert extends Component {
           function() {
             this.close('automatic');
           }.bind(this),
-          this.props.closeInterval
+          closeInterval
         );
       }
     } else {
@@ -236,12 +242,12 @@ export default class DropdownAlert extends Component {
             });
           }
           self.animate(1);
-          if (self.props.closeInterval > 1) {
+          if (closeInterval > 1) {
             this._closeTimeoutId = setTimeout(
               function() {
                 self.close('automatic');
               }.bind(self),
-              self.props.closeInterval
+              closeInterval
             );
           }
         }.bind(this),
