@@ -39,7 +39,7 @@ exports[`renders alert with zIndex correctly 1`] = `
     onLayout={[Function]}
     onPress={[Function]}
   >
-    <View
+    <Component
       style={
         Array [
           Object {
@@ -77,7 +77,7 @@ exports[`renders alert with zIndex correctly 1`] = `
             }
           }
         />
-        <View
+        <Component
           style={
             Object {
               "flex": 1,
@@ -113,9 +113,9 @@ exports[`renders alert with zIndex correctly 1`] = `
             text="World!"
             textProps={Object {}}
           />
-        </View>
+        </Component>
       </SafeAreaView>
-    </View>
+    </Component>
   </TouchableOpacity>
 </AnimatedComponent>
 `;
@@ -158,7 +158,7 @@ exports[`renders custom alert correctly 1`] = `
     onLayout={[Function]}
     onPress={[Function]}
   >
-    <View
+    <Component
       style={
         Array [
           Object {
@@ -193,7 +193,7 @@ exports[`renders custom alert correctly 1`] = `
             }
           }
         />
-        <View
+        <Component
           style={
             Object {
               "flex": 1,
@@ -229,9 +229,9 @@ exports[`renders custom alert correctly 1`] = `
             text="World!"
             textProps={Object {}}
           />
-        </View>
+        </Component>
       </SafeAreaView>
-    </View>
+    </Component>
   </TouchableOpacity>
 </AnimatedComponent>
 `;
@@ -274,7 +274,7 @@ exports[`renders custom alert with cancel correctly 1`] = `
     onLayout={[Function]}
     onPress={[Function]}
   >
-    <View
+    <Component
       style={
         Array [
           Object {
@@ -309,7 +309,7 @@ exports[`renders custom alert with cancel correctly 1`] = `
             }
           }
         />
-        <View
+        <Component
           style={
             Object {
               "flex": 1,
@@ -345,7 +345,7 @@ exports[`renders custom alert with cancel correctly 1`] = `
             text="World!"
             textProps={Object {}}
           />
-        </View>
+        </Component>
       </SafeAreaView>
       <TouchableOpacity
         activeOpacity={0.2}
@@ -375,7 +375,7 @@ exports[`renders custom alert with cancel correctly 1`] = `
           }
         />
       </TouchableOpacity>
-    </View>
+    </Component>
   </TouchableOpacity>
 </AnimatedComponent>
 `;
@@ -418,7 +418,7 @@ exports[`renders error alert correctly 1`] = `
     onLayout={[Function]}
     onPress={[Function]}
   >
-    <View
+    <Component
       style={
         Array [
           Object {
@@ -456,7 +456,7 @@ exports[`renders error alert correctly 1`] = `
             }
           }
         />
-        <View
+        <Component
           style={
             Object {
               "flex": 1,
@@ -492,9 +492,9 @@ exports[`renders error alert correctly 1`] = `
             text="World!"
             textProps={Object {}}
           />
-        </View>
+        </Component>
       </SafeAreaView>
-    </View>
+    </Component>
   </TouchableOpacity>
 </AnimatedComponent>
 `;
@@ -537,7 +537,7 @@ exports[`renders info alert correctly 1`] = `
     onLayout={[Function]}
     onPress={[Function]}
   >
-    <View
+    <Component
       style={
         Array [
           Object {
@@ -575,7 +575,7 @@ exports[`renders info alert correctly 1`] = `
             }
           }
         />
-        <View
+        <Component
           style={
             Object {
               "flex": 1,
@@ -611,9 +611,9 @@ exports[`renders info alert correctly 1`] = `
             text="World!"
             textProps={Object {}}
           />
-        </View>
+        </Component>
       </SafeAreaView>
-    </View>
+    </Component>
   </TouchableOpacity>
 </AnimatedComponent>
 `;
@@ -656,7 +656,7 @@ exports[`renders success alert correctly 1`] = `
     onLayout={[Function]}
     onPress={[Function]}
   >
-    <View
+    <Component
       style={
         Array [
           Object {
@@ -694,7 +694,7 @@ exports[`renders success alert correctly 1`] = `
             }
           }
         />
-        <View
+        <Component
           style={
             Object {
               "flex": 1,
@@ -730,9 +730,9 @@ exports[`renders success alert correctly 1`] = `
             text="World!"
             textProps={Object {}}
           />
-        </View>
+        </Component>
       </SafeAreaView>
-    </View>
+    </Component>
   </TouchableOpacity>
 </AnimatedComponent>
 `;
@@ -775,7 +775,7 @@ exports[`renders warn alert correctly 1`] = `
     onLayout={[Function]}
     onPress={[Function]}
   >
-    <View
+    <Component
       style={
         Array [
           Object {
@@ -813,7 +813,7 @@ exports[`renders warn alert correctly 1`] = `
             }
           }
         />
-        <View
+        <Component
           style={
             Object {
               "flex": 1,
@@ -849,9 +849,9 @@ exports[`renders warn alert correctly 1`] = `
             text="World!"
             textProps={Object {}}
           />
-        </View>
+        </Component>
       </SafeAreaView>
-    </View>
+    </Component>
   </TouchableOpacity>
 </AnimatedComponent>
 `;

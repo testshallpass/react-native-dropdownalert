@@ -3,12 +3,6 @@ import { validateType } from '../functions';
 test('0 length to be false', () => {
   expect(validateType('')).toBeFalsy();
 });
-// test('null to be false', () => {
-//     expect(validateType(null)).toBeFalsy();
-// });
-// test('undefined to be false', () => {
-//     expect(validateType(undefined)).toBeFalsy();
-// });
 test('info type to be true', () => {
   expect(validateType('info')).toBeTruthy();
 });

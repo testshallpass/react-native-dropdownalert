@@ -1,6 +1,5 @@
 import 'react-native';
 import React from 'react';
-import renderer from 'react-test-renderer';
 import ImageView from '../imageview';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
