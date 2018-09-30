@@ -1,4 +1,4 @@
 import React from 'react';
 import { AppRegistry } from 'react-native';
-import Main from './Main';
-AppRegistry.registerComponent('DropDownAlert', () =>  Main );
+import App from './App';
+AppRegistry.registerComponent('DropDownAlert', () =>  App );
