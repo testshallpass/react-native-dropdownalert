@@ -185,7 +185,7 @@ export default class DropdownAlert extends Component {
       },
     });
   };
-  alertWithType = (type, title, message, interval?) => {
+  alertWithType = (type, title, message, interval) => {
     if (validateType(type) == false) {
       return;
     }
@@ -197,21 +197,18 @@ export default class DropdownAlert extends Component {
       message = message.toString();
       console.warn('DropdownAlert: Message is not a string.');
     }
-
-    const closeInterval =
-      typeof interval === "number" && interval > 1
-        ? interval
-        : this.props.closeInterval;
-
+    const closeInterval = typeof interval === 'number' && interval > 1 ? interval : this.props.closeInterval;
     if (this.props.replaceEnabled == false) {
       this.setState({
         type: type,
         message: message,
         title: title,
-        isOpen: true,
         topValue: 0,
       });
       if (this.state.isOpen == false) {
+        this.setState({
+          isOpen: true,
+        });
         this.animate(1);
       }
       if (closeInterval > 1) {
