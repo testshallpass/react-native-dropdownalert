@@ -204,6 +204,7 @@ export default class DropdownAlert extends Component {
         : this.props.closeInterval;
 
     if (this.props.replaceEnabled == false) {
+      let isOpen=this.state.isOpen;
       this.setState({
         type: type,
         message: message,
@@ -211,7 +212,7 @@ export default class DropdownAlert extends Component {
         isOpen: true,
         topValue: 0,
       });
-      if (this.state.isOpen == false) {
+      if (isOpen == false) {
         this.animate(1);
       }
       if (closeInterval > 1) {
@@ -270,19 +271,19 @@ export default class DropdownAlert extends Component {
         clearTimeout(this._closeTimeoutId);
       }
       this.animate(0);
+      if (this.props.updateStatusBar) {
+        if (IS_ANDROID) {
+          StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
+        } else {
+          StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
+        }
+      }
       setTimeout(
         function() {
           if (this.state.isOpen) {
             this.setState({
               isOpen: false,
             });
-            if (this.props.updateStatusBar) {
-              if (IS_ANDROID) {
-                StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
-              } else {
-                StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
-              }
-            }
             if (onClose) {
               var data = {
                 type: this.state.type,
