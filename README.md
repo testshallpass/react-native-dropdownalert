@@ -15,6 +15,7 @@
 3. [Demo](#demo)
 4. [Usage](#usage)
 5. [Props](#props)
+6. [Caveats](#caveats)
 
 A simple alert to notify users about new chat messages, something went wrong or everything is ok. It can be closed by tap, cancel button, automatically with `closeInterval`, pan responder up gesture or programmatically.
 
@@ -34,30 +35,38 @@ npm i react-native-dropdownalert --save
 
 ### Usage
 ```javascript
+// ...
 import DropdownAlert from 'react-native-dropdownalert';
-export default class Example extends Component {
-  // ...
-  onError = error => {
-    if (error) {
-      this.dropdown.alertWithType('error', 'Error', error);
+export default class App extends Component {
+  componentDidMount() {
+    this.fetchData();
+  }
+  fetchData = async () => {
+    try {
+      await fetch('https://mywebsite.com/endpoint/');
+    } catch (error) {
+      this.dropdown.alertWithType('error', 'Error', error.message);
     }
   };
-  // ...
-  onClose(data) {
-    // data = {type, title, message, action}
-    // action means how the alert was closed.
-    // returns: automatic, programmatic, tap, pan or cancel
-  }
   render() {
     return (
       <View>
-        // !!! Make sure it's the last component in your document tree.
-        <DropdownAlert ref={ref => this.dropdown = ref} onClose={data => this.onClose(data)} />
+         // !!! Make sure it is the last component in your document tree.
+        <DropdownAlert ref={ref => this.dropdown = ref} />
       </View>
     );
   }
 }
 ```
+
+### Caveats
+
+* Modals can overlap DropdownAlert if it's not inside the modal's document tree.
+* It is important you place the `DropdownAlert` **ABOVE** the `StackNavigator`.
+  * [DropdownHolder example #1](https://gist.github.com/testshallpass/d76c656874e417bef4e0e6a63fc492af)
+  * [DropdownHolder example #2](https://gist.github.com/testshallpass/6c6c867269348c485a1e0d6ae3f55e90)
+  * [Redux + router flux example](https://gist.github.com/testshallpass/13f047205d1b966f55340b8962fe99c0)
+
 
 ### Props
 | Name | Type | Description | Default |
