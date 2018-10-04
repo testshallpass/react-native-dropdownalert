@@ -59,7 +59,6 @@ test('expect state variables to change with replace disabled', () => {
   expect(wrapper.instance().state.isOpen).toBeTruthy();
   expect(wrapper.instance().state.topValue).toBe(0);
   expect(wrapper.instance()._closeTimeoutId).toBeDefined();
-  expect(wrapper.instance().state.animationValue).toEqual(new reactNative.Animated.Value(0));
 });
 test('expect invalid type with state isOpen to be false', () => {
   const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
