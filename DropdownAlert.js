@@ -267,21 +267,20 @@ export default class DropdownAlert extends Component {
         clearTimeout(this._closeTimeoutId);
       }
       this.animate(0);
+      if (this.props.updateStatusBar) {
+        if (IS_ANDROID) {
+          StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
+        }
+        StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
+      }
       setTimeout(
         function() {
           if (this.state.isOpen) {
             this.setState({
               isOpen: false,
             });
-            if (this.props.updateStatusBar) {
-              if (IS_ANDROID) {
-                StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
-              } else {
-                StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
-              }
-            }
             if (onClose) {
-              var data = {
+              const data = {
                 type: this.state.type,
                 title: this.state.title,
                 message: this.state.message,
@@ -306,9 +305,8 @@ export default class DropdownAlert extends Component {
       if (this.props.updateStatusBar) {
         if (IS_ANDROID) {
           StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
-        } else {
-          StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
         }
+        StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
       }
     }
   }
@@ -452,9 +450,8 @@ export default class DropdownAlert extends Component {
         if (IS_ANDROID) {
           StatusBar.setBackgroundColor(activeStatusBarBackgroundColor, true);
           StatusBar.setTranslucent(translucent);
-        } else if (IS_IOS) {
-          StatusBar.setBarStyle(activeStatusBarStyle, true);
         }
+        StatusBar.setBarStyle(activeStatusBarStyle, true);
       }
       let wrapperStyle = {
         transform: [
