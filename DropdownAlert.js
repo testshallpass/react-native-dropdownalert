@@ -419,14 +419,14 @@ export default class DropdownAlert extends Component {
   }
   renderTitle() {
     if (this.props.renderTitle) {
-      return this.props.renderTitle(this.props);
+      return this.props.renderTitle(this.props, this.state);
     } else {
       return <Label style={StyleSheet.flatten(this.props.titleStyle)} numberOfLines={this.props.titleNumOfLines} text={this.state.title} />;
     }
   }
   renderMessage() {
     if (this.props.renderMessage) {
-      return this.props.renderMessage(this.props);
+      return this.props.renderMessage(this.props, this.state);
     } else {
       return <Label style={StyleSheet.flatten(this.props.messageStyle)} numberOfLines={this.props.messageNumOfLines} text={this.state.message} />;
     }
