@@ -146,6 +146,8 @@ export default class DropdownAlert extends Component {
       startDelta: props.startDelta,
       endDelta: props.endDelta,
       topValue: 0,
+      onClose: null,
+      onCancel: null,
     };
   }
   componentWillMount() {
@@ -185,7 +187,7 @@ export default class DropdownAlert extends Component {
       },
     });
   };
-  alertWithType = (type, title, message, interval) => {
+  alertWithType = (type, title, message, options = {}) => {
     if (validateType(type) == false) {
       return;
     }
@@ -197,6 +199,12 @@ export default class DropdownAlert extends Component {
       message = message.toString();
       console.warn('DropdownAlert: Message is not a string.');
     }
+    if (typeof options == 'number') {
+      options = { interval: options };
+    } else if (typeof options == 'function') {
+      options = { onClose: options };
+    }
+    const { interval, onClose = null, onCancel = null } = options;
     const closeInterval = typeof interval === 'number' && interval > 1 ? interval : this.props.closeInterval;
     if (this.props.replaceEnabled == false) {
       this.setState({
@@ -204,6 +212,8 @@ export default class DropdownAlert extends Component {
         message: message,
         title: title,
         topValue: 0,
+        onClose: onClose,
+        onCancel: onCancel,
       });
       if (this.state.isOpen == false) {
         this.setState({
@@ -238,6 +248,8 @@ export default class DropdownAlert extends Component {
               title: title,
               isOpen: true,
               topValue: 0,
+              onClose: onClose,
+              onCancel: onCancel,
             });
           }
           self.animate(1);
@@ -258,9 +270,9 @@ export default class DropdownAlert extends Component {
     if (action == undefined) {
       action = 'programmatic';
     }
-    var onClose = this.props.onClose;
+    var onClose = this.state.onClose || this.props.onClose;
     if (action == 'cancel') {
-      onClose = this.props.onCancel;
+      onClose = this.state.onCancel || this.props.onCancel;
     }
     if (this.state.isOpen) {
       if (this._closeTimeoutId != null) {

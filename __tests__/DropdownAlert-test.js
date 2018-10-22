@@ -60,6 +60,31 @@ test('expect state variables to change with replace disabled', () => {
   expect(wrapper.instance().state.topValue).toBe(0);
   expect(wrapper.instance()._closeTimeoutId).toBeDefined();
 });
+test('expect onClose and onCancel to fire when passed as option', () => {
+  const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} replaceEnabled={false} closeInterval={1} />);
+  wrapper.instance().isOpen = false;
+  wrapper.instance()._closeTimeoutId = setTimeout(function() {});
+  wrapper.update();
+  return new Promise(resolve => {
+    wrapper.instance().alertWithType('info', 'hello', 'world', {
+      interval: 1,
+      onClose: () => {
+        wrapper.instance().isOpen = false;
+        wrapper.update();
+        resolve();
+      },
+    });
+    wrapper.instance().close('automatic');
+  }).then(() => new Promise((resolve) => {
+    wrapper.instance().alertWithType('info', 'hello', 'world', {
+      interval: 1,
+      onCancel: () => {
+        resolve();
+      },
+    });
+    wrapper.instance().close('cancel');
+  }));
+});
 test('expect invalid type with state isOpen to be false', () => {
   const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
   wrapper.instance().alertWithType('random', 'hello', 'world');

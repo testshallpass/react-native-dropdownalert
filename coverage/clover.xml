@@ -1,164 +1,169 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1538316967906" clover="3.2.0">
-  <project timestamp="1538316967906" name="All files">
-    <metrics statements="187" coveredstatements="126" conditionals="151" coveredconditionals="87" methods="33" coveredmethods="19" elements="371" coveredelements="232" complexity="0" loc="187" ncloc="187" packages="2" files="11" classes="11">
+<coverage generated="1540173893097" clover="3.2.0">
+  <project timestamp="1540173893097" name="All files">
+    <metrics statements="192" coveredstatements="139" conditionals="160" coveredconditionals="102" methods="33" coveredmethods="20" elements="385" coveredelements="261" complexity="0" loc="192" ncloc="192" packages="2" files="11" classes="11">
       <package name="react-native-dropdownalert">
-        <metrics statements="182" coveredstatements="121" conditionals="151" coveredconditionals="87" methods="33" coveredmethods="19"/>
-        <file name="DropdownAlert.js" path="/Users/briansinnicke/Desktop/projects/Github/react-native-dropdownalert/DropdownAlert.js">
-          <metrics statements="151" coveredstatements="90" conditionals="124" coveredconditionals="62" methods="30" coveredmethods="16"/>
-          <line num="138" count="13" type="stmt"/>
-          <line num="139" count="13" type="stmt"/>
-          <line num="152" count="13" type="stmt"/>
-          <line num="155" count="0" type="cond" truecount="0" falsecount="2"/>
-          <line num="156" count="0" type="stmt"/>
-          <line num="160" count="13" type="stmt"/>
-          <line num="162" count="0" type="stmt"/>
-          <line num="165" count="0" type="cond" truecount="0" falsecount="3"/>
-          <line num="168" count="0" type="cond" truecount="0" falsecount="2"/>
-          <line num="169" count="0" type="stmt"/>
-          <line num="175" count="0" type="stmt"/>
-          <line num="176" count="0" type="cond" truecount="0" falsecount="2"/>
+        <metrics statements="187" coveredstatements="134" conditionals="160" coveredconditionals="102" methods="33" coveredmethods="20"/>
+        <file name="DropdownAlert.js" path="/Users/Matthew/git/react-native-dropdownalert/DropdownAlert.js">
+          <metrics statements="156" coveredstatements="103" conditionals="133" coveredconditionals="77" methods="30" coveredmethods="17"/>
+          <line num="138" count="14" type="stmt"/>
+          <line num="139" count="14" type="stmt"/>
+          <line num="154" count="14" type="stmt"/>
+          <line num="157" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="158" count="0" type="stmt"/>
+          <line num="162" count="14" type="stmt"/>
+          <line num="164" count="0" type="stmt"/>
+          <line num="167" count="0" type="cond" truecount="0" falsecount="3"/>
+          <line num="170" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="171" count="0" type="stmt"/>
           <line num="177" count="0" type="stmt"/>
-          <line num="181" count="0" type="stmt"/>
-          <line num="182" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="178" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="179" count="0" type="stmt"/>
           <line num="183" count="0" type="stmt"/>
-          <line num="189" count="3" type="cond" truecount="2" falsecount="0"/>
-          <line num="190" count="1" type="stmt"/>
-          <line num="192" count="2" type="cond" truecount="2" falsecount="0"/>
-          <line num="193" count="1" type="stmt"/>
-          <line num="194" count="1" type="stmt"/>
-          <line num="196" count="2" type="cond" truecount="2" falsecount="0"/>
-          <line num="197" count="1" type="stmt"/>
-          <line num="198" count="1" type="stmt"/>
-          <line num="202" count="2" type="cond" truecount="2" falsecount="2"/>
-          <line num="206" count="2" type="cond" truecount="2" falsecount="0"/>
-          <line num="207" count="1" type="stmt"/>
-          <line num="214" count="1" type="cond" truecount="1" falsecount="1"/>
-          <line num="215" count="0" type="stmt"/>
-          <line num="217" count="1" type="cond" truecount="1" falsecount="1"/>
-          <line num="218" count="1" type="cond" truecount="1" falsecount="1"/>
-          <line num="219" count="1" type="stmt"/>
-          <line num="221" count="1" type="stmt"/>
-          <line num="223" count="0" type="stmt"/>
-          <line num="229" count="1" type="stmt"/>
-          <line num="230" count="1" type="cond" truecount="1" falsecount="1"/>
-          <line num="231" count="0" type="stmt"/>
-          <line num="232" count="0" type="stmt"/>
-          <line num="234" count="1" type="stmt"/>
-          <line num="235" count="1" type="stmt"/>
+          <line num="184" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="185" count="0" type="stmt"/>
+          <line num="191" count="5" type="cond" truecount="2" falsecount="0"/>
+          <line num="192" count="1" type="stmt"/>
+          <line num="194" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="195" count="1" type="stmt"/>
+          <line num="196" count="1" type="stmt"/>
+          <line num="198" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="199" count="1" type="stmt"/>
+          <line num="200" count="1" type="stmt"/>
+          <line num="202" count="4" type="cond" truecount="1" falsecount="1"/>
+          <line num="203" count="0" type="stmt"/>
+          <line num="204" count="4" type="cond" truecount="1" falsecount="1"/>
+          <line num="205" count="0" type="stmt"/>
+          <line num="207" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="208" count="4" type="cond" truecount="3" falsecount="1"/>
+          <line num="209" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="210" count="3" type="stmt"/>
+          <line num="218" count="3" type="cond" truecount="1" falsecount="1"/>
+          <line num="219" count="3" type="stmt"/>
+          <line num="222" count="3" type="stmt"/>
+          <line num="224" count="3" type="cond" truecount="2" falsecount="0"/>
+          <line num="225" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="226" count="1" type="stmt"/>
+          <line num="228" count="1" type="stmt"/>
+          <line num="230" count="0" type="stmt"/>
+          <line num="236" count="1" type="stmt"/>
           <line num="237" count="1" type="cond" truecount="1" falsecount="1"/>
-          <line num="238" count="1" type="stmt"/>
-          <line num="246" count="1" type="stmt"/>
-          <line num="247" count="1" type="cond" truecount="1" falsecount="1"/>
-          <line num="248" count="1" type="stmt"/>
-          <line num="250" count="0" type="stmt"/>
-          <line num="261" count="2" type="cond" truecount="2" falsecount="0"/>
-          <line num="262" count="1" type="stmt"/>
-          <line num="264" count="2" type="stmt"/>
-          <line num="265" count="2" type="cond" truecount="2" falsecount="0"/>
-          <line num="266" count="1" type="stmt"/>
-          <line num="268" count="2" type="cond" truecount="2" falsecount="0"/>
-          <line num="269" count="1" type="cond" truecount="1" falsecount="1"/>
-          <line num="270" count="0" type="stmt"/>
-          <line num="272" count="1" type="stmt"/>
-          <line num="273" count="1" type="stmt"/>
-          <line num="275" count="0" type="cond" truecount="0" falsecount="2"/>
-          <line num="276" count="0" type="stmt"/>
-          <line num="279" count="0" type="cond" truecount="0" falsecount="2"/>
-          <line num="280" count="0" type="cond" truecount="0" falsecount="2"/>
-          <line num="281" count="0" type="stmt"/>
-          <line num="283" count="0" type="stmt"/>
-          <line num="286" count="0" type="cond" truecount="0" falsecount="2"/>
-          <line num="287" count="0" type="stmt"/>
-          <line num="293" count="0" type="stmt"/>
-          <line num="302" count="1" type="cond" truecount="1" falsecount="1"/>
-          <line num="303" count="1" type="cond" truecount="1" falsecount="1"/>
-          <line num="304" count="1" type="stmt"/>
-          <line num="306" count="1" type="stmt"/>
-          <line num="309" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="238" count="0" type="stmt"/>
+          <line num="239" count="0" type="stmt"/>
+          <line num="241" count="1" type="stmt"/>
+          <line num="242" count="1" type="stmt"/>
+          <line num="244" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="245" count="1" type="stmt"/>
+          <line num="255" count="1" type="stmt"/>
+          <line num="256" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="257" count="1" type="stmt"/>
+          <line num="259" count="0" type="stmt"/>
+          <line num="270" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="271" count="1" type="stmt"/>
+          <line num="273" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="274" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="275" count="2" type="cond" truecount="2" falsecount="0"/>
+          <line num="277" count="4" type="cond" truecount="2" falsecount="0"/>
+          <line num="278" count="3" type="cond" truecount="2" falsecount="0"/>
+          <line num="279" count="2" type="stmt"/>
+          <line num="281" count="3" type="stmt"/>
+          <line num="282" count="3" type="cond" truecount="1" falsecount="1"/>
+          <line num="283" count="3" type="cond" truecount="1" falsecount="1"/>
+          <line num="284" count="0" type="stmt"/>
+          <line num="286" count="3" type="stmt"/>
+          <line num="288" count="3" type="stmt"/>
+          <line num="290" count="2" type="cond" truecount="1" falsecount="1"/>
+          <line num="291" count="2" type="stmt"/>
+          <line num="294" count="2" type="cond" truecount="1" falsecount="1"/>
+          <line num="295" count="2" type="stmt"/>
+          <line num="301" count="2" type="stmt"/>
           <line num="310" count="1" type="cond" truecount="1" falsecount="1"/>
-          <line num="311" count="0" type="stmt"/>
-          <line num="313" count="1" type="stmt"/>
-          <line num="319" count="2" type="stmt"/>
-          <line num="327" count="0" type="stmt"/>
-          <line num="328" count="0" type="stmt"/>
-          <line num="329" count="0" type="stmt"/>
-          <line num="330" count="0" type="stmt"/>
-          <line num="331" count="0" type="cond" truecount="0" falsecount="2"/>
-          <line num="332" count="0" type="stmt"/>
-          <line num="333" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="311" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="312" count="1" type="stmt"/>
+          <line num="314" count="1" type="stmt"/>
+          <line num="317" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="318" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="319" count="0" type="stmt"/>
+          <line num="321" count="1" type="stmt"/>
+          <line num="326" count="7" type="stmt"/>
           <line num="334" count="0" type="stmt"/>
-          <line num="336" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="335" count="0" type="stmt"/>
+          <line num="336" count="0" type="stmt"/>
           <line num="337" count="0" type="stmt"/>
-          <line num="339" count="0" type="cond" truecount="0" falsecount="2"/>
-          <line num="340" count="0" type="stmt"/>
-          <line num="341" count="0" type="cond" truecount="0" falsecount="2"/>
-          <line num="342" count="0" type="stmt"/>
+          <line num="338" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="339" count="0" type="stmt"/>
+          <line num="340" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="341" count="0" type="stmt"/>
+          <line num="343" count="0" type="cond" truecount="0" falsecount="2"/>
           <line num="344" count="0" type="stmt"/>
-          <line num="345" count="0" type="cond" truecount="0" falsecount="2"/>
-          <line num="346" count="0" type="stmt"/>
-          <line num="348" count="0" type="cond" truecount="0" falsecount="4"/>
+          <line num="346" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="347" count="0" type="stmt"/>
+          <line num="348" count="0" type="cond" truecount="0" falsecount="2"/>
           <line num="349" count="0" type="stmt"/>
-          <line num="356" count="11" type="stmt"/>
-          <line num="357" count="11" type="cond" truecount="5" falsecount="0"/>
-          <line num="359" count="3" type="stmt"/>
-          <line num="361" count="1" type="stmt"/>
-          <line num="363" count="2" type="stmt"/>
-          <line num="365" count="1" type="stmt"/>
-          <line num="367" count="4" type="stmt"/>
-          <line num="371" count="11" type="cond" truecount="5" falsecount="0"/>
-          <line num="373" count="3" type="stmt"/>
-          <line num="375" count="1" type="stmt"/>
-          <line num="377" count="2" type="stmt"/>
-          <line num="379" count="1" type="stmt"/>
-          <line num="381" count="4" type="stmt"/>
-          <line num="385" count="11" type="cond" truecount="5" falsecount="0"/>
-          <line num="387" count="3" type="stmt"/>
-          <line num="389" count="1" type="stmt"/>
-          <line num="391" count="2" type="stmt"/>
-          <line num="393" count="1" type="stmt"/>
-          <line num="395" count="4" type="stmt"/>
-          <line num="399" count="11" type="cond" truecount="1" falsecount="1"/>
-          <line num="400" count="0" type="stmt"/>
-          <line num="402" count="11" type="stmt"/>
-          <line num="405" count="11" type="cond" truecount="2" falsecount="0"/>
-          <line num="406" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="351" count="0" type="stmt"/>
+          <line num="352" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="353" count="0" type="stmt"/>
+          <line num="355" count="0" type="cond" truecount="0" falsecount="4"/>
+          <line num="356" count="0" type="stmt"/>
+          <line num="363" count="13" type="stmt"/>
+          <line num="364" count="13" type="cond" truecount="5" falsecount="0"/>
+          <line num="366" count="5" type="stmt"/>
+          <line num="368" count="1" type="stmt"/>
+          <line num="370" count="2" type="stmt"/>
+          <line num="372" count="1" type="stmt"/>
+          <line num="374" count="4" type="stmt"/>
+          <line num="378" count="13" type="cond" truecount="5" falsecount="0"/>
+          <line num="380" count="5" type="stmt"/>
+          <line num="382" count="1" type="stmt"/>
+          <line num="384" count="2" type="stmt"/>
+          <line num="386" count="1" type="stmt"/>
+          <line num="388" count="4" type="stmt"/>
+          <line num="392" count="13" type="cond" truecount="5" falsecount="0"/>
+          <line num="394" count="5" type="stmt"/>
+          <line num="396" count="1" type="stmt"/>
+          <line num="398" count="2" type="stmt"/>
+          <line num="400" count="1" type="stmt"/>
+          <line num="402" count="4" type="stmt"/>
+          <line num="406" count="13" type="cond" truecount="1" falsecount="1"/>
           <line num="407" count="0" type="stmt"/>
-          <line num="409" count="1" type="stmt"/>
-          <line num="416" count="0" type="stmt"/>
-          <line num="423" count="10" type="stmt"/>
-          <line num="426" count="11" type="cond" truecount="1" falsecount="1"/>
-          <line num="427" count="0" type="stmt"/>
-          <line num="429" count="11" type="stmt"/>
-          <line num="433" count="11" type="cond" truecount="1" falsecount="1"/>
+          <line num="409" count="13" type="stmt"/>
+          <line num="412" count="13" type="cond" truecount="2" falsecount="0"/>
+          <line num="413" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="414" count="0" type="stmt"/>
+          <line num="416" count="1" type="stmt"/>
+          <line num="423" count="0" type="stmt"/>
+          <line num="430" count="12" type="stmt"/>
+          <line num="433" count="13" type="cond" truecount="1" falsecount="1"/>
           <line num="434" count="0" type="stmt"/>
-          <line num="436" count="11" type="stmt"/>
-          <line num="440" count="25" type="stmt"/>
-          <line num="441" count="25" type="cond" truecount="2" falsecount="0"/>
-          <line num="442" count="11" type="stmt"/>
-          <line num="443" count="11" type="stmt"/>
-          <line num="444" count="11" type="stmt"/>
-          <line num="445" count="11" type="stmt"/>
-          <line num="446" count="11" type="cond" truecount="1" falsecount="1"/>
-          <line num="447" count="0" type="cond" truecount="0" falsecount="2"/>
-          <line num="448" count="0" type="stmt"/>
-          <line num="450" count="0" type="cond" truecount="0" falsecount="2"/>
-          <line num="451" count="0" type="stmt"/>
-          <line num="454" count="11" type="cond" truecount="1" falsecount="1"/>
-          <line num="455" count="11" type="cond" truecount="1" falsecount="1"/>
-          <line num="456" count="0" type="stmt"/>
-          <line num="457" count="0" type="stmt"/>
-          <line num="458" count="11" type="cond" truecount="1" falsecount="1"/>
-          <line num="459" count="11" type="stmt"/>
-          <line num="462" count="11" type="stmt"/>
-          <line num="477" count="11" type="cond" truecount="2" falsecount="0"/>
-          <line num="478" count="11" type="stmt"/>
-          <line num="479" count="0" type="stmt"/>
-          <line num="482" count="0" type="cond" truecount="1" falsecount="1"/>
-          <line num="484" count="0" type="stmt"/>
-          <line num="500" count="14" type="stmt"/>
+          <line num="436" count="13" type="stmt"/>
+          <line num="440" count="13" type="cond" truecount="1" falsecount="1"/>
+          <line num="441" count="0" type="stmt"/>
+          <line num="443" count="13" type="stmt"/>
+          <line num="447" count="33" type="stmt"/>
+          <line num="448" count="33" type="cond" truecount="2" falsecount="0"/>
+          <line num="449" count="13" type="stmt"/>
+          <line num="450" count="13" type="stmt"/>
+          <line num="451" count="13" type="stmt"/>
+          <line num="452" count="13" type="stmt"/>
+          <line num="453" count="13" type="cond" truecount="1" falsecount="1"/>
+          <line num="454" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="455" count="0" type="stmt"/>
+          <line num="457" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="458" count="0" type="stmt"/>
+          <line num="461" count="13" type="cond" truecount="1" falsecount="1"/>
+          <line num="462" count="13" type="cond" truecount="1" falsecount="1"/>
+          <line num="463" count="0" type="stmt"/>
+          <line num="464" count="0" type="stmt"/>
+          <line num="466" count="13" type="stmt"/>
+          <line num="468" count="13" type="stmt"/>
+          <line num="483" count="13" type="cond" truecount="2" falsecount="0"/>
+          <line num="484" count="13" type="stmt"/>
+          <line num="485" count="0" type="stmt"/>
+          <line num="488" count="0" type="cond" truecount="1" falsecount="1"/>
+          <line num="490" count="0" type="stmt"/>
+          <line num="506" count="20" type="stmt"/>
         </file>
-        <file name="constants.js" path="/Users/briansinnicke/Desktop/projects/Github/react-native-dropdownalert/constants.js">
+        <file name="constants.js" path="/Users/Matthew/git/react-native-dropdownalert/constants.js">
           <metrics statements="9" coveredstatements="9" conditionals="4" coveredconditionals="2" methods="0" coveredmethods="0"/>
           <line num="3" count="3" type="cond" truecount="1" falsecount="1"/>
           <line num="4" count="3" type="cond" truecount="1" falsecount="1"/>
@@ -170,18 +175,18 @@
           <line num="10" count="3" type="stmt"/>
           <line num="12" count="3" type="stmt"/>
         </file>
-        <file name="functions.js" path="/Users/briansinnicke/Desktop/projects/Github/react-native-dropdownalert/functions.js">
+        <file name="functions.js" path="/Users/Matthew/git/react-native-dropdownalert/functions.js">
           <metrics statements="8" coveredstatements="8" conditionals="11" coveredconditionals="11" methods="1" coveredmethods="1"/>
           <line num="1" count="2" type="stmt"/>
-          <line num="2" count="10" type="cond" truecount="4" falsecount="0"/>
+          <line num="2" count="12" type="cond" truecount="4" falsecount="0"/>
           <line num="3" count="1" type="stmt"/>
           <line num="4" count="1" type="stmt"/>
-          <line num="6" count="9" type="cond" truecount="7" falsecount="0"/>
+          <line num="6" count="11" type="cond" truecount="7" falsecount="0"/>
           <line num="7" count="2" type="stmt"/>
           <line num="8" count="2" type="stmt"/>
-          <line num="10" count="7" type="stmt"/>
+          <line num="10" count="9" type="stmt"/>
         </file>
-        <file name="imageview.js" path="/Users/briansinnicke/Desktop/projects/Github/react-native-dropdownalert/imageview.js">
+        <file name="imageview.js" path="/Users/Matthew/git/react-native-dropdownalert/imageview.js">
           <metrics statements="9" coveredstatements="9" conditionals="8" coveredconditionals="8" methods="1" coveredmethods="1"/>
           <line num="23" count="5" type="stmt"/>
           <line num="24" count="5" type="cond" truecount="2" falsecount="0"/>
@@ -193,37 +198,37 @@
           <line num="32" count="4" type="cond" truecount="2" falsecount="0"/>
           <line num="34" count="1" type="stmt"/>
         </file>
-        <file name="label.js" path="/Users/briansinnicke/Desktop/projects/Github/react-native-dropdownalert/label.js">
+        <file name="label.js" path="/Users/Matthew/git/react-native-dropdownalert/label.js">
           <metrics statements="4" coveredstatements="4" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
           <line num="24" count="2" type="stmt"/>
           <line num="25" count="2" type="cond" truecount="4" falsecount="0"/>
           <line num="26" count="1" type="stmt"/>
           <line num="32" count="1" type="stmt"/>
         </file>
-        <file name="setupTests.js" path="/Users/briansinnicke/Desktop/projects/Github/react-native-dropdownalert/setupTests.js">
+        <file name="setupTests.js" path="/Users/Matthew/git/react-native-dropdownalert/setupTests.js">
           <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
           <line num="3" count="5" type="stmt"/>
         </file>
       </package>
       <package name="react-native-dropdownalert.assets">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <file name="cancel.png" path="/Users/briansinnicke/Desktop/projects/Github/react-native-dropdownalert/assets/cancel.png">
+        <file name="cancel.png" path="/Users/Matthew/git/react-native-dropdownalert/assets/cancel.png">
           <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
           <line num="1" count="1" type="stmt"/>
         </file>
-        <file name="error.png" path="/Users/briansinnicke/Desktop/projects/Github/react-native-dropdownalert/assets/error.png">
+        <file name="error.png" path="/Users/Matthew/git/react-native-dropdownalert/assets/error.png">
           <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
           <line num="1" count="2" type="stmt"/>
         </file>
-        <file name="info.png" path="/Users/briansinnicke/Desktop/projects/Github/react-native-dropdownalert/assets/info.png">
+        <file name="info.png" path="/Users/Matthew/git/react-native-dropdownalert/assets/info.png">
           <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
           <line num="1" count="1" type="stmt"/>
         </file>
-        <file name="success.png" path="/Users/briansinnicke/Desktop/projects/Github/react-native-dropdownalert/assets/success.png">
+        <file name="success.png" path="/Users/Matthew/git/react-native-dropdownalert/assets/success.png">
           <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
           <line num="1" count="1" type="stmt"/>
         </file>
-        <file name="warn.png" path="/Users/briansinnicke/Desktop/projects/Github/react-native-dropdownalert/assets/warn.png">
+        <file name="warn.png" path="/Users/Matthew/git/react-native-dropdownalert/assets/warn.png">
           <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
           <line num="1" count="1" type="stmt"/>
         </file>
