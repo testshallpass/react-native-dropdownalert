@@ -52,6 +52,9 @@ export default class DropdownAlert extends Component {
     renderCancel: PropTypes.func,
     renderTitle: PropTypes.func,
     renderMessage: PropTypes.func,
+    testID: PropTypes.string,
+    accessibilityLabel: PropTypes.string,
+    accessible: PropTypes.bool,
   };
   static defaultProps = {
     onClose: null,
@@ -133,6 +136,9 @@ export default class DropdownAlert extends Component {
     renderCancel: undefined,
     renderTitle: undefined,
     renderMessage: undefined,
+    testID: undefined,
+    accessibilityLabel: undefined,
+    accessible: false,
   };
   constructor(props) {
     super(props);
@@ -476,6 +482,9 @@ export default class DropdownAlert extends Component {
             onPress={!this.props.tapToCloseEnabled ? null : () => this.close('tap')}
             disabled={!this.props.tapToCloseEnabled}
             onLayout={event => this.onLayoutEvent(event)}
+            testID={this.props.testID}
+            accessibilityLabel={this.props.accessibilityLabel}
+            accessible={this.props.accessible}
           >
             <View style={style}>
               <SafeAreaView style={StyleSheet.flatten(this.props.safeAreaStyle)}>

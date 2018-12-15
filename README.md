@@ -10,6 +10,7 @@
 ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/info.png) ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/warning.png) ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/error.png) ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/success.png)
 
 ### Table of contents
+
 1. [Support](#support)
 2. [Installation](#installation)
 3. [Demo](#demo)
@@ -20,20 +21,24 @@
 A simple alert to notify users about new chat messages, something went wrong or everything is ok. It can be closed by tap, cancel button, automatically with `closeInterval`, pan responder up gesture or programmatically.
 
 ### Support
+
 | react-native version | package version | reason |
 | ---- | :---: | ---- |
 | 0.50.0 | >=3.2.0 | Added SafeAreaView (iPhone X) |
 | 0.44.0 | >=2.12.0 | Added ViewPropTypes |
 
 ### Installation
+
 ```
 npm i react-native-dropdownalert --save
 ```
 
 ### Demo
+
 ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/demo.gif)
 
 ### Usage
+
 ```javascript
 // ...
 import DropdownAlert from 'react-native-dropdownalert';
@@ -67,8 +72,8 @@ export default class App extends Component {
   * [DropdownHolder example #2](https://gist.github.com/testshallpass/6c6c867269348c485a1e0d6ae3f55e90)
   * [Redux + router flux example](https://gist.github.com/testshallpass/13f047205d1b966f55340b8962fe99c0)
 
-
 ### Props
+
 | Name | Type | Description | Default |
 | ---- | :---: | --- | --- |
 | ```closeInterval``` | Number  | dismiss alert at a certain time in milliseconds | 4000
@@ -110,9 +115,12 @@ export default class App extends Component {
 | ```sensitivity``` | Number  | Sensitivity for the pan responder up gesture | 20
 | ```defaultContainer``` | Object  | Style for inner view container (**override paddingTop with this**) | ```{ padding: 8, paddingTop: IS_ANDROID ? 0 : 20, flexDirection: 'row' } ```
 | ```defaultTextContainer``` | Object | Style for inner text container (holds title and message) | ```{ flex: 1, padding: 8 }```
-| ```renderImage``` | Function  | Use to overide the left image component  | undefined
-| ```renderCancel``` | Function  | Use to overide the cancel button component  | undefined
-| ```renderTitle``` | Function  | Use to overide the title component  | undefined
-| ```renderMessage``` | Function  | Use to overide the message component  | undefined
+| ```renderImage``` | Function  | Use to override the left image component  | undefined
+| ```renderCancel``` | Function  | Use to override the cancel button component  | undefined
+| ```renderTitle``` | Function  | Use to override the title component  | undefined
+| ```renderMessage``` | Function  | Use to override the message component  | undefined
+| ```testID``` | String |  Top level TouchableOpacity's testID | undefined
+| ```accessibilityLabel``` | String |  Top level TouchableOpacity's accessibilityLabel | undefined
+| ```accessible``` | Boolean |  Top level TouchableOpacity's accessible | false
 
 > Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
