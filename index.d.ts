@@ -46,6 +46,9 @@ export interface DropdownAlertProps {
       props: DropdownAlertProps,
       state: { type: string }
     ): ReactNode
+    testID?: string
+    accessible?: boolean
+    accessibilityLabel?: string
   }
   export type DropdownAlertType =
     | 'info'
