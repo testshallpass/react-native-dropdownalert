@@ -154,7 +154,7 @@ export default class DropdownAlert extends Component {
       topValue: 0,
     };
   }
-  componentWillMount() {
+  componentDidMount() {
     this.createPanResponder();
   }
   componentWillUnmount() {
