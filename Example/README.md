@@ -1,10 +1,16 @@
-### DropdownAlert Example
-#### Get Started
+# DropdownAlert Example
 
-1. Navigate to the example directory. ```cd ~/Example```
-2. Install the npm modules. ```npm i --save```
-3. You should see a node_modules folder get created in Example directory.
-4. Install react-native CLI ```npm install -g react-native-cli```
-5. Lastly ```react-native run-ios``` or ```react-native run-android``` inside the Example directory. (tip: run Android emulator prior)
+## Pre-requisite
 
-[Official Getting Started with React-Native](http://facebook.github.io/react-native/docs/getting-started.html#content)
+* Install react-native CLI ```npm i -g react-native-cli```.
+
+## Getting started
+
+1. Navigate to Example directory. ```cd ~/Example```.
+2. Install the modules ```npm i --save```.
+3. Notice node_modules directory in Example directory.
+4. Lastly, ```npm run ios``` or ```npm run android``` inside the Example directory. (Android **requires** emulator already running)
+
+## Resources
+
+* [Official react-native Getting started](http://facebook.github.io/react-native/docs/getting-started.html#content).
