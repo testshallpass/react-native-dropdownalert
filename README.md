@@ -122,5 +122,7 @@ export default class App extends Component {
 | ```testID``` | String |  Top level TouchableOpacity's testID | undefined
 | ```accessibilityLabel``` | String |  Top level TouchableOpacity's accessibilityLabel | undefined
 | ```accessible``` | Boolean |  Top level TouchableOpacity's accessible | false
+| ```titleTextProps``` | Object | title text props. **does not override numOfLines (use titleNumOfLines)** | undefined
+| ```messageTextProps``` | Object | message text props. **does not override numOfLines (use messageNumOfLines)** | undefined
 
 > Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
