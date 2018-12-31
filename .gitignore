@@ -56,3 +56,4 @@ buck-out/
 jsconfig.json
 Example/src
 .vscode/
+coverage
