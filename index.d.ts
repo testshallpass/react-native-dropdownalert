@@ -49,6 +49,8 @@ export interface DropdownAlertProps {
     testID?: string
     accessible?: boolean
     accessibilityLabel?: string
+    titleTextProps?: object
+    messageTextProps?: object
   }
   export type DropdownAlertType =
     | 'info'
