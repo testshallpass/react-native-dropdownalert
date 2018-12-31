@@ -15,6 +15,7 @@ exports[`renders label with text 1`] = `
       "textAlign": "left",
     }
   }
+  text="Hello World"
 >
   Hello World
 </Text>
