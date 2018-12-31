@@ -55,6 +55,8 @@ export default class DropdownAlert extends Component {
     testID: PropTypes.string,
     accessibilityLabel: PropTypes.string,
     accessible: PropTypes.bool,
+    titleTextProps: PropTypes.object,
+    messageTextProps: PropTypes.object,
   };
   static defaultProps = {
     onClose: null,
@@ -139,6 +141,8 @@ export default class DropdownAlert extends Component {
     testID: undefined,
     accessibilityLabel: undefined,
     accessible: false,
+    titleTextProps: undefined,
+    messageTextProps: undefined,
   };
   constructor(props) {
     super(props);
@@ -426,16 +430,16 @@ export default class DropdownAlert extends Component {
   renderTitle() {
     if (this.props.renderTitle) {
       return this.props.renderTitle(this.props, this.state);
-    } else {
-      return <Label style={StyleSheet.flatten(this.props.titleStyle)} numberOfLines={this.props.titleNumOfLines} text={this.state.title} />;
     }
+    const { titleTextProps, titleStyle, titleNumOfLines } = this.props;
+    return <Label {...titleTextProps} style={StyleSheet.flatten(titleStyle)} numberOfLines={titleNumOfLines} text={this.state.title} />;
   }
   renderMessage() {
     if (this.props.renderMessage) {
       return this.props.renderMessage(this.props, this.state);
-    } else {
-      return <Label style={StyleSheet.flatten(this.props.messageStyle)} numberOfLines={this.props.messageNumOfLines} text={this.state.message} />;
     }
+    const { messageTextProps, messageStyle, messageNumOfLines } = this.props;
+    return <Label {...messageTextProps} style={StyleSheet.flatten(messageStyle)} numberOfLines={messageNumOfLines} text={this.state.message} />;
   }
   render() {
     const { isOpen, type } = this.state;

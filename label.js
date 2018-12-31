@@ -4,10 +4,9 @@ import { Text } from 'react-native';
 
 export default class Label extends Component {
   static propTypes = {
-    text: PropTypes.string,
+    text: PropTypes.string.isRequired,
     style: PropTypes.object,
     numberOfLines: PropTypes.number,
-    textProps: PropTypes.object,
   };
   static defaultProps = {
     numberOfLines: 1,
@@ -18,13 +17,12 @@ export default class Label extends Component {
       color: 'white',
       backgroundColor: 'transparent',
     },
-    textProps: {},
   };
   render() {
-    const { text, style, numberOfLines, textProps } = this.props;
+    const { text } = this.props;
     if (text !== null && text.length > 0) {
       return (
-        <Text {...textProps} style={style} numberOfLines={numberOfLines}>
+        <Text {...this.props}>
           {text}
         </Text>
       );
