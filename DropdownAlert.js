@@ -157,6 +157,13 @@ export default class DropdownAlert extends Component {
       endDelta: props.endDelta,
       topValue: 0,
     };
+    this.types = {
+      INFO: 'info',
+      WARN: 'warn',
+      ERROR: 'error',
+      SUCCESS: 'success',
+      CUSTOM: 'custom',
+    };
   }
   componentDidMount() {
     this.createPanResponder();
@@ -200,12 +207,10 @@ export default class DropdownAlert extends Component {
       return;
     }
     if (typeof title !== 'string') {
-      title = title.toString();
-      console.warn('DropdownAlert: Title is not a string.');
+      title = `${title}`;
     }
     if (typeof message !== 'string') {
-      message = message.toString();
-      console.warn('DropdownAlert: Message is not a string.');
+      message = `${message}`;
     }
     const closeInterval = typeof interval === 'number' && interval > 1 ? interval : this.props.closeInterval;
     if (this.props.replaceEnabled == false) {
@@ -360,13 +365,13 @@ export default class DropdownAlert extends Component {
   getStyleForType(type) {
     const { defaultContainer } = this.props;
     switch (type) {
-      case 'info':
+      case this.types.INFO:
         return [StyleSheet.flatten(defaultContainer), { backgroundColor: this.props.infoColor }];
-      case 'warn':
+      case this.types.WARN:
         return [StyleSheet.flatten(defaultContainer), { backgroundColor: this.props.warnColor }];
-      case 'error':
+      case this.types.ERROR:
         return [StyleSheet.flatten(defaultContainer), { backgroundColor: this.props.errorColor }];
-      case 'success':
+      case this.types.SUCCESS:
         return [StyleSheet.flatten(defaultContainer), { backgroundColor: this.props.successColor }];
       default:
         return [StyleSheet.flatten(defaultContainer), StyleSheet.flatten(this.props.containerStyle)];
@@ -374,13 +379,13 @@ export default class DropdownAlert extends Component {
   }
   getSourceForType(type) {
     switch (type) {
-      case 'info':
+      case this.types.INFO:
         return this.props.infoImageSrc;
-      case 'warn':
+      case this.types.WARN:
         return this.props.warnImageSrc;
-      case 'error':
+      case this.types.ERROR:
         return this.props.errorImageSrc;
-      case 'success':
+      case this.types.SUCCESS:
         return this.props.successImageSrc;
       default:
         return this.props.imageSrc;
@@ -388,13 +393,13 @@ export default class DropdownAlert extends Component {
   }
   getBackgroundColorForType(type) {
     switch (type) {
-      case 'info':
+      case this.types.INFO:
         return this.props.infoColor;
-      case 'warn':
+      case this.types.WARN:
         return this.props.warnColor;
-      case 'error':
+      case this.types.ERROR:
         return this.props.errorColor;
-      case 'success':
+      case this.types.SUCCESS:
         return this.props.successColor;
       default:
         return this.props.containerStyle.backgroundColor;
@@ -452,7 +457,7 @@ export default class DropdownAlert extends Component {
         if (translucent) {
           style = [style, { paddingTop: StatusBar.currentHeight }];
         }
-        if (type !== 'custom') {
+        if (type !== this.types.CUSTOM) {
           activeStatusBarBackgroundColor = backgroundColor;
         }
       }
