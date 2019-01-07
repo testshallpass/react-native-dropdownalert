@@ -172,6 +172,9 @@ export default class DropdownAlert extends Component {
     if (this._closeTimeoutId != null) {
       clearTimeout(this._closeTimeoutId);
     }
+    if (this.state.isOpen) {
+      this.closeDirectly();
+    }
   }
   createPanResponder = () => {
     this._panResponder = PanResponder.create({
