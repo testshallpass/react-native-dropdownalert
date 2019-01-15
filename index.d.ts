@@ -1,3 +1,5 @@
+import React, { ReactNode } from 'react'
+
 export interface DropdownAlertProps {
     imageSrc?: string | number
     infoImageSrc?: string | number
