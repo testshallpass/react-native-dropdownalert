@@ -272,6 +272,14 @@ export default class DropdownAlert extends Component {
       );
     }
   };
+  resetStatusBarColor = () => {
+    if (this.props.updateStatusBar) {
+      if (IS_ANDROID) {
+        StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
+      }
+      StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
+    }
+  }
   close = action => {
     if (action == undefined) {
       action = 'programmatic';
@@ -285,15 +293,11 @@ export default class DropdownAlert extends Component {
         clearTimeout(this._closeTimeoutId);
       }
       this.animate(0);
-      if (this.props.updateStatusBar) {
-        if (IS_ANDROID) {
-          StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
-        }
-        StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
-      }
+      this.resetStatusBarColor();
       setTimeout(
         function() {
           if (this.state.isOpen) {
+            this.resetStatusBarColor();
             this.setState({
               isOpen: false,
             });
@@ -320,12 +324,7 @@ export default class DropdownAlert extends Component {
       this.setState({
         isOpen: false,
       });
-      if (this.props.updateStatusBar) {
-        if (IS_ANDROID) {
-          StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
-        }
-        StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
-      }
+      this.resetStatusBarColor();
     }
   }
   animate = toValue => {
