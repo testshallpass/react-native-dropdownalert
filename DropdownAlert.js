@@ -156,7 +156,7 @@ export default class DropdownAlert extends Component {
       startDelta: props.startDelta,
       endDelta: props.endDelta,
       topValue: 0,
-      customSource: null
+      payload: {}
     };
     this.types = {
       INFO: 'info',
@@ -203,7 +203,7 @@ export default class DropdownAlert extends Component {
       },
     });
   };
-  alertWithType = (type, title, message, interval, customSource) => {
+  alertWithType = (type, title, message, payload, interval) => {
     if (validateType(type) == false) {
       return;
     }
@@ -220,7 +220,7 @@ export default class DropdownAlert extends Component {
         message: message,
         title: title,
         topValue: 0,
-        customSource
+        payload: payload
       });
       if (this.state.isOpen == false) {
         this.setState({
@@ -255,7 +255,7 @@ export default class DropdownAlert extends Component {
               title: title,
               isOpen: true,
               topValue: 0,
-              customSource
+              payload: payload
             });
           }
           self.animate(1);
@@ -303,6 +303,7 @@ export default class DropdownAlert extends Component {
                 title: this.state.title,
                 message: this.state.message,
                 action: action, // !!! How the alert was closed: automatic, programmatic, tap, pan or cancel
+                payload: this.state.payload,
               };
               onClose(data);
             }
@@ -450,10 +451,10 @@ export default class DropdownAlert extends Component {
     return <Label {...messageTextProps} style={StyleSheet.flatten(messageStyle)} numberOfLines={messageNumOfLines} text={this.state.message} />;
   }
   render() {
-    const { isOpen, type, customSource } = this.state;
+    const { isOpen, type, payload } = this.state;
     if (isOpen) {
       let style = this.getStyleForType(type);
-      const source = customSource || this.getSourceForType(type);
+      const source = payload.customSource || this.getSourceForType(type);
       const backgroundColor = this.getBackgroundColorForType(type);
       let { activeStatusBarBackgroundColor, translucent, updateStatusBar, activeStatusBarStyle, cancelBtnImageSrc, showCancel } = this.props;
       if (IS_ANDROID) {
