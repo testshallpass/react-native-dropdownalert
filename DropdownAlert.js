@@ -454,7 +454,7 @@ export default class DropdownAlert extends Component {
     const { isOpen, type, payload } = this.state;
     if (isOpen) {
       let style = this.getStyleForType(type);
-      const source = payload ? (payload.customSource || this.getSourceForType(type)) : this.getSourceForType(type);
+      const source = payload ? payload.customSource : this.getSourceForType(type);
       const backgroundColor = this.getBackgroundColorForType(type);
       let { activeStatusBarBackgroundColor, translucent, updateStatusBar, activeStatusBarStyle, cancelBtnImageSrc, showCancel } = this.props;
       if (IS_ANDROID) {
