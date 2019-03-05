@@ -448,7 +448,7 @@ export default class DropdownAlert extends Component {
   }
   render() {
     const { isOpen, type } = this.state;
-    const Body = Platform.OS === 'ios' && Platform.Version < 11 ? View : SafeAreaView;
+    const Body = Platform.OS === 'ios' && parseInt(Platform.Version, 10) < 11 ? View : SafeAreaView;
     if (isOpen) {
       let style = this.getStyleForType(type);
       const source = this.getSourceForType(type);
