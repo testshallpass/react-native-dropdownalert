@@ -441,14 +441,14 @@ export default class DropdownAlert extends Component {
       return this.props.renderTitle(this.props, this.state);
     }
     const { titleTextProps, titleStyle, titleNumOfLines } = this.props;
-    return <Label {...titleTextProps} style={StyleSheet.flatten(titleStyle)} numberOfLines={titleNumOfLines} text={this.state.title} />;
+    return <Label {...titleTextProps} style={[StyleSheet.flatten(titleStyle), StyleSheet.flatten(this.state.payload.titleStyle || {})]} numberOfLines={titleNumOfLines} text={this.state.title} />;
   }
   renderMessage() {
     if (this.props.renderMessage) {
       return this.props.renderMessage(this.props, this.state);
     }
     const { messageTextProps, messageStyle, messageNumOfLines } = this.props;
-    return <Label {...messageTextProps} style={StyleSheet.flatten(messageStyle)} numberOfLines={messageNumOfLines} text={this.state.message} />;
+    return <Label {...messageTextProps} style={[StyleSheet.flatten(messageStyle), StyleSheet.flatten(this.state.payload.messageStyle || {})]} numberOfLines={messageNumOfLines} text={this.state.message} />;
   }
   render() {
     const { isOpen, type, payload } = this.state;
