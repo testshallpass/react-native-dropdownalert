@@ -29,6 +29,9 @@ export default class ImageView extends Component {
       if (!style['height']) {
         style['height'] = DEFAULT_IMAGE_DIMENSIONS;
       }
+      if(isRemote) {
+        style['borderRadius'] = (style['width'] / 2);
+      }
       return <Image style={style} source={isRemote ? { uri: source } : source} {...imageProps} />;
     }
     return null;
