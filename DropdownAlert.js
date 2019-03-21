@@ -220,7 +220,7 @@ export default class DropdownAlert extends Component {
         message: message,
         title: title,
         topValue: 0,
-        payload: payload
+        payload: payload || {}
       });
       if (this.state.isOpen == false) {
         this.setState({
@@ -255,7 +255,7 @@ export default class DropdownAlert extends Component {
               title: title,
               isOpen: true,
               topValue: 0,
-              payload: payload
+              payload: payload || {}
             });
           }
           self.animate(1);
