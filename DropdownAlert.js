@@ -131,8 +131,8 @@ export default class DropdownAlert extends Component {
     inactiveStatusBarStyle: StatusBarDefaultBarStyle,
     inactiveStatusBarBackgroundColor: StatusBarDefaultBackgroundColor,
     updateStatusBar: true,
-    useNativeDriver: IS_IOS,
     isInteraction: undefined,
+    useNativeDriver: true,
     elevation: 1,
     zIndex: null,
     sensitivity: 20,
@@ -158,6 +158,7 @@ export default class DropdownAlert extends Component {
       startDelta: props.startDelta,
       endDelta: props.endDelta,
       topValue: 0,
+      payload: {},
     };
     this.types = {
       INFO: 'info',
@@ -173,6 +174,9 @@ export default class DropdownAlert extends Component {
   componentWillUnmount() {
     if (this._closeTimeoutId != null) {
       clearTimeout(this._closeTimeoutId);
+    }
+    if (this.state.isOpen) {
+      this.closeDirectly();
     }
   }
   createPanResponder = () => {
@@ -204,7 +208,7 @@ export default class DropdownAlert extends Component {
       },
     });
   };
-  alertWithType = (type, title, message, interval) => {
+  alertWithType = (type, title, message, payload, interval) => {
     if (validateType(type) == false) {
       return;
     }
@@ -221,6 +225,7 @@ export default class DropdownAlert extends Component {
         message: message,
         title: title,
         topValue: 0,
+        payload: payload,
       });
       if (this.state.isOpen == false) {
         this.setState({
@@ -255,6 +260,7 @@ export default class DropdownAlert extends Component {
               title: title,
               isOpen: true,
               topValue: 0,
+              payload: payload,
             });
           }
           self.animate(1);
@@ -271,6 +277,14 @@ export default class DropdownAlert extends Component {
       );
     }
   };
+  resetStatusBarColor = () => {
+    if (this.props.updateStatusBar) {
+      if (IS_ANDROID) {
+        StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
+      }
+      StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
+    }
+  }
   close = action => {
     if (action == undefined) {
       action = 'programmatic';
@@ -284,15 +298,11 @@ export default class DropdownAlert extends Component {
         clearTimeout(this._closeTimeoutId);
       }
       this.animate(0);
-      if (this.props.updateStatusBar) {
-        if (IS_ANDROID) {
-          StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
-        }
-        StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
-      }
+      this.resetStatusBarColor();
       setTimeout(
         function() {
           if (this.state.isOpen) {
+            this.resetStatusBarColor();
             this.setState({
               isOpen: false,
             });
@@ -302,6 +312,7 @@ export default class DropdownAlert extends Component {
                 title: this.state.title,
                 message: this.state.message,
                 action: action, // !!! How the alert was closed: automatic, programmatic, tap, pan or cancel
+                payload: this.state.payload,
               };
               onClose(data);
             }
@@ -319,12 +330,7 @@ export default class DropdownAlert extends Component {
       this.setState({
         isOpen: false,
       });
-      if (this.props.updateStatusBar) {
-        if (IS_ANDROID) {
-          StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
-        }
-        StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
-      }
+      this.resetStatusBarColor();
     }
   }
   animate = toValue => {

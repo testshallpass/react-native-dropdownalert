@@ -71,6 +71,7 @@ export default class App extends Component {
   * [DropdownHolder example #1](https://gist.github.com/testshallpass/d76c656874e417bef4e0e6a63fc492af)
   * [DropdownHolder example #2](https://gist.github.com/testshallpass/6c6c867269348c485a1e0d6ae3f55e90)
   * [Redux + router flux example](https://gist.github.com/testshallpass/13f047205d1b966f55340b8962fe99c0)
+  * Repo: [react-native-dropdownalert-router-sample](https://github.com/mitsuruog/react-native-dropdownalert-router-sample) Thanks @mitsuruog and @articolo
 
 ### Props
 
