@@ -31,6 +31,7 @@ export interface DropdownAlertProps {
     replaceEnabled?: boolean
     translucent?: boolean
     useNativeDriver?: boolean
+    isInteraction?: boolean
     activeStatusBarStyle?: string
     activeStatusBarBackgroundColor?: string
     inactiveStatusBarStyle?: string
