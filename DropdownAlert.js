@@ -156,6 +156,7 @@ export default class DropdownAlert extends Component {
       startDelta: props.startDelta,
       endDelta: props.endDelta,
       topValue: 0,
+      payload: {},
     };
     this.types = {
       INFO: 'info',
@@ -202,7 +203,7 @@ export default class DropdownAlert extends Component {
       },
     });
   };
-  alertWithType = (type, title, message, interval) => {
+  alertWithType = (type, title, message, payload, interval) => {
     if (validateType(type) == false) {
       return;
     }
@@ -219,6 +220,7 @@ export default class DropdownAlert extends Component {
         message: message,
         title: title,
         topValue: 0,
+        payload: payload,
       });
       if (this.state.isOpen == false) {
         this.setState({
@@ -253,6 +255,7 @@ export default class DropdownAlert extends Component {
               title: title,
               isOpen: true,
               topValue: 0,
+              payload: payload,
             });
           }
           self.animate(1);
@@ -300,6 +303,7 @@ export default class DropdownAlert extends Component {
                 title: this.state.title,
                 message: this.state.message,
                 action: action, // !!! How the alert was closed: automatic, programmatic, tap, pan or cancel
+                payload: this.state.payload,
               };
               onClose(data);
             }
