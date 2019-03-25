@@ -19,4 +19,5 @@ module.exports = {
   WIDTH,
   IS_IOS,
   IS_ANDROID,
+  IS_IOS_BELOW_11,
 };
