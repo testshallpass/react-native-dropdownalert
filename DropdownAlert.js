@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, View, TouchableOpacity, Animated, StatusBar, PanResponder, Platform } from 'react-native';
+import { StyleSheet, SafeAreaView, View, TouchableOpacity, Animated, StatusBar, PanResponder } from 'react-native';
 import PropTypes from 'prop-types';
 import { StatusBarDefaultBarStyle, StatusBarDefaultBackgroundColor, DEFAULT_IMAGE_DIMENSIONS, WINDOW, IS_IOS, IS_ANDROID, IS_IOS_BELOW_11 } from './constants';
 import { validateType } from './functions';
