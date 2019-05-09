@@ -8,6 +8,7 @@ const HEIGHT = WINDOW.height;
 const WIDTH = WINDOW.width;
 const IS_IOS = Platform.OS == 'ios';
 const IS_ANDROID = Platform.OS == 'android';
+const IS_IOS_BELOW_11 = IS_IOS && parseInt(Platform.Version, 10) < 11;
 
 module.exports = {
   StatusBarDefaultBarStyle,
@@ -18,4 +19,5 @@ module.exports = {
   WIDTH,
   IS_IOS,
   IS_ANDROID,
+  IS_IOS_BELOW_11,
 };

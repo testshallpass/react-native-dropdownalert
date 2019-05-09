@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, SafeAreaView, View, TouchableOpacity, Animated, StatusBar, PanResponder } from 'react-native';
 import PropTypes from 'prop-types';
-import { StatusBarDefaultBarStyle, StatusBarDefaultBackgroundColor, DEFAULT_IMAGE_DIMENSIONS, WINDOW, IS_IOS, IS_ANDROID } from './constants';
+import { StatusBarDefaultBarStyle, StatusBarDefaultBackgroundColor, DEFAULT_IMAGE_DIMENSIONS, WINDOW, IS_IOS, IS_ANDROID, IS_IOS_BELOW_11 } from './constants';
 import { validateType } from './functions';
 import Label from './label';
 import ImageView from './imageview';
@@ -457,6 +457,7 @@ export default class DropdownAlert extends Component {
   }
   render() {
     const { isOpen, type } = this.state;
+    const ContentView = IS_IOS_BELOW_11 ? View : SafeAreaView;
     if (isOpen) {
       let style = this.getStyleForType(type);
       const source = this.getSourceForType(type);
@@ -505,13 +506,13 @@ export default class DropdownAlert extends Component {
             accessible={this.props.accessible}
           >
             <View style={style}>
-              <SafeAreaView style={StyleSheet.flatten(this.props.safeAreaStyle)}>
+              <ContentView style={StyleSheet.flatten(this.props.safeAreaStyle)}>
                 {this.renderImage(source)}
                 <View style={StyleSheet.flatten(this.props.defaultTextContainer)}>
                   {this.renderTitle()}
                   {this.renderMessage()}
                 </View>
-              </SafeAreaView>
+              </ContentView>
               {this.renderCancel(showCancel)}
             </View>
           </TouchableOpacity>
