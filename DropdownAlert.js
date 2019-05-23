@@ -1,13 +1,27 @@
 import React, { Component } from 'react';
 import { StyleSheet, SafeAreaView, View, TouchableOpacity, Animated, StatusBar, PanResponder } from 'react-native';
 import PropTypes from 'prop-types';
-import { StatusBarDefaultBarStyle, StatusBarDefaultBackgroundColor, DEFAULT_IMAGE_DIMENSIONS, WINDOW, IS_IOS, IS_ANDROID, IS_IOS_BELOW_11 } from './constants';
+import { StatusBarDefaultBarStyle, StatusBarDefaultBackgroundColor, DEFAULT_IMAGE_DIMENSIONS, WINDOW, IS_IOS, IS_ANDROID, IS_IOS_BELOW_11, DEFAULT_ICON_COLOR, DEFAULT_ICON_SIZE } from './constants';
 import { validateType } from './functions';
 import Label from './label';
 import ImageView from './imageview';
+import AntDesign from "react-native-vector-icons/AntDesign";
+import Entypo from "react-native-vector-icons/Entypo";
+import EvilIcons from "react-native-vector-icons/EvilIcons";
+import Feather from "react-native-vector-icons/Feather";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import Foundation from "react-native-vector-icons/Foundation";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Octicons from "react-native-vector-icons/Octicons";
+import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
+import Zocial from "react-native-vector-icons/Zocial";
 
 export default class DropdownAlert extends Component {
   static propTypes = {
+    vectorIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     infoImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     warnImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -27,7 +41,14 @@ export default class DropdownAlert extends Component {
     titleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     messageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     imageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    iconStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    isIcon: PropTypes.bool,
     cancelBtnImageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    iconType: PropTypes.string,
+    infoVectorIcon: PropTypes.string,
+    warnVectorIcon: PropTypes.string,
+    errorVectorIcon: PropTypes.string,
+    successVectorIcon: PropTypes.string,
     titleNumOfLines: PropTypes.number,
     messageNumOfLines: PropTypes.number,
     onClose: PropTypes.func,
@@ -48,6 +69,7 @@ export default class DropdownAlert extends Component {
     zIndex: PropTypes.number,
     sensitivity: PropTypes.number,
     defaultContainer: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    defaultIconContainer: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     defaultTextContainer: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     renderImage: PropTypes.func,
     renderCancel: PropTypes.func,
@@ -73,6 +95,13 @@ export default class DropdownAlert extends Component {
     errorImageSrc: require('./assets/error.png'),
     successImageSrc: require('./assets/success.png'),
     cancelBtnImageSrc: require('./assets/cancel.png'),
+    isIcon: true,
+    iconType: 'Ionicons',
+    infoVectorIcon: 'alert',
+    warnVectorIcon: 'warning',
+    errorVectorIcon: 'close-circle',
+    successVectorIcon: 'checkmark-circle',
+    vectorIcon: 'arrow-dropright\n',
     infoColor: '#2B73B6',
     warnColor: '#cd853f',
     errorColor: '#cc3232',
@@ -89,6 +118,7 @@ export default class DropdownAlert extends Component {
     safeAreaStyle: {
       flexDirection: 'row',
       flex: 1,
+      alignItems:'center'
     },
     titleStyle: {
       fontSize: 16,
@@ -110,6 +140,11 @@ export default class DropdownAlert extends Component {
       height: DEFAULT_IMAGE_DIMENSIONS,
       alignSelf: 'center',
     },
+	  iconStyle: {
+      color: DEFAULT_ICON_COLOR,
+      fontSize: DEFAULT_ICON_SIZE,
+      alignSelf: 'center',
+    },
     cancelBtnImageStyle: {
       padding: 8,
       width: DEFAULT_IMAGE_DIMENSIONS,
@@ -123,6 +158,10 @@ export default class DropdownAlert extends Component {
     },
     defaultTextContainer: {
       flex: 1,
+      padding: 8,
+    },
+    defaultIconContainer: {
+      flex: 0,
       padding: 8,
     },
     translucent: false,
@@ -387,17 +426,21 @@ export default class DropdownAlert extends Component {
     }
   }
   getSourceForType(type) {
+    const {
+            isIcon, infoImageSrc, infoVectorIcon, warnImageSrc,
+            warnVectorIcon, errorImageSrc, errorVectorIcon,successImageSrc, successVectorIcon, vectorIcon, imageSrc
+          } = this.props;
     switch (type) {
       case this.types.INFO:
-        return this.props.infoImageSrc;
+        return isIcon ? infoVectorIcon : infoImageSrc;
       case this.types.WARN:
-        return this.props.warnImageSrc;
+        return isIcon ? warnVectorIcon : warnImageSrc;
       case this.types.ERROR:
-        return this.props.errorImageSrc;
+        return isIcon ? errorVectorIcon : errorImageSrc;
       case this.types.SUCCESS:
-        return this.props.successImageSrc;
+        return isIcon ? successVectorIcon : successImageSrc;
       default:
-        return this.props.imageSrc;
+        return isIcon ? vectorIcon : imageSrc;
     }
   }
   getBackgroundColorForType(type) {
@@ -414,9 +457,51 @@ export default class DropdownAlert extends Component {
         return this.props.containerStyle.backgroundColor;
     }
   }
+	getIcon(iconType) {
+  	    switch (iconType) {
+			case "AntDesign":
+				return AntDesign;
+			case "Entypo":
+				return Entypo;
+			case "EvilIcons":
+				return EvilIcons;
+			case "Feather":
+				return Feather;
+			case "FontAwesome":
+				return FontAwesome;
+			case "FontAwesome5":
+				return FontAwesome5;
+			case "Foundation":
+				return Foundation;
+			case "MaterialCommunityIcons":
+				return MaterialCommunityIcons;
+			case "MaterialIcons":
+				return MaterialIcons;
+			case "Octicons":
+				return Octicons;
+			case "SimpleLineIcons":
+				return SimpleLineIcons;
+			case "Zocial":
+				return Zocial;
+			default:
+				return Ionicons;
+		}
+  }
   renderImage(source) {
     if (this.props.renderImage) {
       return this.props.renderImage(this.props, this.state);
+    }
+    if (this.props.isIcon) {
+      const Icon   = this.getIcon(this.props.iconType);
+      let iconName = source;
+      if (Icon === Ionicons) {
+        const prefix = IS_ANDROID ? "md-" : "ios-";
+        iconName     = prefix + source;
+      }
+
+      return <Icon
+          style={this.props.iconStyle}
+          name={iconName}/>;
     }
     return <ImageView style={StyleSheet.flatten(this.props.imageStyle)} source={source} />;
   }
@@ -507,7 +592,9 @@ export default class DropdownAlert extends Component {
           >
             <View style={style}>
               <ContentView style={StyleSheet.flatten(this.props.safeAreaStyle)}>
-                {this.renderImage(source)}
+                <View style={StyleSheet.flatten(this.props.defaultIconContainer)}>
+                  {this.renderImage(source)}
+                </View>
                 <View style={StyleSheet.flatten(this.props.defaultTextContainer)}>
                   {this.renderTitle()}
                   {this.renderMessage()}
