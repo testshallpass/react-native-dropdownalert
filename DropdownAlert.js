@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
 import { StyleSheet, SafeAreaView, View, TouchableOpacity, Animated, StatusBar, PanResponder } from 'react-native';
 import PropTypes from 'prop-types';
-import { StatusBarDefaultBarStyle, StatusBarDefaultBackgroundColor, DEFAULT_IMAGE_DIMENSIONS, WINDOW, IS_IOS, IS_ANDROID, IS_IOS_BELOW_11 } from './constants';
-import { validateType } from './functions';
-import Label from './label';
+import {
+  StatusBarDefaultBarStyle,
+  StatusBarDefaultBackgroundColor,
+  DEFAULT_IMAGE_DIMENSIONS,
+  WINDOW,
+  IS_IOS,
+  IS_ANDROID,
+  IS_IOS_BELOW_11,
+  TYPE,
+  ACTION,
+} from './constants';
+import TextView from './TextView';
 import ImageView from './imageview';
+import CancelButton from './CancelButton';
 
 export default class DropdownAlert extends Component {
   static propTypes = {
@@ -60,8 +70,8 @@ export default class DropdownAlert extends Component {
     messageTextProps: PropTypes.object,
   };
   static defaultProps = {
-    onClose: null,
-    onCancel: null,
+    onClose: () => {},
+    onCancel: () => {},
     closeInterval: 4000,
     startDelta: -100,
     endDelta: 0,
@@ -85,10 +95,11 @@ export default class DropdownAlert extends Component {
     containerStyle: {
       padding: 16,
       flexDirection: 'row',
+      backgroundColor: '#202020',
     },
     safeAreaStyle: {
-      flexDirection: 'row',
       flex: 1,
+      flexDirection: 'row',
     },
     titleStyle: {
       fontSize: 16,
@@ -118,7 +129,6 @@ export default class DropdownAlert extends Component {
     },
     defaultContainer: {
       padding: 8,
-      paddingTop: IS_ANDROID ? 0 : 20,
       flexDirection: 'row',
     },
     defaultTextContainer: {
@@ -150,237 +160,220 @@ export default class DropdownAlert extends Component {
     super(props);
     this.state = {
       animationValue: new Animated.Value(0),
-      duration: 450,
+      isOpen: false,
+      topValue: 0,
+      height: 0,
+    };
+    this.alertData = {
       type: '',
       message: '',
       title: '',
-      isOpen: false,
-      startDelta: props.startDelta,
-      endDelta: props.endDelta,
-      topValue: 0,
       payload: {},
+      interval: props.closeInterval,
+      action: '',
     };
-    this.types = {
-      INFO: 'info',
-      WARN: 'warn',
-      ERROR: 'error',
-      SUCCESS: 'success',
-      CUSTOM: 'custom',
-    };
+    this.animationLock = false;
   }
   componentDidMount() {
-    this.createPanResponder();
+    this._panResponder = this.getPanResponder();
   }
   componentWillUnmount() {
-    if (this._closeTimeoutId != null) {
-      clearTimeout(this._closeTimeoutId);
-    }
+    this.clearCloseTimeoutId();
     if (this.state.isOpen) {
-      this.closeDirectly();
+      this.closeAction(ACTION.programmatic);
     }
   }
-  createPanResponder = () => {
-    this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (evt, gestureState) => {
+  getPanResponder = () => {
+    return PanResponder.create({
+      onStartShouldSetPanResponder: (event, gestureState) => {
         return this.props.panResponderEnabled;
       },
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
+      onMoveShouldSetPanResponder: (event, gestureState) => {
         return Math.abs(gestureState.dx) < this.props.sensitivity && Math.abs(gestureState.dy) >= this.props.sensitivity && this.props.panResponderEnabled;
       },
-      onPanResponderMove: (evt, gestureState) => {
+      onPanResponderMove: (event, gestureState) => {
         if (gestureState.dy < 0) {
           this.setState({
             topValue: gestureState.dy,
           });
         }
       },
-      onPanResponderRelease: (evt, gestureState) => {
-        const delta = this.state.startDelta / 5;
+      onPanResponderRelease: (event, gestureState) => {
+        const start = this.getStartDelta(this.state.height, this.props.startDelta);
+        const delta = start / 5;
         if (gestureState.dy < delta) {
-          this.close('pan');
+          this.closeAction(ACTION.pan);
         }
       },
-      onPanResponderTerminate: (evt, gestureState) => {
-        const delta = this.state.startDelta / 5;
+      onPanResponderTerminate: (event, gestureState) => {
+        const start = this.getStartDelta(this.state.height, this.props.startDelta);
+        const delta = start / 5;
         if (gestureState.dy < delta) {
-          this.close('pan');
+          this.closeAction(ACTION.pan);
         }
       },
     });
   };
-  alertWithType = (type, title, message, payload, interval) => {
-    if (validateType(type) == false) {
+  getStringValue(value) {
+    if (typeof value !== 'string') {
+      return `${value}`;
+    }
+    return value;
+  }
+  alertWithType = (type = '', title = '', message = '', payload = {}, interval = 1) => {
+    if (this.animationLock) {
       return;
     }
-    if (typeof title !== 'string') {
-      title = `${title}`;
+    // type is not validated so unexpected types will render alert with default styles.
+    // these default styles can be overridden with style props. (like containerStyle)
+    const { closeInterval, replaceEnabled } = this.props;
+    let duration = closeInterval;
+    // closeInterval prop is overridden if interval is provided
+    if (typeof interval === 'number' && interval > 1) {
+      duration = interval;
     }
-    if (typeof message !== 'string') {
-      message = `${message}`;
+    // title and message are converted to strings
+    const data = {
+      type,
+      title: this.getStringValue(title),
+      message: this.getStringValue(message),
+      payload,
+      interval: duration,
+    };
+    // replaceEnabled
+    // True: alert is closed then replaced by another alert. (default)
+    // False: alert state change is immediate if open.
+    const { isOpen } = this.state;
+    if (!replaceEnabled && isOpen) {
+      this.alertData = data;
+      this.setState({ isOpen: true });
+      this.closeAutomatic(duration);
+      return;
     }
-    const closeInterval = typeof interval === 'number' && interval > 1 ? interval : this.props.closeInterval;
-    if (this.props.replaceEnabled == false) {
-      this.setState({
-        type: type,
-        message: message,
-        title: title,
-        topValue: 0,
-        payload: payload,
+    if (isOpen) {
+      this.closeAction(ACTION.programmatic, () => {
+        this.open(data, duration);
       });
-      if (this.state.isOpen == false) {
-        this.setState({
-          isOpen: true,
-        });
-        this.animate(1);
-      }
-      if (closeInterval > 1) {
-        if (this._closeTimeoutId != null) {
-          clearTimeout(this._closeTimeoutId);
-        }
-        this._closeTimeoutId = setTimeout(
-          function() {
-            this.close('automatic');
-          }.bind(this),
-          closeInterval
-        );
-      }
-    } else {
-      var delayInMilliSeconds = 0;
-      if (this.state.isOpen == true) {
-        delayInMilliSeconds = 475;
-        this.close();
-      }
-      var self = this;
-      setTimeout(
-        function() {
-          if (self.state.isOpen == false) {
-            self.setState({
-              type: type,
-              message: message,
-              title: title,
-              isOpen: true,
-              topValue: 0,
-              payload: payload,
-            });
-          }
-          self.animate(1);
-          if (closeInterval > 1) {
-            this._closeTimeoutId = setTimeout(
-              function() {
-                self.close('automatic');
-              }.bind(self),
-              closeInterval
-            );
-          }
-        }.bind(this),
-        delayInMilliSeconds
-      );
+      return;
     }
+    this.open(data, duration);
   };
-  resetStatusBarColor = () => {
-    if (this.props.updateStatusBar) {
+  open = (data = {}, duration) => {
+    this.alertData = data;
+    this.setState({ isOpen: true });
+    this.animate(1, 450, () => {
+      this.animationLock = false;
+      this.closeAutomatic(duration);
+    });
+  };
+  closeAction = (action = ACTION.programmatic, onDone = () => {}) => {
+    // action is how the alert was closed.
+    // alert currently closes itself by:
+    // tap, pan, cancel, programmatic or automatic
+    this.clearCloseTimeoutId();
+    this.close(action, onDone);
+  };
+  closeAutomatic = duration => {
+    this.clearCloseTimeoutId();
+    this._closeTimeoutId = setTimeout(() => {
+      this.close(ACTION.automatic);
+    }, duration);
+  };
+  close = (action, onDone = () => {}) => {
+    this.animate(0, 250, () => {
+      const { onClose, updateStatusBar, onCancel } = this.props;
+      this.updateStatusBar(updateStatusBar, false);
+      this.alertData.action = action;
+      if (action == 'cancel') {
+        onCancel(this.alertData);
+      } else {
+        onClose(this.alertData);
+      }
+      this.setState({ isOpen: false, topValue: 0, height: 0 });
+      this.animationLock = false;
+      onDone();
+    });
+  };
+  updateStatusBar = (shouldUpdate = true, active = false) => {
+    if (shouldUpdate) {
       if (IS_ANDROID) {
-        StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true);
-      }
-      StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true);
-    }
-  }
-  close = action => {
-    if (action == undefined) {
-      action = 'programmatic';
-    }
-    var onClose = this.props.onClose;
-    if (action == 'cancel') {
-      onClose = this.props.onCancel;
-    }
-    if (this.state.isOpen) {
-      if (this._closeTimeoutId != null) {
-        clearTimeout(this._closeTimeoutId);
-      }
-      this.animate(0);
-      this.resetStatusBarColor();
-      setTimeout(
-        function() {
-          if (this.state.isOpen) {
-            this.resetStatusBarColor();
-            this.setState({
-              isOpen: false,
-            });
-            if (onClose) {
-              const data = {
-                type: this.state.type,
-                title: this.state.title,
-                message: this.state.message,
-                action: action, // !!! How the alert was closed: automatic, programmatic, tap, pan or cancel
-                payload: this.state.payload,
-              };
-              onClose(data);
-            }
+        const { inactiveStatusBarBackgroundColor, activeStatusBarBackgroundColor, translucent } = this.props;
+        if (active) {
+          const backgroundColor = activeStatusBarBackgroundColor;
+          const type = this.alertData.type;
+          if (type !== TYPE.custom) {
+            backgroundColor = this.getBackgroundColorForType(type);
           }
-        }.bind(this),
-        this.state.duration
-      );
+          StatusBar.setBackgroundColor(backgroundColor, true);
+          StatusBar.setTranslucent(translucent);
+        } else {
+          StatusBar.setBackgroundColor(inactiveStatusBarBackgroundColor, true);
+        }
+      } else if (IS_IOS) {
+        const { inactiveStatusBarStyle, activeStatusBarStyle } = this.props;
+        if (active) {
+          StatusBar.setBarStyle(activeStatusBarStyle, true);
+        } else {
+          StatusBar.setBarStyle(inactiveStatusBarStyle, true);
+        }
+      }
     }
   };
-  closeDirectly() {
-    if (this.state.isOpen) {
-      if (this._closeTimeoutId != null) {
-        clearTimeout(this._closeTimeoutId);
-      }
-      this.setState({
-        isOpen: false,
-      });
-      this.resetStatusBarColor();
+  clearCloseTimeoutId = () => {
+    if (this._closeTimeoutId != null) {
+      clearTimeout(this._closeTimeoutId);
     }
-  }
-  animate = toValue => {
+  };
+  animate = (toValue, duration = 450, onComplete = () => {}) => {
+    this.animationLock = true;
     Animated.spring(this.state.animationValue, {
       toValue: toValue,
-      duration: this.state.duration,
+      duration: duration,
       friction: 9,
       useNativeDriver: this.props.useNativeDriver,
       isInteraction: this.props.isInteraction,
-    }).start();
+    }).start(onComplete);
   };
-  onLayoutEvent(event) {
-    const { x, y, width, height } = event.nativeEvent.layout;
-    var actualStartDelta = this.state.startDelta;
-    var actualEndDelta = this.state.endDelta;
-    const { startDelta, endDelta } = this.props;
-    if (startDelta < 0) {
-      const delta = 0 - height;
-      if (delta != startDelta) {
-        actualStartDelta = delta;
-      }
-    } else if (startDelta > WINDOW.height) {
-      actualStartDelta = WINDOW.height + height;
+  getStartDelta = (height, start) => {
+    const windowHeight = WINDOW.height;
+    const startMin = 0 - height;
+    const startMax = windowHeight + height;
+    if (start < 0 && start != startMin) {
+      return startMin;
+    } else if (start > startMax) {
+      return startMax;
     }
-    if (endDelta < 0) {
-      actualEndDelta = 0;
-    } else if (endDelta > WINDOW.height) {
-      actualEndDelta = WINDOW.height - height;
+    return start;
+  };
+  getEndDelta = (height, end) => {
+    const windowHeight = WINDOW.height;
+    const endMin = 0;
+    const endMax = windowHeight;
+    if (end < endMin) {
+      return endMin;
+    } else if (end >= endMax) {
+      return endMax - height;
     }
-    const heightDelta = WINDOW.height - endDelta - height;
-    if (heightDelta < 0) {
-      actualEndDelta = endDelta + heightDelta;
+    return end;
+  };
+  getOutputRange = (height, startDelta, endDelta) => {
+    if (!height) {
+      return [startDelta, endDelta];
     }
-    if (actualStartDelta != this.state.startDelta || actualEndDelta != this.state.endDelta) {
-      this.setState({
-        startDelta: actualStartDelta,
-        endDelta: actualEndDelta,
-      });
-    }
-  }
+    const start = this.getStartDelta(height, startDelta);
+    const end = this.getEndDelta(height, endDelta);
+    return [start, end];
+  };
   getStyleForType(type) {
     const { defaultContainer } = this.props;
     switch (type) {
-      case this.types.INFO:
+      case TYPE.info:
         return [StyleSheet.flatten(defaultContainer), { backgroundColor: this.props.infoColor }];
-      case this.types.WARN:
+      case TYPE.warn:
         return [StyleSheet.flatten(defaultContainer), { backgroundColor: this.props.warnColor }];
-      case this.types.ERROR:
+      case TYPE.error:
         return [StyleSheet.flatten(defaultContainer), { backgroundColor: this.props.errorColor }];
-      case this.types.SUCCESS:
+      case TYPE.success:
         return [StyleSheet.flatten(defaultContainer), { backgroundColor: this.props.successColor }];
       default:
         return [StyleSheet.flatten(defaultContainer), StyleSheet.flatten(this.props.containerStyle)];
@@ -388,13 +381,13 @@ export default class DropdownAlert extends Component {
   }
   getSourceForType(type) {
     switch (type) {
-      case this.types.INFO:
+      case TYPE.info:
         return this.props.infoImageSrc;
-      case this.types.WARN:
+      case TYPE.warn:
         return this.props.warnImageSrc;
-      case this.types.ERROR:
+      case TYPE.error:
         return this.props.errorImageSrc;
-      case this.types.SUCCESS:
+      case TYPE.success:
         return this.props.successImageSrc;
       default:
         return this.props.imageSrc;
@@ -402,123 +395,137 @@ export default class DropdownAlert extends Component {
   }
   getBackgroundColorForType(type) {
     switch (type) {
-      case this.types.INFO:
+      case TYPE.info:
         return this.props.infoColor;
-      case this.types.WARN:
+      case TYPE.warn:
         return this.props.warnColor;
-      case this.types.ERROR:
+      case TYPE.error:
         return this.props.errorColor;
-      case this.types.SUCCESS:
+      case TYPE.success:
         return this.props.successColor;
       default:
         return this.props.containerStyle.backgroundColor;
     }
   }
-  renderImage(source) {
+  _onLayoutEvent(event) {
+    const { height } = event.nativeEvent.layout;
+    if (height > this.state.height) {
+      const { startDelta, endDelta } = this.props;
+      const start = this.getStartDelta(height, startDelta);
+      const end = this.getEndDelta(height, endDelta);
+      if (startDelta != start || endDelta != end) {
+        this.setState({ height });
+      }
+    }
+  }
+  _renderImage(source) {
     if (this.props.renderImage) {
-      return this.props.renderImage(this.props, this.state);
+      return this.props.renderImage(this.props, this.alertData);
     }
     return <ImageView style={StyleSheet.flatten(this.props.imageStyle)} source={source} />;
   }
-  renderCancel(show) {
-    if (show) {
-      if (this.props.renderCancel) {
-        return this.props.renderCancel(this.props);
-      } else {
-        return (
-          <TouchableOpacity
-            style={{
-              alignSelf: this.props.cancelBtnImageStyle.alignSelf,
-              width: this.props.cancelBtnImageStyle.width,
-              height: this.props.cancelBtnImageStyle.height,
-            }}
-            onPress={() => this.close('cancel')}
-          >
-            <ImageView style={this.props.cancelBtnImageStyle} source={this.props.cancelBtnImageSrc} />
-          </TouchableOpacity>
-        );
-      }
-    }
-    return null;
-  }
-  renderTitle() {
+  _renderTitle() {
     if (this.props.renderTitle) {
-      return this.props.renderTitle(this.props, this.state);
+      return this.props.renderTitle(this.props, this.alertData);
     }
     const { titleTextProps, titleStyle, titleNumOfLines } = this.props;
-    return <Label {...titleTextProps} style={StyleSheet.flatten(titleStyle)} numberOfLines={titleNumOfLines} text={this.state.title} />;
+    return <TextView {...titleTextProps} style={StyleSheet.flatten(titleStyle)} numberOfLines={titleNumOfLines} text={this.alertData.title} />;
   }
-  renderMessage() {
+  _renderMessage() {
     if (this.props.renderMessage) {
-      return this.props.renderMessage(this.props, this.state);
+      return this.props.renderMessage(this.props, this.alertData);
     }
     const { messageTextProps, messageStyle, messageNumOfLines } = this.props;
-    return <Label {...messageTextProps} style={StyleSheet.flatten(messageStyle)} numberOfLines={messageNumOfLines} text={this.state.message} />;
+    return <TextView {...messageTextProps} style={StyleSheet.flatten(messageStyle)} numberOfLines={messageNumOfLines} text={this.alertData.message} />;
+  }
+  _renderCancel(show = false) {
+    if (!show) {
+      return null;
+    }
+    if (this.props.renderCancel) {
+      return this.props.renderCancel(this.props, this.alertData);
+    } else {
+      const { cancelBtnImageSrc, cancelBtnImageStyle } = this.props;
+      return <CancelButton imageStyle={cancelBtnImageStyle} imageSrc={cancelBtnImageSrc} onPress={() => this.closeAction(ACTION.cancel)} />;
+    }
   }
   render() {
-    const { isOpen, type } = this.state;
-    const ContentView = IS_IOS_BELOW_11 ? View : SafeAreaView;
-    if (isOpen) {
-      let style = this.getStyleForType(type);
-      const source = this.getSourceForType(type);
-      const backgroundColor = this.getBackgroundColorForType(type);
-      let { activeStatusBarBackgroundColor, translucent, updateStatusBar, activeStatusBarStyle, cancelBtnImageSrc, showCancel } = this.props;
-      if (IS_ANDROID) {
-        if (translucent) {
-          style = [style, { paddingTop: StatusBar.currentHeight }];
-        }
-        if (type !== this.types.CUSTOM) {
-          activeStatusBarBackgroundColor = backgroundColor;
-        }
-      }
-      if (updateStatusBar) {
-        if (IS_ANDROID) {
-          StatusBar.setBackgroundColor(activeStatusBarBackgroundColor, true);
-          StatusBar.setTranslucent(translucent);
-        }
-        StatusBar.setBarStyle(activeStatusBarStyle, true);
-      }
-      let wrapperStyle = {
-        transform: [
-          {
-            translateY: this.state.animationValue.interpolate({
-              inputRange: [0, 1],
-              outputRange: [this.state.startDelta, this.state.endDelta],
-            }),
-          },
-        ],
-        position: 'absolute',
-        top: this.state.topValue,
-        left: 0,
-        right: 0,
-        elevation: this.props.elevation,
-      };
-      if (this.props.zIndex != null) wrapperStyle['zIndex'] = this.props.zIndex;
-      return (
-        <Animated.View ref={ref => this.mainView = ref} {...this._panResponder.panHandlers} style={[wrapperStyle, this.props.wrapperStyle]}>
-          <TouchableOpacity
-            activeOpacity={!this.props.tapToCloseEnabled || showCancel ? 1 : 0.95}
-            onPress={!this.props.tapToCloseEnabled ? null : () => this.close('tap')}
-            disabled={!this.props.tapToCloseEnabled}
-            onLayout={event => this.onLayoutEvent(event)}
-            testID={this.props.testID}
-            accessibilityLabel={this.props.accessibilityLabel}
-            accessible={this.props.accessible}
-          >
-            <View style={style}>
-              <ContentView style={StyleSheet.flatten(this.props.safeAreaStyle)}>
-                {this.renderImage(source)}
-                <View style={StyleSheet.flatten(this.props.defaultTextContainer)}>
-                  {this.renderTitle()}
-                  {this.renderMessage()}
-                </View>
-              </ContentView>
-              {this.renderCancel(showCancel)}
-            </View>
-          </TouchableOpacity>
-        </Animated.View>
-      );
+    const { isOpen } = this.state;
+    if (!isOpen) {
+      return null;
     }
-    return null;
+    const {
+      elevation,
+      zIndex,
+      wrapperStyle,
+      tapToCloseEnabled,
+      accessibilityLabel,
+      testID,
+      accessible,
+      safeAreaStyle,
+      defaultTextContainer,
+      startDelta,
+      endDelta,
+      translucent,
+      updateStatusBar,
+      showCancel,
+    } = this.props;
+    const { animationValue, topValue, height } = this.state;
+    const type = this.alertData.type;
+    let style = this.getStyleForType(type);
+    const source = this.getSourceForType(type);
+    if (IS_ANDROID && translucent) {
+      style = [style, { paddingTop: StatusBar.currentHeight }];
+    }
+    this.updateStatusBar(updateStatusBar, true);
+    const outputRange = this.getOutputRange(height, startDelta, endDelta);
+    let wrapperAnimStyle = {
+      transform: [
+        {
+          translateY: animationValue.interpolate({
+            inputRange: [0, 1],
+            outputRange,
+          }),
+        },
+      ],
+      position: 'absolute',
+      top: topValue,
+      left: 0,
+      right: 0,
+      elevation: elevation,
+    };
+    if (zIndex != null) {
+      wrapperAnimStyle['zIndex'] = zIndex;
+    }
+    let ContentView = SafeAreaView;
+    if (IS_IOS_BELOW_11 || IS_ANDROID) {
+      ContentView = View;
+    }
+    const activeOpacity = !tapToCloseEnabled || showCancel ? 1 : 0.95;
+    const onPress = !tapToCloseEnabled ? null : () => this.closeAction(ACTION.tap);
+    return (
+      <Animated.View ref={ref => this.mainView = ref} {...this._panResponder.panHandlers} style={[wrapperAnimStyle, wrapperStyle]}>
+        <TouchableOpacity
+          activeOpacity={activeOpacity}
+          onPress={onPress}
+          disabled={!tapToCloseEnabled}
+          onLayout={event => this._onLayoutEvent(event)}
+          testID={testID}
+          accessibilityLabel={accessibilityLabel}
+          accessible={accessible}
+        >
+          <View style={style}>
+            <ContentView style={StyleSheet.flatten(safeAreaStyle)}>
+              {this._renderImage(source)}
+              <View style={StyleSheet.flatten(defaultTextContainer)}>
+                {this._renderTitle()}
+                {this._renderMessage()}
+              </View>
+            </ContentView>
+            {this._renderCancel(showCancel)}
+          </View>
+        </TouchableOpacity>
+      </Animated.View>
+    );
   }
 }
