@@ -1,5 +1,5 @@
 {
-  "name": "react-native-dropdownalert",
+  "name": "@erhanbicer/react-native-dropdownalert",
   "version": "3.11.0",
   "description": "A simple alert to notify users about new chat messages, something went wrong or everything is ok.",
   "main": "DropdownAlert.js",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/testshallpass/react-native-dropdownalert.git"
+    "url": "git+https://github.com/erhanbicer/react-native-dropdownalert.git"
   },
   "keywords": [
     "dropdown",
