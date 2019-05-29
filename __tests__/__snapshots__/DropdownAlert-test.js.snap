@@ -46,10 +46,11 @@ exports[`renders alert with zIndex correctly 1`] = `
           Object {
             "flexDirection": "row",
             "padding": 8,
-            "paddingTop": 20,
           },
           Object {
-            "backgroundColor": "#2B73B6",
+            "backgroundColor": "#202020",
+            "flexDirection": "row",
+            "padding": 16,
           },
         ]
       }
@@ -64,11 +65,7 @@ exports[`renders alert with zIndex correctly 1`] = `
       >
         <ImageView
           imageProps={Object {}}
-          source={
-            Object {
-              "testUri": "../../../assets/info.png",
-            }
-          }
+          source="https://facebook.github.io/react-native/docs/assets/favicon.png"
           style={
             Object {
               "alignSelf": "center",
@@ -86,7 +83,7 @@ exports[`renders alert with zIndex correctly 1`] = `
             }
           }
         >
-          <Label
+          <TextView
             numberOfLines={1}
             style={
               Object {
@@ -97,9 +94,9 @@ exports[`renders alert with zIndex correctly 1`] = `
                 "textAlign": "left",
               }
             }
-            text="Hello"
+            text=""
           />
-          <Label
+          <TextView
             numberOfLines={3}
             style={
               Object {
@@ -110,7 +107,7 @@ exports[`renders alert with zIndex correctly 1`] = `
                 "textAlign": "left",
               }
             }
-            text="World!"
+            text=""
           />
         </Component>
       </SafeAreaView>
@@ -164,9 +161,9 @@ exports[`renders custom alert correctly 1`] = `
           Object {
             "flexDirection": "row",
             "padding": 8,
-            "paddingTop": 20,
           },
           Object {
+            "backgroundColor": "#202020",
             "flexDirection": "row",
             "padding": 16,
           },
@@ -201,7 +198,7 @@ exports[`renders custom alert correctly 1`] = `
             }
           }
         >
-          <Label
+          <TextView
             numberOfLines={1}
             style={
               Object {
@@ -212,9 +209,9 @@ exports[`renders custom alert correctly 1`] = `
                 "textAlign": "left",
               }
             }
-            text="Hello"
+            text=""
           />
-          <Label
+          <TextView
             numberOfLines={3}
             style={
               Object {
@@ -225,7 +222,7 @@ exports[`renders custom alert correctly 1`] = `
                 "textAlign": "left",
               }
             }
-            text="World!"
+            text=""
           />
         </Component>
       </SafeAreaView>
@@ -279,9 +276,9 @@ exports[`renders custom alert with cancel correctly 1`] = `
           Object {
             "flexDirection": "row",
             "padding": 8,
-            "paddingTop": 20,
           },
           Object {
+            "backgroundColor": "#202020",
             "flexDirection": "row",
             "padding": 16,
           },
@@ -316,7 +313,7 @@ exports[`renders custom alert with cancel correctly 1`] = `
             }
           }
         >
-          <Label
+          <TextView
             numberOfLines={1}
             style={
               Object {
@@ -327,9 +324,9 @@ exports[`renders custom alert with cancel correctly 1`] = `
                 "textAlign": "left",
               }
             }
-            text="Hello"
+            text=""
           />
-          <Label
+          <TextView
             numberOfLines={3}
             style={
               Object {
@@ -340,38 +337,34 @@ exports[`renders custom alert with cancel correctly 1`] = `
                 "textAlign": "left",
               }
             }
-            text="World!"
+            text=""
           />
         </Component>
       </SafeAreaView>
-      <TouchableOpacity
-        activeOpacity={0.2}
+      <CancelButton
+        imageSrc={
+          Object {
+            "testUri": "../../../assets/cancel.png",
+          }
+        }
+        imageStyle={
+          Object {
+            "alignSelf": "center",
+            "height": 36,
+            "padding": 8,
+            "width": 36,
+          }
+        }
         onPress={[Function]}
         style={
           Object {
             "alignSelf": "center",
             "height": 36,
+            "padding": 8,
             "width": 36,
           }
         }
-      >
-        <ImageView
-          imageProps={Object {}}
-          source={
-            Object {
-              "testUri": "../../../assets/cancel.png",
-            }
-          }
-          style={
-            Object {
-              "alignSelf": "center",
-              "height": 36,
-              "padding": 8,
-              "width": 36,
-            }
-          }
-        />
-      </TouchableOpacity>
+      />
     </Component>
   </TouchableOpacity>
 </AnimatedComponent>
@@ -422,10 +415,11 @@ exports[`renders error alert correctly 1`] = `
           Object {
             "flexDirection": "row",
             "padding": 8,
-            "paddingTop": 20,
           },
           Object {
-            "backgroundColor": "#cc3232",
+            "backgroundColor": "#202020",
+            "flexDirection": "row",
+            "padding": 16,
           },
         ]
       }
@@ -440,11 +434,7 @@ exports[`renders error alert correctly 1`] = `
       >
         <ImageView
           imageProps={Object {}}
-          source={
-            Object {
-              "testUri": "../../../assets/error.png",
-            }
-          }
+          source="https://facebook.github.io/react-native/docs/assets/favicon.png"
           style={
             Object {
               "alignSelf": "center",
@@ -462,7 +452,7 @@ exports[`renders error alert correctly 1`] = `
             }
           }
         >
-          <Label
+          <TextView
             numberOfLines={1}
             style={
               Object {
@@ -473,9 +463,9 @@ exports[`renders error alert correctly 1`] = `
                 "textAlign": "left",
               }
             }
-            text="Hello"
+            text=""
           />
-          <Label
+          <TextView
             numberOfLines={3}
             style={
               Object {
@@ -486,7 +476,7 @@ exports[`renders error alert correctly 1`] = `
                 "textAlign": "left",
               }
             }
-            text="World!"
+            text=""
           />
         </Component>
       </SafeAreaView>
@@ -540,10 +530,11 @@ exports[`renders info alert correctly 1`] = `
           Object {
             "flexDirection": "row",
             "padding": 8,
-            "paddingTop": 20,
           },
           Object {
-            "backgroundColor": "#2B73B6",
+            "backgroundColor": "#202020",
+            "flexDirection": "row",
+            "padding": 16,
           },
         ]
       }
@@ -558,11 +549,7 @@ exports[`renders info alert correctly 1`] = `
       >
         <ImageView
           imageProps={Object {}}
-          source={
-            Object {
-              "testUri": "../../../assets/info.png",
-            }
-          }
+          source="https://facebook.github.io/react-native/docs/assets/favicon.png"
           style={
             Object {
               "alignSelf": "center",
@@ -580,7 +567,7 @@ exports[`renders info alert correctly 1`] = `
             }
           }
         >
-          <Label
+          <TextView
             numberOfLines={1}
             style={
               Object {
@@ -591,9 +578,9 @@ exports[`renders info alert correctly 1`] = `
                 "textAlign": "left",
               }
             }
-            text="Hello"
+            text=""
           />
-          <Label
+          <TextView
             numberOfLines={3}
             style={
               Object {
@@ -604,7 +591,7 @@ exports[`renders info alert correctly 1`] = `
                 "textAlign": "left",
               }
             }
-            text="World!"
+            text=""
           />
         </Component>
       </SafeAreaView>
@@ -658,10 +645,11 @@ exports[`renders success alert correctly 1`] = `
           Object {
             "flexDirection": "row",
             "padding": 8,
-            "paddingTop": 20,
           },
           Object {
-            "backgroundColor": "#32A54A",
+            "backgroundColor": "#202020",
+            "flexDirection": "row",
+            "padding": 16,
           },
         ]
       }
@@ -676,11 +664,7 @@ exports[`renders success alert correctly 1`] = `
       >
         <ImageView
           imageProps={Object {}}
-          source={
-            Object {
-              "testUri": "../../../assets/success.png",
-            }
-          }
+          source="https://facebook.github.io/react-native/docs/assets/favicon.png"
           style={
             Object {
               "alignSelf": "center",
@@ -698,7 +682,7 @@ exports[`renders success alert correctly 1`] = `
             }
           }
         >
-          <Label
+          <TextView
             numberOfLines={1}
             style={
               Object {
@@ -709,9 +693,9 @@ exports[`renders success alert correctly 1`] = `
                 "textAlign": "left",
               }
             }
-            text="Hello"
+            text=""
           />
-          <Label
+          <TextView
             numberOfLines={3}
             style={
               Object {
@@ -722,7 +706,7 @@ exports[`renders success alert correctly 1`] = `
                 "textAlign": "left",
               }
             }
-            text="World!"
+            text=""
           />
         </Component>
       </SafeAreaView>
@@ -776,10 +760,11 @@ exports[`renders warn alert correctly 1`] = `
           Object {
             "flexDirection": "row",
             "padding": 8,
-            "paddingTop": 20,
           },
           Object {
-            "backgroundColor": "#cd853f",
+            "backgroundColor": "#202020",
+            "flexDirection": "row",
+            "padding": 16,
           },
         ]
       }
@@ -794,11 +779,7 @@ exports[`renders warn alert correctly 1`] = `
       >
         <ImageView
           imageProps={Object {}}
-          source={
-            Object {
-              "testUri": "../../../assets/warn.png",
-            }
-          }
+          source="https://facebook.github.io/react-native/docs/assets/favicon.png"
           style={
             Object {
               "alignSelf": "center",
@@ -816,7 +797,7 @@ exports[`renders warn alert correctly 1`] = `
             }
           }
         >
-          <Label
+          <TextView
             numberOfLines={1}
             style={
               Object {
@@ -827,9 +808,9 @@ exports[`renders warn alert correctly 1`] = `
                 "textAlign": "left",
               }
             }
-            text="Hello"
+            text=""
           />
-          <Label
+          <TextView
             numberOfLines={3}
             style={
               Object {
@@ -840,7 +821,7 @@ exports[`renders warn alert correctly 1`] = `
                 "textAlign": "left",
               }
             }
-            text="World!"
+            text=""
           />
         </Component>
       </SafeAreaView>

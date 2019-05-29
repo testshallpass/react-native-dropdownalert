@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CancelButton renders 1`] = `
+<TouchableOpacity
+  activeOpacity={0.2}
+  onPress={[Function]}
+  style={
+    Object {
+      "alignSelf": "center",
+      "height": 36,
+      "padding": 8,
+      "width": 36,
+    }
+  }
+>
+  <ImageView
+    imageProps={Object {}}
+    source={null}
+    style={
+      Object {
+        "alignSelf": "center",
+        "height": 36,
+        "padding": 8,
+        "width": 36,
+      }
+    }
+  />
+</TouchableOpacity>
+`;
