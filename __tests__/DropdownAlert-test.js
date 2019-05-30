@@ -4,7 +4,7 @@ import DropdownAlert from '../DropdownAlert';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 const imageSrc = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
-import { TYPE, ACTION } from '../constants';
+import { TYPE, ACTION, HEIGHT } from '../constants';
 
 describe('DropdownAlert component', () => {
   describe('Snapshots', () => {
@@ -118,19 +118,42 @@ describe('DropdownAlert component', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
       const height = 144;
       const start = -200;
-      const min = 0 - height;
       const startDelta = wrapper.instance().getStartDelta(height, start);
+      const min = 0 - height;
       expect(startDelta).toEqual(min);
+    });
+    test('expect to return start max value', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+      const height = 144;
+      const start = HEIGHT + height + 1;
+      const startDelta = wrapper.instance().getStartDelta(height, start);
+      const max = HEIGHT + height;
+      expect(startDelta).toEqual(max);
     });
   });
   describe('getEndDelta', () => {
+    test('expect to return end value', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+      const height = 144;
+      const end = 200;
+      const endDelta = wrapper.instance().getEndDelta(height, end);
+      expect(endDelta).toEqual(end);
+    });
     test('expect to return end min value', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
       const height = 144;
       const end = -200;
-      const min = 0;
       const endDelta = wrapper.instance().getEndDelta(height, end);
+      const min = 0;
       expect(endDelta).toEqual(min);
+    });
+    test('expect to return end max value', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+      const height = 144;
+      const end = HEIGHT;
+      const endDelta = wrapper.instance().getEndDelta(height, end);
+      const max = end - height;
+      expect(endDelta).toEqual(max);
     });
   });
   describe("getOutputRange", () => {
@@ -144,9 +167,34 @@ describe('DropdownAlert component', () => {
     });
   });
   describe('getBackgroundColorForType', () => {
-    test('expect infoColor to be black', () => {
-      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} infoColor={'black'} />);
+    test('expect infoColor to be blue', () => {
+      const blue = 'blue';
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} infoColor={blue} />);
       const backgroundColor = wrapper.instance().getBackgroundColorForType(TYPE.info);
+      expect(backgroundColor).toEqual(blue);
+    });
+    test('expect errorColor to be red', () => {
+      const red = 'red';
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} errorColor={red} />);
+      const backgroundColor = wrapper.instance().getBackgroundColorForType(TYPE.error);
+      expect(backgroundColor).toEqual(red);
+    });
+    test('expect successColor to be green', () => {
+      const green = 'green';
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} successColor={green} />);
+      const backgroundColor = wrapper.instance().getBackgroundColorForType(TYPE.success);
+      expect(backgroundColor).toEqual(green);
+    });
+    test('expect warnColor to be yellow', () => {
+      const yellow = 'yellow';
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} warnColor={yellow} />);
+      const backgroundColor = wrapper.instance().getBackgroundColorForType(TYPE.warn);
+      expect(backgroundColor).toEqual(yellow);
+    });
+    test('expect unknown type to be black', () => {
+      const black = 'black'
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} containerStyle={{ backgroundColor: black }} />);
+      const backgroundColor = wrapper.instance().getBackgroundColorForType('unknown');
       expect(backgroundColor).toEqual('black');
     });
   });
