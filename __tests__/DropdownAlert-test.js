@@ -156,14 +156,21 @@ describe('DropdownAlert component', () => {
       expect(endDelta).toEqual(max);
     });
   });
-  describe("getOutputRange", () => {
-    test('expect to be start and end with undefined height', () => {
+  describe('getOutputRange', () => {
+    test('expect to be [height, end] with height less than zero', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
       const start = -100;
       const end = 0;
       const height = -144;
       const outputRange = wrapper.instance().getOutputRange(144, start, end);
       expect(outputRange).toEqual([height, end]);
+    });
+    test('expect to be [start, end] with undefined height', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+      const start = -100;
+      const end = 0;
+      const outputRange = wrapper.instance().getOutputRange(undefined, start, end);
+      expect(outputRange).toEqual([start, end]);
     });
   });
   describe('getBackgroundColorForType', () => {
@@ -192,7 +199,7 @@ describe('DropdownAlert component', () => {
       expect(backgroundColor).toEqual(yellow);
     });
     test('expect unknown type to be black', () => {
-      const black = 'black'
+      const black = 'black';
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} containerStyle={{ backgroundColor: black }} />);
       const backgroundColor = wrapper.instance().getBackgroundColorForType('unknown');
       expect(backgroundColor).toEqual('black');
@@ -216,14 +223,80 @@ describe('DropdownAlert component', () => {
       });
     });
   });
+  describe('_onLayoutEvent', () => {
+    test('expect event with height to equal that height', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+      wrapper.instance().height = 100;
+      wrapper.update();
+      const event = { nativeEvent: { layout: { height: 144 } } };
+      wrapper.instance()._onLayoutEvent(event);
+      expect(wrapper.instance().state.height).toEqual(event.nativeEvent.layout.height);
+    });
+    test('expect event with height to equal 0', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+      wrapper.instance().height = 100;
+      wrapper.update();
+      const event = { nativeEvent: { layout: { height: 100 } } };
+      wrapper.instance()._onLayoutEvent(event);
+      expect(wrapper.instance().state.height).toEqual(0);
+    });
+    test('expect event with negative height to equal 0', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+      const event = { nativeEvent: { layout: { height: -1 } } };
+      wrapper.instance()._onLayoutEvent(event);
+      expect(wrapper.instance().state.height).toEqual(0);
+    });
+  });
+  describe('getStyleForType', () => {
+    test('expect unknown type style to be array with default and background black', () => {
+      const style = [{ flexDirection: 'row', padding: 8 }, { backgroundColor: 'black' }];
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} containerStyle={{ backgroundColor: 'black' }} />);
+      const styleForType = wrapper.instance().getStyleForType('unknown');
+      expect(styleForType).toEqual(style);
+    });
+    test('expect info type style to be array with default and background blue', () => {
+      const style = [{ flexDirection: 'row', padding: 8 }, { backgroundColor: 'blue' }];
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} infoColor={'blue'} />);
+      const styleForType = wrapper.instance().getStyleForType(TYPE.info);
+      expect(styleForType).toEqual(style);
+    });
+    test('expect warn type style to be array with default and background yellow', () => {
+      const style = [{ flexDirection: 'row', padding: 8 }, { backgroundColor: 'yellow' }];
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} warnColor={'yellow'} />);
+      const styleForType = wrapper.instance().getStyleForType(TYPE.warn);
+      expect(styleForType).toEqual(style);
+    });
+    test('expect success type style to be array with default and background green', () => {
+      const style = [{ flexDirection: 'row', padding: 8 }, { backgroundColor: 'green' }];
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} successColor={'green'} />);
+      const styleForType = wrapper.instance().getStyleForType(TYPE.success);
+      expect(styleForType).toEqual(style);
+    });
+  });
+  describe('getSourceForType', () => {
+    test('expect warn type source to be imageSrc', () => {
+      const wrapper = shallow(<DropdownAlert warnImageSrc={imageSrc} />);
+      const sourceForType = wrapper.instance().getSourceForType(TYPE.warn);
+      expect(sourceForType).toEqual(imageSrc);
+    });
+    test('expect success type source to be imageSrc', () => {
+      const wrapper = shallow(<DropdownAlert successImageSrc={imageSrc} />);
+      const sourceForType = wrapper.instance().getSourceForType(TYPE.success);
+      expect(sourceForType).toEqual(imageSrc);
+    });
+  });
+  describe('closeAutomatic', () => {
+    test('expect isOpen to be false', () => {
+      const wrapper = shallow(<DropdownAlert successImageSrc={imageSrc} />);
+      wrapper.instance().closeAutomatic(1);
+      expect(wrapper.instance().state.isOpen).toBeFalsy();
+    });
+  });
+  describe('componentWillUnmount', () => {
+    test('expect isOpen to be false', () => {
+      const wrapper = shallow(<DropdownAlert successImageSrc={imageSrc} zIndex={999} />);
+      wrapper.instance().componentWillUnmount();
+      expect(wrapper.instance().state.isOpen).toBeFalsy();
+    });
+  });
 });
-
-
-
-
-
-
-
-
-
-
