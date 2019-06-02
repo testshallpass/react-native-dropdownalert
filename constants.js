@@ -1,7 +1,5 @@
 import { StatusBar, Platform, Dimensions } from 'react-native';
 
-const StatusBarDefaultBarStyle = StatusBar._defaultProps ? StatusBar._defaultProps.barStyle.value : 'default';
-const StatusBarDefaultBackgroundColor = StatusBar._defaultProps ? StatusBar._defaultProps.backgroundColor.value : 'black';
 const DEFAULT_IMAGE_DIMENSIONS = 36;
 const WINDOW = Dimensions.get('window');
 const HEIGHT = WINDOW.height;
@@ -23,10 +21,20 @@ const ACTION = {
   programmatic: 'programmatic',
   tap: 'tap',
 };
+const getDefaultStatusBarStyle = () => {
+  if (StatusBar._defaultProps) {
+    return StatusBar._defaultProps.barStyle.value;
+  }
+  return 'default';
+};
+const getDefaultStatusBarBackgroundColor = () => {
+  if (StatusBar._defaultProps) {
+    return StatusBar._defaultProps.backgroundColor.value;
+  }
+  return 'black';
+};
 
 module.exports = {
-  StatusBarDefaultBarStyle,
-  StatusBarDefaultBackgroundColor,
   DEFAULT_IMAGE_DIMENSIONS,
   WINDOW,
   HEIGHT,
@@ -36,4 +44,6 @@ module.exports = {
   IS_IOS_BELOW_11,
   TYPE,
   ACTION,
+  getDefaultStatusBarStyle,
+  getDefaultStatusBarBackgroundColor,
 };

@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { StyleSheet, SafeAreaView, View, TouchableOpacity, Animated, StatusBar, PanResponder } from 'react-native';
 import PropTypes from 'prop-types';
 import {
-  StatusBarDefaultBarStyle,
-  StatusBarDefaultBackgroundColor,
   DEFAULT_IMAGE_DIMENSIONS,
-  WINDOW,
   IS_IOS,
   IS_ANDROID,
   IS_IOS_BELOW_11,
   TYPE,
   ACTION,
+  HEIGHT,
+  getDefaultStatusBarStyle,
+  getDefaultStatusBarBackgroundColor,
 } from './constants';
 import TextView from './TextView';
 import ImageView from './imageview';
@@ -68,6 +68,7 @@ export default class DropdownAlert extends Component {
     accessible: PropTypes.bool,
     titleTextProps: PropTypes.object,
     messageTextProps: PropTypes.object,
+    useAnimationLock: PropTypes.bool,
   };
   static defaultProps = {
     onClose: () => {},
@@ -137,9 +138,9 @@ export default class DropdownAlert extends Component {
     },
     translucent: false,
     activeStatusBarStyle: 'light-content',
-    activeStatusBarBackgroundColor: StatusBarDefaultBackgroundColor,
-    inactiveStatusBarStyle: StatusBarDefaultBarStyle,
-    inactiveStatusBarBackgroundColor: StatusBarDefaultBackgroundColor,
+    activeStatusBarBackgroundColor: getDefaultStatusBarBackgroundColor(),
+    inactiveStatusBarStyle: getDefaultStatusBarStyle(),
+    inactiveStatusBarBackgroundColor: getDefaultStatusBarBackgroundColor(),
     updateStatusBar: true,
     isInteraction: undefined,
     useNativeDriver: true,
@@ -155,6 +156,7 @@ export default class DropdownAlert extends Component {
     accessible: false,
     titleTextProps: undefined,
     messageTextProps: undefined,
+    useAnimationLock: true,
   };
   constructor(props) {
     super(props);
@@ -173,52 +175,61 @@ export default class DropdownAlert extends Component {
       action: '',
     };
     this.animationLock = false;
-  }
-  componentDidMount() {
-    this._panResponder = this.getPanResponder();
+    this.panResponder = this.getPanResponder();
   }
   componentWillUnmount() {
-    this.clearCloseTimeoutId();
+    this.clearCloseTimeoutID();
     if (this.state.isOpen) {
       this.closeAction(ACTION.programmatic);
     }
   }
   getPanResponder = () => {
     return PanResponder.create({
-      onStartShouldSetPanResponder: (event, gestureState) => {
-        return this.props.panResponderEnabled;
-      },
-      onMoveShouldSetPanResponder: (event, gestureState) => {
-        return Math.abs(gestureState.dx) < this.props.sensitivity && Math.abs(gestureState.dy) >= this.props.sensitivity && this.props.panResponderEnabled;
-      },
-      onPanResponderMove: (event, gestureState) => {
-        if (gestureState.dy < 0) {
-          this.setState({
-            topValue: gestureState.dy,
-          });
-        }
-      },
-      onPanResponderRelease: (event, gestureState) => {
-        const start = this.getStartDelta(this.state.height, this.props.startDelta);
-        const delta = start / 5;
-        if (gestureState.dy < delta) {
-          this.closeAction(ACTION.pan);
-        }
-      },
-      onPanResponderTerminate: (event, gestureState) => {
-        const start = this.getStartDelta(this.state.height, this.props.startDelta);
-        const delta = start / 5;
-        if (gestureState.dy < delta) {
-          this.closeAction(ACTION.pan);
-        }
-      },
+      onStartShouldSetPanResponder: (event, gestureState) => this._onShouldStartPan(event, gestureState),
+      onMoveShouldSetPanResponder: (event, gestureState) => this._onShouldMovePan(event, gestureState),
+      onPanResponderMove: (event, gestureState) => this._onMovePan(event, gestureState),
+      onPanResponderRelease: (event, gestureState) => this._onDonePan(event, gestureState),
+      onPanResponderTerminate: (event, gestureState) => this._onDonePan(event, gestureState),
     });
   };
-  getStringValue(value) {
-    if (typeof value !== 'string') {
-      return `${value}`;
+  _onShouldStartPan = (event, gestureState) => {
+    return this.props.panResponderEnabled;
+  };
+  _onShouldMovePan = (event, gestureState) => {
+    const { sensitivity, panResponderEnabled } = this.props;
+    const dx = Math.abs(gestureState.dx);
+    const dy = Math.abs(gestureState.dy);
+    const isDxSensitivity = dx < sensitivity;
+    const isDySensitivity = dy >= sensitivity;
+    return isDxSensitivity && isDySensitivity && panResponderEnabled;
+  };
+  _onMovePan = (event, gestureState) => {
+    if (gestureState.dy < 0) {
+      this.setState({ topValue: gestureState.dy });
     }
-    return value;
+  };
+  _onDonePan = (event, gestureState) => {
+    const start = this.getStartDelta(this.state.height, this.props.startDelta);
+    const delta = start / 5;
+    if (gestureState.dy < delta) {
+      this.closeAction(ACTION.pan);
+    }
+  };
+  getStringValue(value) {
+    try {
+      if (typeof value !== 'string') {
+        if (Array.isArray(value)) {
+          return value.join(' ');
+        }
+        if (typeof value == 'object') {
+          return `${JSON.stringify(value)}`;
+        }
+        return `${value}`;
+      }
+      return value;
+    } catch (error) {
+      return error.toString();
+    }
   }
   alertWithType = (type = '', title = '', message = '', payload = {}, interval = 1) => {
     if (this.animationLock) {
@@ -270,12 +281,12 @@ export default class DropdownAlert extends Component {
     // action is how the alert was closed.
     // alert currently closes itself by:
     // tap, pan, cancel, programmatic or automatic
-    this.clearCloseTimeoutId();
+    this.clearCloseTimeoutID();
     this.close(action, onDone);
   };
   closeAutomatic = duration => {
-    this.clearCloseTimeoutId();
-    this._closeTimeoutId = setTimeout(() => {
+    this.clearCloseTimeoutID();
+    this.closeTimeoutID = setTimeout(() => {
       this.close(ACTION.automatic);
     }, duration);
   };
@@ -319,13 +330,15 @@ export default class DropdownAlert extends Component {
       }
     }
   };
-  clearCloseTimeoutId = () => {
-    if (this._closeTimeoutId != null) {
-      clearTimeout(this._closeTimeoutId);
+  clearCloseTimeoutID = () => {
+    if (this.closeTimeoutID) {
+      clearTimeout(this.closeTimeoutID);
     }
   };
   animate = (toValue, duration = 450, onComplete = () => {}) => {
-    this.animationLock = true;
+    if (this.props.useAnimationLock) {
+      this.animationLock = true;
+    }
     Animated.spring(this.state.animationValue, {
       toValue: toValue,
       duration: duration,
@@ -335,7 +348,7 @@ export default class DropdownAlert extends Component {
     }).start(onComplete);
   };
   getStartDelta = (height, start) => {
-    const windowHeight = WINDOW.height;
+    const windowHeight = HEIGHT;
     const startMin = 0 - height;
     const startMax = windowHeight + height;
     if (start < 0 && start != startMin) {
@@ -346,7 +359,7 @@ export default class DropdownAlert extends Component {
     return start;
   };
   getEndDelta = (height, end) => {
-    const windowHeight = WINDOW.height;
+    const windowHeight = HEIGHT;
     const endMin = 0;
     const endMax = windowHeight;
     if (end < endMin) {
@@ -504,7 +517,7 @@ export default class DropdownAlert extends Component {
     const activeOpacity = !tapToCloseEnabled || showCancel ? 1 : 0.95;
     const onPress = !tapToCloseEnabled ? null : () => this.closeAction(ACTION.tap);
     return (
-      <Animated.View ref={ref => this.mainView = ref} {...this._panResponder.panHandlers} style={[wrapperAnimStyle, wrapperStyle]}>
+      <Animated.View ref={ref => this.mainView = ref} {...this.panResponder.panHandlers} style={[wrapperAnimStyle, wrapperStyle]}>
         <TouchableOpacity
           activeOpacity={activeOpacity}
           onPress={onPress}
