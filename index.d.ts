@@ -23,8 +23,8 @@ export interface DropdownAlertProps {
     cancelBtnImageStyle?: object | number
     titleNumOfLines?: number
     messageNumOfLines?: number
-    onClose?(): void
-    onCancel?(): void
+    onClose?(data: AlertDataType): void
+    onCancel?(data: AlertDataType): void
     showCancel?: boolean
     tapToCloseEnabled?: boolean
     panResponderEnabled?: boolean
@@ -72,3 +72,17 @@ export interface DropdownAlertProps {
       interval?: number,
     ): void
   }
+export type CloseActionType =
+  | 'automatic'
+  | 'programmatic'
+  | 'tap'
+  | 'pan'
+  | 'cancel'
+export type AlertDataType = {
+  type: DropdownAlertType
+  title: string
+  message: string
+  action: CloseActionType
+  payload: object
+  interval: number
+}
