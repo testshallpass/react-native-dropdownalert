@@ -30,7 +30,7 @@ describe('DropdownAlert component', () => {
     });
   });
   describe('getPanResponder', () => {
-    test('expect to return PanResponder', () => {
+    test('expect PanResponder to be defined', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
       const panResponder = wrapper.instance().getPanResponder();
       expect(panResponder).toBeDefined();

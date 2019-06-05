@@ -14,13 +14,13 @@ export default class App extends Component {
         this.forceClose();
         break;
       default:
-        const random = Math.floor(Math.random() * 1000 + 1);
-        const title = item.type + ' #' + random;
-        this.dropdown.alertWithType(item.type, title, item.message);
+        const random = Math.floor(Math.random() * 4000 + 1);
+        const title = `${item.type} in ${random} milliseconds`;
+        this.dropdown.alertWithType(item.type, title, item.message, {payload: 'HelloWorld'}, random);
     }
   }
   forceClose() {
-    this.dropdown.close();
+    this.dropdown.closeAction();
   }
   onClose(data) {
     console.log(data);
@@ -40,6 +40,7 @@ export default class App extends Component {
           showCancel={true}
           onClose={data => this.onClose(data)}
           onCancel={data => this.onCancel(data)}
+          messageNumOfLines={0}
         />
       </SafeAreaView>
     );
@@ -49,6 +50,6 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#E9EEEF',
   },
 });
