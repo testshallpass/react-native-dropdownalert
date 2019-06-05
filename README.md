@@ -125,5 +125,6 @@ export default class App extends Component {
 | ```accessible``` | Boolean |  Top level TouchableOpacity's accessible | false
 | ```titleTextProps``` | Object | title text props. **does not override numOfLines (use titleNumOfLines)** | undefined
 | ```messageTextProps``` | Object | message text props. **does not override numOfLines (use messageNumOfLines)** | undefined
+| ```useAnimationLock``` | Boolean | prevents animation collision (i.e. alert is invoked while one is animating) | true
 
 > Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
