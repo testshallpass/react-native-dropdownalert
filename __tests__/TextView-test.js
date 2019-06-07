@@ -1,16 +1,16 @@
 import 'react-native';
 import React from 'react';
-import Label from '../label';
+import TextView from '../TextView';
 import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 
-test('renders label with text', () => {
-  const wrapper = shallow(<Label text={'Hello World'} />);
+test('renders TextView with text', () => {
+  const wrapper = shallow(<TextView text={'Hello World'} />);
   const tree = toJson(wrapper);
   expect(tree).toMatchSnapshot();
 });
-test('renders label without text', () => {
-  const wrapper = shallow(<Label text={''} />);
+test('renders TextView without text', () => {
+  const wrapper = shallow(<TextView text={''} />);
   const tree = toJson(wrapper);
   expect(tree).toEqual("");
 });

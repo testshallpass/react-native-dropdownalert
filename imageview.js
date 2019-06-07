@@ -21,16 +21,17 @@ export default class ImageView extends Component {
   };
   render() {
     const { source, style, imageProps } = this.props;
-    if (source != null) {
-      const isRemote = typeof source === 'string';
-      if (!style['width']) {
-        style['width'] = DEFAULT_IMAGE_DIMENSIONS;
-      }
-      if (!style['height']) {
-        style['height'] = DEFAULT_IMAGE_DIMENSIONS;
-      }
-      return <Image style={style} source={isRemote ? { uri: source } : source} {...imageProps} />;
+    if (source == null) {
+      return null;
     }
-    return null;
+    const isRemote = typeof source === 'string';
+    if (!style['width']) {
+      style['width'] = DEFAULT_IMAGE_DIMENSIONS;
+    }
+    if (!style['height']) {
+      style['height'] = DEFAULT_IMAGE_DIMENSIONS;
+    }
+    const src = isRemote ? { uri: source } : source;
+    return <Image {...imageProps} style={style} source={src} />;
   }
 }

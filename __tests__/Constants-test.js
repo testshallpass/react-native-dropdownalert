@@ -1,16 +1,20 @@
-import { StatusBarDefaultBarStyle, StatusBarDefaultBackgroundColor } from '../constants';
+import { getDefaultStatusBarStyle, getDefaultStatusBarBackgroundColor } from '../constants';
 
 test('StatusBarDefaultBarStyle to be default', () => {
-  expect(StatusBarDefaultBarStyle).toBe('default');
+  const barStyle = getDefaultStatusBarStyle();
+  expect(barStyle).toBe('default');
 });
 test('StatusBarDefaultBackgroundColor to be black', () => {
-  expect(StatusBarDefaultBackgroundColor).toBe('black');
+  const backgroundColor = getDefaultStatusBarBackgroundColor();
+  expect(backgroundColor).toBe('black');
 });
 test('StatusBarDefaultBarStyle to be StatusBar._defaultProps.barStyle.value', () => {
   const { StatusBar } = require('react-native');
-  expect(StatusBarDefaultBarStyle).toBe(StatusBar._defaultProps.barStyle.value);
+  const barStyle = getDefaultStatusBarStyle();
+  expect(barStyle).toBe(StatusBar._defaultProps.barStyle.value);
 });
 test('StatusBarDefaultBackgroundColor to be StatusBar._defaultProps.backgroundColor.value', () => {
   const { StatusBar } = require('react-native');
-  expect(StatusBarDefaultBackgroundColor).toBe(StatusBar._defaultProps.backgroundColor.value);
+  const backgroundColor = getDefaultStatusBarBackgroundColor();
+  expect(backgroundColor).toBe(StatusBar._defaultProps.backgroundColor.value);
 });

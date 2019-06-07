@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders label with text 1`] = `
+exports[`renders TextView with text 1`] = `
 <Text
   accessible={true}
   allowFontScaling={true}

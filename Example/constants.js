@@ -3,7 +3,7 @@ const MAIN_WARN_COLOR = '#cd853f';
 const MAIN_ERROR_COLOR = '#cc3232';
 const MAIN_SUCCESS_COLOR = '#32A54A';
 const MAIN_CUSTOM_COLOR = '#6441A4';
-const MAIN_DISMISS_COLOR = '#748182';
+const MAIN_DISMISS_COLOR = '#202020';
 const items = [
   {
     backgroundColor: MAIN_INFO_COLOR,
@@ -32,8 +32,12 @@ const items = [
   },
   { backgroundColor: MAIN_DISMISS_COLOR, type: 'close', title: 'close' },
 ];
+import { Dimensions } from 'react-native';
+const WINDOW = Dimensions.get('window');
+const HEIGHT = WINDOW.height;
 
 module.exports = {
   items,
   MAIN_CUSTOM_COLOR,
+  HEIGHT,
 };

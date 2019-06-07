@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Text } from 'react-native';
 
-export default class Label extends Component {
+export default class TextView extends Component {
   static propTypes = {
     text: PropTypes.string.isRequired,
     style: PropTypes.object,
@@ -20,13 +20,9 @@ export default class Label extends Component {
   };
   render() {
     const { text } = this.props;
-    if (text !== null && text.length > 0) {
-      return (
-        <Text {...this.props}>
-          {text}
-        </Text>
-      );
+    if (!text || text.length == 0) {
+      return null;
     }
-    return null;
+    return <Text {...this.props}>{text}</Text>;
   }
 }
