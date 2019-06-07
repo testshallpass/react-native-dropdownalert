@@ -33,7 +33,7 @@ export default class DropdownAlert extends Component {
     endDelta: PropTypes.number,
     wrapperStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
-    safeAreaStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
+    contentContainerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     titleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     messageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
     imageStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.number]),
@@ -98,7 +98,7 @@ export default class DropdownAlert extends Component {
       flexDirection: 'row',
       backgroundColor: '#202020',
     },
-    safeAreaStyle: {
+    contentContainerStyle: {
       flex: 1,
       flexDirection: 'row',
     },
@@ -142,7 +142,7 @@ export default class DropdownAlert extends Component {
     inactiveStatusBarStyle: getDefaultStatusBarStyle(),
     inactiveStatusBarBackgroundColor: getDefaultStatusBarBackgroundColor(),
     updateStatusBar: true,
-    isInteraction: undefined,
+    isInteraction: true,
     useNativeDriver: true,
     elevation: 1,
     zIndex: null,
@@ -336,15 +336,16 @@ export default class DropdownAlert extends Component {
     }
   };
   animate = (toValue, duration = 450, onComplete = () => {}) => {
-    if (this.props.useAnimationLock) {
+    const { useAnimationLock, useNativeDriver, isInteraction } = this.props;
+    if (useAnimationLock) {
       this.animationLock = true;
     }
     Animated.spring(this.state.animationValue, {
       toValue: toValue,
       duration: duration,
       friction: 9,
-      useNativeDriver: this.props.useNativeDriver,
-      isInteraction: this.props.isInteraction,
+      useNativeDriver,
+      isInteraction,
     }).start(onComplete);
   };
   getStartDelta = (height, start) => {
@@ -475,7 +476,7 @@ export default class DropdownAlert extends Component {
       accessibilityLabel,
       testID,
       accessible,
-      safeAreaStyle,
+      contentContainerStyle,
       defaultTextContainer,
       startDelta,
       endDelta,
@@ -528,7 +529,7 @@ export default class DropdownAlert extends Component {
           accessible={accessible}
         >
           <View style={style}>
-            <ContentView style={StyleSheet.flatten(safeAreaStyle)}>
+            <ContentView style={StyleSheet.flatten(contentContainerStyle)}>
               {this._renderImage(source)}
               <View style={StyleSheet.flatten(defaultTextContainer)}>
                 {this._renderTitle()}
