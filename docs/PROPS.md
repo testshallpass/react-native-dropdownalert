@@ -28,6 +28,7 @@
 | ---- | :---: | --- | --- |
 | ```onClose``` | Function  | alert close callback returns: ```alertData = { type, title, message, action, payload, interval }```  | () => {}
 | ```onCancel``` | Function  | alert is closed by cancel button returns: ```alertData = {type, title, message, action, payload, interval}```  | () => {}
+| ```onTap``` | Function  | alert is closed by tap returns: ```alertData = {type, title, message, action, payload, interval}```  | () => {}
 
 ### Animation
 
