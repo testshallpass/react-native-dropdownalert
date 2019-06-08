@@ -4,6 +4,7 @@ const MAIN_ERROR_COLOR = '#cc3232';
 const MAIN_SUCCESS_COLOR = '#32A54A';
 const MAIN_CUSTOM_COLOR = '#6441A4';
 const MAIN_DISMISS_COLOR = '#202020';
+const MAIN_BACKGROUND_COLOR = '#E9EEEF';
 const items = [
   {
     backgroundColor: MAIN_INFO_COLOR,
@@ -40,4 +41,5 @@ module.exports = {
   items,
   MAIN_CUSTOM_COLOR,
   HEIGHT,
+  MAIN_BACKGROUND_COLOR
 };

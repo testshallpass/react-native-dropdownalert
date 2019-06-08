@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import DropdownAlert from 'react-native-dropdownalert';
-import { MAIN_CUSTOM_COLOR } from './constants';
+import { MAIN_CUSTOM_COLOR, MAIN_BACKGROUND_COLOR } from './constants';
 import List from './List';
 
 export default class App extends Component {
@@ -11,23 +11,32 @@ export default class App extends Component {
   onSelect({ item, index }) {
     switch (item.type) {
       case 'close':
-        this.forceClose();
+        this._close();
         break;
       default:
         const random = Math.floor(Math.random() * 4000 + 1);
         const title = `${item.type} in ${random} milliseconds`;
-        this.dropdown.alertWithType(item.type, title, item.message, {payload: 'HelloWorld'}, random);
+        this.dropdown.alertWithType(
+          item.type,
+          title,
+          item.message,
+          { message: 'HelloWorld', source: 'https://facebook.github.io/react-native/docs/assets/favicon.png' },
+          random
+        );
     }
   }
-  forceClose() {
+  _close = () => {
     this.dropdown.closeAction();
-  }
-  onClose(data) {
+  };
+  _onClose = data => {
     console.log(data);
-  }
-  onCancel(data) {
+  };
+  _onCancel = data => {
     console.log(data);
-  }
+  };
+  _onTap = data => {
+    console.log(data);
+  };
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -38,8 +47,8 @@ export default class App extends Component {
             backgroundColor: MAIN_CUSTOM_COLOR,
           }}
           showCancel={true}
-          onClose={data => this.onClose(data)}
-          onCancel={data => this.onCancel(data)}
+          onCancel={this._onCancel}
+          onTap={this._onTap}
           messageNumOfLines={0}
         />
       </SafeAreaView>
@@ -50,6 +59,6 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E9EEEF',
+    backgroundColor: MAIN_BACKGROUND_COLOR,
   },
 });
