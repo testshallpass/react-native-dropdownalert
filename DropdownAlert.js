@@ -310,7 +310,7 @@ export default class DropdownAlert extends Component {
       if (IS_ANDROID) {
         const { inactiveStatusBarBackgroundColor, activeStatusBarBackgroundColor, translucent } = this.props;
         if (active) {
-          const backgroundColor = activeStatusBarBackgroundColor;
+          let backgroundColor = activeStatusBarBackgroundColor;
           const type = this.alertData.type;
           if (type !== TYPE.custom) {
             backgroundColor = this.getBackgroundColorForType(type);
