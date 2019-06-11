@@ -258,7 +258,9 @@ export default class DropdownAlert extends Component {
     if (!replaceEnabled && isOpen) {
       this.alertData = data;
       this.setState({ isOpen: true });
-      this.closeAutomatic(duration);
+      if (duration > 0) {
+        this.closeAutomatic(duration);
+      }
       return;
     }
     if (isOpen) {
@@ -274,7 +276,9 @@ export default class DropdownAlert extends Component {
     this.setState({ isOpen: true });
     this.animate(1, 450, () => {
       this.animationLock = false;
-      this.closeAutomatic(duration);
+      if (duration > 0) {
+        this.closeAutomatic(duration);
+      }
     });
   };
   closeAction = (action = ACTION.programmatic, onDone = () => {}) => {
