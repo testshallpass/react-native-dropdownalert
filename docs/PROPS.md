@@ -33,7 +33,7 @@
 
 | Name | Type | Description | Default |
 | ---- | :---: | --- | --- |
-| ```closeInterval``` | Number  | automatic close duration in milliseconds (set to 0 disables the automatic close) | 4000
+| ```closeInterval``` | Number  | automatic close duration in milliseconds (set to less than and equal to 0 disables the automatic close) | 4000
 | ```startDelta``` | Number  | where the alert container starts to animate from (min: negative height) | -100
 | ```endDelta``` | Number  | where the alert container ends at | 0
 | ```useAnimationLock``` | Bool | used to avoid animation collision (i.e. alert is invoked while one is animating open or close) | true
