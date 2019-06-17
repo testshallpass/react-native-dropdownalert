@@ -173,7 +173,7 @@ describe('DropdownAlert component', () => {
         <DropdownAlert imageSrc={imageSrc} showCancel={true} renderTitle={() => {}} renderMessage={() => {}} renderCancel={() => {}} renderImage={() => {}} />
       );
       wrapper.instance().isOpen = false;
-      wrapper.instance().closeTimeoutID = setTimeout(function() {});
+      wrapper.instance().closeTimeoutID = setTimeout(() => {});
       wrapper.update();
       const type = TYPE.error;
       const title = 'Duis duis nostrud excepteur ipsum.';
@@ -189,7 +189,7 @@ describe('DropdownAlert component', () => {
     test('expect type custom to be open state and have alert data', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
       wrapper.instance().isOpen = false;
-      wrapper.instance().closeTimeoutID = setTimeout(function() {});
+      wrapper.instance().closeTimeoutID = setTimeout(() => {});
       wrapper.update();
       const type = TYPE.custom;
       const title = 'Lorem fugiat reprehenderit non aute elit Lorem quis sit irure non.';
@@ -205,7 +205,7 @@ describe('DropdownAlert component', () => {
     test('expect type info to be open state with replaceEnabled prop as false', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} replaceEnabled={false} />);
       wrapper.instance().isOpen = false;
-      wrapper.instance().closeTimeoutID = setTimeout(function() {});
+      wrapper.instance().closeTimeoutID = setTimeout(() => {});
       wrapper.update();
       const type = TYPE.info;
       const title = 'Laborum reprehenderit aute sit sunt labore velit consectetur cillum id dolore tempor mollit commodo.';
@@ -222,7 +222,7 @@ describe('DropdownAlert component', () => {
       const closeInterval = 4000;
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} closeInterval={closeInterval} />);
       wrapper.instance().isOpen = false;
-      wrapper.instance().closeTimeoutID = setTimeout(function() {});
+      wrapper.instance().closeTimeoutID = setTimeout(() => {});
       wrapper.update();
       const type = TYPE.info;
       const title = 'Laborum reprehenderit aute sit sunt labore velit consectetur cillum id dolore tempor mollit commodo.';
@@ -236,10 +236,28 @@ describe('DropdownAlert component', () => {
       expect(wrapper.instance().state.topValue).toBe(0);
       expect(wrapper.instance().closeTimeoutID).toBeDefined();
     });
+    test('expect type info to be open state with closeInterval prop as zero and replaceEnabled false', () => {
+      const closeInterval = 0;
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} closeInterval={closeInterval} replaceEnabled={false} />);
+      wrapper.instance().setState({ isOpen: true });
+      wrapper.instance().closeTimeoutID = setTimeout(() => {});
+      wrapper.update();
+      const type = TYPE.info;
+      const title = 'Laborum reprehenderit aute sit sunt labore velit consectetur cillum id dolore tempor mollit commodo.';
+      const message = 'Aliquip excepteur dolore ipsum exercitation cupidatat incididunt in.';
+      wrapper.instance().alertWithType(type, title, message, {});
+      expect(wrapper.instance().alertData.type).toBe(type);
+      expect(wrapper.instance().alertData.title).toBe(title);
+      expect(wrapper.instance().alertData.message).toBe(message);
+      expect(wrapper.instance().alertData.interval).toBe(closeInterval);
+      expect(wrapper.instance().state.isOpen).toBeTruthy();
+      expect(wrapper.instance().state.topValue).toBe(0);
+      expect(wrapper.instance().closeTimeoutID).toBeDefined();
+    });
     test('expect type success to be open state and have alert data with animationLock as true', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
       wrapper.instance().isOpen = false;
-      wrapper.instance().closeTimeoutID = setTimeout(function() {});
+      wrapper.instance().closeTimeoutID = setTimeout(() => {});
       wrapper.instance().animationLock = true;
       wrapper.update();
       const type = TYPE.success;
@@ -268,7 +286,7 @@ describe('DropdownAlert component', () => {
     test('expect type unknown to be open state and have alert data', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
       wrapper.instance().isOpen = false;
-      wrapper.instance().closeTimeoutID = setTimeout(function() {});
+      wrapper.instance().closeTimeoutID = setTimeout(() => {});
       wrapper.update();
       const type = 'unknown';
       const title = 'Excepteur dolore aute culpa occaecat reprehenderit veniam sint tempor exercitation cillum aliquip id reprehenderit.';
@@ -284,7 +302,7 @@ describe('DropdownAlert component', () => {
     test('expect unknown type to be open state and have alert data and close automatic', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} replaceEnabled={false} />);
       wrapper.instance().setState({ isOpen: true });
-      wrapper.instance().closeTimeoutID = setTimeout(function() {});
+      wrapper.instance().closeTimeoutID = setTimeout(() => {});
       wrapper.update();
       const type = 'unknown';
       const title = 'Excepteur dolore aute culpa occaecat reprehenderit veniam sint tempor exercitation cillum aliquip id reprehenderit.';
@@ -300,7 +318,7 @@ describe('DropdownAlert component', () => {
     test('expect unknown type to be open state and have alert data and close action', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
       wrapper.instance().setState({ isOpen: true });
-      wrapper.instance().closeTimeoutID = setTimeout(function() {});
+      wrapper.instance().closeTimeoutID = setTimeout(() => {});
       wrapper.update();
       const type = 'unknown';
       const title = 'Excepteur dolore aute culpa occaecat reprehenderit veniam sint tempor exercitation cillum aliquip id reprehenderit.';
@@ -314,7 +332,13 @@ describe('DropdownAlert component', () => {
       expect(wrapper.instance().closeTimeoutID).toBeDefined();
     });
   });
-  describe('open', () => {});
+  describe('open', () => {
+    test('expect open to be okay with no data', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc}  />);
+      wrapper.instance().open();
+      expect(wrapper.instance().state.isOpen).toBeTruthy();
+    });
+  });
   describe('closeAction', () => {
     test('expect close with programmatic action to set isOpen to be false', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
@@ -331,6 +355,11 @@ describe('DropdownAlert component', () => {
         expect(wrapper.instance().state.isOpen).toBeFalsy();
         expect(wrapper.instance().state.topValue).toBe(0);
       });
+    });
+    test('expect close without action to be okay', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+      wrapper.setState({ isOpen: true });
+      wrapper.instance().closeAction();
     });
   });
   describe('closeAutomatic', () => {
@@ -354,6 +383,10 @@ describe('DropdownAlert component', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
       wrapper.instance().updateStatusBar(false, true);
     });
+    test('expect without parameters to be okay', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+      wrapper.instance().updateStatusBar();
+    });
   });
   describe('clearCloseTimeoutID', () => {});
   describe('animate', () => {
@@ -362,6 +395,12 @@ describe('DropdownAlert component', () => {
       wrapper.instance().animate(1, 450, () => {})
       const lock = wrapper.instance().animationLock;
       expect(lock).toBeTruthy();
+    });
+    test('expect animation lock to be false', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} useAnimationLock={false} />);
+      wrapper.instance().animate(0)
+      const lock = wrapper.instance().animationLock;
+      expect(lock).toBeFalsy();
     });
   });
   describe('getStartDelta', () => {
