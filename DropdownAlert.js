@@ -499,7 +499,7 @@ export default class DropdownAlert extends Component {
     let imageSrc = this.getSourceForType(type);
     // imageSrc is overridden when payload has source property
     // other than it existing and not an object there is no validation to ensure it is image source expected by Image
-    if (payload.hasOwnProperty('source') && payload.source && typeof payload.source !== 'object') {
+    if (payload && payload.hasOwnProperty('source') && payload.source && typeof payload.source !== 'object') {
       imageSrc = payload.source;
     }
     if (IS_ANDROID && translucent) {

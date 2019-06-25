@@ -17,5 +17,6 @@ describe('CancelButton', () => {
     const wrapper = shallow(<CancelButton onPress={onCancel} />);
     expect(wrapper.prop('onPress')).toEqual(onCancel);
     expect(wrapper.props().onPress).toBeDefined();
+    CancelButton.defaultProps.onPress();
   });
 });

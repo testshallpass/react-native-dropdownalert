@@ -150,7 +150,7 @@ describe('DropdownAlert component', () => {
     test('expect to return error string value', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
       const expected = TypeError('Converting circular structure to JSON').toString();
-      let circularObject = {}; 
+      let circularObject = {};
       circularObject.a = circularObject;
       const value = wrapper.instance().getStringValue(circularObject);
       expect(value).toEqual(expected);
@@ -331,10 +331,33 @@ describe('DropdownAlert component', () => {
       expect(wrapper.instance().state.topValue).toBe(0);
       expect(wrapper.instance().closeTimeoutID).toBeDefined();
     });
+    test('expect error type to be open state and have alert data with payload and source defined', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+      wrapper.instance().setState({ isOpen: true });
+      wrapper.instance().closeTimeoutID = setTimeout(() => {});
+      wrapper.update();
+      const type = TYPE.error;
+      const title = 'Excepteur dolore aute culpa occaecat reprehenderit veniam sint tempor exercitation cillum aliquip id reprehenderit.';
+      const message = 'Et id irure proident ipsum veniam ad magna cillum fugiat.';
+      const payload = {
+        source: imageSrc,
+      };
+      wrapper.instance().alertWithType(type, title, message, payload);
+      expect(wrapper.instance().alertData).toBeDefined();
+      expect(wrapper.instance().alertData.type).toBe(type);
+      expect(wrapper.instance().alertData.title).toBe(title);
+      expect(wrapper.instance().alertData.message).toBe(message);
+      expect(wrapper.instance().alertData.payload.source).toBeDefined();
+      expect(wrapper.instance().alertData.payload.source).toBe(imageSrc);
+      expect(wrapper.instance().alertData.payload).toBe(payload);
+      expect(wrapper.instance().state.isOpen).toBeTruthy();
+      expect(wrapper.instance().state.topValue).toBe(0);
+      expect(wrapper.instance().closeTimeoutID).toBeDefined();
+    });
   });
   describe('open', () => {
     test('expect open to be okay with no data', () => {
-      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc}  />);
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
       wrapper.instance().open();
       expect(wrapper.instance().state.isOpen).toBeTruthy();
     });
@@ -369,7 +392,14 @@ describe('DropdownAlert component', () => {
       expect(wrapper.instance().state.isOpen).toBeFalsy();
     });
   });
-  describe('close', () => {});
+  describe('close', () => {
+    test('expect close with onTap', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} onTap={() => {}} />);
+      wrapper.instance().close(ACTION.tap, () => {
+        expect(wrapper.instance().alertData).toBeDefined();
+      });
+    });
+  });
   describe('updateStatusBar', () => {
     // FIXME: mock platform
     // jest.mock('Platform', () => ({
@@ -392,13 +422,13 @@ describe('DropdownAlert component', () => {
   describe('animate', () => {
     test('expect animation lock to be true', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} useAnimationLock={true} />);
-      wrapper.instance().animate(1, 450, () => {})
+      wrapper.instance().animate(1, 450, () => {});
       const lock = wrapper.instance().animationLock;
       expect(lock).toBeTruthy();
     });
     test('expect animation lock to be false', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} useAnimationLock={false} />);
-      wrapper.instance().animate(0)
+      wrapper.instance().animate(0);
       const lock = wrapper.instance().animationLock;
       expect(lock).toBeFalsy();
     });
@@ -572,6 +602,11 @@ describe('DropdownAlert component', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
       const button = wrapper.instance()._renderCancel(true);
       expect(button).toBeDefined();
+    });
+    test('expect show to be false and button to be null', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+      const button = wrapper.instance()._renderCancel(false);
+      expect(button).toBeNull();
     });
   });
 });
