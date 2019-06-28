@@ -16,7 +16,7 @@ export default class App extends Component {
       default:
         const random = Math.floor(Math.random() * 4000 + 1);
         const title = `${item.type} in ${random} milliseconds`;
-        this.dropdown.alertWithType(
+        this.dropDownAlertRef.alertWithType(
           item.type,
           title,
           item.message,
@@ -42,7 +42,7 @@ export default class App extends Component {
       <SafeAreaView style={styles.container}>
         <List onSelect={({ item, index }) => this.onSelect({ item, index })} />
         <DropdownAlert
-          ref={ref => this.dropdown = ref}
+          ref={ref => this.dropDownAlertRef = ref}
           containerStyle={{
             backgroundColor: MAIN_CUSTOM_COLOR,
           }}
@@ -50,6 +50,7 @@ export default class App extends Component {
           onCancel={this._onCancel}
           onTap={this._onTap}
           messageNumOfLines={0}
+          onClose={this._onClose}
         />
       </SafeAreaView>
     );
