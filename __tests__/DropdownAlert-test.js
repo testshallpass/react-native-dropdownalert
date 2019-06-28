@@ -401,21 +401,43 @@ describe('DropdownAlert component', () => {
     });
   });
   describe('updateStatusBar', () => {
-    // FIXME: mock platform
-    // jest.mock('Platform', () => ({
-    //   OS: 'android',
-    // }));
-    test('expect should update status bar to active state', () => {
-      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
-      wrapper.instance().updateStatusBar(true, true);
+    describe('ios', () => {
+      beforeEach(() => {
+        jest.mock('Platform', () => ({
+          OS: 'ios',
+        }));
+      });
+      test('expect should update status bar to active state', () => {
+        const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+        wrapper.instance().updateStatusBar(true, true);
+      });
+      test('expect should not update status bar', () => {
+        const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+        wrapper.instance().updateStatusBar(false, true);
+      });
+      test('expect without parameters to be okay', () => {
+        const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+        wrapper.instance().updateStatusBar();
+      });
     });
-    test('expect should not update status bar', () => {
-      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
-      wrapper.instance().updateStatusBar(false, true);
-    });
-    test('expect without parameters to be okay', () => {
-      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
-      wrapper.instance().updateStatusBar();
+    describe('android', () => {
+      beforeEach(() => {
+        jest.mock('Platform', () => ({
+          OS: 'android',
+        }));
+      });
+      test('expect should update status bar to active state', () => {
+        const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+        wrapper.instance().updateStatusBar(true, true);
+      });
+      test('expect should not update status bar', () => {
+        const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+        wrapper.instance().updateStatusBar(false, true);
+      });
+      test('expect without parameters to be okay', () => {
+        const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+        wrapper.instance().updateStatusBar();
+      });
     });
   });
   describe('clearCloseTimeoutID', () => {});
