@@ -69,6 +69,7 @@ export default class DropdownAlert extends Component {
     titleTextProps: PropTypes.object,
     messageTextProps: PropTypes.object,
     useAnimationLock: PropTypes.bool,
+    onTap: PropTypes.func,
   };
   static defaultProps = {
     onClose: () => {},
@@ -157,6 +158,7 @@ export default class DropdownAlert extends Component {
     titleTextProps: undefined,
     messageTextProps: undefined,
     useAnimationLock: true,
+    onTap: () => {},
   };
   constructor(props) {
     super(props);
@@ -296,12 +298,15 @@ export default class DropdownAlert extends Component {
   };
   close = (action, onDone = () => {}) => {
     this.animate(0, 250, () => {
-      const { onClose, updateStatusBar, onCancel } = this.props;
+      const { onClose, updateStatusBar, onCancel, onTap } = this.props;
       this.updateStatusBar(updateStatusBar, false);
       this.alertData.action = action;
-      if (action == 'cancel') {
+      if (action == ACTION.cancel) {
         onCancel(this.alertData);
       } else {
+        if (action == ACTION.tap) {
+          onTap(this.alertData);
+        }
         onClose(this.alertData);
       }
       this.setState({ isOpen: false, topValue: 0, height: 0 });
@@ -489,9 +494,14 @@ export default class DropdownAlert extends Component {
       showCancel,
     } = this.props;
     const { animationValue, topValue, height } = this.state;
-    const type = this.alertData.type;
+    const { type, payload } = this.alertData;
     let style = this.getStyleForType(type);
-    const source = this.getSourceForType(type);
+    let imageSrc = this.getSourceForType(type);
+    // imageSrc is overridden when payload has source property
+    // other than it existing and not an object there is no validation to ensure it is image source expected by Image
+    if (payload && payload.hasOwnProperty('source') && payload.source && typeof payload.source !== 'object') {
+      imageSrc = payload.source;
+    }
     if (IS_ANDROID && translucent) {
       style = [style, { paddingTop: StatusBar.currentHeight }];
     }
@@ -534,7 +544,7 @@ export default class DropdownAlert extends Component {
         >
           <View style={style}>
             <ContentView style={StyleSheet.flatten(contentContainerStyle)}>
-              {this._renderImage(source)}
+              {this._renderImage(imageSrc)}
               <View style={StyleSheet.flatten(defaultTextContainer)}>
                 {this._renderTitle()}
                 {this._renderMessage()}
