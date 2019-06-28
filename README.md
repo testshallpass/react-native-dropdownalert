@@ -1,4 +1,4 @@
-## react-native-dropdownalert
+# react-native-dropdownalert
 
 [![Platform](https://img.shields.io/badge/platform-react--native-lightgrey.svg)](http://facebook.github.io/react-native/)
 [![npm version](http://img.shields.io/npm/v/react-native-dropdownalert.svg)](https://www.npmjs.com/package/react-native-dropdownalert)
@@ -18,7 +18,7 @@
 5. [Props](docs/PROPS.md)
 6. [Caveats](#caveats)
 
-A simple alert to notify users about new chat messages, something went wrong or everything is ok. It can be closed by tap, cancel button, automatically with `closeInterval`, pan responder up gesture or programmatically.
+A simple alert to notify users about new chat messages, something went wrong or everything is ok. It can be closed by tap, cancel button, automatically with `closeInterval`, pan responder up gesture or programmatically (```this.dropDownAlertRef.closeAction()```).
 
 ### Support
 
@@ -29,9 +29,7 @@ A simple alert to notify users about new chat messages, something went wrong or 
 
 ### Installation
 
-```
-npm i react-native-dropdownalert --save
-```
+```npm i react-native-dropdownalert --save```
 
 ### Demo
 
@@ -40,27 +38,28 @@ npm i react-native-dropdownalert --save
 ### Usage
 
 ```javascript
-// ...
 import DropdownAlert from 'react-native-dropdownalert';
 export default class App extends Component {
   componentDidMount() {
-    this.fetchData();
+    this._fetchData();
   }
-  fetchData = async () => {
+  _fetchData = async () => {
     try {
-      const data = await fetch('https://mywebsite.com/endpoint/');
-      if (data) {
-        this.dropdown.alertWithType('success', 'Success', 'Received data.');
-      }
+      await fetch('https://mywebsite.com/endpoint/');
+      // alertWithType parameters: type, title, message, payload, interval.
+      // There are 4 pre-defined types: info, warn, success, error.
+      // payload object with source property overrides image source prop. (optional)
+      // interval overrides closeInterval prop. (optional)
+      this.dropDownAlertRef.alertWithType('success', 'Success', 'Fetch data is complete.');
     } catch (error) {
-      this.dropdown.alertWithType('error', 'Error', error.message);
+      this.dropDownAlertRef.alertWithType('error', 'Error', error.message);
     }
   };
   render() {
+    // Make sure DropdownAlert is the last component in the document tree.
     return (
       <View>
-         // !!! Make sure it is the last component in your document tree.
-        <DropdownAlert ref={ref => this.dropdown = ref} />
+        <DropdownAlert ref={ref => this.dropDownAlertRef = ref} />
       </View>
     );
   }

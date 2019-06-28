@@ -62,7 +62,7 @@
 
 | Name | Type | Description | Default |
 | ---- | :---: | --- | --- |
-| ```defaultContainer``` | Object  | Style for inner view container (**override paddingTop with this**) | ```{ padding: 8, paddingTop: IS_ANDROID ? 0 : 20, flexDirection: 'row' } ```
+| ```defaultContainer``` | Object  | Style for inner view container (**override paddingTop with this**) | ```{ padding: 8, paddingTop: IS_ANDROID ? 0 : 20, flexDirection: 'row' }```
 | ```defaultTextContainer``` | Object | Style for inner text container (holds title and message) | ```{ flex: 1, padding: 8 }```
 | ```wrapperStyle``` | Object  | styles for the view that wraps the container. For [React Native Web](https://github.com/necolas/react-native-web) support you might want to set this to `{ position: 'fixed' }` | ```null```
 | ```containerStyle``` | Object  | styles for container for custom type only | ```{ padding: 16, flexDirection: 'row', backgroundColor: '#202020' }```
@@ -71,6 +71,8 @@
 | ```elevation``` | Number  | Animated.View elevation | 1
 
 ### Image
+
+image sources are overridden if payload parameter has source property. For example,```{ source: 'https://facebook.github.io/react-native/docs/assets/favicon.png' }```
 
 | Name | Type | Description | Default |
 | ---- | :---: | --- | --- |
