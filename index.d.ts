@@ -23,6 +23,7 @@ export interface DropdownAlertProps {
     cancelBtnImageStyle?: object | number
     titleNumOfLines?: number
     messageNumOfLines?: number
+    onTap?(data: AlertDataType): void
     onClose?(data: AlertDataType): void
     onCancel?(data: AlertDataType): void
     showCancel?: boolean
