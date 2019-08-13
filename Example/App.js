@@ -12,7 +12,7 @@ export default class App extends Component {
         break;
       default:
         const random = Math.floor(Math.random() * 4000 + 1);
-        const title = `${item.type} \ncloses in ${random/1000} seconds`;
+        const title = `${item.type} \ncloses in ${random / 1000} seconds`;
         this.dropDownAlertRef.alertWithType(
           item.type,
           title,
