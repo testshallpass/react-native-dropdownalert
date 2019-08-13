@@ -1,10 +1,12 @@
-# DropdownAlert Example
+# DropdownAlert example project
 
-## Pre-requisite
+## Installation
 
-* Install react-native CLI ```npm i -g react-native-cli```.
+* ```npm i -g react-native-cli```
+* ```brew install node```
+* ```brew install watchman```
 
-## Getting started
+## Up and running
 
 1. Navigate to Example directory. ```cd ~/Example```.
 2. Install the modules ```npm i --save```.
@@ -13,4 +15,4 @@
 
 ## Resources
 
-* [Official react-native Getting started](http://facebook.github.io/react-native/docs/getting-started.html#content).
+* [Official react-native Getting started](http://facebook.github.io/react-native/docs/getting-started.html#content)

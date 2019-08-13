@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 import DropdownAlert from 'react-native-dropdownalert';
-import { MAIN_CUSTOM_COLOR, MAIN_BACKGROUND_COLOR } from './constants';
+import { PURPLE_COLOR, WHITE_COLOR, ITEMS } from './constants';
 import List from './List';
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-  onSelect({ item, index }) {
+  _onSelect({ item }) {
     switch (item.type) {
       case 'close':
-        this._close();
+        this._onProgrammaticClose();
         break;
       default:
         const random = Math.floor(Math.random() * 4000 + 1);
-        const title = `${item.type} in ${random} milliseconds`;
+        const title = `${item.type} \ncloses in ${random/1000} seconds`;
         this.dropDownAlertRef.alertWithType(
           item.type,
           title,
@@ -25,8 +22,8 @@ export default class App extends Component {
         );
     }
   }
-  _close = () => {
-    this.dropdown.closeAction();
+  _onProgrammaticClose = () => {
+    this.dropDownAlertRef.closeAction();
   };
   _onClose = data => {
     console.log(data);
@@ -40,15 +37,16 @@ export default class App extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <List onSelect={({ item, index }) => this.onSelect({ item, index })} />
+        <List items={ITEMS} onSelect={({ item }) => this._onSelect({ item })} />
         <DropdownAlert
           ref={ref => this.dropDownAlertRef = ref}
           containerStyle={{
-            backgroundColor: MAIN_CUSTOM_COLOR,
+            backgroundColor: PURPLE_COLOR,
           }}
           showCancel={true}
           onCancel={this._onCancel}
           onTap={this._onTap}
+          titleNumOfLines={2}
           messageNumOfLines={0}
           onClose={this._onClose}
         />
@@ -60,6 +58,6 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: MAIN_BACKGROUND_COLOR,
+    backgroundColor: WHITE_COLOR,
   },
 });
