@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView, View } from 'react-native';
 import DropdownAlert from 'react-native-dropdownalert';
 import { PURPLE_COLOR, WHITE_COLOR, ITEMS } from './constants';
 import List from './List';
@@ -36,8 +36,10 @@ export default class App extends Component {
   };
   render() {
     return (
-      <SafeAreaView style={styles.container}>
-        <List items={ITEMS} onSelect={({ item }) => this._onSelect({ item })} />
+      <View style={styles.container}>
+        <SafeAreaView>
+          <List items={ITEMS} onSelect={({ item }) => this._onSelect({ item })} />
+        </SafeAreaView>
         <DropdownAlert
           ref={ref => this.dropDownAlertRef = ref}
           containerStyle={{
@@ -50,7 +52,7 @@ export default class App extends Component {
           messageNumOfLines={0}
           onClose={this._onClose}
         />
-      </SafeAreaView>
+      </View>
     );
   }
 }
