@@ -3,7 +3,6 @@ import { StyleSheet, SafeAreaView, View, TouchableOpacity, Animated, StatusBar, 
 import PropTypes from 'prop-types';
 import {
   DEFAULT_IMAGE_DIMENSIONS,
-  IS_IOS,
   IS_ANDROID,
   IS_IOS_BELOW_11,
   TYPE,
@@ -181,9 +180,6 @@ export default class DropdownAlert extends Component {
   }
   componentWillUnmount() {
     this.clearCloseTimeoutID();
-    if (this.state.isOpen) {
-      this.closeAction(ACTION.programmatic);
-    }
   }
   getPanResponder = () => {
     return PanResponder.create({
@@ -329,13 +325,12 @@ export default class DropdownAlert extends Component {
         } else {
           StatusBar.setBackgroundColor(inactiveStatusBarBackgroundColor, true);
         }
-      } else if (IS_IOS) {
-        const { inactiveStatusBarStyle, activeStatusBarStyle } = this.props;
-        if (active) {
-          StatusBar.setBarStyle(activeStatusBarStyle, true);
-        } else {
-          StatusBar.setBarStyle(inactiveStatusBarStyle, true);
-        }
+      }
+      const { inactiveStatusBarStyle, activeStatusBarStyle } = this.props;
+      if (active) {
+        StatusBar.setBarStyle(activeStatusBarStyle, true);
+      } else {
+        StatusBar.setBarStyle(inactiveStatusBarStyle, true);
       }
     }
   };
