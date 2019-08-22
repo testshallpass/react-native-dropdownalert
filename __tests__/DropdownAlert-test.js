@@ -20,6 +20,14 @@ describe('DropdownAlert component', () => {
       wrapper.instance().componentWillUnmount();
       expect(wrapper.instance().closeTimeoutID).toBeUndefined();
     });
+    test('expect to close because it is open', () => {
+      const wrapper = shallow(<DropdownAlert successImageSrc={imageSrc} />);
+      wrapper.instance().setState({ isOpen: true });
+      wrapper.update();
+      wrapper.instance().componentWillUnmount();
+      expect(wrapper.instance().state.isOpen).toBeFalsy();
+      expect(wrapper.instance().closeTimeoutID).toBeUndefined();
+    });
   });
   describe('getPanResponder', () => {
     test('expect PanResponder to be defined', () => {
