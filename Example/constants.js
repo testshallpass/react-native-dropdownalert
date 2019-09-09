@@ -28,3 +28,4 @@ export const ITEMS = [
   },
   { backgroundColor: '#202020', type: 'close', title: 'close' },
 ];
+export const ReactNativeLogo = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
