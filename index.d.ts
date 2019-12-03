@@ -16,7 +16,6 @@ export interface DropdownAlertProps {
     endDelta?: number
     wrapperStyle?: object | number
     containerStyle?: object | number
-    safeAreaStyle?: object | number
     titleStyle?: object | number
     messageStyle?: object | number
     imageStyle?: object | number
