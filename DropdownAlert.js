@@ -18,11 +18,11 @@ import CancelButton from './CancelButton';
 export default class DropdownAlert extends Component {
   static propTypes = {
     imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    infoImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    warnImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    errorImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    successImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    cancelBtnImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    infoImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object]),
+    warnImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object]),
+    errorImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object]),
+    successImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object]),
+    cancelBtnImageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.object]),
     infoColor: PropTypes.string,
     warnColor: PropTypes.string,
     errorColor: PropTypes.string,
