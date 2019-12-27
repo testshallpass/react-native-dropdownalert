@@ -1,18 +1,20 @@
-# DropdownAlert example project
+# DropdownAlertExample
 
 ## Installation
 
 * ```npm i -g react-native-cli```
 * ```brew install node```
 * ```brew install watchman```
+* ```gem install cocoapods```
 
 ## Up and running
 
-1. Navigate to Example directory. ```cd ~/Example```.
-2. Install the modules ```npm i --save```.
-3. Notice node_modules directory in Example directory.
-4. Lastly, ```npm run ios``` or ```npm run android``` inside the Example directory. (Android **requires** emulator already running)
+1. Navigate to Example directory (```cd ~/Example```).
+2. Install dependencies: ```npm i --save```.
+3. Install iOS cocoapods: ```cd ios && pod install```
+4. Start Metro Bundler: ```npm start```.
+5. For iOS,```npm run ios```. For Android, start an emulator then, do ```npm run android```.
 
 ## Resources
 
-* [Official react-native Getting started](http://facebook.github.io/react-native/docs/getting-started.html#content)
+* <http://facebook.github.io/react-native/docs/getting-started.html>
