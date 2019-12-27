@@ -8,15 +8,6 @@
     "test": "jest",
     "test:ci": "jest && codecov"
   },
-  "jest": {
-    "preset": "react-native",
-    "modulePathIgnorePatterns": [
-      "/Example"
-    ],
-    "coverageDirectory": "./coverage/",
-    "collectCoverage": true,
-    "setupTestFrameworkScriptFile": "./setupTests.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/testshallpass/react-native-dropdownalert.git"
@@ -39,17 +30,16 @@
   },
   "homepage": "https://github.com/testshallpass/react-native-dropdownalert#readme",
   "devDependencies": {
-    "babel-jest": "22.4.1",
-    "babel-preset-react-native": "4.0.0",
-    "enzyme": "3.3.0",
-    "enzyme-adapter-react-16": "1.1.1",
-    "enzyme-to-json": "3.3.1",
-    "jest": "21.1.0",
+    "babel-jest": "24.9.0",
+    "enzyme": "3.10.0",
+    "enzyme-adapter-react-16": "1.15.1",
+    "enzyme-to-json": "3.4.3",
+    "jest": "24.9.0",
+    "metro-react-native-babel-preset": "0.54.1",
     "prop-types": "15.5.10",
-    "react": "16.3.1",
-    "react-dom": "16.3.1",
-    "react-native": "0.55.4",
-    "react-test-renderer": "16.3.1"
+    "react": "16.8.3",
+    "react-dom": "16.8.3",
+    "react-native": "0.59.10"
   },
   "dependencies": {
     "prop-types": "15.5.10"

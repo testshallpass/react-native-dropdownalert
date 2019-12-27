@@ -1,4 +1,3 @@
-import 'react-native';
 import React from 'react';
 import TextView from '../TextView';
 import { shallow } from 'enzyme';

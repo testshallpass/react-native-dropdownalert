@@ -39,7 +39,7 @@ exports[`DropdownAlert component Snapshots expect to render 1`] = `
     onLayout={[Function]}
     onPress={[Function]}
   >
-    <Component
+    <View
       style={
         Array [
           Object {
@@ -74,7 +74,7 @@ exports[`DropdownAlert component Snapshots expect to render 1`] = `
             }
           }
         />
-        <Component
+        <View
           style={
             Object {
               "flex": 1,
@@ -108,9 +108,9 @@ exports[`DropdownAlert component Snapshots expect to render 1`] = `
             }
             text=""
           />
-        </Component>
+        </View>
       </SafeAreaView>
-    </Component>
+    </View>
   </TouchableOpacity>
 </AnimatedComponent>
 `;

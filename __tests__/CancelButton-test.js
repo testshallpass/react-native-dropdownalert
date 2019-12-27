@@ -1,4 +1,3 @@
-import 'react-native';
 import React from 'react';
 import CancelButton from '../CancelButton';
 import { shallow } from 'enzyme';

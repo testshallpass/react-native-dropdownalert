@@ -2,9 +2,6 @@
 
 exports[`renders TextView with text 1`] = `
 <Text
-  accessible={true}
-  allowFontScaling={true}
-  ellipsizeMode="tail"
   numberOfLines={1}
   style={
     Object {
