@@ -62,6 +62,12 @@ export interface DropdownAlertProps {
     | 'error'
     | 'custom'
     | 'success'
+  export type CloseActionType =
+    | 'automatic'
+    | 'programmatic'
+    | 'tap'
+    | 'pan'
+    | 'cancel'
   export default class DropdownAlert extends React.Component<
     DropdownAlertProps
   > {
@@ -72,13 +78,11 @@ export interface DropdownAlertProps {
       payload?: object,
       interval?: number,
     ): void
+    closeAction(
+      action?: CloseActionType,
+      onDone?: () => void,
+    ): void
   }
-export type CloseActionType =
-  | 'automatic'
-  | 'programmatic'
-  | 'tap'
-  | 'pan'
-  | 'cancel'
 export type AlertDataType = {
   type: DropdownAlertType
   title: string
