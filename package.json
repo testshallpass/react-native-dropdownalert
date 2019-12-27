@@ -1,6 +1,6 @@
 {
   "name": "react-native-dropdownalert",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "A simple alert to notify users about new chat messages, something went wrong or everything is ok.",
   "main": "DropdownAlert.js",
   "types": "index.d.ts",
