@@ -23,7 +23,7 @@ export default class List extends Component {
               style={[styles.button, {borderColor: item.backgroundColor}]}
               onPress={() => onSelect({item, index})}>
               <Text style={[styles.text, {color: item.backgroundColor}]}>
-                {item.type}
+                {item.title ? item.title : item.type}
               </Text>
             </TouchableOpacity>
           );

@@ -11,9 +11,16 @@ export default class App extends Component {
       case 'close':
         this._onProgrammaticClose();
         break;
+      case 'clear':
+        this._onProgrammaticClear();
+        break;
+      case 'show':
+        this._showAlertQueue();
+        break;
       default:
-        const interval = Math.floor(Math.random() * 4000 + 1);
-        const title = `${item.type} \ncloses in ${interval / 1000} seconds`;
+        const inMilliSeconds = Math.floor(Math.random() * 4000 + 1);
+        const inSeconds = (inMilliSeconds / 1000).toFixed(2);
+        const title = `${item.type} closes in ${inSeconds}s`;
         // local image source
         let payload = {message: 'HelloWorld', source: InfoIcon};
         if (index % 2 === 0) {
@@ -25,12 +32,21 @@ export default class App extends Component {
           title,
           item.message,
           payload,
-          interval,
+          inMilliSeconds,
         );
     }
   }
   _onProgrammaticClose = () => {
     this.dropDownAlertRef.closeAction();
+  };
+  _onProgrammaticClear = () => {
+    this.dropDownAlertRef.clearQueue();
+  };
+  _showAlertQueue = () => {
+    this.dropDownAlertRef.alertWithType('info', 'Info', 'Alert queue #1');
+    this.dropDownAlertRef.alertWithType('warn', 'Warn', 'Alert queue #2');
+    this.dropDownAlertRef.alertWithType('error', 'Error', 'Alert queue #3');
+    this.dropDownAlertRef.alertWithType('', 'Custom', 'Alert queue #4');
   };
   _onClose = data => {
     console.log(data);
