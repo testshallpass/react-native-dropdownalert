@@ -44,7 +44,6 @@ export default class DropdownAlert extends Component {
     showCancel: PropTypes.bool,
     tapToCloseEnabled: PropTypes.bool,
     panResponderEnabled: PropTypes.bool,
-    replaceEnabled: PropTypes.bool,
     translucent: PropTypes.bool,
     useNativeDriver: PropTypes.bool,
     isInteraction: PropTypes.bool,
@@ -67,7 +66,6 @@ export default class DropdownAlert extends Component {
     accessible: PropTypes.bool,
     titleTextProps: PropTypes.object,
     messageTextProps: PropTypes.object,
-    useAnimationLock: PropTypes.bool,
     onTap: PropTypes.func,
   };
   static defaultProps = {
@@ -91,7 +89,6 @@ export default class DropdownAlert extends Component {
     showCancel: false,
     tapToCloseEnabled: true,
     panResponderEnabled: true,
-    replaceEnabled: true,
     wrapperStyle: null,
     containerStyle: {
       padding: 16,
@@ -156,7 +153,6 @@ export default class DropdownAlert extends Component {
     accessible: false,
     titleTextProps: undefined,
     messageTextProps: undefined,
-    useAnimationLock: true,
     onTap: () => {},
   };
   constructor(props) {
@@ -175,8 +171,8 @@ export default class DropdownAlert extends Component {
       interval: props.closeInterval,
       action: '',
     };
-    this.animationLock = false;
     this.panResponder = this.getPanResponder();
+    this.queue = [];
   }
   componentWillUnmount() {
     if (this.state.isOpen) {
@@ -231,53 +227,52 @@ export default class DropdownAlert extends Component {
       return error.toString();
     }
   }
-  alertWithType = (type = '', title = '', message = '', payload = {}, interval = 1) => {
-    if (this.animationLock) {
-      return;
-    }
+  alertWithType = async (type = '', title = '', message = '', payload = {}, interval) => {
     // type is not validated so unexpected types will render alert with default styles.
-    // these default styles can be overridden with style props. (like containerStyle)
-    const { closeInterval, replaceEnabled } = this.props;
-    let duration = closeInterval;
-    // closeInterval prop is overridden if interval is provided
-    if (typeof interval === 'number' && interval > 1) {
-      duration = interval;
-    }
+    // these default styles can be overridden with style props. (for example, containerStyle)
+    const { closeInterval } = this.props;
     // title and message are converted to strings
     const data = {
       type,
       title: this.getStringValue(title),
       message: this.getStringValue(message),
       payload,
-      interval: duration,
+      interval: closeInterval,
     };
-    // replaceEnabled
-    // True: alert is closed then replaced by another alert. (default)
-    // False: alert state change is immediate if open.
-    const { isOpen } = this.state;
-    if (!replaceEnabled && isOpen) {
-      this.alertData = data;
-      this.setState({ isOpen: true });
-      if (duration > 0) {
-        this.closeAutomatic(duration);
-      }
-      return;
+    // closeInterval prop is overridden if interval is provided
+    if (interval && typeof interval === 'number') {
+      data.interval = interval;
     }
-    if (isOpen) {
-      this.closeAction(ACTION.programmatic, () => {
-        this.open(data, duration);
-      });
-      return;
+    this._enqueue(data);
+    // start processing queue when it has at least one
+    if (this.getQueueSize() == 1) {
+      this._processQueue();
     }
-    this.open(data, duration);
   };
-  open = (data = {}, duration) => {
+  clearQueue = () => {
+    this.queue = [];
+  };
+  getQueueSize = () => {
+    return this.queue.length;
+  };
+  _enqueue = data => {
+    this.queue.push(data);
+  };
+  _dequeue = () => {
+    this.queue.shift();
+  };
+  _processQueue = () => {
+    if (this.getQueueSize() > 0) {
+      const data = this.queue[0];
+      this.open(data);
+    }
+  };
+  open = (data = {}) => {
     this.alertData = data;
     this.setState({ isOpen: true });
     this.animate(1, 450, () => {
-      this.animationLock = false;
-      if (duration > 0) {
-        this.closeAutomatic(duration);
+      if (data.interval > 0) {
+        this.closeAutomatic(data.interval);
       }
     });
   };
@@ -288,11 +283,11 @@ export default class DropdownAlert extends Component {
     this.clearCloseTimeoutID();
     this.close(action, onDone);
   };
-  closeAutomatic = duration => {
+  closeAutomatic = interval => {
     this.clearCloseTimeoutID();
     this.closeTimeoutID = setTimeout(() => {
       this.close(ACTION.automatic);
-    }, duration);
+    }, interval);
   };
   close = (action, onDone = () => {}) => {
     this.animate(0, 250, () => {
@@ -308,7 +303,8 @@ export default class DropdownAlert extends Component {
         onClose(this.alertData);
       }
       this.setState({ isOpen: false, topValue: 0, height: 0 });
-      this.animationLock = false;
+      this._dequeue();
+      this._processQueue();
       onDone();
     });
   };
@@ -342,10 +338,7 @@ export default class DropdownAlert extends Component {
     }
   };
   animate = (toValue, duration = 450, onComplete = () => {}) => {
-    const { useAnimationLock, useNativeDriver, isInteraction } = this.props;
-    if (useAnimationLock) {
-      this.animationLock = true;
-    }
+    const { useNativeDriver, isInteraction } = this.props;
     Animated.spring(this.state.animationValue, {
       toValue: toValue,
       duration: duration,
