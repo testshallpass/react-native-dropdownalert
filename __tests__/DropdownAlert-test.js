@@ -147,16 +147,6 @@ describe('DropdownAlert component', () => {
       expect(value).toHaveLength(expected.length);
       expect(typeof value == 'string').toBeTruthy();
     });
-    test('expect to return error string value', () => {
-      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
-      const expected = TypeError('Converting circular structure to JSON').toString();
-      let circularObject = {};
-      circularObject.a = circularObject;
-      const value = wrapper.instance().getStringValue(circularObject);
-      expect(value).toEqual(expected);
-      expect(value).toHaveLength(expected.length);
-      expect(typeof value == 'string').toBeTruthy();
-    });
     test('expect to return array string value', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
       const array = ['Ullamco nisi tempor ad minim enim ut esse veniam.', 'Tempor velit et ad aliqua officia reprehenderit adipisicing.'];
@@ -202,22 +192,6 @@ describe('DropdownAlert component', () => {
       expect(wrapper.instance().state.topValue).toBe(0);
       expect(wrapper.instance().closeTimeoutID).toBeDefined();
     });
-    test('expect type info to be open state with replaceEnabled prop as false', () => {
-      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} replaceEnabled={false} />);
-      wrapper.instance().isOpen = false;
-      wrapper.instance().closeTimeoutID = setTimeout(() => {});
-      wrapper.update();
-      const type = TYPE.info;
-      const title = 'Laborum reprehenderit aute sit sunt labore velit consectetur cillum id dolore tempor mollit commodo.';
-      const message = 'Aliquip excepteur dolore ipsum exercitation cupidatat incididunt in.';
-      wrapper.instance().alertWithType(type, title, message);
-      expect(wrapper.instance().alertData.type).toBe(type);
-      expect(wrapper.instance().alertData.title).toBe(title);
-      expect(wrapper.instance().alertData.message).toBe(message);
-      expect(wrapper.instance().state.isOpen).toBeTruthy();
-      expect(wrapper.instance().state.topValue).toBe(0);
-      expect(wrapper.instance().closeTimeoutID).toBeDefined();
-    });
     test('expect type info to be open state and closeInterval prop to be overridden by interval parameter', () => {
       const closeInterval = 4000;
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} closeInterval={closeInterval} />);
@@ -236,9 +210,9 @@ describe('DropdownAlert component', () => {
       expect(wrapper.instance().state.topValue).toBe(0);
       expect(wrapper.instance().closeTimeoutID).toBeDefined();
     });
-    test('expect type info to be open state with closeInterval prop as zero and replaceEnabled false', () => {
+    test('expect type info to be open state with closeInterval prop as zero', () => {
       const closeInterval = 0;
-      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} closeInterval={closeInterval} replaceEnabled={false} />);
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} closeInterval={closeInterval} />);
       wrapper.instance().setState({ isOpen: true });
       wrapper.instance().closeTimeoutID = setTimeout(() => {});
       wrapper.update();
@@ -254,23 +228,20 @@ describe('DropdownAlert component', () => {
       expect(wrapper.instance().state.topValue).toBe(0);
       expect(wrapper.instance().closeTimeoutID).toBeDefined();
     });
-    test('expect type success to be open state and have alert data with animationLock as true', () => {
+    test('expect type success to be open state and have alert data', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
       wrapper.instance().isOpen = false;
       wrapper.instance().closeTimeoutID = setTimeout(() => {});
-      wrapper.instance().animationLock = true;
       wrapper.update();
       const type = TYPE.success;
       const title = 'Laborum reprehenderit aute sit sunt labore velit consectetur cillum id dolore tempor mollit commodo.';
       const message = 'Aliquip excepteur dolore ipsum exercitation cupidatat incididunt in.';
       wrapper.instance().alertWithType(type, title, message, {}, 1000);
-      expect(wrapper.instance().alertData.type).toBe('');
-      expect(wrapper.instance().alertData.title).toBe('');
-      expect(wrapper.instance().alertData.message).toBe('');
+      expect(wrapper.instance().alertData.type).toBe(type);
+      expect(wrapper.instance().alertData.title).toBe(title);
+      expect(wrapper.instance().alertData.message).toBe(message);
       expect(wrapper.instance().alertData.payload).toEqual({});
-      expect(wrapper.instance().alertData.interval).toBe(4000);
-      expect(wrapper.instance().animationLock).toBeTruthy();
-      expect(wrapper.instance().state.isOpen).toBeFalsy();
+      expect(wrapper.instance().alertData.interval).toBe(1000);
       expect(wrapper.instance().state.topValue).toBe(0);
       expect(wrapper.instance().closeTimeoutID).toBeDefined();
     });
@@ -300,7 +271,7 @@ describe('DropdownAlert component', () => {
       expect(wrapper.instance().closeTimeoutID).toBeDefined();
     });
     test('expect unknown type to be open state and have alert data and close automatic', () => {
-      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} replaceEnabled={false} />);
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
       wrapper.instance().setState({ isOpen: true });
       wrapper.instance().closeTimeoutID = setTimeout(() => {});
       wrapper.update();
@@ -441,20 +412,7 @@ describe('DropdownAlert component', () => {
     });
   });
   describe('clearCloseTimeoutID', () => {});
-  describe('animate', () => {
-    test('expect animation lock to be true', () => {
-      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} useAnimationLock={true} />);
-      wrapper.instance().animate(1, 450, () => {});
-      const lock = wrapper.instance().animationLock;
-      expect(lock).toBeTruthy();
-    });
-    test('expect animation lock to be false', () => {
-      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} useAnimationLock={false} />);
-      wrapper.instance().animate(0);
-      const lock = wrapper.instance().animationLock;
-      expect(lock).toBeFalsy();
-    });
-  });
+  describe('animate', () => {});
   describe('getStartDelta', () => {
     test('expect to return start value', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
