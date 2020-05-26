@@ -4,8 +4,10 @@ import { shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 const imageSrc = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
 import { TYPE, ACTION, HEIGHT } from '../constants';
+import { Platform } from "react-native";
 
 describe('DropdownAlert component', () => {
+  jest.useFakeTimers();
   describe('Snapshots', () => {
     test('expect to render', () => {
       const wrapper = shallow(<DropdownAlert />);
@@ -154,6 +156,17 @@ describe('DropdownAlert component', () => {
       const value = wrapper.instance().getStringValue(array);
       expect(value).toEqual(expected);
       expect(value).toHaveLength(expected.length);
+      expect(typeof value == 'string').toBeTruthy();
+    });
+    test('expect to return error string value', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+      const error = TypeError(`Converting circular structure to JSON
+    --> starting at object with constructor 'Object'
+    --- property 'a' closes the circle`);
+      let circularObject = {};
+      circularObject.a = circularObject;
+      const value = wrapper.instance().getStringValue(circularObject);
+      expect(value).toEqual(`TypeError: ${error.message}`);
       expect(typeof value == 'string').toBeTruthy();
     });
   });
@@ -325,6 +338,31 @@ describe('DropdownAlert component', () => {
       expect(wrapper.instance().state.topValue).toBe(0);
       expect(wrapper.instance().closeTimeoutID).toBeDefined();
     });
+    test('test queue size after multiple calls to alertWithType', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+      const type = TYPE.error;
+      const title = 'Excepteur dolore aute culpa occaecat reprehenderit veniam sint tempor exercitation cillum aliquip id reprehenderit.';
+      const message = 'Et id irure proident ipsum veniam ad magna cillum fugiat.';
+      wrapper.instance().alertWithType(type, title, message);
+      wrapper.instance().alertWithType(type, title, message);
+      wrapper.instance().alertWithType(type, title, message);
+      wrapper.instance().alertWithType(type, title, message);
+      expect(wrapper.instance().queue).toBeDefined();
+      expect(wrapper.instance().queue).toHaveLength(4);
+    });
+  });
+  describe('clearQueue', () => {
+    test('test queue to be empty after clearing it', () => {
+      const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
+      const type = TYPE.error;
+      const title = 'Excepteur dolore aute culpa occaecat reprehenderit veniam sint tempor exercitation cillum aliquip id reprehenderit.';
+      const message = 'Et id irure proident ipsum veniam ad magna cillum fugiat.';
+      wrapper.instance().alertWithType(type, title, message);
+      expect(wrapper.instance().queue).toBeDefined();
+      expect(wrapper.instance().queue).toHaveLength(1);
+      wrapper.instance().clearQueue();
+      expect(wrapper.instance().queue).toHaveLength(0);
+    });
   });
   describe('open', () => {
     test('expect open to be okay with no data', () => {
@@ -373,11 +411,6 @@ describe('DropdownAlert component', () => {
   });
   describe('updateStatusBar', () => {
     describe('ios', () => {
-      beforeEach(() => {
-        jest.mock('Platform', () => ({
-          OS: 'ios',
-        }));
-      });
       test('expect should update status bar to active state', () => {
         const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
         wrapper.instance().updateStatusBar(true, true);
@@ -392,11 +425,8 @@ describe('DropdownAlert component', () => {
       });
     });
     describe('android', () => {
-      beforeEach(() => {
-        jest.mock('Platform', () => ({
-          OS: 'android',
-        }));
-      });
+      // FIXME: android not being set see contants IS_ANDROID
+      Platform.OS = 'android';
       test('expect should update status bar to active state', () => {
         const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
         wrapper.instance().updateStatusBar(true, true);

@@ -30,16 +30,18 @@
   },
   "homepage": "https://github.com/testshallpass/react-native-dropdownalert#readme",
   "devDependencies": {
-    "babel-jest": "24.9.0",
+    "@babel/core": "7.7.7",
+    "@babel/preset-env": "7.7.7",
+    "babel-jest": "26.0.1",
     "enzyme": "3.10.0",
-    "enzyme-adapter-react-16": "1.15.1",
-    "enzyme-to-json": "3.4.3",
-    "jest": "24.9.0",
-    "metro-react-native-babel-preset": "0.54.1",
-    "prop-types": "15.5.10",
-    "react": "16.8.3",
-    "react-dom": "16.8.3",
-    "react-native": "0.59.10"
+    "enzyme-adapter-react-16": "1.15.2",
+    "enzyme-to-json": "3.4.4",
+    "jest": "26.0.1",
+    "metro-react-native-babel-preset": "0.57.0",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
+    "react-test-renderer": "16.9.0",
+    "react-native": "0.61.5"
   },
   "dependencies": {
     "prop-types": "15.5.10"
