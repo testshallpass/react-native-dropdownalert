@@ -16,6 +16,7 @@ export interface DropdownAlertProps {
     endDelta?: number
     wrapperStyle?: object | number
     containerStyle?: object | number
+    contentContainerStyle?: object | number
     titleStyle?: object | number
     messageStyle?: object | number
     imageStyle?: object | number
@@ -28,7 +29,6 @@ export interface DropdownAlertProps {
     showCancel?: boolean
     tapToCloseEnabled?: boolean
     panResponderEnabled?: boolean
-    replaceEnabled?: boolean
     translucent?: boolean
     useNativeDriver?: boolean
     isInteraction?: boolean
