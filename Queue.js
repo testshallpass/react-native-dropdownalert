@@ -14,8 +14,8 @@ export default class Queue {
   get isEmpty() {
     return this.size === 0;
   }
-  enqueue(data) {
-    this.data.push(data);
+  enqueue(item) {
+    this.data.push(item);
   }
   dequeue() {
     if (!this.isEmpty) {
