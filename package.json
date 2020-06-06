@@ -32,16 +32,19 @@
   "devDependencies": {
     "@babel/core": "7.7.7",
     "@babel/preset-env": "7.7.7",
+    "@react-native-community/eslint-config": "1.1.0",
     "babel-jest": "26.0.1",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.15.2",
     "enzyme-to-json": "3.4.4",
+    "eslint": "7.2.0",
     "jest": "26.0.1",
     "metro-react-native-babel-preset": "0.57.0",
+    "prettier": "2.0.5",
     "react": "16.9.0",
     "react-dom": "16.9.0",
-    "react-test-renderer": "16.9.0",
-    "react-native": "0.61.5"
+    "react-native": "0.61.5",
+    "react-test-renderer": "16.9.0"
   },
   "dependencies": {
     "prop-types": "15.5.10"

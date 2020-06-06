@@ -1,4 +1,4 @@
-import * as ReactNative from "react-native";
+import * as ReactNative from 'react-native';
 
 export const Animated = {
   ...ReactNative.Animated,
@@ -6,16 +6,16 @@ export const Animated = {
 
 export const Dimensions = {
   get: jest.fn().mockReturnValue({
-    width: ReactNative.Dimensions.get("window").width,
-    height: ReactNative.Dimensions.get("window").height,
+    width: ReactNative.Dimensions.get('window').width,
+    height: ReactNative.Dimensions.get('window').height,
   }),
 };
 
-export const Text = "Text";
-export const Image = "Image";
-export const SafeAreaView = "SafeAreaView";
-export const View = "View";
-export const TouchableOpacity = "TouchableOpacity";
+export const Text = 'Text';
+export const Image = 'Image';
+export const SafeAreaView = 'SafeAreaView';
+export const View = 'View';
+export const TouchableOpacity = 'TouchableOpacity';
 
 export const PanResponder = {
   ...ReactNative.PanResponder,
@@ -23,10 +23,10 @@ export const PanResponder = {
 
 export const Platform = {
   ...ReactNative.Platform,
-  OS: "ios",
+  OS: 'ios',
   Version: 123,
   isTesting: true,
-  select: (objs) => objs["ios"],
+  select: objs => objs['ios'],
 };
 
 export const StatusBar = {
@@ -52,5 +52,5 @@ export default Object.setPrototypeOf(
     View,
     TouchableOpacity,
   },
-  ReactNative
+  ReactNative,
 );
