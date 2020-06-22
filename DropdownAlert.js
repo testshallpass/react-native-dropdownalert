@@ -323,8 +323,10 @@ export default class DropdownAlert extends Component {
     // action is how the alert was closed.
     // alert currently closes itself by:
     // tap, pan, cancel, programmatic or automatic
-    this.clearCloseTimeoutID();
-    this.close(action, onDone);
+    if (this.state.isOpen) {
+      this.clearCloseTimeoutID();
+      this.close(action, onDone);
+    }
   };
   closeAutomatic = interval => {
     this.clearCloseTimeoutID();
@@ -335,7 +337,6 @@ export default class DropdownAlert extends Component {
   close = (action, onDone = () => {}) => {
     this.animate(0, 250, () => {
       const {onClose, updateStatusBar, onCancel, onTap} = this.props;
-      this.updateStatusBar(updateStatusBar, false);
       this.alertData.action = action;
       this.queue.dequeue();
       if (action === ACTION.cancel) {
@@ -347,6 +348,7 @@ export default class DropdownAlert extends Component {
         onClose(this.alertData);
       }
       this.setState({isOpen: false, topValue: 0, height: 0});
+      this.updateStatusBar(updateStatusBar, false);
       this._processQueue();
       onDone();
     });
