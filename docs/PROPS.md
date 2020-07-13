@@ -71,7 +71,7 @@
 
 ### Image
 
-image sources are overridden if payload parameter has source property. For example,```{ source: 'https://facebook.github.io/react-native/docs/assets/favicon.png' }```
+image sources are overridden if payload parameter has source property. For example,```{ source: 'https://reactnative.dev/docs/assets/favicon.png' }```
 
 | Name | Type | Description | Default |
 | ---- | :---: | --- | --- |

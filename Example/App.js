@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, SafeAreaView, Text, View} from 'react-native';
-import DropdownAlert from './src/DropdownAlert';
+import DropdownAlert from 'react-native-dropdownalert';
 import {PURPLE_COLOR, WHITE_COLOR, ITEMS, ReactNativeLogo} from './constants';
 import List from './List';
 const InfoIcon = require('./assets/info.png');
