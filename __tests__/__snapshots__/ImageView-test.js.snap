@@ -22,7 +22,7 @@ exports[`renders imageview with uri source 1`] = `
 <Image
   source={
     Object {
-      "uri": "https://facebook.github.io/react/img/logo_og.png",
+      "uri": "https://reactnative.dev/docs/assets/favicon.png",
     }
   }
   style={

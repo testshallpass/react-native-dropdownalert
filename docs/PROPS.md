@@ -37,7 +37,6 @@
 | ```closeInterval``` | Number  | automatic close duration in milliseconds (set to less than and equal to 0 disables the automatic close) | 4000
 | ```startDelta``` | Number  | where the alert container starts to animate from (min: negative height) | -100
 | ```endDelta``` | Number  | where the alert container ends at | 0
-| ```useAnimationLock``` | Bool | used to avoid animation collision (i.e. alert is invoked while one is animating open or close) | true
 | ```useNativeDriver``` | Bool  | enable or disable native driver for animations. Android may have issues on earlier react-native versions: See [#65](https://github.com/testshallpass/react-native-dropdownalert/issues/65)  | true
 | ```isInteraction``` | Bool  | whether or not this animation creates an "interaction handle" on the InteractionManager. Default true.  | true
 
@@ -72,7 +71,7 @@
 
 ### Image
 
-image sources are overridden if payload parameter has source property. For example,```{ source: 'https://facebook.github.io/react-native/docs/assets/favicon.png' }```
+image sources are overridden if payload parameter has source property. For example,```{ source: 'https://reactnative.dev/docs/assets/favicon.png' }```
 
 | Name | Type | Description | Default |
 | ---- | :---: | --- | --- |
@@ -118,6 +117,5 @@ image sources are overridden if payload parameter has source property. For examp
 | Name | Type | Description | Default |
 | ---- | :---: | --- | --- |
 | ```sensitivity``` | Number  | Sensitivity for the pan responder up gesture | 20
-| ```replaceEnabled``` | Bool  | enables the alert to either state change without dismissal or go to next alert with dismissal | true
 | ```tapToCloseEnabled``` | Bool  | enable/disable close with tap | true
 | ```panResponderEnabled``` | Bool  | enable/disable close with pan responder | true

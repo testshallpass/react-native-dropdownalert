@@ -6,6 +6,6 @@ module.exports = {
   preset: 'react-native',
   setupFiles: ['<rootDir>/setupTests.js'],
   testEnvironment: 'node',
-  modulePathIgnorePatterns: ['/Example'],
+  modulePathIgnorePatterns: ['/Example', '/__tests__/__mocks__'],
   collectCoverage: true,
 };

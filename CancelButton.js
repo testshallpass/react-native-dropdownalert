@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { TouchableOpacity } from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import ImageView from './imageview';
-import { DEFAULT_IMAGE_DIMENSIONS } from './constants';
+import {DEFAULT_IMAGE_DIMENSIONS} from './constants';
 
 export default class CancelButton extends Component {
   static propTypes = {
@@ -21,7 +21,7 @@ export default class CancelButton extends Component {
     },
   };
   render() {
-    const { style, onPress, imageStyle, imageSrc } = this.props;
+    const {style, onPress, imageStyle, imageSrc} = this.props;
     return (
       <TouchableOpacity style={style} onPress={onPress}>
         <ImageView style={imageStyle} source={imageSrc} />

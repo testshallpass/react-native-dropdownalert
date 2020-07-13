@@ -17,13 +17,14 @@ export default class List extends Component {
       <FlatList
         keyExtractor={item => item.type}
         data={items}
+        numColumns={3}
         renderItem={({item, index}) => {
           return (
             <TouchableOpacity
               style={[styles.button, {borderColor: item.backgroundColor}]}
               onPress={() => onSelect({item, index})}>
               <Text style={[styles.text, {color: item.backgroundColor}]}>
-                {item.type}
+                {item.title ? item.title : item.type}
               </Text>
             </TouchableOpacity>
           );
@@ -35,9 +36,9 @@ export default class List extends Component {
 
 const styles = StyleSheet.create({
   button: {
-    alignItems: 'center',
+    flex: 1,
     borderRadius: 8,
-    margin: 8,
+    margin: 4,
     borderWidth: 1,
   },
   text: {

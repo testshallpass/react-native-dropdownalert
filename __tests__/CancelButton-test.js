@@ -1,6 +1,6 @@
 import React from 'react';
 import CancelButton from '../CancelButton';
-import { shallow } from 'enzyme';
+import {shallow} from 'enzyme';
 import toJson from 'enzyme-to-json';
 
 describe('CancelButton', () => {
