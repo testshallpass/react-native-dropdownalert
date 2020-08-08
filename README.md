@@ -45,7 +45,7 @@ import React,{useRef,useEffect} from 'react'
 import {View} from 'react-native'
 import DropdownAlert from 'react-native-dropdownalert';
 
-export default App = () => (
+export default const App = () => {
   let dropDownAlertRef = useRef(null)
 
   useEffect(() => {
@@ -73,7 +73,7 @@ export default App = () => (
       </View>
     );
 
-)
+}
 ```
 
 ## Caveats
