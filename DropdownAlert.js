@@ -135,6 +135,7 @@ export default class DropdownAlert extends Component {
     },
     contentContainerStyle: {
       flex: 1,
+      alignItems: 'center',
       flexDirection: 'row',
     },
     titleStyle: {
@@ -636,8 +637,8 @@ export default class DropdownAlert extends Component {
               <View style={StyleSheet.flatten(defaultTextContainer)}>
                 {this._renderTitle()}
                 {this._renderMessage()}
-                {this._renderCancel(showCancel)}
               </View>
+              {this._renderCancel(showCancel)}
             </ContentView>
           </View>
         </TouchableOpacity>
