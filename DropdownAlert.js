@@ -636,9 +636,9 @@ export default class DropdownAlert extends Component {
               <View style={StyleSheet.flatten(defaultTextContainer)}>
                 {this._renderTitle()}
                 {this._renderMessage()}
+                {this._renderCancel(showCancel)}
               </View>
             </ContentView>
-            {this._renderCancel(showCancel)}
           </View>
         </TouchableOpacity>
       </Animated.View>
