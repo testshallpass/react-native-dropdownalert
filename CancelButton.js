@@ -23,7 +23,7 @@ export default class CancelButton extends Component {
   render() {
     const {style, onPress, imageStyle, imageSrc} = this.props;
     return (
-      <TouchableOpacity style={style} onPress={onPress}>
+      <TouchableOpacity onPress={onPress}>
         <ImageView style={imageStyle} source={imageSrc} />
       </TouchableOpacity>
     );
