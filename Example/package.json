@@ -12,7 +12,6 @@
     "doctor": "npx react-native doctor"
   },
   "dependencies": {
-    "prop-types": "15.7.2",
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-dropdownalert": "4.3.0"
