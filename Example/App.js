@@ -1,27 +1,50 @@
-import React, {Component} from 'react';
+import React, {useRef, useState} from 'react';
 import {StyleSheet, SafeAreaView, Text, View} from 'react-native';
-import DropdownAlert from 'react-native-dropdownalert';
-import {PURPLE_COLOR, WHITE_COLOR, ITEMS, ReactNativeLogo} from './constants';
+import {
+  PURPLE_COLOR,
+  WHITE_COLOR,
+  ITEMS,
+  ReactNativeLogo,
+  InfoIcon,
+} from './constants';
 import List from './List';
-const InfoIcon = require('./assets/info.png');
+import DropdownAlert from 'react-native-dropdownalert';
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      queueSize: 0,
-    };
-  }
-  _onSelect({item, index}) {
+const App = () => {
+  const [queueSize, setQueueSize] = useState(0);
+  let dropDownAlertRef = useRef(null);
+
+  const _onProgrammaticClose = () => {
+    dropDownAlertRef.closeAction();
+  };
+  const _onProgrammaticClear = () => {
+    dropDownAlertRef.clearQueue();
+  };
+  const _showAlertQueue = () => {
+    const types = ['info', 'warn', 'error', 'success', 'custom'];
+    const message =
+      'Officia eu do labore incididunt consequat sunt sint ullamco cillum.';
+    let count = 1;
+    types.map((type) => {
+      dropDownAlertRef.alertWithType(
+        type,
+        `Alert ${count} of ${types.length}`,
+        message,
+      );
+      count++;
+    });
+  };
+
+  const _onSelect = ({item}) => {
     switch (item.type) {
       case 'close':
-        this._onProgrammaticClose();
+        _onProgrammaticClose();
         break;
       case 'clear':
-        this._onProgrammaticClear();
+        _onProgrammaticClear();
         break;
       case 'show':
-        this._showAlertQueue();
+        _showAlertQueue();
         break;
       default:
         const inMilliSeconds = Math.floor(Math.random() * 4000 + 1);
@@ -35,7 +58,7 @@ export default class App extends Component {
           // example using local image source in payload
           payload = {source: InfoIcon};
         }
-        this.dropDownAlertRef.alertWithType(
+        dropDownAlertRef.alertWithType(
           item.type,
           title,
           item.message,
@@ -43,69 +66,48 @@ export default class App extends Component {
           inMilliSeconds,
         );
     }
-    this._updateQueueSize();
-  }
-  _onProgrammaticClose = () => {
-    this.dropDownAlertRef.closeAction();
+    _updateQueueSize();
   };
-  _onProgrammaticClear = () => {
-    this.dropDownAlertRef.clearQueue();
-  };
-  _showAlertQueue = () => {
-    const types = ['info', 'warn', 'error', 'success', 'custom'];
-    const message =
-      'Officia eu do labore incididunt consequat sunt sint ullamco cillum.';
-    let count = 1;
-    types.map(type => {
-      this.dropDownAlertRef.alertWithType(
-        type,
-        `Alert ${count} of ${types.length}`,
-        message,
-      );
-      count++;
-    });
-  };
-  _onClose = data => {
+
+  const _onClose = (data) => {
     console.log(data);
-    this._updateQueueSize();
+    _updateQueueSize();
   };
-  _onCancel = data => {
+  const _onCancel = (data) => {
     console.log(data);
-    this._updateQueueSize();
+    _updateQueueSize();
   };
-  _onTap = data => {
+  const _onTap = (data) => {
     console.log(data);
-    this._updateQueueSize();
+    _updateQueueSize();
   };
-  _updateQueueSize = () => {
-    this.setState({queueSize: this.dropDownAlertRef.getQueueSize()});
+  const _updateQueueSize = () => {
+    setQueueSize(dropDownAlertRef.getQueueSize());
   };
-  render() {
-    return (
-      <View style={styles.container}>
-        <SafeAreaView>
-          <Text style={styles.size}>{`Alert queue size: ${
-            this.state.queueSize
-          }`}</Text>
-          <List
-            items={ITEMS}
-            onSelect={({item, index}) => this._onSelect({item, index})}
-          />
-        </SafeAreaView>
-        <DropdownAlert
-          ref={ref => (this.dropDownAlertRef = ref)}
-          containerStyle={styles.content}
-          showCancel={true}
-          onCancel={this._onCancel}
-          onTap={this._onTap}
-          titleNumOfLines={2}
-          messageNumOfLines={0}
-          onClose={this._onClose}
-        />
-      </View>
-    );
-  }
-}
+
+  return (
+    <View style={styles.container}>
+      <SafeAreaView>
+        <Text style={styles.size}>{`Alert queue size: ${queueSize}`}</Text>
+        <List items={ITEMS} onSelect={_onSelect} />
+      </SafeAreaView>
+      <DropdownAlert
+        ref={(ref) => {
+          if (ref) {
+            dropDownAlertRef = ref;
+          }
+        }}
+        containerStyle={styles.content}
+        showCancel={true}
+        onCancel={_onCancel}
+        onTap={_onTap}
+        titleNumOfLines={2}
+        messageNumOfLines={0}
+        onClose={_onClose}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -123,3 +125,5 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
 });
+
+export default App;

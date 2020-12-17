@@ -1,38 +1,32 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, TouchableOpacity, FlatList} from 'react-native';
-import PropTypes from 'prop-types';
+import React from 'react';
+import {StyleSheet, Text, Pressable, FlatList} from 'react-native';
 
-export default class List extends Component {
-  static propTypes = {
-    items: PropTypes.array,
-    onSelect: PropTypes.func,
-  };
-  static defaultProps = {
-    items: [],
-    onSelect: () => {},
-  };
-  render() {
-    const {items, onSelect} = this.props;
-    return (
-      <FlatList
-        keyExtractor={item => item.type}
-        data={items}
-        numColumns={3}
-        renderItem={({item, index}) => {
-          return (
-            <TouchableOpacity
-              style={[styles.button, {borderColor: item.backgroundColor}]}
-              onPress={() => onSelect({item, index})}>
-              <Text style={[styles.text, {color: item.backgroundColor}]}>
-                {item.title ? item.title : item.type}
-              </Text>
-            </TouchableOpacity>
-          );
-        }}
-      />
-    );
-  }
-}
+const Button = ({
+  item = {title: '', type: '', color: '#202020'},
+  onSelect = () => {},
+}) => {
+  const text = item.title ? item.title : item.type;
+  return (
+    <Pressable
+      style={[styles.button, {borderColor: item.color}]}
+      onPress={() => onSelect({item})}>
+      <Text style={[styles.text, {color: item.color}]}>{text}</Text>
+    </Pressable>
+  );
+};
+
+const List = ({items = [], onSelect = () => {}}) => {
+  return (
+    <FlatList
+      keyExtractor={(item) => item.type}
+      data={items}
+      numColumns={3}
+      renderItem={({item}) => {
+        return <Button item={item} onSelect={onSelect} />;
+      }}
+    />
+  );
+};
 
 const styles = StyleSheet.create({
   button: {
@@ -48,3 +42,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+export default List;
