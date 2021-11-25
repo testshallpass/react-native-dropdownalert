@@ -17,15 +17,17 @@ const App = () => {
   const _onProgrammaticClose = () => {
     dropDownAlertRef.closeAction();
   };
+  
   const _onProgrammaticClear = () => {
     dropDownAlertRef.clearQueue();
   };
+
   const _showAlertQueue = () => {
     const types = ['info', 'warn', 'error', 'success', 'custom'];
     const message =
       'Officia eu do labore incididunt consequat sunt sint ullamco cillum.';
     let count = 1;
-    types.map((type) => {
+    types.map(type => {
       dropDownAlertRef.alertWithType(
         type,
         `Alert ${count} of ${types.length}`,
@@ -69,18 +71,21 @@ const App = () => {
     _updateQueueSize();
   };
 
-  const _onClose = (data) => {
+  const _onClose = data => {
     console.log(data);
     _updateQueueSize();
   };
-  const _onCancel = (data) => {
+
+  const _onCancel = data => {
     console.log(data);
     _updateQueueSize();
   };
-  const _onTap = (data) => {
+
+  const _onTap = data => {
     console.log(data);
     _updateQueueSize();
   };
+
   const _updateQueueSize = () => {
     setQueueSize(dropDownAlertRef.getQueueSize());
   };
@@ -92,7 +97,7 @@ const App = () => {
         <List items={ITEMS} onSelect={_onSelect} />
       </SafeAreaView>
       <DropdownAlert
-        ref={(ref) => {
+        ref={ref => {
           if (ref) {
             dropDownAlertRef = ref;
           }

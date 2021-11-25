@@ -18,7 +18,7 @@ const Button = ({
 const List = ({items = [], onSelect = () => {}}) => {
   return (
     <FlatList
-      keyExtractor={(item) => item.type}
+      keyExtractor={item => item.type}
       data={items}
       numColumns={3}
       renderItem={({item}) => {
