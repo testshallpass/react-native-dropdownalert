@@ -328,7 +328,7 @@ export default class DropdownAlert extends Component {
       this.close(action, onDone);
     }
   };
-  closeAutomatic = interval => {
+  closeAutomatic = (interval) => {
     this.clearCloseTimeoutID();
     this.closeTimeoutID = setTimeout(() => {
       this.close(ACTION.automatic);
@@ -619,14 +619,14 @@ export default class DropdownAlert extends Component {
       : () => this.closeAction(ACTION.tap);
     return (
       <Animated.View
-        ref={ref => (this.mainView = ref)}
+        ref={(ref) => (this.mainView = ref)}
         {...this.panResponder.panHandlers}
         style={[wrapperAnimStyle, wrapperStyle]}>
         <TouchableOpacity
           activeOpacity={activeOpacity}
           onPress={onPress}
           disabled={!tapToCloseEnabled}
-          onLayout={event => this._onLayoutEvent(event)}
+          onLayout={(event) => this._onLayoutEvent(event)}
           testID={testID}
           accessibilityLabel={accessibilityLabel}
           accessible={accessible}>
