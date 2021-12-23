@@ -2,11 +2,11 @@ import React, {ReactNode} from 'react';
 
 export interface DropdownAlertProps {
   imageSrc?: string | number;
-  infoImageSrc?: string | number;
-  warnImageSrc?: string | number;
-  errorImageSrc?: string | number;
-  successImageSrc?: string | number;
-  cancelBtnImageSrc?: string | number;
+  infoImageSrc?: string | number | object;
+  warnImageSrc?: string | number | object;
+  errorImageSrc?: string | number | object;
+  successImageSrc?: string | number | object;
+  cancelBtnImageSrc?: string | number | object;
   infoColor?: string;
   warnColor?: string;
   errorColor?: string;
@@ -23,7 +23,6 @@ export interface DropdownAlertProps {
   cancelBtnImageStyle?: object | number;
   titleNumOfLines?: number;
   messageNumOfLines?: number;
-  onTap?(data: AlertDataType): void;
   onClose?(data: AlertDataType): void;
   onCancel?(data: AlertDataType): void;
   showCancel?: boolean;
@@ -47,23 +46,27 @@ export interface DropdownAlertProps {
   renderTitle?(props: DropdownAlertProps, state: {type: string}): ReactNode;
   renderMessage?(props: DropdownAlertProps, state: {type: string}): ReactNode;
   testID?: string;
-  accessible?: boolean;
   accessibilityLabel?: string;
+  accessible?: boolean;
   titleTextProps?: object;
   messageTextProps?: object;
+  onTap?(data: AlertDataType): void;
 }
+
 export type DropdownAlertType =
   | 'info'
   | 'warn'
   | 'error'
   | 'custom'
   | 'success';
+
 export type CloseActionType =
   | 'automatic'
   | 'programmatic'
   | 'tap'
   | 'pan'
   | 'cancel';
+
 export default class DropdownAlert extends React.Component<DropdownAlertProps> {
   alertWithType(
     type: DropdownAlertType,
@@ -73,7 +76,10 @@ export default class DropdownAlert extends React.Component<DropdownAlertProps> {
     interval?: number,
   ): void;
   closeAction(action?: CloseActionType, onDone?: () => void): void;
+  clearQueue(): void;
+  getQueueSize(): number;
 }
+
 export type AlertDataType = {
   type: DropdownAlertType;
   title: string;
