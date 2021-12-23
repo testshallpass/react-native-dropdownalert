@@ -637,8 +637,8 @@ export default class DropdownAlert extends Component {
                 {this._renderTitle()}
                 {this._renderMessage()}
               </View>
+              {this._renderCancel(showCancel)}
             </ContentView>
-            {this._renderCancel(showCancel)}
           </View>
         </TouchableOpacity>
       </Animated.View>
