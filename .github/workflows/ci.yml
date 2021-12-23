@@ -1,9 +1,14 @@
-name: TestCI
+name: CI
 
 on:
+
+  push:
+    branches: [ $default-branch ]
   pull_request:
     branches: [ $default-branch ]
+  
   workflow_dispatch:
+  
 jobs:
   test:
     runs-on: macos-latest
@@ -12,5 +17,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-      - run: npm install --legacy-peer-deps
-      - run: npm test
+      - name: Install dependencies
+        run: yarn
+      - name: yarn test
+        run: yarn test
