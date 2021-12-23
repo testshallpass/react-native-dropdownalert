@@ -2,7 +2,6 @@
 
 exports[`CancelButton renders 1`] = `
 <TouchableOpacity
-  activeOpacity={0.2}
   onPress={[Function]}
   style={
     Object {
