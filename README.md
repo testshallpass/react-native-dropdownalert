@@ -3,7 +3,7 @@
 [![Platform](https://img.shields.io/badge/platform-react--native-lightgrey.svg)](https://reactnative.dev)
 [![npm version](http://img.shields.io/npm/v/react-native-dropdownalert.svg)](https://www.npmjs.com/package/react-native-dropdownalert)
 [![npm version](http://img.shields.io/npm/dm/react-native-dropdownalert.svg)](https://www.npmjs.com/package/react-native-dropdownalert)
-[![Build Status](https://travis-ci.org/testshallpass/react-native-dropdownalert.svg?branch=master)](https://travis-ci.org/testshallpass/react-native-dropdownalert)
+[![TestCI](https://github.com/testshallpass/react-native-dropdownalert/actions/workflows/ci.yml/badge.svg)](https://github.com/testshallpass/react-native-dropdownalert/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/testshallpass/react-native-dropdownalert/branch/master/graph/badge.svg)](https://codecov.io/gh/testshallpass/react-native-dropdownalert)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.github.com/testshallpass/react-native-dropdownalert/master/LICENSE)
 
