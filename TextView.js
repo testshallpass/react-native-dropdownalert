@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { Text } from 'react-native';
+import {Text} from 'react-native';
 
 export default class TextView extends Component {
   static propTypes = {
@@ -19,8 +19,8 @@ export default class TextView extends Component {
     },
   };
   render() {
-    const { text } = this.props;
-    if (!text || text.length == 0) {
+    const {text} = this.props;
+    if (!text || text.length === 0) {
       return null;
     }
     return <Text {...this.props}>{text}</Text>;

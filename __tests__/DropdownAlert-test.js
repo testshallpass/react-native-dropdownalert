@@ -121,7 +121,7 @@ describe('DropdownAlert component', () => {
       const value = wrapper.instance().getStringValue(undefined);
       expect(value).toEqual(expected);
       expect(value).toHaveLength(expected.length);
-      expect(typeof value == 'string').toBeTruthy();
+      expect(typeof value === 'string').toBeTruthy();
     });
     test('expect to return null string value', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
@@ -129,7 +129,7 @@ describe('DropdownAlert component', () => {
       const value = wrapper.instance().getStringValue(null);
       expect(value).toEqual(expected);
       expect(value).toHaveLength(expected.length);
-      expect(typeof value == 'string').toBeTruthy();
+      expect(typeof value === 'string').toBeTruthy();
     });
     test('expect to return json stringify object string value', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
@@ -141,7 +141,7 @@ describe('DropdownAlert component', () => {
       const value = wrapper.instance().getStringValue(object);
       expect(value).toEqual(expected);
       expect(value).toHaveLength(expected.length);
-      expect(typeof value == 'string').toBeTruthy();
+      expect(typeof value === 'string').toBeTruthy();
     });
     test('expect to return string value', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
@@ -151,7 +151,7 @@ describe('DropdownAlert component', () => {
         .getStringValue('Consequat et consequat dolore aliqua ut.');
       expect(value).toEqual(expected);
       expect(value).toHaveLength(expected.length);
-      expect(typeof value == 'string').toBeTruthy();
+      expect(typeof value === 'string').toBeTruthy();
     });
     test('expect to return number string value', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
@@ -159,7 +159,7 @@ describe('DropdownAlert component', () => {
       const value = wrapper.instance().getStringValue(1337);
       expect(value).toEqual(expected);
       expect(value).toHaveLength(expected.length);
-      expect(typeof value == 'string').toBeTruthy();
+      expect(typeof value === 'string').toBeTruthy();
     });
     test('expect to return array string value', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
@@ -171,7 +171,7 @@ describe('DropdownAlert component', () => {
       const value = wrapper.instance().getStringValue(array);
       expect(value).toEqual(expected);
       expect(value).toHaveLength(expected.length);
-      expect(typeof value == 'string').toBeTruthy();
+      expect(typeof value === 'string').toBeTruthy();
     });
     test('expect to return error string value', () => {
       const wrapper = shallow(<DropdownAlert imageSrc={imageSrc} />);
@@ -182,7 +182,7 @@ describe('DropdownAlert component', () => {
       circularObject.a = circularObject;
       const value = wrapper.instance().getStringValue(circularObject);
       expect(value).toEqual(`TypeError: ${error.message}`);
-      expect(typeof value == 'string').toBeTruthy();
+      expect(typeof value === 'string').toBeTruthy();
     });
   });
   describe('alertWithType', () => {

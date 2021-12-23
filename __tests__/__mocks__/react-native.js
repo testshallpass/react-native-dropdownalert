@@ -26,7 +26,7 @@ export const Platform = {
   OS: 'ios',
   Version: 123,
   isTesting: true,
-  select: objs => objs['ios'],
+  select: (objs) => objs.ios,
 };
 
 export const StatusBar = {
