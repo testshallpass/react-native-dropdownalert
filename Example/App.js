@@ -17,7 +17,7 @@ const App = () => {
   const _onProgrammaticClose = () => {
     dropDownAlertRef.closeAction();
   };
-  
+
   const _onProgrammaticClear = () => {
     dropDownAlertRef.clearQueue();
   };

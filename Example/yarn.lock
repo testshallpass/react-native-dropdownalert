@@ -5921,10 +5921,10 @@ react-native-codegen@^0.0.7:
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
 
-react-native-dropdownalert@4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-dropdownalert/-/react-native-dropdownalert-4.3.0.tgz#56b612d63576387fa1a507b4158d92e7b7638af3"
-  integrity sha512-fXs18A23nrTB95jkTdP7c9TzoSZU0xS9F4lxMzwW1DFI08Nm62S4X00UqWu+Ong+TBDDP18/aF7b50T67Z26EQ==
+react-native-dropdownalert@4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-dropdownalert/-/react-native-dropdownalert-4.4.0.tgz#1224eeeb131aea748c33e2b97cd978decf462bc1"
+  integrity sha512-7Q7aEcdmvCpfExMUCbHQ0pcqk3n/q1mKxzobEWKF6Aew5P9ce8ytvg8H5dORj07bJORpJusUcL0yygii938HKg==
   dependencies:
     prop-types "15.5.10"
 
