@@ -13,4 +13,6 @@ jobs:
         with:
           node-version: 16
           cache: 'npm'
-      - run: npm test:ci
+      - run: npm i yarn
+      - run: yarn install
+      - run: yarn test
