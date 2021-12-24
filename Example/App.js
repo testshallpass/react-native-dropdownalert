@@ -8,7 +8,7 @@ import {
   InfoIcon,
 } from './constants';
 import List from './List';
-import DropdownAlert from './src/DropdownAlert';
+import DropdownAlert from 'react-native-dropdownalert';
 
 const App = () => {
   const [queueSize, setQueueSize] = useState(0);
