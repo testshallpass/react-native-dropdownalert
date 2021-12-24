@@ -4,9 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/react-native-dropdownalert.svg?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/react-native-dropdownalert)
 [![npm version](https://img.shields.io/npm/dm/react-native-dropdownalert.svg?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/react-native-dropdownalert)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](https://raw.github.com/testshallpass/react-native-dropdownalert/master/LICENSE)
-[![Build Status](https://travis-ci.org/testshallpass/react-native-dropdownalert.svg?branch=master)](https://travis-ci.org/testshallpass/react-native-dropdownalert)
 [![CI](https://github.com/testshallpass/react-native-dropdownalert/actions/workflows/ci.yml/badge.svg)](https://github.com/testshallpass/react-native-dropdownalert/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/testshallpass/react-native-dropdownalert/branch/master/graph/badge.svg)](https://codecov.io/gh/testshallpass/react-native-dropdownalert)
 
 |                                                    info                                                    |                                                     warn                                                      |                                                    error                                                    |                                                    success                                                    |
 | :--------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
@@ -53,20 +51,23 @@ const App = () => {
     _fetchData();
   }, []);
 
-  _fetchData = async () => {
+  const _fetchData = async () => {
     try {
       // alertWithType parameters: type, title, message, payload, interval.
       // payload object that includes a source property overrides the image source prop. (optional: object)
       // interval takes precedence over the closeInterval prop. (optional: number)
-      dropDownAlertRef.alertWithType('info', 'Info', 'Start fetch data.');
-      await fetch('https://httpbin.org/get');
-      dropDownAlertRef.alertWithType('success', 'Success', 'End fetch data');
+      dropDownAlertRef.alertWithType('info', 'Info', 'Start fetch data');
+      const response = await fetch('https://httpbin.org/uuid');
+      const {uuid} = await response.json();
+      dropDownAlertRef.alertWithType('success', 'Success', uuid);
+      throw 'Error fetch data'; // example error
     } catch (error) {
       dropDownAlertRef.alertWithType('error', 'Error', error);
     }
   };
 
-  // To ensures that it overlaps other UI components place it as the last component in the document tree.
+  // To ensures that it overlaps other UI components
+  // place it as the last component in the document tree.
   return (
     <View>
       <DropdownAlert

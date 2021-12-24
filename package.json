@@ -5,8 +5,7 @@
   "main": "DropdownAlert.js",
   "types": "index.d.ts",
   "scripts": {
-    "test": "npx jest",
-    "test:ci": "jest && codecov",
+    "test": "npx jest --coverage",
     "lint": "npx eslint .",
     "lint:fix": "npx eslint . --fix",
     "prettier": "npx prettier --check ."

@@ -7,6 +7,8 @@ import {
   Animated,
   StatusBar,
   PanResponder,
+  Image,
+  Text,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {
@@ -18,10 +20,7 @@ import {
   HEIGHT,
   getDefaultStatusBarStyle,
   getDefaultStatusBarBackgroundColor,
-} from './constants';
-import TextView from './TextView';
-import ImageView from './imageview';
-import CancelButton from './CancelButton';
+} from './Utils';
 import Queue from './Queue';
 
 export default class DropdownAlert extends Component {
@@ -129,7 +128,6 @@ export default class DropdownAlert extends Component {
     panResponderEnabled: true,
     wrapperStyle: null,
     containerStyle: {
-      padding: 16,
       flexDirection: 'row',
       backgroundColor: '#202020',
     },
@@ -152,24 +150,24 @@ export default class DropdownAlert extends Component {
       backgroundColor: 'transparent',
     },
     imageStyle: {
-      padding: 8,
       width: DEFAULT_IMAGE_DIMENSIONS,
       height: DEFAULT_IMAGE_DIMENSIONS,
       alignSelf: 'center',
     },
     cancelBtnImageStyle: {
-      padding: 8,
       width: DEFAULT_IMAGE_DIMENSIONS,
       height: DEFAULT_IMAGE_DIMENSIONS,
+    },
+    cancelBtnStyle: {
       alignSelf: 'center',
     },
     defaultContainer: {
-      padding: 8,
       flexDirection: 'row',
+      padding: 8,
     },
     defaultTextContainer: {
       flex: 1,
-      padding: 8,
+      paddingHorizontal: 8,
     },
     translucent: false,
     activeStatusBarStyle: 'light-content',
@@ -231,7 +229,7 @@ export default class DropdownAlert extends Component {
         this._onDonePan(event, gestureState),
     });
   };
-  _onShouldStartPan = (event, gestureState) => {
+  _onShouldStartPan = () => {
     return this.props.panResponderEnabled;
   };
   _onShouldMovePan = (event, gestureState) => {
@@ -254,7 +252,7 @@ export default class DropdownAlert extends Component {
       this.closeAction(ACTION.pan);
     }
   };
-  getStringValue(value) {
+  getStringValue = (value) => {
     try {
       if (typeof value !== 'string') {
         if (Array.isArray(value)) {
@@ -269,7 +267,7 @@ export default class DropdownAlert extends Component {
     } catch (error) {
       return error.toString();
     }
-  }
+  };
   alertWithType = async (
     type = '',
     title = '',
@@ -426,7 +424,7 @@ export default class DropdownAlert extends Component {
     const end = this.getEndDelta(height, endDelta);
     return [start, end];
   };
-  getStyleForType(type) {
+  getStyleForType = (type) => {
     const {defaultContainer} = this.props;
     switch (type) {
       case TYPE.info:
@@ -455,8 +453,8 @@ export default class DropdownAlert extends Component {
           StyleSheet.flatten(this.props.containerStyle),
         ];
     }
-  }
-  getSourceForType(type) {
+  };
+  getSourceForType = (type) => {
     switch (type) {
       case TYPE.info:
         return this.props.infoImageSrc;
@@ -469,8 +467,8 @@ export default class DropdownAlert extends Component {
       default:
         return this.props.imageSrc;
     }
-  }
-  getBackgroundColorForType(type) {
+  };
+  getBackgroundColorForType = (type) => {
     switch (type) {
       case TYPE.info:
         return this.props.infoColor;
@@ -483,8 +481,8 @@ export default class DropdownAlert extends Component {
       default:
         return this.props.containerStyle.backgroundColor;
     }
-  }
-  _onLayoutEvent(event) {
+  };
+  _onLayoutEvent = (event) => {
     const {height} = event.nativeEvent.layout;
     if (height > this.state.height) {
       const {startDelta, endDelta} = this.props;
@@ -494,63 +492,75 @@ export default class DropdownAlert extends Component {
         this.setState({height});
       }
     }
-  }
-  _renderImage(source) {
-    if (this.props.renderImage) {
-      return this.props.renderImage(this.props, this.alertData);
+  };
+  _renderImage = (source, imageStyle) => {
+    const {renderImage} = this.props;
+    if (renderImage) {
+      return renderImage(this.props, this.alertData);
     }
-    return (
-      <ImageView
-        style={StyleSheet.flatten(this.props.imageStyle)}
-        source={source}
-      />
-    );
-  }
-  _renderTitle() {
+    if (!source) {
+      return null;
+    }
+    let style = imageStyle;
+    if (!style.width) {
+      style.width = DEFAULT_IMAGE_DIMENSIONS;
+    }
+    if (!style.height) {
+      style.height = DEFAULT_IMAGE_DIMENSIONS;
+    }
+    const isRemote = typeof source === 'string';
+    const src = isRemote ? {uri: source} : source;
+    return <Image style={style} source={src} />;
+  };
+  _renderTitle = () => {
     if (this.props.renderTitle) {
       return this.props.renderTitle(this.props, this.alertData);
     }
     const {titleTextProps, titleStyle, titleNumOfLines} = this.props;
     return (
-      <TextView
+      <Text
         {...titleTextProps}
-        style={StyleSheet.flatten(titleStyle)}
-        numberOfLines={titleNumOfLines}
-        text={this.alertData.title}
-      />
+        style={titleStyle}
+        numberOfLines={titleNumOfLines}>
+        {this.alertData.title}
+      </Text>
     );
-  }
-  _renderMessage() {
+  };
+  _renderMessage = () => {
     if (this.props.renderMessage) {
       return this.props.renderMessage(this.props, this.alertData);
     }
     const {messageTextProps, messageStyle, messageNumOfLines} = this.props;
     return (
-      <TextView
+      <Text
         {...messageTextProps}
-        style={StyleSheet.flatten(messageStyle)}
-        numberOfLines={messageNumOfLines}
-        text={this.alertData.message}
-      />
+        style={messageStyle}
+        numberOfLines={messageNumOfLines}>
+        {this.alertData.message}
+      </Text>
     );
-  }
-  _renderCancel(show = false) {
+  };
+  _renderCancel = (show = false) => {
     if (!show) {
       return null;
     }
-    if (this.props.renderCancel) {
-      return this.props.renderCancel(this.props, this.alertData);
-    } else {
-      const {cancelBtnImageSrc, cancelBtnImageStyle} = this.props;
-      return (
-        <CancelButton
-          imageStyle={cancelBtnImageStyle}
-          imageSrc={cancelBtnImageSrc}
-          onPress={() => this.closeAction(ACTION.cancel)}
-        />
-      );
+    const {
+      renderCancel,
+      cancelBtnStyle,
+      cancelBtnImageSrc,
+      cancelBtnImageStyle,
+    } = this.props;
+    if (renderCancel) {
+      return renderCancel(this.props, this.alertData);
     }
-  }
+    return (
+      <TouchableOpacity
+        style={cancelBtnStyle}
+        onPress={() => this.closeAction(ACTION.cancel)}>
+        {this._renderImage(cancelBtnImageSrc, cancelBtnImageStyle)}
+      </TouchableOpacity>
+    );
+  };
   render() {
     const {isOpen} = this.state;
     if (!isOpen) {
@@ -571,6 +581,7 @@ export default class DropdownAlert extends Component {
       translucent,
       updateStatusBar,
       showCancel,
+      imageStyle,
     } = this.props;
     const {animationValue, topValue, height} = this.state;
     const {type, payload} = this.alertData;
@@ -632,7 +643,7 @@ export default class DropdownAlert extends Component {
           accessible={accessible}>
           <View style={style}>
             <ContentView style={StyleSheet.flatten(contentContainerStyle)}>
-              {this._renderImage(imageSrc)}
+              {this._renderImage(imageSrc, imageStyle)}
               <View style={StyleSheet.flatten(defaultTextContainer)}>
                 {this._renderTitle()}
                 {this._renderMessage()}

@@ -4,7 +4,7 @@ import {shallow} from 'enzyme';
 import toJson from 'enzyme-to-json';
 const imageSrc =
   'https://facebook.github.io/react-native/docs/assets/favicon.png';
-import {TYPE, ACTION, HEIGHT} from '../constants';
+import {TYPE, ACTION, HEIGHT} from '../Utils';
 import {Platform} from 'react-native';
 
 describe('DropdownAlert component', () => {

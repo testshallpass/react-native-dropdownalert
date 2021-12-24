@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {StyleSheet, SafeAreaView, Text, View} from 'react-native';
 import {
   PURPLE_COLOR,
@@ -8,11 +8,27 @@ import {
   InfoIcon,
 } from './constants';
 import List from './List';
-import DropdownAlert from 'react-native-dropdownalert';
+import DropdownAlert from './src/DropdownAlert';
 
 const App = () => {
   const [queueSize, setQueueSize] = useState(0);
-  let dropDownAlertRef = useRef(null);
+  let dropDownAlertRef = useRef();
+
+  useEffect(() => {
+    _fetchData();
+  }, []);
+
+  const _fetchData = async () => {
+    try {
+      dropDownAlertRef.alertWithType('info', 'Info', 'Start fetch data');
+      const response = await fetch('https://httpbin.org/uuid');
+      const {uuid} = await response.json();
+      dropDownAlertRef.alertWithType('success', 'Success', uuid);
+      throw 'Error fetch data'; // example thrown error
+    } catch (error) {
+      dropDownAlertRef.alertWithType('error', 'Error', error);
+    }
+  };
 
   const _onProgrammaticClose = () => {
     dropDownAlertRef.closeAction();
@@ -72,22 +88,26 @@ const App = () => {
   };
 
   const _onClose = data => {
-    console.log(data);
+    _log(data);
     _updateQueueSize();
   };
 
   const _onCancel = data => {
-    console.log(data);
+    _log(data);
     _updateQueueSize();
   };
 
   const _onTap = data => {
-    console.log(data);
+    _log(data);
     _updateQueueSize();
   };
 
   const _updateQueueSize = () => {
     setQueueSize(dropDownAlertRef.getQueueSize());
+  };
+
+  const _log = data => {
+    console.log(data);
   };
 
   return (
