@@ -8,8 +8,8 @@
 [![CI](https://github.com/testshallpass/react-native-dropdownalert/actions/workflows/ci.yml/badge.svg)](https://github.com/testshallpass/react-native-dropdownalert/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/testshallpass/react-native-dropdownalert/branch/master/graph/badge.svg)](https://codecov.io/gh/testshallpass/react-native-dropdownalert)
 
-| info | warn | error | success |
-| :----: | :---: | :----: | :----: |
+|                                                    info                                                    |                                                     warn                                                      |                                                    error                                                    |                                                    success                                                    |
+| :--------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
 | ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/info.png) | ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/warning.png) | ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/error.png) | ![screenshot](https://raw.github.com/testshallpass/react-native-dropdownalert/master/screenshots/success.png) |
 
 ## Table of contents
@@ -42,8 +42,8 @@ An alert to notify users about new chat messages, something went wrong or everyt
 ## Usage
 
 ```javascript
-import React, {useRef, useEffect} from 'react'
-import {View} from 'react-native'
+import React, {useRef, useEffect} from 'react';
+import {View} from 'react-native';
 import DropdownAlert from 'react-native-dropdownalert';
 
 const App = () => {
@@ -70,7 +70,7 @@ const App = () => {
   return (
     <View>
       <DropdownAlert
-        ref={ref => {
+        ref={(ref) => {
           if (ref) {
             dropDownAlertRef = ref;
           }
