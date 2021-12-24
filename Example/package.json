@@ -10,7 +10,8 @@
     "lint:fix": "eslint . --fix",
     "ios:pod": "cd ios && pod install && cd ..",
     "android:clean": "cd android && ./gradlew clean && cd ..",
-    "doctor": "npx react-native doctor"
+    "doctor": "npx react-native doctor",
+    "prettier": "npx prettier --check ."
   },
   "dependencies": {
     "react": "17.0.2",
