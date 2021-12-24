@@ -1,10 +1,10 @@
 import {
   getDefaultStatusBarStyle,
   getDefaultStatusBarBackgroundColor,
-} from '../constants';
+} from '../Utils';
 import {StatusBar} from 'react-native';
 
-describe('Constants', () => {
+describe('Utils', () => {
   describe('Mock StatusBar with no _defaultProps property', () => {
     StatusBar._defaultProps = undefined;
     test('StatusBarDefaultBarStyle to be default', () => {

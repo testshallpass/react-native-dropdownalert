@@ -42,11 +42,12 @@
 
 ### Cancel
 
-| Name                  |   Type   | Description                                                                    | Default                                                      |
-| --------------------- | :------: | ------------------------------------------------------------------------------ | ------------------------------------------------------------ |
-| `showCancel`          |   Bool   | show or hide cancel button                                                     | false                                                        |
-| `cancelBtnImageStyle` |  Object  | styles for image for all types                                                 | `{ padding: 8, width: 36, height: 36, alignSelf: 'center' }` |
-| `renderCancel`        | Function | Use to override the cancel button component. props and alertData are returned. | undefined                                                    |
+| Name                  |   Type   | Description                                                                    | Default                     |
+| --------------------- | :------: | ------------------------------------------------------------------------------ | --------------------------- |
+| `showCancel`          |   Bool   | show or hide cancel button                                                     | false                       |
+| `cancelBtnImageStyle` |  Object  | styles for image for all types                                                 | `{ width: 36, height: 36 }` |
+| `cancelBtnStyle`      |  Object  | styles for image for all types                                                 | `{ alignSelf: 'center' }`   |
+| `renderCancel`        | Function | Use to override the cancel button component. props and alertData are returned. | undefined                   |
 
 ### Colors
 
@@ -59,29 +60,29 @@
 
 ### Containers
 
-| Name                    |  Type  | Description                                                                                                                                                                     | Default                                                                 |
-| ----------------------- | :----: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `defaultContainer`      | Object | Style for inner view container (**override paddingTop with this**)                                                                                                              | `{ padding: 8, paddingTop: IS_ANDROID ? 0 : 20, flexDirection: 'row' }` |
-| `defaultTextContainer`  | Object | Style for inner text container (holds title and message)                                                                                                                        | `{ flex: 1, padding: 8 }`                                               |
-| `wrapperStyle`          | Object | styles for the view that wraps the container. For [React Native Web](https://github.com/necolas/react-native-web) support you might want to set this to `{ position: 'fixed' }` | `null`                                                                  |
-| `containerStyle`        | Object | styles for container for custom type only                                                                                                                                       | `{ padding: 16, flexDirection: 'row', backgroundColor: '#202020' }`     |
-| `contentContainerStyle` | Object | styles for ContentView                                                                                                                                                          | `{ flex: 1, flexDirection: 'row' }`                                     |
-| `zIndex`                | Number | zIndex attribute on outermost container                                                                                                                                         | null                                                                    |
-| `elevation`             | Number | Animated.View elevation                                                                                                                                                         | 1                                                                       |
+| Name                    |  Type  | Description                                                                                                                                                                     | Default                                                |
+| ----------------------- | :----: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `defaultContainer`      | Object | Style for inner view container (**override paddingTop with this**)                                                                                                              | `{ flexDirection: 'row', padding: 8 }`                 |
+| `defaultTextContainer`  | Object | Style for inner text container (holds title and message)                                                                                                                        | `{ flex: 1, paddingHorizontal: 8 }`                    |
+| `wrapperStyle`          | Object | styles for the view that wraps the container. For [React Native Web](https://github.com/necolas/react-native-web) support you might want to set this to `{ position: 'fixed' }` | `null`                                                 |
+| `containerStyle`        | Object | styles for container for custom type only                                                                                                                                       | `{ flexDirection: 'row', backgroundColor: '#202020' }` |
+| `contentContainerStyle` | Object | styles for ContentView                                                                                                                                                          | `{ flex: 1, flexDirection: 'row' }`                    |
+| `zIndex`                | Number | zIndex attribute on outermost container                                                                                                                                         | null                                                   |
+| `elevation`             | Number | Animated.View elevation                                                                                                                                                         | 1                                                      |
 
 ### Image
 
 image sources are overridden if payload parameter has source property. For example,`{ source: 'https://reactnative.dev/docs/assets/favicon.png' }`
 
-| Name              |       Type       | Description                                    | Default                                                      |
-| ----------------- | :--------------: | ---------------------------------------------- | ------------------------------------------------------------ |
-| `imageStyle`      |      Object      | styles for image for all types                 | `{ padding: 8, width: 36, height: 36, alignSelf: 'center' }` |
-| `renderImage`     |     Function     | Use to override the left image component       | undefined                                                    |
-| `imageSrc`        | String or Number | local or network source for custom alert type  | null                                                         |
-| `infoImageSrc`    | String or Number | local or network source for info alert type    | `require('./assets/info.png')`                               |
-| `warnImageSrc`    | String or Number | local or network source for warn alert type    | `require('./assets/warn.png')`                               |
-| `errorImageSrc`   | String or Number | local or network source for error alert type   | `require('./assets/error.png')`                              |
-| `successImageSrc` | String or Number | local or network source for success alert type | `require('./assets/success.png')`                            |
+| Name              |       Type       | Description                                    | Default                                          |
+| ----------------- | :--------------: | ---------------------------------------------- | ------------------------------------------------ |
+| `imageStyle`      |      Object      | styles for image for all types                 | `{ width: 36, height: 36, alignSelf: 'center' }` |
+| `renderImage`     |     Function     | Use to override the left image component       | undefined                                        |
+| `imageSrc`        | String or Number | local or network source for custom alert type  | null                                             |
+| `infoImageSrc`    | String or Number | local or network source for info alert type    | `require('./assets/info.png')`                   |
+| `warnImageSrc`    | String or Number | local or network source for warn alert type    | `require('./assets/warn.png')`                   |
+| `errorImageSrc`   | String or Number | local or network source for error alert type   | `require('./assets/error.png')`                  |
+| `successImageSrc` | String or Number | local or network source for success alert type | `require('./assets/success.png')`                |
 
 ### Title
 
