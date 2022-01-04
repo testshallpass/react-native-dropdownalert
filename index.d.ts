@@ -41,10 +41,10 @@ export interface DropdownAlertProps {
   sensitivity?: number;
   defaultContainer?: object | number;
   defaultTextContainer?: object | number;
-  renderImage?(props: DropdownAlertProps, state: {type: string}): ReactNode;
-  renderCancel?(props: DropdownAlertProps, state: {type: string}): ReactNode;
-  renderTitle?(props: DropdownAlertProps, state: {type: string}): ReactNode;
-  renderMessage?(props: DropdownAlertProps, state: {type: string}): ReactNode;
+  renderImage?(props: DropdownAlertProps, state: AlertDataType): ReactNode;
+  renderCancel?(props: DropdownAlertProps, state: AlertDataType): ReactNode;
+  renderTitle?(props: DropdownAlertProps, state: AlertDataType): ReactNode;
+  renderMessage?(props: DropdownAlertProps, state: AlertDataType): ReactNode;
   testID?: string;
   accessibilityLabel?: string;
   accessible?: boolean;
