@@ -167,7 +167,7 @@ export default class DropdownAlert extends Component {
     },
     defaultTextContainer: {
       flex: 1,
-      paddingHorizontal: 8,
+      padding: 8,
     },
     translucent: false,
     activeStatusBarStyle: 'light-content',
@@ -194,7 +194,6 @@ export default class DropdownAlert extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      animationValue: new Animated.Value(0),
       isOpen: false,
       topValue: 0,
       height: 0,
@@ -209,6 +208,7 @@ export default class DropdownAlert extends Component {
     };
     this.panResponder = this.getPanResponder();
     this.queue = new Queue();
+    this.animationValue = new Animated.Value(0);
   }
   componentWillUnmount() {
     if (this.state.isOpen) {
@@ -386,7 +386,7 @@ export default class DropdownAlert extends Component {
   };
   animate = (toValue, duration = 450, onComplete = () => {}) => {
     const {useNativeDriver, isInteraction} = this.props;
-    Animated.spring(this.state.animationValue, {
+    Animated.spring(this.animationValue, {
       toValue: toValue,
       duration: duration,
       friction: 9,
@@ -512,9 +512,12 @@ export default class DropdownAlert extends Component {
     const src = isRemote ? {uri: source} : source;
     return <Image style={style} source={src} />;
   };
-  _renderTitle = () => {
+  _renderTitle = title => {
     if (this.props.renderTitle) {
       return this.props.renderTitle(this.props, this.alertData);
+    }
+    if (!title || title.length == 0) {
+      return null;
     }
     const {titleTextProps, titleStyle, titleNumOfLines} = this.props;
     return (
@@ -522,13 +525,16 @@ export default class DropdownAlert extends Component {
         {...titleTextProps}
         style={titleStyle}
         numberOfLines={titleNumOfLines}>
-        {this.alertData.title}
+        {title}
       </Text>
     );
   };
-  _renderMessage = () => {
+  _renderMessage = message => {
     if (this.props.renderMessage) {
       return this.props.renderMessage(this.props, this.alertData);
+    }
+    if (!message || message.length == 0) {
+      return null;
     }
     const {messageTextProps, messageStyle, messageNumOfLines} = this.props;
     return (
@@ -536,7 +542,7 @@ export default class DropdownAlert extends Component {
         {...messageTextProps}
         style={messageStyle}
         numberOfLines={messageNumOfLines}>
-        {this.alertData.message}
+        {message}
       </Text>
     );
   };
@@ -583,8 +589,8 @@ export default class DropdownAlert extends Component {
       showCancel,
       imageStyle,
     } = this.props;
-    const {animationValue, topValue, height} = this.state;
-    const {type, payload} = this.alertData;
+    const {topValue, height} = this.state;
+    const {type, payload, title, message} = this.alertData;
     let style = this.getStyleForType(type);
     let imageSrc = this.getSourceForType(type);
     // imageSrc is overridden when payload has source property
@@ -605,7 +611,7 @@ export default class DropdownAlert extends Component {
     let wrapperAnimStyle = {
       transform: [
         {
-          translateY: animationValue.interpolate({
+          translateY: this.animationValue.interpolate({
             inputRange: [0, 1],
             outputRange,
           }),
@@ -645,8 +651,8 @@ export default class DropdownAlert extends Component {
             <ContentView style={StyleSheet.flatten(contentContainerStyle)}>
               {this._renderImage(imageSrc, imageStyle)}
               <View style={StyleSheet.flatten(defaultTextContainer)}>
-                {this._renderTitle()}
-                {this._renderMessage()}
+                {this._renderTitle(title)}
+                {this._renderMessage(message)}
               </View>
               {this._renderCancel(showCancel)}
             </ContentView>
