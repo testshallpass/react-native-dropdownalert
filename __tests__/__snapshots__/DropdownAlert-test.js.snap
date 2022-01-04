@@ -65,35 +65,10 @@ exports[`DropdownAlert component Snapshots expect to render 1`] = `
           style={
             Object {
               "flex": 1,
-              "paddingHorizontal": 8,
+              "padding": 8,
             }
           }
-        >
-          <Text
-            numberOfLines={1}
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 16,
-                "fontWeight": "bold",
-                "textAlign": "left",
-              }
-            }
-          />
-          <Text
-            numberOfLines={3}
-            style={
-              Object {
-                "backgroundColor": "transparent",
-                "color": "white",
-                "fontSize": 14,
-                "fontWeight": "normal",
-                "textAlign": "left",
-              }
-            }
-          />
-        </View>
+        />
       </ForwardRef(SafeAreaView)>
     </View>
   </TouchableOpacity>

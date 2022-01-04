@@ -1,16 +1,56 @@
 import React, {useRef, useState, useEffect} from 'react';
 import {StyleSheet, SafeAreaView, Text, View} from 'react-native';
-import {
-  PURPLE_COLOR,
-  WHITE_COLOR,
-  ITEMS,
-  ReactNativeLogo,
-  InfoIcon,
-} from './constants';
 import List from './List';
 import DropdownAlert from 'react-native-dropdownalert';
+const Color = {
+  info: '#2B73B6',
+  warn: '#cd853f',
+  success: '#32A54A',
+  error: '#cc3232',
+  purple: '#6441A4',
+  white: 'whitesmoke',
+};
+const InfoIcon = require('./assets/info.png');
 
 const App = () => {
+  const items = [
+    {
+      color: Color.info,
+      type: 'info',
+      message:
+        'System maintenance starts at midnight. System will be down for approximately 3 hours.',
+    },
+    {
+      color: Color.warn,
+      type: 'warn',
+      message:
+        'Warning: Low disk space. Please add more at your earliest convenience.',
+    },
+    {
+      color: Color.error,
+      type: 'error',
+      message:
+        'Sorry, we are having some technical difficulties. Please try again.',
+    },
+    {
+      color: Color.success,
+      type: 'success',
+      message: 'Order complete. Please check your email for further details.',
+    },
+    {
+      color: Color.purple,
+      type: 'custom',
+      message: `Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+    },
+    {type: 'close', title: 'close'},
+    {type: 'show', title: 'enqueue all alerts'},
+    {type: 'clear', title: 'clear queue'},
+  ];
+  const reactNativeLogo = 'https://reactnative.dev/docs/assets/favicon.png';
+
   const [queueSize, setQueueSize] = useState(0);
   let dropDownAlertRef = useRef();
 
@@ -27,6 +67,8 @@ const App = () => {
       throw 'Error fetch data'; // example thrown error
     } catch (error) {
       dropDownAlertRef.alertWithType('error', 'Error', error);
+    } finally {
+      _updateQueueSize();
     }
   };
 
@@ -65,13 +107,13 @@ const App = () => {
         _showAlertQueue();
         break;
       default:
-        const inMilliSeconds = Math.floor(Math.random() * 4000 + 1);
+        const inMilliSeconds = Math.floor(Math.random() * 6000 + 1);
         const inSeconds = (inMilliSeconds / 1000).toFixed(2);
         const title = `${item.type} closes in ${inSeconds}s`;
         let payload;
         if (item.type === 'custom') {
           // example using remote image source in payload
-          payload = {source: ReactNativeLogo};
+          payload = {source: reactNativeLogo};
         } else if (item.type === 'info') {
           // example using local image source in payload
           payload = {source: InfoIcon};
@@ -114,7 +156,7 @@ const App = () => {
     <View style={styles.container}>
       <SafeAreaView>
         <Text style={styles.size}>{`Alert queue size: ${queueSize}`}</Text>
-        <List items={ITEMS} onSelect={_onSelect} />
+        <List items={items} onSelect={_onSelect} />
       </SafeAreaView>
       <DropdownAlert
         ref={ref => {
@@ -137,11 +179,11 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: WHITE_COLOR,
+    backgroundColor: Color.white,
     justifyContent: 'center',
   },
   content: {
-    backgroundColor: PURPLE_COLOR,
+    backgroundColor: Color.purple,
   },
   size: {
     textAlign: 'center',
