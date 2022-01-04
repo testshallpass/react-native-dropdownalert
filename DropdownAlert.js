@@ -512,11 +512,11 @@ export default class DropdownAlert extends Component {
     const src = isRemote ? {uri: source} : source;
     return <Image style={style} source={src} />;
   };
-  _renderTitle = title => {
+  _renderTitle = (title) => {
     if (this.props.renderTitle) {
       return this.props.renderTitle(this.props, this.alertData);
     }
-    if (!title || title.length == 0) {
+    if (!title || title.length === 0) {
       return null;
     }
     const {titleTextProps, titleStyle, titleNumOfLines} = this.props;
@@ -529,11 +529,11 @@ export default class DropdownAlert extends Component {
       </Text>
     );
   };
-  _renderMessage = message => {
+  _renderMessage = (message) => {
     if (this.props.renderMessage) {
       return this.props.renderMessage(this.props, this.alertData);
     }
-    if (!message || message.length == 0) {
+    if (!message || message.length === 0) {
       return null;
     }
     const {messageTextProps, messageStyle, messageNumOfLines} = this.props;

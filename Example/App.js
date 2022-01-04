@@ -17,17 +17,20 @@ const App = () => {
     {
       color: Color.info,
       type: 'info',
-      message: 'System maintenance starts at midnight. System will be down for approximately 3 hours.',
+      message:
+        'System maintenance starts at midnight. System will be down for approximately 3 hours.',
     },
     {
       color: Color.warn,
       type: 'warn',
-      message: 'Warning: Low disk space. Please add more at your earliest convenience.',
+      message:
+        'Warning: Low disk space. Please add more at your earliest convenience.',
     },
     {
       color: Color.error,
       type: 'error',
-      message: 'Sorry, we are having some technical difficulties. Please try again.',
+      message:
+        'Sorry, we are having some technical difficulties. Please try again.',
     },
     {
       color: Color.success,
@@ -37,8 +40,7 @@ const App = () => {
     {
       color: Color.purple,
       type: 'custom',
-      message:
-        `Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+      message: `Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
 Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
 Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
@@ -80,7 +82,8 @@ Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deseru
 
   const _showAlertQueue = () => {
     const types = ['info', 'warn', 'error', 'success', 'custom'];
-    const message = 'Officia eu do labore incididunt consequat sunt sint ullamco cillum.';
+    const message =
+      'Officia eu do labore incididunt consequat sunt sint ullamco cillum.';
     let count = 1;
     types.map(type => {
       dropDownAlertRef.alertWithType(
