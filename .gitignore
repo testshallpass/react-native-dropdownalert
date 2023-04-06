@@ -57,3 +57,4 @@ jsconfig.json
 Example/src
 .vscode/
 coverage
+example/src
