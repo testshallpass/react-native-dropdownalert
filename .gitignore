@@ -54,7 +54,8 @@ buck-out/
 
 # custom
 jsconfig.json
-Example/src
 .vscode/
 coverage
 example/src
+example/jsconfig.json
+RELEASE_NOTES.md

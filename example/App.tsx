@@ -7,6 +7,7 @@ import {
   ColorValue,
   SafeAreaView,
   TouchableOpacity,
+  ImageSourcePropType,
 } from 'react-native';
 import DropdownAlert, {
   DropdownAlertColor,
@@ -57,8 +58,8 @@ function App(): JSX.Element {
     },
     {
       title: 'Tap here to show custom alert',
-      color: DropdownAlertColor.Custom,
-      type: DropdownAlertType.Custom,
+      color: '#6441A4',
+      type: 'custom',
       message: `Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
   Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
   Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
@@ -70,10 +71,10 @@ function App(): JSX.Element {
   ];
   let alert = useRef(
     (
-      _type: string,
+      _type?: string,
       _title?: string,
       _message?: string,
-      _payload?: object,
+      _source?: ImageSourcePropType,
       _interval?: number,
     ) => {},
   );
@@ -97,7 +98,8 @@ function App(): JSX.Element {
       DropdownAlertType.Warn,
       DropdownAlertType.Error,
       DropdownAlertType.Success,
-      DropdownAlertType.Custom,
+      'custom',
+      '',
     ];
     const message =
       'At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution.';
@@ -137,23 +139,20 @@ function App(): JSX.Element {
         break;
       default:
         const inMilliSeconds = Math.floor(Math.random() * 6000 + 1);
-        console.log('[_onSelect] interval: ', inMilliSeconds);
         const inSeconds = Number((inMilliSeconds / 1000).toFixed(2));
         const title = `${item.type} closes in ${inSeconds}s`;
-        let payload;
+        let source;
         if (item.type === 'custom') {
-          payload = {
-            source: {uri: 'https://reactnative.dev/docs/assets/favicon.png'},
-          };
+          source = {uri: 'https://reactnative.dev/docs/assets/favicon.png'};
         }
-        alert.current(item.type, title, item.message, payload, inMilliSeconds);
+        alert.current(item.type, title, item.message, source, inMilliSeconds);
     }
   };
 
   const _onDismiss = (data: DropdownAlertData) => _log('onDismiss', data);
   const _onCancel = (data: DropdownAlertData) => _log('onCancel', data);
   const _onTap = (data: DropdownAlertData) => _log('onTap', data);
-  const _log = (message: string, data: DropdownAlertData) =>
+  const _log = (message: string, data?: DropdownAlertData) =>
     console.log(message, data);
 
   return (
@@ -169,9 +168,9 @@ function App(): JSX.Element {
       <DropdownAlert
         alert={func => (alert.current = func)}
         dismiss={func => (dismiss.current = func)}
+        containerStyle={styles.container}
         showCancel
         onCancel={_onCancel}
-        containerStyle={styles.container}
         onDismiss={_onDismiss}
         onTap={_onTap}
       />
@@ -182,7 +181,6 @@ function App(): JSX.Element {
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-    justifyContent: 'center',
   },
   button: {
     borderColor: 'dark gray',
@@ -207,7 +205,7 @@ const styles = StyleSheet.create({
     width: 36,
   },
   container: {
-    backgroundColor: DropdownAlertColor.Custom,
+    backgroundColor: '#6441A4',
   },
 });
 
