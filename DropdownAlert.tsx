@@ -188,16 +188,16 @@ export type DropdownAlertProps = {
       interval?: number,
     ) => void,
   ) => void;
-  // Function to dismiss alert progammicatically
+  // Function to dismiss alert programmatically
   dismiss?: (func: () => void) => void;
-  // Used in the alert's open and dimiss animation sequence
+  // Used in the alert's open and dismiss animation sequence
   springAnimationConfig?: Animated.SpringAnimationConfig;
   // Distance on the Y-axis for the alert to be dismissed by pan gesture
   // panResponderEnabled must be true as well
   panResponderDismissDistance?: number;
 };
 
-const DropdownAlert: React.FC<DropdownAlertProps> = ({
+const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   onDismiss = () => {},
   onCancel = () => {},
   dismissInterval = 4000,
@@ -302,61 +302,51 @@ const DropdownAlert: React.FC<DropdownAlertProps> = ({
     ? () => {}
     : () => _dismiss(DropdownAlertAction.Tap);
 
-  const _onShouldMovePan = (
-    _event: GestureResponderEvent,
-    gestureState: PanResponderGestureState,
-  ) => {
-    if (panResponderEnabled) {
-      return gestureState.dy <= panResponderMoveDistance;
+  function _getPanResponder() {
+    function _onDonePan(
+      _event: GestureResponderEvent,
+      gestureState: PanResponderGestureState,
+    ) {
+      if (
+        panResponderEnabled &&
+        gestureState.dy <= panResponderDismissDistance
+      ) {
+        _dismiss(DropdownAlertAction.Pan);
+      }
     }
-    return panResponderEnabled;
-  };
-
-  const _onMovePan = (
-    _event: GestureResponderEvent,
-    gestureState: PanResponderGestureState,
-  ) => {
-    if (panResponderEnabled && gestureState.dy < 0) {
-      setTop(gestureState.dy);
-    }
-  };
-
-  const _onDonePan = (
-    _event: GestureResponderEvent,
-    gestureState: PanResponderGestureState,
-  ) => {
-    if (panResponderEnabled && gestureState.dy <= panResponderDismissDistance) {
-      _dismiss(DropdownAlertAction.Pan);
-    }
-  };
-
-  const _getPanResponder = () => {
     return PanResponder.create({
       onStartShouldSetPanResponder: () => panResponderEnabled,
-      onMoveShouldSetPanResponder: (event, gestureState) =>
-        _onShouldMovePan(event, gestureState),
-      onPanResponderMove: (event, gestureState) =>
-        _onMovePan(event, gestureState),
+      onMoveShouldSetPanResponder: (_event, gestureState) => {
+        if (panResponderEnabled) {
+          return gestureState.dy <= panResponderMoveDistance;
+        }
+        return panResponderEnabled;
+      },
+      onPanResponderMove: (_event, gestureState) => {
+        if (panResponderEnabled && gestureState.dy < 0) {
+          setTop(gestureState.dy);
+        }
+      },
       onPanResponderRelease: (event, gestureState) =>
         _onDonePan(event, gestureState),
       onPanResponderTerminate: (event, gestureState) =>
         _onDonePan(event, gestureState),
     });
-  };
+  }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const panResponder = useMemo(_getPanResponder, [
     panResponderEnabled,
-    panResponderMoveDistance,
     panResponderDismissDistance,
+    panResponderMoveDistance,
   ]);
 
-  const _alertWithType = (
+  function _alertWithType(
     type?: string,
     title?: string,
     message?: string,
     source?: ImageSourcePropType,
     interval?: number,
-  ) => {
+  ) {
     const data: DropdownAlertData = {
       type,
       title,
@@ -372,16 +362,16 @@ const DropdownAlert: React.FC<DropdownAlertProps> = ({
     if (queue.current.size === 1) {
       _processQueue();
     }
-  };
+  }
   alert(_alertWithType);
 
-  const _processQueue = () => {
+  function _processQueue() {
     if (!queue.current.isEmpty) {
       _open(queue.current.first);
     }
-  };
+  }
 
-  const _open = (data: DropdownAlertData) => {
+  function _open(data: DropdownAlertData) {
     setAlertData(data);
     alertDataRef.current = data;
     _updateStatusBar(true, data.type);
@@ -395,9 +385,9 @@ const DropdownAlert: React.FC<DropdownAlertProps> = ({
         }, data.interval);
       }
     });
-  };
+  }
 
-  const _dismiss = (action = DropdownAlertAction.Programmatic) => {
+  function _dismiss(action = DropdownAlertAction.Programmatic) {
     if (!queue.current.isEmpty && !isLockRef.current) {
       _clearDismissTimeoutID();
       _updateStatusBar(false);
@@ -416,10 +406,10 @@ const DropdownAlert: React.FC<DropdownAlertProps> = ({
         isLockRef.current = false;
       });
     }
-  };
+  }
   dismiss(_dismiss);
 
-  const _updateStatusBar = (active = false, type = '') => {
+  function _updateStatusBar(active = false, type = '') {
     if (updateStatusBar) {
       if (isAndroid) {
         if (active) {
@@ -444,22 +434,22 @@ const DropdownAlert: React.FC<DropdownAlertProps> = ({
         StatusBar.setBarStyle(inactiveStatusBarStyle, true);
       }
     }
-  };
+  }
 
-  const _clearDismissTimeoutID = () => {
+  function _clearDismissTimeoutID() {
     if (dismissTimeoutID.current) {
       clearTimeout(dismissTimeoutID.current);
     }
-  };
+  }
 
-  const _animate = (toValue = 0, onComplete = () => {}) => {
+  function _animate(toValue = 0, onComplete = () => {}) {
     springAnimationConfig.toValue = toValue;
     Animated.spring(animatedValue.current, springAnimationConfig).start(
       onComplete,
     );
-  };
+  }
 
-  const _getStyleForType = (type: string | undefined) => {
+  function _getStyleForType(type: string | undefined) {
     switch (type) {
       case DropdownAlertType.Info:
       case DropdownAlertType.Warn:
@@ -472,9 +462,9 @@ const DropdownAlert: React.FC<DropdownAlertProps> = ({
       default:
         return [defaultContainer, containerStyle];
     }
-  };
+  }
 
-  const _getSourceForType = (type: string | undefined) => {
+  function _getSourceForType(type: string | undefined) {
     switch (type) {
       case DropdownAlertType.Info:
         return infoImageSrc;
@@ -487,9 +477,9 @@ const DropdownAlert: React.FC<DropdownAlertProps> = ({
       default:
         return imageSrc;
     }
-  };
+  }
 
-  const _getBackgroundColorForType = (type: string | undefined) => {
+  function _getBackgroundColorForType(type: string | undefined) {
     switch (type) {
       case DropdownAlertType.Info:
         return infoColor;
@@ -502,16 +492,16 @@ const DropdownAlert: React.FC<DropdownAlertProps> = ({
       default:
         return containerStyle.backgroundColor;
     }
-  };
+  }
 
-  const _onLayout = (event: LayoutChangeEvent) => {
+  function _onLayout(event: LayoutChangeEvent) {
     const eventHeight = event.nativeEvent.layout.height;
     if (eventHeight > height) {
       setHeight(eventHeight);
     }
-  };
+  }
 
-  const _renderImage = (source: ImageSourcePropType) => {
+  function _renderImage(source: ImageSourcePropType) {
     if (renderImage) {
       if (!alertData.source) {
         alertData.source = source;
@@ -519,9 +509,9 @@ const DropdownAlert: React.FC<DropdownAlertProps> = ({
       return renderImage(alertData);
     }
     return <Image style={imageStyle} source={source} />;
-  };
+  }
 
-  const _renderTitle = () => {
+  function _renderTitle() {
     if (renderTitle) {
       return renderTitle(alertData);
     }
@@ -536,9 +526,9 @@ const DropdownAlert: React.FC<DropdownAlertProps> = ({
         {title}
       </Text>
     );
-  };
+  }
 
-  const _renderMessage = () => {
+  function _renderMessage() {
     if (renderMessage) {
       return renderMessage(alertData);
     }
@@ -553,23 +543,23 @@ const DropdownAlert: React.FC<DropdownAlertProps> = ({
         {message}
       </Text>
     );
-  };
+  }
 
-  const _renderCancel = () => {
+  function _renderCancel() {
     const _onCancel = () => _dismiss(DropdownAlertAction.Cancel);
     if (renderCancel) {
       return renderCancel(alertData, _onCancel);
     }
     return (
-      <TouchableOpacity style={cancelBtnStyle} onPress={onCancel}>
+      <TouchableOpacity style={cancelBtnStyle} onPress={_onCancel}>
         {cancelBtnImageSrc && (
           <Image style={cancelBtnImageStyle} source={cancelBtnImageSrc} />
         )}
       </TouchableOpacity>
     );
-  };
+  }
 
-  const _getViewAnimatedStyle = () => {
+  function _getViewAnimatedStyle() {
     return [
       {
         // https://github.com/microsoft/TypeScript/issues/11465
@@ -592,7 +582,7 @@ const DropdownAlert: React.FC<DropdownAlertProps> = ({
       },
       wrapperStyle,
     ];
-  };
+  }
 
   const {type, source, title, message} = alertData;
 
