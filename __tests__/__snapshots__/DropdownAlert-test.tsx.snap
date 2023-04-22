@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`it renders 1`] = `
+exports[`it alerts 1`] = `
 <View
   accessible={false}
   collapsable={false}
@@ -32,6 +32,7 @@ exports[`it renders 1`] = `
       "zIndex": 1,
     }
   }
+  testID="animatedView"
 >
   <View
     accessibilityState={
@@ -68,6 +69,7 @@ exports[`it renders 1`] = `
         "padding": 8,
       }
     }
+    testID="button"
   >
     <RCTSafeAreaView
       style={
@@ -76,7 +78,529 @@ exports[`it renders 1`] = `
           "flexDirection": "row",
         }
       }
+      testID="contentView"
     >
+      <View
+        style={
+          {
+            "flex": 1,
+            "marginHorizontal": 8,
+          }
+        }
+      />
+    </RCTSafeAreaView>
+  </View>
+</View>
+`;
+
+exports[`it error alerts 1`] = `
+<View
+  accessible={false}
+  collapsable={false}
+  onLayout={[Function]}
+  onMoveShouldSetResponder={[Function]}
+  onMoveShouldSetResponderCapture={[Function]}
+  onResponderEnd={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderReject={[Function]}
+  onResponderRelease={[Function]}
+  onResponderStart={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onStartShouldSetResponderCapture={[Function]}
+  style={
+    {
+      "elevation": 1,
+      "left": 0,
+      "position": "absolute",
+      "right": 0,
+      "top": 0,
+      "transform": [
+        {
+          "translateY": -99,
+        },
+      ],
+      "zIndex": 1,
+    }
+  }
+  testID="animatedView"
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#cc3232",
+        "opacity": 1,
+        "padding": 8,
+      }
+    }
+    testID="button"
+  >
+    <RCTSafeAreaView
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+      testID="contentView"
+    >
+      <Image
+        source={
+          {
+            "testUri": "../../../assets/error.png",
+          }
+        }
+        style={
+          {
+            "height": 36,
+            "width": 36,
+          }
+        }
+        testID="image"
+      />
+      <View
+        style={
+          {
+            "flex": 1,
+            "marginHorizontal": 8,
+          }
+        }
+      />
+    </RCTSafeAreaView>
+  </View>
+</View>
+`;
+
+exports[`it info alerts 1`] = `
+<View
+  accessible={false}
+  collapsable={false}
+  onLayout={[Function]}
+  onMoveShouldSetResponder={[Function]}
+  onMoveShouldSetResponderCapture={[Function]}
+  onResponderEnd={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderReject={[Function]}
+  onResponderRelease={[Function]}
+  onResponderStart={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onStartShouldSetResponderCapture={[Function]}
+  style={
+    {
+      "elevation": 1,
+      "left": 0,
+      "position": "absolute",
+      "right": 0,
+      "top": 0,
+      "transform": [
+        {
+          "translateY": -99,
+        },
+      ],
+      "zIndex": 1,
+    }
+  }
+  testID="animatedView"
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#2B73B6",
+        "opacity": 1,
+        "padding": 8,
+      }
+    }
+    testID="button"
+  >
+    <RCTSafeAreaView
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+      testID="contentView"
+    >
+      <Image
+        source={
+          {
+            "testUri": "../../../assets/info.png",
+          }
+        }
+        style={
+          {
+            "height": 36,
+            "width": 36,
+          }
+        }
+        testID="image"
+      />
+      <View
+        style={
+          {
+            "flex": 1,
+            "marginHorizontal": 8,
+          }
+        }
+      />
+    </RCTSafeAreaView>
+  </View>
+</View>
+`;
+
+exports[`it renders 1`] = `
+<View
+  accessible={false}
+  collapsable={false}
+  onLayout={[Function]}
+  onMoveShouldSetResponder={[Function]}
+  onMoveShouldSetResponderCapture={[Function]}
+  onResponderEnd={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderReject={[Function]}
+  onResponderRelease={[Function]}
+  onResponderStart={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onStartShouldSetResponderCapture={[Function]}
+  style={
+    {
+      "elevation": 1,
+      "left": 0,
+      "position": "absolute",
+      "right": 0,
+      "top": 0,
+      "transform": [
+        {
+          "translateY": -99,
+        },
+      ],
+      "zIndex": 1,
+    }
+  }
+  testID="animatedView"
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "black",
+        "opacity": 1,
+        "padding": 8,
+      }
+    }
+    testID="button"
+  >
+    <RCTSafeAreaView
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+      testID="contentView"
+    >
+      <View
+        style={
+          {
+            "flex": 1,
+            "marginHorizontal": 8,
+          }
+        }
+      />
+    </RCTSafeAreaView>
+  </View>
+</View>
+`;
+
+exports[`it success alerts 1`] = `
+<View
+  accessible={false}
+  collapsable={false}
+  onLayout={[Function]}
+  onMoveShouldSetResponder={[Function]}
+  onMoveShouldSetResponderCapture={[Function]}
+  onResponderEnd={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderReject={[Function]}
+  onResponderRelease={[Function]}
+  onResponderStart={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onStartShouldSetResponderCapture={[Function]}
+  style={
+    {
+      "elevation": 1,
+      "left": 0,
+      "position": "absolute",
+      "right": 0,
+      "top": 0,
+      "transform": [
+        {
+          "translateY": -99,
+        },
+      ],
+      "zIndex": 1,
+    }
+  }
+  testID="animatedView"
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#32A54A",
+        "opacity": 1,
+        "padding": 8,
+      }
+    }
+    testID="button"
+  >
+    <RCTSafeAreaView
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+      testID="contentView"
+    >
+      <Image
+        source={
+          {
+            "testUri": "../../../assets/success.png",
+          }
+        }
+        style={
+          {
+            "height": 36,
+            "width": 36,
+          }
+        }
+        testID="image"
+      />
+      <View
+        style={
+          {
+            "flex": 1,
+            "marginHorizontal": 8,
+          }
+        }
+      />
+    </RCTSafeAreaView>
+  </View>
+</View>
+`;
+
+exports[`it warn alerts 1`] = `
+<View
+  accessible={false}
+  collapsable={false}
+  onLayout={[Function]}
+  onMoveShouldSetResponder={[Function]}
+  onMoveShouldSetResponderCapture={[Function]}
+  onResponderEnd={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderReject={[Function]}
+  onResponderRelease={[Function]}
+  onResponderStart={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onStartShouldSetResponderCapture={[Function]}
+  style={
+    {
+      "elevation": 1,
+      "left": 0,
+      "position": "absolute",
+      "right": 0,
+      "top": 0,
+      "transform": [
+        {
+          "translateY": -99,
+        },
+      ],
+      "zIndex": 1,
+    }
+  }
+  testID="animatedView"
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#cd853f",
+        "opacity": 1,
+        "padding": 8,
+      }
+    }
+    testID="button"
+  >
+    <RCTSafeAreaView
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+      testID="contentView"
+    >
+      <Image
+        source={
+          {
+            "testUri": "../../../assets/warn.png",
+          }
+        }
+        style={
+          {
+            "height": 36,
+            "width": 36,
+          }
+        }
+        testID="image"
+      />
       <View
         style={
           {

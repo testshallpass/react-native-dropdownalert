@@ -52,7 +52,13 @@ export type DropdownAlertData = {
   source?: ImageSourcePropType;
   interval?: number;
   action?: string;
+  resolve?: (_value: unknown) => void;
 };
+
+export enum DropdownAlertToValue {
+  Alert = 1,
+  Dismiss = 0,
+}
 
 // References
 //  Image source: https://reactnative.dev/docs/image#source
@@ -179,14 +185,14 @@ export type DropdownAlertProps = {
   // Callback when TouchableOpacity's onPress is invoked | is controlled by tapToDismissEnabled
   onTap?: (data: DropdownAlertData) => void;
   // Function to invoke the alert to open
-  alert?: (
+  alertWithType?: (
     func: (
       type?: string,
       title?: string,
       message?: string,
       source?: ImageSourcePropType,
       interval?: number,
-    ) => void,
+    ) => Promise<unknown>,
   ) => void;
   // Function to dismiss alert programmatically
   dismiss?: (func: () => void) => void;
@@ -262,13 +268,13 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   renderCancel = undefined,
   renderTitle = undefined,
   renderMessage = undefined,
-  testID = undefined,
+  testID = 'animatedView',
   accessibilityLabel = undefined,
   accessible = false,
   titleTextProps = undefined,
   messageTextProps = undefined,
   onTap = () => {},
-  alert = () => {},
+  alertWithType = () => {},
   dismiss = () => {},
   springAnimationConfig = {
     toValue: 0,
@@ -287,9 +293,6 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     type: '',
     title: '',
     message: '',
-    source: undefined,
-    interval: dismissInterval,
-    action: '',
   };
   const [alertData, setAlertData] = useState(defaultAlertData);
   const alertDataRef = useRef(defaultAlertData);
@@ -351,60 +354,52 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
       type,
       title,
       message,
-      source,
-      interval: dismissInterval,
-      action: '',
+      source: source ? source : _getSourceForType(type),
+      interval: interval ? interval : dismissInterval,
     };
-    if (interval) {
-      data.interval = interval;
-    }
     queue.current.enqueue(data);
     if (queue.current.size === 1) {
-      _processQueue();
+      _alert(queue.current.first);
     }
+    return new Promise(resolve => (data.resolve = resolve));
   }
-  alert(_alertWithType);
+  alertWithType(_alertWithType);
 
-  function _processQueue() {
-    if (!queue.current.isEmpty) {
-      _open(queue.current.first);
-    }
-  }
-
-  function _open(data: DropdownAlertData) {
+  async function _alert(data: DropdownAlertData) {
     setAlertData(data);
     alertDataRef.current = data;
     _updateStatusBar(true, data.type);
-    _animate(1, () => {
-      if (data.interval && data.interval > 0) {
-        alertData.interval = data.interval;
-        alertData.action = DropdownAlertAction.Automatic;
-        _clearDismissTimeoutID();
-        dismissTimeoutID.current = setTimeout(() => {
-          _dismiss(DropdownAlertAction.Automatic);
-        }, data.interval);
-      }
-    });
+    await _animate(DropdownAlertToValue.Alert);
+    if (data.interval && data.interval > 0) {
+      _clearDismissTimeoutID();
+      dismissTimeoutID.current = setTimeout(() => {
+        _dismiss(DropdownAlertAction.Automatic);
+      }, data.interval);
+    }
   }
 
-  function _dismiss(action = DropdownAlertAction.Programmatic) {
+  async function _dismiss(action = DropdownAlertAction.Programmatic) {
     if (!queue.current.isEmpty && !isLockRef.current) {
       _clearDismissTimeoutID();
       _updateStatusBar(false);
       isLockRef.current = true;
-      _animate(0, () => {
-        alertDataRef.current.action = action;
-        if (action === DropdownAlertAction.Cancel) {
-          onCancel(alertDataRef.current);
-        } else if (action === DropdownAlertAction.Tap) {
-          onTap(alertDataRef.current);
-        }
-        onDismiss(alertDataRef.current);
-        setTop(0);
-        queue.current.dequeue();
-        _processQueue();
-        isLockRef.current = false;
-      });
+      await _animate(DropdownAlertToValue.Dismiss);
+      alertDataRef.current.action = action;
+      if (action === DropdownAlertAction.Cancel) {
+        onCancel(alertDataRef.current);
+      } else if (action === DropdownAlertAction.Tap) {
+        onTap(alertDataRef.current);
+      }
+      onDismiss(alertDataRef.current);
+      if (alertDataRef.current.resolve) {
+        alertDataRef.current.resolve(alertDataRef.current);
+      }
+      setTop(0);
+      queue.current.dequeue();
+      if (!queue.current.isEmpty) {
+        _alert(queue.current.first);
+      }
+      isLockRef.current = false;
     }
   }
   dismiss(_dismiss);
@@ -442,11 +437,13 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     }
   }
 
-  function _animate(toValue = 0, onComplete = () => {}) {
+  function _animate(toValue = 0) {
     springAnimationConfig.toValue = toValue;
-    Animated.spring(animatedValue.current, springAnimationConfig).start(
-      onComplete,
-    );
+    return new Promise(resolve => {
+      Animated.spring(animatedValue.current, springAnimationConfig).start(
+        resolve,
+      );
+    });
   }
 
   function _getStyleForType(type: string | undefined) {
@@ -508,7 +505,7 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
       }
       return renderImage(alertData);
     }
-    return <Image style={imageStyle} source={source} />;
+    return <Image testID={'image'} style={imageStyle} source={source} />;
   }
 
   function _renderTitle() {
@@ -522,6 +519,7 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
       <Text
         style={titleStyle}
         numberOfLines={titleNumOfLines}
+        testID={'title'}
         {...titleTextProps}>
         {title}
       </Text>
@@ -539,6 +537,7 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
       <Text
         style={messageStyle}
         numberOfLines={messageNumOfLines}
+        testID={'message'}
         {...messageTextProps}>
         {message}
       </Text>
@@ -551,9 +550,16 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
       return renderCancel(alertData, _onCancel);
     }
     return (
-      <TouchableOpacity style={cancelBtnStyle} onPress={_onCancel}>
+      <TouchableOpacity
+        testID={'cancelButton'}
+        style={cancelBtnStyle}
+        onPress={_onCancel}>
         {cancelBtnImageSrc && (
-          <Image style={cancelBtnImageStyle} source={cancelBtnImageSrc} />
+          <Image
+            testID={'cancelButtonImage'}
+            style={cancelBtnImageStyle}
+            source={cancelBtnImageSrc}
+          />
         )}
       </TouchableOpacity>
     );
@@ -586,11 +592,6 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
 
   const {type, source, title, message} = alertData;
 
-  let imageSource = _getSourceForType(type);
-  if (source) {
-    imageSource = source;
-  }
-
   let touchableOpacityStyle = _getStyleForType(type);
   if (isAndroid && translucent) {
     touchableOpacityStyle = [
@@ -613,12 +614,13 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
       accessibilityLabel={accessibilityLabel}
       accessible={accessible}>
       <TouchableOpacity
+        testID={'button'}
         style={touchableOpacityStyle}
         activeOpacity={activeOpacity}
         onPress={onPress}
         disabled={!tapToDismissEnabled}>
-        <ContentView style={contentContainerStyle}>
-          {imageSource && _renderImage(imageSource)}
+        <ContentView testID={'contentView'} style={contentContainerStyle}>
+          {source && _renderImage(source)}
           <View style={defaultTextContainer}>
             {_renderTitle()}
             {_renderMessage()}
