@@ -1,4 +1,5 @@
 import React from 'react';
+import {Image, LayoutChangeEvent, Pressable, Text} from 'react-native';
 import '@testing-library/jest-native/extend-expect';
 import {
   render,
@@ -168,3 +169,101 @@ test('it alert with cancel button', async () => {
     fireEvent.press(cancelButton);
   });
 }, 5500);
+
+test('render image, title, message and cancel', async () => {
+  let alert = (_type: string, _title: string, _message: string) =>
+    new Promise(res => res);
+  const source = {uri: 'https://reactnative.dev/docs/assets/favicon.png'};
+  const component = render(
+    <DropdownAlert
+      alertWithType={func => (alert = func)}
+      renderImage={() => {
+        return <Image source={source} style={{width: 20, height: 20}} />;
+      }}
+      renderTitle={data => {
+        return <Text>{data.title}</Text>;
+      }}
+      renderMessage={data => {
+        return <Text>{data.message}</Text>;
+      }}
+      renderCancel={(_data, onCancel) => {
+        return <Pressable onPress={onCancel}>{'Cancel'}</Pressable>;
+      }}
+      showCancel
+    />,
+  );
+  expect(component).toBeDefined();
+  await act(async () => {
+    await alert('custom', 'title', 'message');
+  });
+  expect(component.toJSON()).toMatchSnapshot();
+}, 5500);
+
+test('it renders multiple long alerts', async () => {
+  let alert = (_type: string, _title: string, _message: string) =>
+    new Promise(res => res);
+  const component = render(
+    <DropdownAlert
+      alertWithType={func => (alert = func)}
+      dismissInterval={1000}
+    />,
+  );
+  expect(component).toBeDefined();
+  await act(async () => {
+    alert(
+      DropdownAlertType.Info,
+      'Info',
+      'Esse ex ullamco pariatur id labore laborum ipsum non qui ut occaecat consectetur fugiat.',
+    );
+    await alert(
+      DropdownAlertType.Error,
+      'Error',
+      'Dolore dolor veniam culpa proident veniam incididunt in laboris irure fugiat cupidatat.',
+    );
+  });
+}, 5500);
+
+test('it invoke onLayout', async () => {
+  let alert = (_type: string, _title: string, _message: string) =>
+    new Promise(res => res);
+  const component = render(
+    <DropdownAlert
+      alertWithType={func => (alert = func)}
+      dismissInterval={0}
+    />,
+  );
+  expect(component).toBeDefined();
+  await act(async () => {
+    alert(DropdownAlertType.Warn, 'title', 'message');
+    const animatedView = await screen.findByTestId('animatedView');
+    expect(animatedView).toBeDefined();
+    const event: LayoutChangeEvent = {
+      nativeEvent: {layout: {x: 0, y: 0, height: 100, width: 100}},
+      currentTarget: 0,
+      target: 0,
+      bubbles: false,
+      cancelable: false,
+      defaultPrevented: false,
+      eventPhase: 0,
+      isTrusted: false,
+      preventDefault: function (): void {
+        throw new Error('Function not implemented.');
+      },
+      isDefaultPrevented: function (): boolean {
+        throw new Error('Function not implemented.');
+      },
+      stopPropagation: function (): void {
+        throw new Error('Function not implemented.');
+      },
+      isPropagationStopped: function (): boolean {
+        throw new Error('Function not implemented.');
+      },
+      persist: function (): void {
+        throw new Error('Function not implemented.');
+      },
+      timeStamp: 0,
+      type: '',
+    };
+    fireEvent(animatedView, 'onLayout', event);
+  });
+});

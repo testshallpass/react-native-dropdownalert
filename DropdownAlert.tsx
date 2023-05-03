@@ -60,6 +60,14 @@ export enum DropdownAlertToValue {
   Dismiss = 0,
 }
 
+export enum DropDownAlertImage {
+  Info = require('./assets/info.png'),
+  Warn = require('./assets/warn.png'),
+  Error = require('./assets/error.png'),
+  Success = require('./assets/success.png'),
+  Cancel = require('./assets/cancel.png'),
+}
+
 // References
 //  Image source: https://reactnative.dev/docs/image#source
 //  Image style: https://reactnative.dev/docs/image#style
@@ -163,8 +171,6 @@ export type DropdownAlertProps = {
   // Distance on the Y-axis for alert to move by pan gesture
   // panResponderEnabled must be true as well
   panResponderMoveDistance?: number;
-  // TouchableOpacity base style
-  defaultContainer?: ViewStyle;
   // View style that holds the title and message components
   defaultTextContainer?: ViewStyle;
   // The following render functions shall override built-in UI components
@@ -210,11 +216,11 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   titleNumOfLines = 1,
   messageNumOfLines = 3,
   imageSrc = undefined,
-  infoImageSrc = require('./assets/info.png'),
-  warnImageSrc = require('./assets/warn.png'),
-  errorImageSrc = require('./assets/error.png'),
-  successImageSrc = require('./assets/success.png'),
-  cancelBtnImageSrc = require('./assets/cancel.png'),
+  infoImageSrc = DropDownAlertImage.Info,
+  warnImageSrc = DropDownAlertImage.Warn,
+  errorImageSrc = DropDownAlertImage.Error,
+  successImageSrc = DropDownAlertImage.Success,
+  cancelBtnImageSrc = DropDownAlertImage.Cancel,
   infoColor = DropdownAlertColor.Info,
   warnColor = DropdownAlertColor.Warn,
   errorColor = DropdownAlertColor.Error,
@@ -224,6 +230,7 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   panResponderEnabled = true,
   wrapperStyle = undefined,
   containerStyle = {
+    padding: 8,
     backgroundColor: DropdownAlertColor.Default,
   },
   contentContainerStyle = {
@@ -248,9 +255,6 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     width: 36,
   },
   cancelBtnStyle = undefined,
-  defaultContainer = {
-    padding: 8,
-  },
   defaultTextContainer = {
     flex: 1,
     marginHorizontal: 8,
@@ -446,21 +450,6 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     });
   }
 
-  function _getStyleForType(type: string | undefined) {
-    switch (type) {
-      case DropdownAlertType.Info:
-      case DropdownAlertType.Warn:
-      case DropdownAlertType.Error:
-      case DropdownAlertType.Success:
-        return [
-          defaultContainer,
-          {backgroundColor: _getBackgroundColorForType(type)},
-        ];
-      default:
-        return [defaultContainer, containerStyle];
-    }
-  }
-
   function _getSourceForType(type: string | undefined) {
     switch (type) {
       case DropdownAlertType.Info:
@@ -498,12 +487,12 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     }
   }
 
-  function _renderImage(source: ImageSourcePropType) {
+  function _renderImage(source: ImageSourcePropType | undefined) {
     if (renderImage) {
-      if (!alertData.source) {
-        alertData.source = source;
-      }
       return renderImage(alertData);
+    }
+    if (!source) {
+      return null;
     }
     return <Image testID={'image'} style={imageStyle} source={source} />;
   }
@@ -592,12 +581,12 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
 
   const {type, source, title, message} = alertData;
 
-  let touchableOpacityStyle = _getStyleForType(type);
+  let touchableOpacityViewStyle: ViewStyle = {
+    backgroundColor: _getBackgroundColorForType(type),
+  };
+
   if (isAndroid && translucent) {
-    touchableOpacityStyle = [
-      ...touchableOpacityStyle,
-      {marginTop: StatusBar.currentHeight},
-    ];
+    touchableOpacityViewStyle.marginTop = StatusBar.currentHeight;
   }
 
   let ContentView = SafeAreaView;
@@ -615,12 +604,12 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
       accessible={accessible}>
       <TouchableOpacity
         testID={'button'}
-        style={touchableOpacityStyle}
+        style={[containerStyle, touchableOpacityViewStyle]}
         activeOpacity={activeOpacity}
         onPress={onPress}
         disabled={!tapToDismissEnabled}>
         <ContentView testID={'contentView'} style={contentContainerStyle}>
-          {source && _renderImage(source)}
+          {_renderImage(source)}
           <View style={defaultTextContainer}>
             {_renderTitle()}
             {_renderMessage()}
