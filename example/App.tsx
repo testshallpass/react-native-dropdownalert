@@ -1,179 +1,206 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   StyleSheet,
   Text,
   View,
   FlatList,
-  ColorValue,
   SafeAreaView,
   TouchableOpacity,
   ImageSourcePropType,
 } from 'react-native';
 import DropdownAlert, {
-  DropdownAlertColor,
   DropdownAlertData,
   DropdownAlertType,
 } from './src/DropdownAlert';
+import NotificationIOS from './NotificationIOS';
+import NotificationAndroid from './NotificationAndroid';
 
-type AlertItem = {
-  color?: ColorValue;
-  type: string;
-  message?: string;
-  title?: string;
+type ListItem = {
+  name: string;
+  description?: string;
+  alert: JSX.Element;
+  action?: () => void;
 };
 
-type AlertListItem = {
-  item: AlertItem;
+type ListItemIndex = {
+  item: ListItem;
   index: number;
 };
 
 function App(): JSX.Element {
-  const items: AlertItem[] = [
-    {
-      title: 'Tap here to show info alert',
-      color: DropdownAlertColor.Info,
-      type: DropdownAlertType.Info,
-      message:
-        'System maintenance begins at midnight. System will be down for approximately 3 hours.',
-    },
-    {
-      title: 'Tap here to show warn alert',
-      color: DropdownAlertColor.Warn,
-      type: DropdownAlertType.Warn,
-      message:
-        'Warning: low disk space. Please add more disk space at your earliest convenience.',
-    },
-    {
-      title: 'Tap here to show error alert',
-      color: DropdownAlertColor.Error,
-      type: DropdownAlertType.Error,
-      message:
-        'Sorry, we are having some technical difficulties. Please try again.',
-    },
-    {
-      title: 'Tap here to show success alert',
-      color: DropdownAlertColor.Success,
-      type: DropdownAlertType.Success,
-      message: 'Order complete. We sent the receipt to your email.',
-    },
-    {
-      title: 'Tap here to show custom alert',
-      color: '#6441A4',
-      type: 'custom',
-      message: `Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-    },
-    {type: 'fetch', title: 'Tap here to invoke fetch example', color: 'teal'},
-    {type: 'dismiss', title: 'Tap here to dismiss alert', color: 'gray'},
-    {type: 'show', title: 'Tap here to enqueue all alerts', color: 'black'},
-  ];
-  let alert = useRef(
-    (
-      _type?: string,
-      _title?: string,
-      _message?: string,
-      _source?: ImageSourcePropType,
-      _interval?: number,
-    ) => {},
-  );
+  const defaultSelected: ListItem = {
+    name: 'Default',
+    alert: <DropdownAlert />,
+  };
+  const [selected, setSelected] = useState(defaultSelected);
+  let alert = useRef((_data?: DropdownAlertData) => new Promise(res => res));
   let dismiss = useRef(() => {});
-
-  const _fetchData = async () => {
-    try {
-      alert.current('info', 'Info', 'Start fetch data');
-      const response = await fetch('https://httpbin.org/uuid');
-      const {uuid} = await response.json();
-      alert.current('success', 'Success', uuid);
-      throw 'Error fetch data'; // example thrown error
-    } catch (error: any) {
-      alert.current('error', 'Error', error);
-    }
+  const reactNativeLogoSrc: ImageSourcePropType = {
+    uri: 'https://reactnative.dev/docs/assets/favicon.png',
   };
 
-  const _showAlertQueue = () => {
-    const types = [
-      DropdownAlertType.Info,
-      DropdownAlertType.Warn,
-      DropdownAlertType.Error,
-      DropdownAlertType.Success,
-      'custom',
-      '',
-    ];
-    const message =
-      'At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution.';
-    let count = 1;
-    types.forEach(type => {
-      alert.current(type, `Alert ${count} of ${types.length}`, message);
-      count++;
-    });
-  };
+  const items: ListItem[] = [
+    {
+      name: 'Fetch data',
+      description:
+        'This demonstrates all the DropdownAlertTypes by showing them before and after an API request.',
+      action: async function _fetchData() {
+        try {
+          await alert.current({
+            type: 'warn',
+            title: 'Warning',
+            message: 'Fetch data is about to start',
+          });
+          await alert.current({
+            type: 'info',
+            title: 'Info',
+            message: 'Fetch data is going to start',
+          });
+          const response = await fetch('https://httpbin.org/uuid');
+          const {uuid} = await response.json();
+          await alert.current({
+            type: 'success',
+            title: 'Success',
+            message: `Fetch data return: ${uuid}`,
+          });
+          throw 'Error fetch data';
+        } catch (error: any) {
+          await alert.current({type: 'error', title: 'Error', message: error});
+        }
+      },
+      alert: <DropdownAlert alert={func => (alert.current = func)} />,
+    },
+    {
+      name: 'Queue processing',
+      description:
+        "This demonstrates the DropDownAlert's first in first out (FIFO) queue by invoking alert multiple times in a for loop.",
+      action: function _showAlertQueue() {
+        const types = [
+          DropdownAlertType.Info,
+          DropdownAlertType.Warn,
+          DropdownAlertType.Error,
+          DropdownAlertType.Success,
+          '',
+        ];
+        let count = 1;
+        types.forEach(type => {
+          alert.current({
+            type,
+            title: `Queue alert #${count} of ${types.length}`,
+            message: `Message for alert #${count}. Deserunt in nulla irure et laboris cillum velit aliquip irure aute velit.`,
+          });
+          count++;
+        });
+      },
+      alert: <DropdownAlert alert={func => (alert.current = func)} />,
+    },
+    {
+      name: 'Custom DropdownAlert',
+      description:
+        'This demonstrates the ability to set a remote image and change the background color.',
+      action: () => {
+        alert.current({
+          type: '',
+          title: 'Custom DropdownAlert',
+          message:
+            'Ut qui labore exercitation esse exercitation sint mollit exercitation qui nulla.',
+        });
+      },
+      alert: (
+        <DropdownAlert
+          alert={func => (alert.current = func)}
+          imageSrc={reactNativeLogoSrc}
+          alertViewStyle={styles.alertView}
+        />
+      ),
+    },
+    {
+      name: 'iOS notification',
+      description:
+        'This demonstrates build your own alert (BYOA) by showing a custom child component.',
+      action: () => {
+        alert.current();
+      },
+      alert: (
+        <DropdownAlert
+          alert={func => (alert.current = func)}
+          updateStatusBar={false}>
+          <NotificationIOS />
+        </DropdownAlert>
+      ),
+    },
+    {
+      name: 'Android notification',
+      description:
+        'This demonstrates build your own alert (BYOA) by showing a custom child component.',
+      action: () => {
+        alert.current();
+      },
+      alert: (
+        <DropdownAlert
+          alert={func => (alert.current = func)}
+          dismiss={func => (dismiss.current = func)}
+          updateStatusBar={false}>
+          <NotificationAndroid action={() => dismiss.current()} />
+        </DropdownAlert>
+      ),
+    },
+    {
+      name: 'Cancel',
+      description: 'This demonstrates Info alert with a cancel button',
+      alert: (
+        <DropdownAlert alert={func => (alert.current = func)} showCancel />
+      ),
+      action: () => {
+        alert.current({
+          type: 'info',
+          title: 'Info',
+          message: 'Tap cancel button to dismiss alert',
+        });
+      },
+    },
+  ];
 
-  const _renderHeader = () => {
-    return <Text style={styles.header}>{'DropdownAlert Example'}</Text>;
-  };
+  function _renderHeader() {
+    return <Text style={styles.header}>{'DropdownAlert examples'}</Text>;
+  }
 
-  const _renderItem = (alertListItem: AlertListItem) => {
-    const {item} = alertListItem;
+  function _renderItem(listItemIndex: ListItemIndex) {
+    const {item} = listItemIndex;
     return (
-      <TouchableOpacity
-        style={[styles.button, {backgroundColor: item.color}]}
-        onPress={() => _onSelect(alertListItem)}>
-        <Text style={styles.title}>{item.title}</Text>
+      <TouchableOpacity style={styles.item} onPress={() => _onSelect(item)}>
+        <Text style={styles.name}>{item.name}</Text>
+        <Text style={styles.description}>{item.description}</Text>
       </TouchableOpacity>
     );
-  };
+  }
 
-  const _onSelect = (alertListItem: AlertListItem) => {
-    const {item} = alertListItem;
-    switch (item.type) {
-      case 'dismiss':
-        dismiss.current();
-        break;
-      case 'show':
-        _showAlertQueue();
-        break;
-      case 'fetch':
-        _fetchData();
-        break;
-      default:
-        const inMilliSeconds = Math.floor(Math.random() * 6000 + 1);
-        const inSeconds = Number((inMilliSeconds / 1000).toFixed(2));
-        const title = `${item.type} closes in ${inSeconds}s`;
-        let source;
-        if (item.type === 'custom') {
-          source = {uri: 'https://reactnative.dev/docs/assets/favicon.png'};
-        }
-        alert.current(item.type, title, item.message, source, inMilliSeconds);
-    }
-  };
+  function _renderSeparator() {
+    return <View style={styles.separator} />;
+  }
 
-  const _onDismiss = (data: DropdownAlertData) => _log('onDismiss', data);
-  const _onCancel = (data: DropdownAlertData) => _log('onCancel', data);
-  const _onTap = (data: DropdownAlertData) => _log('onTap', data);
-  const _log = (message: string, data?: DropdownAlertData) =>
-    console.log(message, data);
+  function _onSelect(item: ListItem) {
+    setSelected(item);
+    setTimeout(() => {
+      if (item.action) {
+        item.action();
+      }
+    }, 100);
+  }
 
   return (
     <View style={styles.view}>
       <SafeAreaView>
         <FlatList
-          keyExtractor={item => item.type}
+          keyExtractor={(_item, index) => `${index}`}
           data={items}
+          initialNumToRender={items.length}
           renderItem={_renderItem}
           ListHeaderComponent={_renderHeader}
+          ItemSeparatorComponent={_renderSeparator}
         />
       </SafeAreaView>
-      <DropdownAlert
-        alert={func => (alert.current = func)}
-        dismiss={func => (dismiss.current = func)}
-        containerStyle={styles.container}
-        showCancel
-        onCancel={_onCancel}
-        onDismiss={_onDismiss}
-        onTap={_onTap}
-      />
+      {selected.alert}
     </View>
   );
 }
@@ -181,30 +208,31 @@ function App(): JSX.Element {
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-  },
-  button: {
-    borderColor: 'dark gray',
-    borderWidth: 1,
-    padding: 10,
-    margin: 4,
-    borderRadius: 8,
+    backgroundColor: '#32302F',
   },
   header: {
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 18,
-    padding: 8,
-  },
-  title: {
     fontSize: 16,
     color: 'white',
-    fontWeight: 'bold',
   },
-  image: {
-    height: 36,
-    width: 36,
+  item: {
+    padding: 8,
   },
-  container: {
+  name: {
+    fontSize: 16,
+    color: 'white',
+  },
+  description: {
+    fontSize: 14,
+    color: 'white',
+  },
+  separator: {
+    backgroundColor: 'white',
+    height: StyleSheet.hairlineWidth,
+  },
+  alertView: {
+    padding: 8,
     backgroundColor: '#6441A4',
   },
 });
