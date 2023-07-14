@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, LayoutChangeEvent, Pressable, Text} from 'react-native';
+import {Image, LayoutChangeEvent, Pressable, Text, View} from 'react-native';
 import '@testing-library/jest-native/extend-expect';
 import {
   render,
@@ -11,259 +11,379 @@ import {
 import DropdownAlert, {
   DropdownAlertType,
   DropdownAlertColor,
+  DropDownAlertTestID,
+  DropDownAlertImage,
+  DropdownAlertData,
 } from '../DropdownAlert';
+
+function testAlertBackgroundColor(backgroundColor: DropdownAlertColor) {
+  const alert = screen.getByTestId(DropDownAlertTestID.Alert);
+  expect(alert).toBeDefined();
+  expect(alert).toHaveStyle({
+    backgroundColor,
+    opacity: 1,
+    padding: 8,
+  });
+}
+
+function testImageSourceWithType(type: DropdownAlertType) {
+  const image = screen.getByTestId(DropDownAlertTestID.Image);
+  expect(image).toBeDefined();
+  expect(image.props.source).toBeDefined();
+  expect(image.props.source.testUri).toBeDefined();
+  expect(image.props.source.testUri).toContain(type);
+}
+
+function delay(milliseconds: number = 1000) {
+  return new Promise(res => setTimeout(() => res(true), milliseconds));
+}
 
 afterEach(cleanup);
 
-test('it renders', () => {
+test('it renders component', () => {
   const component = render(<DropdownAlert />);
   expect(component).toBeDefined();
   expect(component.toJSON()).toMatchSnapshot();
 });
 
-test('it alerts', async () => {
-  let alert = () => new Promise(res => res);
+test('alert without parameters to be default background color', async () => {
+  let alert = (_data?: DropdownAlertData) =>
+    new Promise<DropdownAlertData>(res => res);
+  const component = render(<DropdownAlert alert={func => (alert = func)} />);
+  expect(component).toBeDefined();
+  await act(async () => {
+    await alert();
+  });
+  [
+    DropDownAlertTestID.AnimatedView,
+    DropDownAlertTestID.SafeView,
+    DropDownAlertTestID.TextView,
+  ].forEach(testId => {
+    const view = screen.getByTestId(testId);
+    expect(view).toBeDefined();
+  });
+  testAlertBackgroundColor(DropdownAlertColor.Default);
+}, 5500);
+
+test('DropdownAlertType.Info', async () => {
+  let alert = (_data?: DropdownAlertData) =>
+    new Promise<DropdownAlertData>(res => res);
+  const component = render(<DropdownAlert alert={func => (alert = func)} />);
+  expect(component).toBeDefined();
+  await act(async () => {
+    await alert({type: DropdownAlertType.Info});
+  });
+  testAlertBackgroundColor(DropdownAlertColor.Info);
+  testImageSourceWithType(DropdownAlertType.Info);
+  expect(component.toJSON()).toMatchSnapshot();
+}, 5500);
+
+test('DropdownAlertType.Warn', async () => {
+  let alert = (_data?: DropdownAlertData) =>
+    new Promise<DropdownAlertData>(res => res);
+  const component = render(<DropdownAlert alert={func => (alert = func)} />);
+  expect(component).toBeDefined();
+  await act(async () => {
+    await alert({type: DropdownAlertType.Warn});
+  });
+  testAlertBackgroundColor(DropdownAlertColor.Warn);
+  testImageSourceWithType(DropdownAlertType.Warn);
+  expect(component.toJSON()).toMatchSnapshot();
+}, 5500);
+
+test('DropdownAlertType.Error', async () => {
+  let alert = (_data?: DropdownAlertData) =>
+    new Promise<DropdownAlertData>(res => res);
+  const component = render(<DropdownAlert alert={func => (alert = func)} />);
+  expect(component).toBeDefined();
+  await act(async () => {
+    await alert({type: DropdownAlertType.Error});
+  });
+  testAlertBackgroundColor(DropdownAlertColor.Error);
+  testImageSourceWithType(DropdownAlertType.Error);
+  expect(component.toJSON()).toMatchSnapshot();
+}, 5500);
+
+test('DropdownAlertType.Success', async () => {
+  let alert = (_data?: DropdownAlertData) =>
+    new Promise<DropdownAlertData>(res => res);
+  const component = render(<DropdownAlert alert={func => (alert = func)} />);
+  expect(component).toBeDefined();
+  await act(async () => {
+    await alert({type: DropdownAlertType.Success});
+  });
+  testAlertBackgroundColor(DropdownAlertColor.Success);
+  testImageSourceWithType(DropdownAlertType.Success);
+  expect(component.toJSON()).toMatchSnapshot();
+}, 5500);
+
+test('onDismissProgrammatic', async () => {
+  let alert = (_data?: DropdownAlertData) =>
+    new Promise<DropdownAlertData>(res => res);
+  let dismiss = () => {};
+  let _onDismissProgrammatic = jest.fn();
   const component = render(
-    <DropdownAlert alertWithType={func => (alert = func)} />,
+    <DropdownAlert
+      alert={func => (alert = func)}
+      dismiss={func => (dismiss = func)}
+      dismissInterval={0}
+      onDismissProgrammatic={_onDismissProgrammatic}
+    />,
+  );
+  expect(component).toBeDefined();
+  await act(async () => {
+    alert({
+      type: 'custom',
+      title: DropDownAlertTestID.Title,
+      message: DropDownAlertTestID.Message,
+    });
+  });
+  const title = screen.getByText(DropDownAlertTestID.Title);
+  expect(title).toBeDefined();
+  const message = screen.getByText(DropDownAlertTestID.Message);
+  expect(message).toBeDefined();
+  const button = screen.getByTestId(DropDownAlertTestID.Alert);
+  expect(button).toBeDefined();
+  dismiss();
+  await delay();
+  expect(_onDismissProgrammatic).toBeCalled();
+}, 2000);
+
+test('onDismissPress', async () => {
+  let alert = (_data?: DropdownAlertData) =>
+    new Promise<DropdownAlertData>(res => res);
+  let _onDismissPress = jest.fn();
+  const component = render(
+    <DropdownAlert
+      alert={func => (alert = func)}
+      dismissInterval={0}
+      onDismissPress={_onDismissPress}
+    />,
+  );
+  expect(component).toBeDefined();
+  await act(async () => {
+    alert({
+      type: 'custom',
+      title: DropDownAlertTestID.Title,
+      message: DropDownAlertTestID.Message,
+    });
+  });
+  const title = screen.getByText(DropDownAlertTestID.Title);
+  expect(title).toBeDefined();
+  const message = screen.getByText(DropDownAlertTestID.Message);
+  expect(message).toBeDefined();
+  const button = screen.getByTestId(DropDownAlertTestID.Alert);
+  expect(button).toBeDefined();
+  fireEvent.press(button);
+  await delay();
+  expect(_onDismissPress).toBeCalled();
+}, 2000);
+
+test('onDismissCancel', async () => {
+  let alert = (_data?: DropdownAlertData) =>
+    new Promise<DropdownAlertData>(res => res);
+  let _onDismissCancel = jest.fn();
+  const component = render(
+    <DropdownAlert
+      alert={func => (alert = func)}
+      showCancel
+      dismissInterval={0}
+      onDismissCancel={_onDismissCancel}
+    />,
+  );
+  expect(component).toBeDefined();
+  await act(async () => {
+    alert({
+      type: 'custom',
+      title: DropDownAlertTestID.Title,
+      message: DropDownAlertTestID.Message,
+    });
+  });
+  const cancel = screen.getByTestId(DropDownAlertTestID.Cancel);
+  expect(cancel).toBeDefined();
+  fireEvent.press(cancel);
+  const cancelImage = screen.getByTestId(DropDownAlertTestID.CancelImage);
+  expect(cancelImage).toBeDefined();
+  await delay();
+  expect(_onDismissCancel).toBeCalled();
+}, 5500);
+
+test('renderImage, renderTitle, renderMessage and renderCancel props', async () => {
+  let alert = (_data?: DropdownAlertData) =>
+    new Promise<DropdownAlertData>(res => res);
+  const component = render(
+    <DropdownAlert
+      alert={func => (alert = func)}
+      renderImage={() => {
+        return <Image testID={'myImage'} source={DropDownAlertImage.Info} />;
+      }}
+      renderTitle={data => <Text>{data.title}</Text>}
+      renderMessage={data => <Text>{data.message}</Text>}
+      renderCancel={(_data, onCancel) => {
+        return (
+          <Pressable testID={'myButton'} onPress={onCancel}>
+            {'Cancel'}
+          </Pressable>
+        );
+      }}
+      showCancel
+    />,
+  );
+  expect(component).toBeDefined();
+  await act(async () => {
+    await alert({type: 'custom', title: 'myTitle', message: 'myMessage'});
+  });
+  ['myImage', 'myButton'].forEach(testID => {
+    const view = screen.getByTestId(testID);
+    expect(view).toBeDefined();
+  });
+  ['myTitle', 'myMessage'].forEach(text => {
+    const view = screen.getByText(text);
+    expect(view).toBeDefined();
+  });
+  expect(component.toJSON()).toMatchSnapshot();
+}, 5500);
+
+test('multiple queued alerts', async () => {
+  let alert = (_data?: DropdownAlertData) =>
+    new Promise<DropdownAlertData>(res => res);
+  const component = render(
+    <DropdownAlert alert={func => (alert = func)} dismissInterval={1000} />,
+  );
+  expect(component).toBeDefined();
+  await act(async () => {
+    alert({
+      type: DropdownAlertType.Info,
+      title: 'Info',
+      message:
+        'Esse ex ullamco pariatur id labore laborum ipsum non qui ut occaecat consectetur fugiat.',
+    });
+    await alert({
+      type: DropdownAlertType.Error,
+      title: 'Error',
+      message:
+        'Dolore dolor veniam culpa proident veniam incididunt in laboris irure fugiat cupidatat.',
+    });
+  });
+  expect(component.toJSON()).toMatchSnapshot();
+}, 5500);
+
+test('Animated.View onLayout function', async () => {
+  let alert = (_data?: DropdownAlertData) =>
+    new Promise<DropdownAlertData>(res => res);
+  const component = render(
+    <DropdownAlert alert={func => (alert = func)} dismissInterval={0} />,
+  );
+  expect(component).toBeDefined();
+  await act(() => {
+    alert({type: DropdownAlertType.Warn, title: 'title', message: 'message'});
+  });
+  const height = 150;
+  const animatedView = screen.getByTestId(DropDownAlertTestID.AnimatedView);
+  expect(animatedView).toBeDefined();
+  const event: LayoutChangeEvent = {
+    nativeEvent: {layout: {x: 0, y: 0, height, width: 100}},
+    currentTarget: 0,
+    target: 0,
+    bubbles: false,
+    cancelable: false,
+    defaultPrevented: false,
+    eventPhase: 0,
+    isTrusted: false,
+    preventDefault: jest.fn(),
+    isDefaultPrevented: jest.fn(),
+    stopPropagation: jest.fn(),
+    isPropagationStopped: jest.fn(),
+    persist: jest.fn(),
+    timeStamp: new Date().getTime(),
+    type: '',
+  };
+  fireEvent(animatedView, 'onLayout', event);
+  const transform = animatedView.props.style.transform;
+  expect(transform).toBeDefined();
+  expect(transform).toHaveLength(1);
+  expect(transform[0]).toBeDefined();
+  const translateY = transform[0].translateY;
+  expect(translateY).toBeDefined();
+  expect(animatedView).toHaveStyle({transform: [{translateY}]});
+  expect(component.toJSON()).toMatchSnapshot();
+});
+
+test('it updates status bar on Android', async () => {
+  jest.mock('react-native/Libraries/Utilities/Platform', () => ({
+    OS: 'android',
+    select: () => null,
+  }));
+  const currentHeight = 20;
+  jest.mock('react-native/Libraries/Components/StatusBar/StatusBar', () => ({
+    currentHeight,
+    setBackgroundColor: jest.fn(),
+    setTranslucent: jest.fn(),
+    setBarStyle: jest.fn(),
+  }));
+  let alert = (_data?: DropdownAlertData) =>
+    new Promise<DropdownAlertData>(res => res);
+  const component = render(
+    <DropdownAlert alert={func => (alert = func)} translucent />,
   );
   expect(component).toBeDefined();
   await act(async () => {
     await alert();
   });
-  expect(component.toJSON()).toMatchSnapshot();
-}, 5500);
-
-test('it info alerts', async () => {
-  let alert = (_type: string) => new Promise(res => res);
-  const component = render(
-    <DropdownAlert alertWithType={func => (alert = func)} />,
-  );
-  expect(component).toBeDefined();
-  await act(async () => {
-    await alert(DropdownAlertType.Info);
-  });
-  const button = await screen.findByTestId('button');
+  const button = screen.getByTestId(DropDownAlertTestID.Alert);
   expect(button).toBeDefined();
-  expect(button).toHaveStyle({
-    backgroundColor: DropdownAlertColor.Info,
-    opacity: 1,
-    padding: 8,
-  });
-  const image = await screen.findByTestId('image');
-  expect(image).toBeDefined();
-  expect(image.props.source).toBeDefined();
-  expect(image.props.source.testUri).toBeDefined();
-  expect(image.props.source.testUri).toContain(DropdownAlertType.Info);
+  expect(button).toHaveStyle({marginTop: currentHeight});
   expect(component.toJSON()).toMatchSnapshot();
-}, 5500);
+}, 6000);
 
-test('it warn alerts', async () => {
-  let alert = (_type: string) => new Promise(res => res);
-  const component = render(
-    <DropdownAlert alertWithType={func => (alert = func)} />,
-  );
-  expect(component).toBeDefined();
-  await act(async () => {
-    await alert(DropdownAlertType.Warn);
-  });
-  const button = await screen.findByTestId('button');
-  expect(button).toBeDefined();
-  expect(button).toHaveStyle({
-    backgroundColor: DropdownAlertColor.Warn,
-    opacity: 1,
-    padding: 8,
-  });
-  const image = await screen.findByTestId('image');
-  expect(image).toBeDefined();
-  expect(image.props.source).toBeDefined();
-  expect(image.props.source.testUri).toBeDefined();
-  expect(image.props.source.testUri).toContain(DropdownAlertType.Warn);
-  expect(component.toJSON()).toMatchSnapshot();
-}, 5500);
-
-test('it error alerts', async () => {
-  let alert = (_type: string) => new Promise(res => res);
-  const component = render(
-    <DropdownAlert alertWithType={func => (alert = func)} />,
-  );
-  expect(component).toBeDefined();
-  await act(async () => {
-    await alert(DropdownAlertType.Error);
-  });
-  const button = await screen.findByTestId('button');
-  expect(button).toBeDefined();
-  expect(button).toHaveStyle({
-    backgroundColor: DropdownAlertColor.Error,
-    opacity: 1,
-    padding: 8,
-  });
-  const image = await screen.findByTestId('image');
-  expect(image).toBeDefined();
-  expect(image.props.source).toBeDefined();
-  expect(image.props.source.testUri).toBeDefined();
-  expect(image.props.source.testUri).toContain(DropdownAlertType.Error);
-  expect(component.toJSON()).toMatchSnapshot();
-}, 5500);
-
-test('it success alerts', async () => {
-  let alert = (_type: string) => new Promise(res => res);
-  const component = render(
-    <DropdownAlert alertWithType={func => (alert = func)} />,
-  );
-  expect(component).toBeDefined();
-  await act(async () => {
-    await alert(DropdownAlertType.Success);
-  });
-  const button = await screen.findByTestId('button');
-  expect(button).toBeDefined();
-  expect(button).toHaveStyle({
-    backgroundColor: DropdownAlertColor.Success,
-    opacity: 1,
-    padding: 8,
-  });
-  const image = await screen.findByTestId('image');
-  expect(image).toBeDefined();
-  expect(image.props.source).toBeDefined();
-  expect(image.props.source.testUri).toBeDefined();
-  expect(image.props.source.testUri).toContain(DropdownAlertType.Success);
-  expect(component.toJSON()).toMatchSnapshot();
-}, 5500);
-
-test('it alert with title and message then tap to dismiss', async () => {
-  let alert = (_type: string, _title: string, _message: string) =>
-    new Promise(res => res);
+test('it updates status bar with containerStyle undefined backgroundColor on Android', async () => {
+  jest.mock('react-native/Libraries/Utilities/Platform', () => ({
+    OS: 'android',
+    select: () => null,
+  }));
+  const currentHeight = 20;
+  jest.mock('react-native/Libraries/Components/StatusBar/StatusBar', () => ({
+    currentHeight,
+    setBackgroundColor: jest.fn(),
+    setTranslucent: jest.fn(),
+    setBarStyle: jest.fn(),
+  }));
+  let alert = (_data?: DropdownAlertData) =>
+    new Promise<DropdownAlertData>(res => res);
   const component = render(
     <DropdownAlert
-      alertWithType={func => (alert = func)}
-      dismissInterval={0}
-    />,
-  );
-  expect(component).toBeDefined();
-  await act(() => {
-    alert('custom', 'title', 'message');
-  });
-  const title = screen.getByText('title');
-  expect(title).toBeDefined();
-  const message = screen.getByText('message');
-  expect(message).toBeDefined();
-  const button = await screen.findByTestId('button');
-  expect(button).toBeDefined();
-  fireEvent.press(button);
-}, 5500);
-
-test('it alert with cancel button', async () => {
-  let alert = (_type: string, _title: string, _message: string) =>
-    new Promise(res => res);
-  const component = render(
-    <DropdownAlert
-      alertWithType={func => (alert = func)}
-      showCancel
-      dismissInterval={0}
+      alert={func => (alert = func)}
+      translucent
+      alertViewStyle={{padding: 8}}
     />,
   );
   expect(component).toBeDefined();
   await act(async () => {
-    alert('custom', 'title', 'message');
-    const cancelButton = await screen.findByTestId('cancelButton');
-    expect(cancelButton).toBeDefined();
-    fireEvent.press(cancelButton);
+    await alert();
   });
-}, 5500);
+  const button = screen.getByTestId(DropDownAlertTestID.Alert);
+  expect(button).toBeDefined();
+  expect(button).toHaveStyle({marginTop: currentHeight});
+}, 6000);
 
-test('render image, title, message and cancel', async () => {
-  let alert = (_type: string, _title: string, _message: string) =>
-    new Promise(res => res);
-  const source = {uri: 'https://reactnative.dev/docs/assets/favicon.png'};
+test('children prop', async () => {
+  let alert = (_data?: DropdownAlertData) =>
+    new Promise<DropdownAlertData>(res => res);
   const component = render(
-    <DropdownAlert
-      alertWithType={func => (alert = func)}
-      renderImage={() => {
-        return <Image source={source} style={{width: 20, height: 20}} />;
-      }}
-      renderTitle={data => {
-        return <Text>{data.title}</Text>;
-      }}
-      renderMessage={data => {
-        return <Text>{data.message}</Text>;
-      }}
-      renderCancel={(_data, onCancel) => {
-        return <Pressable onPress={onCancel}>{'Cancel'}</Pressable>;
-      }}
-      showCancel
-    />,
+    <DropdownAlert alert={func => (alert = func)}>
+      <View testID={'childView'}>
+        <Text testID={'childText'}>{'My Child Text'}</Text>
+        <Pressable testID={'childButton'}>{'My Button'}</Pressable>
+      </View>
+    </DropdownAlert>,
   );
   expect(component).toBeDefined();
   await act(async () => {
-    await alert('custom', 'title', 'message');
+    await alert();
+  });
+  ['childView', 'childText', 'childButton'].forEach(testId => {
+    const view = screen.getByTestId(testId);
+    expect(view).toBeDefined();
   });
   expect(component.toJSON()).toMatchSnapshot();
 }, 5500);
-
-test('it renders multiple long alerts', async () => {
-  let alert = (_type: string, _title: string, _message: string) =>
-    new Promise(res => res);
-  const component = render(
-    <DropdownAlert
-      alertWithType={func => (alert = func)}
-      dismissInterval={1000}
-    />,
-  );
-  expect(component).toBeDefined();
-  await act(async () => {
-    alert(
-      DropdownAlertType.Info,
-      'Info',
-      'Esse ex ullamco pariatur id labore laborum ipsum non qui ut occaecat consectetur fugiat.',
-    );
-    await alert(
-      DropdownAlertType.Error,
-      'Error',
-      'Dolore dolor veniam culpa proident veniam incididunt in laboris irure fugiat cupidatat.',
-    );
-  });
-}, 5500);
-
-test('it invoke onLayout', async () => {
-  let alert = (_type: string, _title: string, _message: string) =>
-    new Promise(res => res);
-  const component = render(
-    <DropdownAlert
-      alertWithType={func => (alert = func)}
-      dismissInterval={0}
-    />,
-  );
-  expect(component).toBeDefined();
-  await act(async () => {
-    alert(DropdownAlertType.Warn, 'title', 'message');
-    const animatedView = await screen.findByTestId('animatedView');
-    expect(animatedView).toBeDefined();
-    const event: LayoutChangeEvent = {
-      nativeEvent: {layout: {x: 0, y: 0, height: 100, width: 100}},
-      currentTarget: 0,
-      target: 0,
-      bubbles: false,
-      cancelable: false,
-      defaultPrevented: false,
-      eventPhase: 0,
-      isTrusted: false,
-      preventDefault: function (): void {
-        throw new Error('Function not implemented.');
-      },
-      isDefaultPrevented: function (): boolean {
-        throw new Error('Function not implemented.');
-      },
-      stopPropagation: function (): void {
-        throw new Error('Function not implemented.');
-      },
-      isPropagationStopped: function (): boolean {
-        throw new Error('Function not implemented.');
-      },
-      persist: function (): void {
-        throw new Error('Function not implemented.');
-      },
-      timeStamp: 0,
-      type: '',
-    };
-    fireEvent(animatedView, 'onLayout', event);
-  });
-});

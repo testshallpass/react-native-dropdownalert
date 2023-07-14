@@ -33,7 +33,7 @@ function App(): JSX.Element {
     alert: <DropdownAlert />,
   };
   const [selected, setSelected] = useState(defaultSelected);
-  let alert = useRef((_data?: DropdownAlertData) => new Promise(res => res));
+  let alert = useRef((_data?: DropdownAlertData) => new Promise<DropdownAlertData>(res => res));
   let dismiss = useRef(() => {});
   const reactNativeLogoSrc: ImageSourcePropType = {
     uri: 'https://reactnative.dev/docs/assets/favicon.png',
@@ -104,12 +104,13 @@ function App(): JSX.Element {
           title: 'Custom DropdownAlert',
           message:
             'Ut qui labore exercitation esse exercitation sint mollit exercitation qui nulla.',
+          source: reactNativeLogoSrc, // can also use imageSrc prop
+          interval: 5000,
         });
       },
       alert: (
         <DropdownAlert
           alert={func => (alert.current = func)}
-          imageSrc={reactNativeLogoSrc}
           alertViewStyle={styles.alertView}
         />
       ),

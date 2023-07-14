@@ -1,4 +1,4 @@
-import React, {useState, useRef, useMemo} from 'react';
+import React, {useState, useRef, useMemo, ReactNode} from 'react';
 import {
   SafeAreaView,
   View,
@@ -19,6 +19,9 @@ import {
   PanResponderGestureState,
   LayoutChangeEvent,
   Platform,
+  ViewProps,
+  TouchableOpacityProps,
+  ImageProps,
 } from 'react-native';
 import Queue from './Queue';
 
@@ -29,30 +32,29 @@ export enum DropdownAlertType {
   Success = 'success',
 }
 
-export enum DropdownAlertAction {
+export enum DropdownAlertDismissAction {
   Automatic = 'automatic',
   Cancel = 'cancel',
   Pan = 'pan',
   Programmatic = 'programmatic',
-  Tap = 'tap',
+  Press = 'press',
 }
 
 export enum DropdownAlertColor {
-  Info = '#2B73B6',
+  Info = '#2b73b6',
   Warn = '#cd853f',
   Error = '#cc3232',
-  Success = '#32A54A',
-  Default = 'black',
+  Success = '#32a54a',
+  Default = '#000000',
 }
 
 export type DropdownAlertData = {
-  type?: string;
+  type?: string | DropdownAlertType;
   title?: string;
   message?: string;
   source?: ImageSourcePropType;
   interval?: number;
-  action?: string;
-  resolve?: (_value: unknown) => void;
+  resolve?: (_value: DropdownAlertData) => void;
 };
 
 export enum DropdownAlertToValue {
@@ -67,6 +69,18 @@ export enum DropDownAlertImage {
   Success = require('./assets/success.png'),
   Cancel = require('./assets/cancel.png'),
 }
+
+export const DropDownAlertTestID = {
+  AnimatedView: 'animatedView',
+  SafeView: 'safeView',
+  TextView: 'textView',
+  Alert: 'alert',
+  Image: 'image',
+  Title: 'title',
+  Message: 'message',
+  Cancel: 'cancel',
+  CancelImage: 'cancelImage',
+};
 
 // References
 //  Image source: https://reactnative.dev/docs/image#source
@@ -88,161 +102,117 @@ export enum DropDownAlertImage {
 //  zIndex: https://reactnative.dev/docs/layout-props#zindex
 
 export type DropdownAlertProps = {
-  // image source when NOT info, warn, success or error types
-  // can be overridden by alert function parameter source
   imageSrc?: ImageSourcePropType;
-  // image source for info type
-  // can be overridden by alert function parameter source
   infoImageSrc?: ImageSourcePropType;
-  // image source for warn type
-  // can be overridden by alert function parameter source
   warnImageSrc?: ImageSourcePropType;
-  // image source for error type
-  // can be overridden by alert function parameter source
   errorImageSrc?: ImageSourcePropType;
-  // image source for success type
-  // can be overridden by alert function parameter source
   successImageSrc?: ImageSourcePropType;
-  // image source for cancel button
-  cancelBtnImageSrc?: ImageSourcePropType;
-  // TouchableOpacity background color for info type and
-  // used as the Android status bar background color
+  cancelImageSrc?: ImageSourcePropType;
   infoColor?: ColorValue;
-  // TouchableOpacity background color for warn type and
-  // used as the Android status bar background color
   warnColor?: ColorValue;
-  // TouchableOpacity background color for error type and
-  // used as the Android status bar background color
   errorColor?: ColorValue;
-  // TouchableOpacity background color for success type and
-  // used as the Android status bar background color
   successColor?: ColorValue;
-  // interval to automatically dismiss alert and
-  // is overridden if interval passed into alertWithType function
-  dismissInterval?: number;
-  // Animated.View style and can override pre-defined styles
-  wrapperStyle?: ViewStyle;
-  // TouchableOpacity style override when NOT info, warn, success or error types
-  // also the background color is used when NOT info, warn, success or error types
-  containerStyle?: ViewStyle;
-  // ContentView style
-  contentContainerStyle?: ViewStyle;
-  // Text component for title style
-  titleStyle?: TextStyle;
-  // Text component for message style
-  messageStyle?: TextStyle;
-  // Image style
-  imageStyle?: ImageStyle;
-  // Cancel button's image style
-  cancelBtnImageStyle?: ImageStyle;
-  // Cancel button's TouchableOpacity style
-  cancelBtnStyle?: ViewStyle;
-  // Text component title number of lines
-  titleNumOfLines?: number;
-  // Text component message number of lines
-  messageNumOfLines?: number;
-  // Callback function when alert is dismissed
-  onDismiss?: (data: DropdownAlertData) => void;
-  // Callback function when alert is cancelled using cancel button
-  onCancel?: (data: DropdownAlertData) => void;
-  // Whether or not to show the cancel button
-  showCancel?: boolean;
-  // Whether or not to allow onPress on TouchableOpacity to dismiss alert
-  tapToDismissEnabled?: boolean;
-  // Whether or not to allow pan gestures
-  panResponderEnabled?: boolean;
-  // Android exclusive: used to set status bar translucent property when update status bar function is called
-  //  if it is true it also sets the marginTop on TouchableOpacity component
-  translucent?: boolean;
-  // StatusBarStyle when alert is open and updateStatusBar must be true
-  activeStatusBarStyle?: StatusBarStyle;
-  // Android exclusive: StatusBar background color when alert is open and updateStatusBar must be true
+  // Android: StatusBar background color when alert is visible and updateStatusBar is true
   activeStatusBarBackgroundColor?: ColorValue;
-  // StatusBarStyle when alert is dismissed and updateStatusBar must be true
-  inactiveStatusBarStyle?: StatusBarStyle;
-  // Android exclusive: StatusBar background color when alert is dismissed and updateStatusBar must be true
+  // Android: StatusBar background color when alert is dismissed and updateStatusBar is true
   inactiveStatusBarBackgroundColor?: ColorValue;
-  // Whether or not to update status bar style, translucent or backgroundColor
-  updateStatusBar?: boolean;
-  // Android exclusive: it is used in the Animated.View style so alert is above other UI components
+  dismissInterval?: number;
+  titleNumberOfLines?: number;
+  messageNumberOfLines?: number;
+  // Android: it is used in the Animated.View style so alert is above other UI components
   elevation?: number;
   // It is used in the Animated.View style so alert is above other UI components
   zIndex?: number;
   // Distance on the Y-axis for alert to move by pan gesture
   // panResponderEnabled must be true as well
   panResponderMoveDistance?: number;
-  // View style that holds the title and message components
-  defaultTextContainer?: ViewStyle;
-  // The following render functions shall override built-in UI components
+  // Distance on the Y-axis for the alert to be dismissed by pan gesture
+  // panResponderEnabled must be true as well
+  panResponderDismissDistance?: number;
+  animatedViewStyle?: ViewStyle;
+  alertViewStyle?: ViewStyle;
+  safeViewStyle?: ViewStyle;
+  textViewStyle?: ViewStyle;
+  cancelViewStyle?: ViewStyle;
+  titleTextStyle?: TextStyle;
+  messageTextStyle?: TextStyle;
+  imageStyle?: ImageStyle;
+  cancelImageStyle?: ImageStyle;
+  onDismissAutomatic?: (data: DropdownAlertData) => void;
+  onDismissCancel?: (data: DropdownAlertData) => void;
+  onDismissPress?: (data: DropdownAlertData) => void;
+  onDismissPanResponder?: (data: DropdownAlertData) => void;
+  onDismissProgrammatic?: (data: DropdownAlertData) => void;
+  showCancel?: boolean;
+  onDismissPressDisabled?: boolean;
+  panResponderEnabled?: boolean;
+  // Android: used to set status bar translucent property when update status bar function is called
+  //  if it is true it also sets the marginTop on TouchableOpacity component
+  translucent?: boolean;
+  // Whether or not to update status bar style, translucent or backgroundColor
+  updateStatusBar?: boolean;
+  // StatusBarStyle when alert is open and updateStatusBar must be true
+  activeStatusBarStyle?: StatusBarStyle;
+  // StatusBarStyle when alert is dismissed and updateStatusBar must be true
+  inactiveStatusBarStyle?: StatusBarStyle;
   renderImage?: (data: DropdownAlertData) => JSX.Element;
   renderCancel?: (data: DropdownAlertData, onCancel: () => void) => JSX.Element;
   renderTitle?: (data: DropdownAlertData) => JSX.Element;
   renderMessage?: (data: DropdownAlertData) => JSX.Element;
-  // Animated.View testID
-  testID?: string;
-  // Animated.View accessibilityLabel
-  accessibilityLabel?: string;
-  // Animated.View accessible
-  accessible?: boolean;
-  // Text component props for title
   titleTextProps?: TextProps;
-  // Text component props for message
   messageTextProps?: TextProps;
-  // Callback when TouchableOpacity's onPress is invoked | is controlled by tapToDismissEnabled
-  onTap?: (data: DropdownAlertData) => void;
-  // Function to invoke the alert to open
-  alertWithType?: (
-    func: (
-      type?: string,
-      title?: string,
-      message?: string,
-      source?: ImageSourcePropType,
-      interval?: number,
-    ) => Promise<unknown>,
+  animatedViewProps?: ViewProps;
+  alertTouchableOpacityProps?: TouchableOpacityProps;
+  safeViewProps?: ViewProps;
+  textViewProps?: ViewProps;
+  imageProps?: ImageProps;
+  cancelTouchableOpacityProps?: TouchableOpacityProps;
+  cancelImageProps?: ImageProps;
+  alert?: (
+    func: (data?: DropdownAlertData) => Promise<DropdownAlertData>,
   ) => void;
-  // Function to dismiss alert programmatically
   dismiss?: (func: () => void) => void;
-  // Used in the alert's open and dismiss animation sequence
   springAnimationConfig?: Animated.SpringAnimationConfig;
-  // Distance on the Y-axis for the alert to be dismissed by pan gesture
-  // panResponderEnabled must be true as well
-  panResponderDismissDistance?: number;
+  children?: ReactNode;
 };
 
 const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
-  onDismiss = () => {},
-  onCancel = () => {},
+  onDismissAutomatic = () => {},
+  onDismissPress = () => {},
+  onDismissPanResponder = () => {},
+  onDismissProgrammatic = () => {},
+  onDismissCancel = () => {},
   dismissInterval = 4000,
-  titleNumOfLines = 1,
-  messageNumOfLines = 3,
+  titleNumberOfLines = 1,
+  messageNumberOfLines = 3,
   imageSrc = undefined,
   infoImageSrc = DropDownAlertImage.Info,
   warnImageSrc = DropDownAlertImage.Warn,
   errorImageSrc = DropDownAlertImage.Error,
   successImageSrc = DropDownAlertImage.Success,
-  cancelBtnImageSrc = DropDownAlertImage.Cancel,
+  cancelImageSrc = DropDownAlertImage.Cancel,
   infoColor = DropdownAlertColor.Info,
   warnColor = DropdownAlertColor.Warn,
   errorColor = DropdownAlertColor.Error,
   successColor = DropdownAlertColor.Success,
   showCancel = false,
-  tapToDismissEnabled = true,
+  onDismissPressDisabled = false,
   panResponderEnabled = true,
-  wrapperStyle = undefined,
-  containerStyle = {
+  animatedViewStyle = undefined,
+  alertViewStyle = {
     padding: 8,
     backgroundColor: DropdownAlertColor.Default,
   },
-  contentContainerStyle = {
+  safeViewStyle = {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  titleStyle = {
+  titleTextStyle = {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
   },
-  messageStyle = {
+  messageTextStyle = {
     fontSize: 16,
     color: 'white',
   },
@@ -250,12 +220,12 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     height: 36,
     width: 36,
   },
-  cancelBtnImageStyle = {
+  cancelImageStyle = {
     height: 36,
     width: 36,
   },
-  cancelBtnStyle = undefined,
-  defaultTextContainer = {
+  cancelViewStyle = undefined,
+  textViewStyle = {
     flex: 1,
     marginHorizontal: 8,
   },
@@ -272,13 +242,16 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   renderCancel = undefined,
   renderTitle = undefined,
   renderMessage = undefined,
-  testID = 'animatedView',
-  accessibilityLabel = undefined,
-  accessible = false,
   titleTextProps = undefined,
   messageTextProps = undefined,
-  onTap = () => {},
-  alertWithType = () => {},
+  animatedViewProps = undefined,
+  alertTouchableOpacityProps = undefined,
+  safeViewProps = undefined,
+  textViewProps = undefined,
+  imageProps = undefined,
+  cancelTouchableOpacityProps = undefined,
+  cancelImageProps = undefined,
+  alert = () => {},
   dismiss = () => {},
   springAnimationConfig = {
     toValue: 0,
@@ -287,6 +260,7 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     isInteraction: false,
   },
   panResponderDismissDistance = -10,
+  children = undefined,
 }) => {
   const isIOS = Platform.OS === 'ios';
   const isAndroid = Platform.OS === 'android';
@@ -304,10 +278,10 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   const queue = useRef(new Queue());
   const animatedValue = useRef(new Animated.Value(0));
   const dismissTimeoutID = useRef(0);
-  const activeOpacity = !tapToDismissEnabled || showCancel ? 1 : 0.95;
-  const onPress = !tapToDismissEnabled
+  const activeOpacity = onDismissPressDisabled || showCancel ? 1 : 0.95;
+  const onPress = onDismissPressDisabled
     ? () => {}
-    : () => _dismiss(DropdownAlertAction.Tap);
+    : () => _dismiss(DropdownAlertDismissAction.Press);
 
   function _getPanResponder() {
     function _onDonePan(
@@ -318,7 +292,7 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
         panResponderEnabled &&
         gestureState.dy <= panResponderDismissDistance
       ) {
-        _dismiss(DropdownAlertAction.Pan);
+        _dismiss(DropdownAlertDismissAction.Pan);
       }
     }
     return PanResponder.create({
@@ -347,27 +321,22 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     panResponderMoveDistance,
   ]);
 
-  function _alertWithType(
-    type?: string,
-    title?: string,
-    message?: string,
-    source?: ImageSourcePropType,
-    interval?: number,
-  ) {
-    const data: DropdownAlertData = {
-      type,
-      title,
-      message,
-      source: source ? source : _getSourceForType(type),
-      interval: interval ? interval : dismissInterval,
+  function _alertWithData(data?: DropdownAlertData) {
+    const dropdownAlertData: DropdownAlertData = {
+      source: data?.source ? data.source : _getSourceForType(data?.type),
+      interval: data?.interval ? data.interval : dismissInterval,
+      ...data,
     };
-    queue.current.enqueue(data);
+    const promise = new Promise<DropdownAlertData>(
+      resolve => (dropdownAlertData.resolve = resolve),
+    );
+    queue.current.enqueue(dropdownAlertData);
     if (queue.current.size === 1) {
       _alert(queue.current.first);
     }
-    return new Promise(resolve => (data.resolve = resolve));
+    return promise;
   }
-  alertWithType(_alertWithType);
+  alert(_alertWithData);
 
   async function _alert(data: DropdownAlertData) {
     setAlertData(data);
@@ -377,26 +346,36 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     if (data.interval && data.interval > 0) {
       _clearDismissTimeoutID();
       dismissTimeoutID.current = setTimeout(() => {
-        _dismiss(DropdownAlertAction.Automatic);
+        _dismiss(DropdownAlertDismissAction.Automatic);
       }, data.interval);
     }
   }
 
-  async function _dismiss(action = DropdownAlertAction.Programmatic) {
+  async function _dismiss(action = DropdownAlertDismissAction.Programmatic) {
     if (!queue.current.isEmpty && !isLockRef.current) {
       _clearDismissTimeoutID();
       _updateStatusBar(false);
       isLockRef.current = true;
       await _animate(DropdownAlertToValue.Dismiss);
-      alertDataRef.current.action = action;
-      if (action === DropdownAlertAction.Cancel) {
-        onCancel(alertDataRef.current);
-      } else if (action === DropdownAlertAction.Tap) {
-        onTap(alertDataRef.current);
-      }
-      onDismiss(alertDataRef.current);
       if (alertDataRef.current.resolve) {
         alertDataRef.current.resolve(alertDataRef.current);
+      }
+      switch (action) {
+        case DropdownAlertDismissAction.Automatic:
+          onDismissAutomatic(alertDataRef.current);
+          break;
+        case DropdownAlertDismissAction.Programmatic:
+          onDismissProgrammatic(alertDataRef.current);
+          break;
+        case DropdownAlertDismissAction.Cancel:
+          onDismissCancel(alertDataRef.current);
+          break;
+        case DropdownAlertDismissAction.Pan:
+          onDismissPanResponder(alertDataRef.current);
+          break;
+        case DropdownAlertDismissAction.Press:
+          onDismissPress(alertDataRef.current);
+          break;
       }
       setTop(0);
       queue.current.dequeue();
@@ -476,7 +455,7 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
       case DropdownAlertType.Success:
         return successColor;
       default:
-        return containerStyle.backgroundColor;
+        return alertViewStyle.backgroundColor;
     }
   }
 
@@ -494,10 +473,17 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     if (!source) {
       return null;
     }
-    return <Image testID={'image'} style={imageStyle} source={source} />;
+    return (
+      <Image
+        testID={DropDownAlertTestID.Image}
+        style={imageStyle}
+        source={source}
+        {...imageProps}
+      />
+    );
   }
 
-  function _renderTitle() {
+  function _renderTitle(title?: string) {
     if (renderTitle) {
       return renderTitle(alertData);
     }
@@ -506,16 +492,16 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     }
     return (
       <Text
-        style={titleStyle}
-        numberOfLines={titleNumOfLines}
-        testID={'title'}
+        style={titleTextStyle}
+        numberOfLines={titleNumberOfLines}
+        testID={DropDownAlertTestID.Title}
         {...titleTextProps}>
         {title}
       </Text>
     );
   }
 
-  function _renderMessage() {
+  function _renderMessage(message?: string) {
     if (renderMessage) {
       return renderMessage(alertData);
     }
@@ -524,9 +510,9 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     }
     return (
       <Text
-        style={messageStyle}
-        numberOfLines={messageNumOfLines}
-        testID={'message'}
+        style={messageTextStyle}
+        numberOfLines={messageNumberOfLines}
+        testID={DropDownAlertTestID.Title}
         {...messageTextProps}>
         {message}
       </Text>
@@ -534,20 +520,22 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   }
 
   function _renderCancel() {
-    const _onCancel = () => _dismiss(DropdownAlertAction.Cancel);
+    const _onCancel = () => _dismiss(DropdownAlertDismissAction.Cancel);
     if (renderCancel) {
       return renderCancel(alertData, _onCancel);
     }
     return (
       <TouchableOpacity
-        testID={'cancelButton'}
-        style={cancelBtnStyle}
-        onPress={_onCancel}>
-        {cancelBtnImageSrc && (
+        testID={DropDownAlertTestID.Cancel}
+        style={cancelViewStyle}
+        onPress={_onCancel}
+        {...cancelTouchableOpacityProps}>
+        {cancelImageSrc && (
           <Image
-            testID={'cancelButtonImage'}
-            style={cancelBtnImageStyle}
-            source={cancelBtnImageSrc}
+            testID={DropDownAlertTestID.CancelImage}
+            style={cancelImageStyle}
+            source={cancelImageSrc}
+            {...cancelImageProps}
           />
         )}
       </TouchableOpacity>
@@ -575,23 +563,48 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
           },
         ],
       },
-      wrapperStyle,
+      animatedViewStyle,
     ];
   }
 
-  const {type, source, title, message} = alertData;
-
-  let touchableOpacityViewStyle: ViewStyle = {
-    backgroundColor: _getBackgroundColorForType(type),
-  };
-
-  if (isAndroid && translucent) {
-    touchableOpacityViewStyle.marginTop = StatusBar.currentHeight;
-  }
-
-  let ContentView = SafeAreaView;
-  if (isBelowIOS11 || isAndroid) {
-    ContentView = View;
+  function _renderAlert() {
+    if (children) {
+      return children;
+    }
+    let additionalAlertViewStyle: ViewStyle = {
+      backgroundColor: _getBackgroundColorForType(alertData.type),
+    };
+    if (isAndroid && translucent) {
+      additionalAlertViewStyle.marginTop = StatusBar.currentHeight;
+    }
+    let SafeView = SafeAreaView;
+    if (isBelowIOS11 || isAndroid) {
+      SafeView = View;
+    }
+    return (
+      <TouchableOpacity
+        testID={DropDownAlertTestID.Alert}
+        style={[alertViewStyle, additionalAlertViewStyle]}
+        activeOpacity={activeOpacity}
+        onPress={onPress}
+        disabled={onDismissPressDisabled}
+        {...alertTouchableOpacityProps}>
+        <SafeView
+          testID={DropDownAlertTestID.SafeView}
+          style={safeViewStyle}
+          {...safeViewProps}>
+          {_renderImage(alertData.source)}
+          <View
+            testID={DropDownAlertTestID.TextView}
+            style={textViewStyle}
+            {...textViewProps}>
+            {_renderTitle(alertData.title)}
+            {_renderMessage(alertData.message)}
+          </View>
+          {showCancel && _renderCancel()}
+        </SafeView>
+      </TouchableOpacity>
+    );
   }
 
   return (
@@ -599,24 +612,9 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
       {...panResponder.panHandlers}
       style={_getViewAnimatedStyle()}
       onLayout={event => _onLayout(event)}
-      testID={testID}
-      accessibilityLabel={accessibilityLabel}
-      accessible={accessible}>
-      <TouchableOpacity
-        testID={'button'}
-        style={[containerStyle, touchableOpacityViewStyle]}
-        activeOpacity={activeOpacity}
-        onPress={onPress}
-        disabled={!tapToDismissEnabled}>
-        <ContentView testID={'contentView'} style={contentContainerStyle}>
-          {_renderImage(source)}
-          <View style={defaultTextContainer}>
-            {_renderTitle()}
-            {_renderMessage()}
-          </View>
-          {showCancel && _renderCancel()}
-        </ContentView>
-      </TouchableOpacity>
+      testID={DropDownAlertTestID.AnimatedView}
+      {...animatedViewProps}>
+      {_renderAlert()}
     </Animated.View>
   );
 };

@@ -21,4 +21,5 @@ babel.config.js
 jest.config.ts
 tsconfig.json
 README.md
-RELEASE_NOTES.md
+CHANGELOG.md
+MIGRATION.md
