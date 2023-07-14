@@ -71,7 +71,7 @@ const App = () => {
   return (
     <View>
       <DropdownAlert
-        ref={(ref) => {
+        ref={ref => {
           if (ref) {
             dropDownAlertRef = ref;
           }

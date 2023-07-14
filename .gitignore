@@ -58,4 +58,4 @@ jsconfig.json
 coverage
 example/src
 example/jsconfig.json
-RELEASE_NOTES.md
+CHANGELOG.md
