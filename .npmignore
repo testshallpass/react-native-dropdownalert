@@ -5,7 +5,6 @@ __tests__/
 coverage/
 .github/
 screenshots/
-docs/
 .vscode/
 
 # files

@@ -1,9 +1,8 @@
 {
   "name": "react-native-dropdownalert",
   "version": "4.5.1",
-  "description": "A simple alert to notify users about new chat messages, something went wrong or everything is ok.",
-  "main": "DropdownAlert.js",
-  "types": "index.d.ts",
+  "description": "An alert to notify users about an error or something else.",
+  "main": "DropdownAlert.tsx",
   "scripts": {
     "test": "npx jest --coverage",
     "lint": "npx eslint .",
@@ -15,15 +14,16 @@
     "url": "git+https://github.com/testshallpass/react-native-dropdownalert.git"
   },
   "keywords": [
-    "dropdown",
-    "alert",
-    "error",
-    "info",
-    "warning",
     "react-native",
     "ios",
     "android",
-    "react-component"
+    "dropdown",
+    "alert",
+    "dismiss",
+    "error",
+    "info",
+    "warn",
+    "success"
   ],
   "author": "Brian Sinnicke",
   "license": "MIT",
@@ -34,10 +34,10 @@
   "devDependencies": {
     "@babel/preset-typescript": "7.21.0",
     "@jest/globals": "29.6.1",
-    "@react-native/eslint-config": "^0.72.2",
+    "@react-native/eslint-config": "0.72.2",
     "@testing-library/jest-native": "5.4.2",
     "@testing-library/react-native": "12.1.2",
-    "@tsconfig/react-native": "^3.0.2",
+    "@tsconfig/react-native": "3.0.2",
     "@types/jest": "29.5.3",
     "@types/react": "18.2.15",
     "@types/react-test-renderer": "18.0.0",

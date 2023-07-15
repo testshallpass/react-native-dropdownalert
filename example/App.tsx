@@ -33,7 +33,9 @@ function App(): JSX.Element {
     alert: <DropdownAlert />,
   };
   const [selected, setSelected] = useState(defaultSelected);
-  let alert = useRef((_data?: DropdownAlertData) => new Promise<DropdownAlertData>(res => res));
+  let alert = useRef(
+    (_data?: DropdownAlertData) => new Promise<DropdownAlertData>(res => res),
+  );
   let dismiss = useRef(() => {});
   const reactNativeLogoSrc: ImageSourcePropType = {
     uri: 'https://reactnative.dev/docs/assets/favicon.png',

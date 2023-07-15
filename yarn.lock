@@ -2056,7 +2056,7 @@
     jscodeshift "^0.14.0"
     nullthrows "^1.1.1"
 
-"@react-native/eslint-config@^0.72.2":
+"@react-native/eslint-config@0.72.2":
   version "0.72.2"
   resolved "https://registry.yarnpkg.com/@react-native/eslint-config/-/eslint-config-0.72.2.tgz#31da4cec65ad2805d4db9fdda138452821d72133"
   integrity sha512-rAYuQQXzi63W7+9Pu/+23od/b/lTSzHjMFibum3sKgdG2LIyvhoMEWQ5+Chu7TqebqYy1b9SDn/KEMHvpWFtNg==
@@ -2187,7 +2187,7 @@
   resolved "https://registry.yarnpkg.com/@tsconfig/node16/-/node16-1.0.3.tgz#472eaab5f15c1ffdd7f8628bd4c4f753995ec79e"
   integrity sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==
 
-"@tsconfig/react-native@^3.0.2":
+"@tsconfig/react-native@3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@tsconfig/react-native/-/react-native-3.0.2.tgz#f7db242eee4820f5a3d0edcc86c920bb7d9ec0f2"
   integrity sha512-F7IoHEqf741lut4Z2K+IkWQRvXAhBiZMeY5L7BysG7Z2Z3MlIyFR+AagD8jQ/CqC1vowGnRwfLjeuwIpaeoJxA==
