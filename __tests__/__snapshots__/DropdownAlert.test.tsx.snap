@@ -25,7 +25,7 @@ exports[`Animated.View onLayout function 1`] = `
       "top": 0,
       "transform": [
         {
-          "translateY": -149.9322164545697,
+          "translateY": 0,
         },
       ],
       "zIndex": 1,

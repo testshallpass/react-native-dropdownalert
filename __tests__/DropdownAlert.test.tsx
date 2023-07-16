@@ -46,7 +46,7 @@ test('it renders component', () => {
   expect(component.toJSON()).toMatchSnapshot();
 });
 
-test('alert without parameters to be default background color', async () => {
+test('alert without arguments to be default background color', async () => {
   let alert = (_data?: DropdownAlertData) =>
     new Promise<DropdownAlertData>(res => res);
   const component = render(<DropdownAlert alert={func => (alert = func)} />);
@@ -131,7 +131,7 @@ test('onDismissProgrammatic', async () => {
     />,
   );
   expect(component).toBeDefined();
-  await act(async () => {
+  await act(() => {
     alert({
       type: 'custom',
       title: DropDownAlertTestID.Title,
@@ -144,8 +144,10 @@ test('onDismissProgrammatic', async () => {
   expect(message).toBeDefined();
   const button = screen.getByTestId(DropDownAlertTestID.Alert);
   expect(button).toBeDefined();
-  dismiss();
-  await delay();
+  await act(async () => {
+    dismiss();
+    await delay();
+  });
   expect(_onDismissProgrammatic).toBeCalled();
 }, 2000);
 
@@ -174,8 +176,10 @@ test('onDismissPress', async () => {
   expect(message).toBeDefined();
   const button = screen.getByTestId(DropDownAlertTestID.Alert);
   expect(button).toBeDefined();
-  fireEvent.press(button);
-  await delay();
+  await act(async () => {
+    fireEvent.press(button);
+    await delay();
+  });
   expect(_onDismissPress).toBeCalled();
 }, 2000);
 
@@ -201,10 +205,12 @@ test('onDismissCancel', async () => {
   });
   const cancel = screen.getByTestId(DropDownAlertTestID.Cancel);
   expect(cancel).toBeDefined();
-  fireEvent.press(cancel);
-  const cancelImage = screen.getByTestId(DropDownAlertTestID.CancelImage);
-  expect(cancelImage).toBeDefined();
-  await delay();
+  await act(async () => {
+    fireEvent.press(cancel);
+    const cancelImage = screen.getByTestId(DropDownAlertTestID.CancelImage);
+    expect(cancelImage).toBeDefined();
+    await delay();
+  });
   expect(_onDismissCancel).toBeCalled();
 }, 5500);
 
@@ -298,7 +304,10 @@ test('Animated.View onLayout function', async () => {
     timeStamp: new Date().getTime(),
     type: '',
   };
-  fireEvent(animatedView, 'onLayout', event);
+  await act(async () => {
+    fireEvent(animatedView, 'onLayout', event);
+    await delay();
+  });
   const transform = animatedView.props.style.transform;
   expect(transform).toBeDefined();
   expect(transform).toHaveLength(1);
