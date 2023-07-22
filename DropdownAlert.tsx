@@ -277,7 +277,7 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   const isLockRef = useRef(false);
   const queue = useRef(new Queue());
   const animatedValue = useRef(new Animated.Value(0));
-  let dismissTimeoutID: ReturnType<typeof setTimeout>;
+  const dismissTimeoutID = useRef(0);
   const activeOpacity = onDismissPressDisabled || showCancel ? 1 : 0.95;
   const onPress = onDismissPressDisabled
     ? () => {}
@@ -345,9 +345,10 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     await _animate(DropdownAlertToValue.Alert);
     if (data.interval && data.interval > 0) {
       _clearDismissTimeoutID();
-      dismissTimeoutID = setTimeout(() => {
+      const timeout = setTimeout(() => {
         _dismiss(DropdownAlertDismissAction.Automatic);
       }, data.interval);
+      dismissTimeoutID.current = Number(timeout);
     }
   }
 
@@ -415,8 +416,9 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   }
 
   function _clearDismissTimeoutID() {
-    if (dismissTimeoutID) {
-      clearTimeout(dismissTimeoutID);
+    if (dismissTimeoutID.current) {
+      clearTimeout(dismissTimeoutID.current);
+      dismissTimeoutID.current = 0;
     }
   }
 
