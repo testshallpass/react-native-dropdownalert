@@ -21,7 +21,6 @@ type NotificationAndroidProps = {
   contentTitle?: string;
   contentText?: string;
   timestamp?: string;
-  action?: () => void;
 };
 
 const NotificationAndroid: React.FunctionComponent<
@@ -33,57 +32,76 @@ const NotificationAndroid: React.FunctionComponent<
   contentTitle = 'Tap to expand',
   contentText = 'Ipsum tempor tempor ea occaecat ipsum commodo do minim magna excepteur. Commodo non ex consectetur laboris sunt consequat laborum amet exercitation tempor anim sint cillum.',
   timestamp = 'now',
-  action = () => {},
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  let contentTextNumberOfLines = 1;
-  let expandIcon: ImageSourcePropType = require('./assets/arrowdown.png');
-  if (isExpanded) {
-    expandIcon = require('./assets/arrowup.png');
-    contentTextNumberOfLines = 0;
-  }
 
   function _setIsExpanded() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setIsExpanded(!isExpanded);
   }
 
-  return (
-    <SafeAreaView style={styles.safeView}>
+  function _renderExpand() {
+    return (
       <TouchableOpacity
-        style={styles.view}
+        style={styles.button}
         onPress={_setIsExpanded}
         activeOpacity={1}>
         <View style={styles.row}>
           <Image source={smallIcon} style={styles.smallIcon} />
-          <Text style={styles.appName}>{appName}</Text>
-          <Text style={styles.timestamp}>
-            {' \u2022 '}
+          <Text style={styles.appName}>
+            {appName}
+            <Text style={styles.dot}>{' \u2022 '}</Text>
             {timestamp}
           </Text>
-          <Image source={expandIcon} style={styles.expandIcon} />
+          <Image source={bigIcon} style={styles.bigIcon} />
+          <Image
+            source={require('./assets/arrowup.png')}
+            style={styles.expandIcon}
+          />
         </View>
+        <View style={styles.expandRow}>
+          <View style={styles.expandColumn}>
+            <Text style={styles.contentTitle} numberOfLines={1}>
+              {'Tap to collapse'}
+            </Text>
+            <Text style={styles.contentText} numberOfLines={0}>
+              {contentText}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  function _renderNotExpand() {
+    return (
+      <TouchableOpacity
+        style={styles.button}
+        onPress={_setIsExpanded}
+        activeOpacity={1}>
         <View style={styles.row}>
+          <Image source={smallIcon} style={styles.smallIcon} />
           <View style={styles.column}>
             <Text style={styles.contentTitle} numberOfLines={1}>
               {contentTitle}
             </Text>
-            <Text
-              style={styles.contentText}
-              numberOfLines={contentTextNumberOfLines}>
+            <Text style={styles.contentText} numberOfLines={1}>
               {contentText}
             </Text>
           </View>
           <Image source={bigIcon} style={styles.bigIcon} />
+          <Image
+            source={require('./assets/arrowdown.png')}
+            style={[styles.expandIcon, {alignSelf: 'auto'}]}
+          />
         </View>
       </TouchableOpacity>
-      {isExpanded && (
-        <View style={styles.actionView}>
-          <TouchableOpacity onPress={action}>
-            <Text style={styles.action}>{'DISMISS'}</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+    );
+  }
+
+  return (
+    <SafeAreaView style={styles.safeView}>
+      {isExpanded ? _renderExpand() : _renderNotExpand()}
     </SafeAreaView>
   );
 };
@@ -92,63 +110,67 @@ const styles = StyleSheet.create({
   safeView: {
     margin: 8,
   },
-  view: {
+  button: {
     padding: 12,
-    backgroundColor: '#FEFEFE',
+    backgroundColor: '#1F89C7',
+    borderRadius: 16,
   },
   row: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 4,
+    justifyContent: 'space-between',
+  },
+  expandRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginLeft: 36,
   },
   column: {
     flex: 1,
     flexDirection: 'column',
+    marginLeft: 8,
   },
-  timestamp: {
-    fontSize: 12,
-    fontWeight: '300',
+  expandColumn: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  dot: {
+    fontWeight: '600',
   },
   appName: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '400',
-    color: '#1F89C7',
+    color: 'white',
   },
   contentTitle: {
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 4,
+    color: 'white',
   },
   contentText: {
-    fontSize: 12,
-    fontWeight: '300',
+    fontSize: 14,
+    fontWeight: '400',
+    color: 'white',
   },
   smallIcon: {
-    width: 15,
-    height: 15,
-    marginRight: 4,
+    width: 26,
+    height: 26,
+    borderRadius: 13,
   },
   bigIcon: {
-    width: 30,
-    height: 30,
-    marginLeft: 4,
-  },
-  actionView: {
-    flexDirection: 'row',
-    backgroundColor: '#EDEDED',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#B8B8B8',
-    padding: 12,
-  },
-  action: {
-    fontSize: 12,
-    color: '#1F89C7',
+    width: 46,
+    height: 46,
+    borderRadius: 8,
+    marginHorizontal: 8,
   },
   expandIcon: {
-    width: 15,
-    height: 15,
-    marginRight: 4,
-    tintColor: '#1F89C7',
+    width: 22,
+    height: 22,
+    backgroundColor: 'lightgray',
+    borderRadius: 11,
+    alignSelf: 'flex-start',
   },
 });
 

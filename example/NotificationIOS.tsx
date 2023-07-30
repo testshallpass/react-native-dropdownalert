@@ -1,13 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
   View,
   SafeAreaView,
   Image,
-  TouchableOpacity,
   ImageSourcePropType,
-  LayoutAnimation,
 } from 'react-native';
 import {name} from './app.json';
 
@@ -24,45 +22,32 @@ const NotificationIOS: React.FunctionComponent<NotificationIOSProps> = ({
     uri: 'https://reactnative.dev/docs/assets/favicon.png',
   },
   title = name,
-  subtitle = 'Tap to expand',
-  body = 'Incididunt pariatur non amet non est eiusmod id incididunt occaecat amet Lorem. Eu veniam dolore incididunt consequat.',
+  subtitle = 'Information',
+  body = 'Ipsum tempor tempor ea occaecat ipsum commodo do minim magna excepteur. Commodo non ex consectetur laboris sunt consequat laborum amet exercitation tempor anim sint cillum.',
   timestamp = 'now',
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  let numberOfLines = 1;
-  if (isExpanded) {
-    numberOfLines = 0;
-  }
-
-  function _setIsExpanded() {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    setIsExpanded(!isExpanded);
-  }
-
   return (
     <SafeAreaView style={styles.safeView}>
-      <TouchableOpacity
-        style={styles.view}
-        onPress={_setIsExpanded}
-        activeOpacity={1}>
+      <View
+        style={styles.view}>
         <View style={styles.row}>
           <Image source={imageSrc} style={styles.image} />
           <View style={styles.column}>
             <View style={styles.innerRow}>
-              <Text style={styles.title} numberOfLines={numberOfLines}>
+              <Text style={styles.title} numberOfLines={1}>
                 {title}
               </Text>
               <Text style={styles.timestamp}>{timestamp}</Text>
             </View>
-            <Text style={styles.subtitle} numberOfLines={numberOfLines}>
+            <Text style={styles.subtitle} numberOfLines={1}>
               {subtitle}
             </Text>
-            <Text style={styles.body} numberOfLines={numberOfLines}>
+            <Text style={styles.body} numberOfLines={4}>
               {body}
             </Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -72,8 +57,8 @@ const styles = StyleSheet.create({
     margin: 4,
   },
   view: {
-    padding: 8,
-    backgroundColor: '#EDEDED',
+    padding: 12,
+    backgroundColor: 'gray',
     borderRadius: 16,
   },
   innerRow: {
@@ -92,23 +77,28 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginHorizontal: 6,
     fontWeight: '300',
+    color: 'white',
   },
   title: {
     flex: 1,
     fontSize: 14,
     fontWeight: '700',
+    color: 'white',
   },
   subtitle: {
     fontSize: 14,
     fontWeight: '500',
+    color: 'white',
   },
   body: {
     fontSize: 14,
+    color: 'white',
   },
   image: {
-    width: 30,
-    height: 30,
-    marginRight: 4,
+    width: 36,
+    height: 36,
+    marginRight: 8,
+    borderRadius: 8,
   },
 });
 
