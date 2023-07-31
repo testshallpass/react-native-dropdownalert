@@ -1,0 +1,4 @@
+{
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "exclude": ["babel.config.js", ".eslintrc.js", ".prettierrc.js"]
+}

@@ -1,16 +1,24 @@
-.DS_Store
+# directories
 node_modules/
-Example/
 example/
-screenshots/
-npm-debug.log
-.travis.yml
-README.md
-ISSUE_TEMPLATE.md
-.babelrc
-babelrc
-test/
 __tests__/
 coverage/
-.gitattributes
-setupTests.js
+.github/
+screenshots/
+.vscode/
+
+# files
+npm-debug.log
+.DS_Store
+.gitignore
+.npmignore
+.prettierignore
+.prettierrc.js
+.eslintignore
+.eslintrc.js
+babel.config.js
+jest.config.ts
+tsconfig.json
+README.md
+CHANGELOG.md
+MIGRATION.md
