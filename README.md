@@ -14,6 +14,7 @@
 - [Usage](#usage)
 - [Support](#support)
 - [Using children prop](#using-children-prop)
+- [Caveats](#caveats)
 - [More Examples](./example/App.tsx)
 
 An alert to notify users about an error or something else. It can be dismissed by press, cancel, automatic, pan gesture or programmatic. It can be customized and/or you can build your own alert (BYOA) - see [DropdownAlertProps](./DropdownAlert.tsx) on what's available.
@@ -75,5 +76,10 @@ Option 2 pass child component(s) like so:
 ```
 
 Either way `DropdownAlert` will render these instead of the pre-defined child components when alert is invoked. Check out the iOS and Android notifications in example project.
+
+## Caveats
+
+- Modals can overlap `DropdownAlert`` if it is not inside the modal's document tree.
+- It is important you place the `DropdownAlert` above the `StackNavigator`.
 
 > Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
