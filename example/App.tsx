@@ -14,7 +14,7 @@ import DropdownAlert, {
   DropdownAlertType,
   DropdownAlertColor,
   DropdownAlertProps,
-} from './src/DropdownAlert';
+} from 'react-native-dropdownalert';
 import NotificationIOS from './NotificationIOS';
 import NotificationAndroid from './NotificationAndroid';
 
