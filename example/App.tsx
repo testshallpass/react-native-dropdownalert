@@ -14,7 +14,7 @@ import DropdownAlert, {
   DropdownAlertType,
   DropdownAlertColor,
   DropdownAlertProps,
-} from 'react-native-dropdownalert';
+} from './src/DropdownAlert';
 import NotificationIOS from './NotificationIOS';
 import NotificationAndroid from './NotificationAndroid';
 
@@ -131,6 +131,19 @@ function App(): JSX.Element {
         onDismissPressDisabled: true,
       },
       color: 'teal',
+    },
+    {
+      name: 'Bottom',
+      alertData: {
+        type: DropdownAlertType.Info,
+        title: 'Info',
+        message: 'This demonstrates an info alert with bottom alert position.',
+      },
+      alertProps: {
+        alertPosition: 'bottom',
+        infoColor: 'green',
+      },
+      color: 'green',
     },
   ];
 
