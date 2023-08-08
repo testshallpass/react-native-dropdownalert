@@ -22,6 +22,7 @@ import {
   ViewProps,
   TouchableOpacityProps,
   ImageProps,
+  useWindowDimensions,
 } from 'react-native';
 import Queue from './Queue';
 
@@ -82,6 +83,11 @@ export const DropDownAlertTestID = {
   CancelImage: 'cancelImage',
 };
 
+export enum DropdownAlertPosition {
+  Top = 'top',
+  Bottom = 'bottom',
+}
+
 // References
 //  Image source: https://reactnative.dev/docs/image#source
 //  Image style: https://reactnative.dev/docs/image#style
@@ -123,9 +129,6 @@ export type DropdownAlertProps = {
   elevation?: number;
   // It is used in the Animated.View style so alert is above other UI components
   zIndex?: number;
-  // Distance on the Y-axis for alert to move by pan gesture
-  // panResponderEnabled must be true as well
-  panResponderMoveDistance?: number;
   // Distance on the Y-axis for the alert to be dismissed by pan gesture
   // panResponderEnabled must be true as well
   panResponderDismissDistance?: number;
@@ -174,6 +177,7 @@ export type DropdownAlertProps = {
   dismiss?: (func: () => void) => void;
   springAnimationConfig?: Animated.SpringAnimationConfig;
   children?: ReactNode;
+  alertPosition?: 'top' | 'bottom';
 };
 
 const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
@@ -237,7 +241,6 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   updateStatusBar = true,
   elevation = 1,
   zIndex = 1,
-  panResponderMoveDistance = 0,
   renderImage = undefined,
   renderCancel = undefined,
   renderTitle = undefined,
@@ -261,11 +264,13 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   },
   panResponderDismissDistance = -10,
   children = undefined,
+  alertPosition = DropdownAlertPosition.Top,
 }) => {
+  const windowDimensions = useWindowDimensions();
   const isIOS = Platform.OS === 'ios';
   const isAndroid = Platform.OS === 'android';
   const isBelowIOS11 = isIOS && Number(Platform.Version) < 11;
-  const [top, setTop] = useState(0);
+  const [dimValue, setDimValue] = useState(0);
   const [height, setHeight] = useState(99);
   const defaultAlertData: DropdownAlertData = {
     type: '',
@@ -288,24 +293,40 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
       _event: GestureResponderEvent,
       gestureState: PanResponderGestureState,
     ) {
-      if (
-        panResponderEnabled &&
-        gestureState.dy <= panResponderDismissDistance
-      ) {
-        _dismiss(DropdownAlertDismissAction.Pan);
+      if (panResponderEnabled) {
+        switch (alertPosition) {
+          case DropdownAlertPosition.Bottom:
+            if (gestureState.dy >= Math.abs(panResponderDismissDistance)) {
+              _dismiss(DropdownAlertDismissAction.Pan);
+            }
+            break;
+
+          default:
+            if (gestureState.dy <= panResponderDismissDistance) {
+              _dismiss(DropdownAlertDismissAction.Pan);
+            }
+            break;
+        }
       }
     }
     return PanResponder.create({
       onStartShouldSetPanResponder: () => panResponderEnabled,
-      onMoveShouldSetPanResponder: (_event, gestureState) => {
-        if (panResponderEnabled) {
-          return gestureState.dy <= panResponderMoveDistance;
-        }
-        return panResponderEnabled;
-      },
+      onMoveShouldSetPanResponder: () => panResponderEnabled,
       onPanResponderMove: (_event, gestureState) => {
-        if (panResponderEnabled && gestureState.dy < 0) {
-          setTop(gestureState.dy);
+        if (panResponderEnabled) {
+          switch (alertPosition) {
+            case DropdownAlertPosition.Bottom:
+              if (gestureState.dy > 0) {
+                setDimValue(0 - gestureState.dy);
+              }
+              break;
+
+            default:
+              if (gestureState.dy < 0) {
+                setDimValue(gestureState.dy);
+              }
+              break;
+          }
         }
       },
       onPanResponderRelease: (event, gestureState) =>
@@ -318,7 +339,7 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   const panResponder = useMemo(_getPanResponder, [
     panResponderEnabled,
     panResponderDismissDistance,
-    panResponderMoveDistance,
+    alertPosition,
   ]);
 
   function _alertWithData(data?: DropdownAlertData) {
@@ -378,7 +399,7 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
           onDismissPress(alertDataRef.current);
           break;
       }
-      setTop(0);
+      setDimValue(0);
       queue.current.dequeue();
       if (!queue.current.isEmpty) {
         _alert(queue.current.first);
@@ -389,7 +410,7 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   dismiss(_dismiss);
 
   function _updateStatusBar(active = false, type = '') {
-    if (updateStatusBar) {
+    if (updateStatusBar && alertPosition === DropdownAlertPosition.Top) {
       if (isAndroid) {
         if (active) {
           let backgroundColor = activeStatusBarBackgroundColor;
@@ -545,23 +566,33 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   }
 
   function _getViewAnimatedStyle() {
+    let viewStyle: ViewStyle = {
+      // https://github.com/microsoft/TypeScript/issues/11465
+      position: 'absolute' as 'absolute',
+      top: dimValue,
+      left: 0,
+      right: 0,
+      elevation,
+      zIndex,
+    };
+    let animatedInterpolateConfig = {
+      inputRange: [0, 1],
+      outputRange: [0 - height, 0],
+    };
+    if (alertPosition === DropdownAlertPosition.Bottom) {
+      viewStyle.top = undefined;
+      viewStyle.bottom = dimValue;
+      animatedInterpolateConfig.outputRange[0] =
+        windowDimensions.height - height;
+    }
     return [
-      {
-        // https://github.com/microsoft/TypeScript/issues/11465
-        position: 'absolute' as 'absolute',
-        top,
-        left: 0,
-        right: 0,
-        elevation,
-        zIndex,
-      },
+      viewStyle,
       {
         transform: [
           {
-            translateY: animatedValue.current.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0 - height, 0],
-            }),
+            translateY: animatedValue.current.interpolate(
+              animatedInterpolateConfig,
+            ),
           },
         ],
       },

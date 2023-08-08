@@ -29,7 +29,10 @@ An alert to notify users about an error or something else. It can be dismissed b
 import the library
 
 ```javascript
-import DropdownAlert, {DropdownAlertData, DropdownAlertType} from 'react-native-dropdownalert';
+import DropdownAlert, {
+  DropdownAlertData,
+  DropdownAlertType,
+} from 'react-native-dropdownalert';
 ```
 
 create an alert promise function variable
@@ -56,10 +59,11 @@ const alertData = await alert({
 
 ## Support
 
-| react-native version | package version | reason              |
-| -------------------- | :-------------: | ------------------- |
-| 0.50.0               |     >=3.2.0     | use `SafeAreaView`  |
-| 0.44.0               |    >=2.12.0     | use `ViewPropTypes` |
+| react minium version | react-native minium version | package version | reason              |
+| :------------------: | :-------------------------: | :-------------: | ------------------- |
+|       v16.8.0        |           v0.61.0           |     v5.0.0      | use react hooks     |
+|       v16.0.0        |           v0.50.0           |     v3.2.0      | use `SafeAreaView`  |
+|   v16.0.0-alpha.6    |           v0.44.0           |     v2.12.0     | use `ViewPropTypes` |
 
 ## Using `children` prop
 
@@ -80,6 +84,6 @@ Either way `DropdownAlert` will render these instead of the pre-defined child co
 ## Caveats
 
 - Modals can overlap `DropdownAlert`` if it is not inside the modal's document tree.
-- It is important you place the `DropdownAlert` above the `StackNavigator`.
+- It is important you place the `DropdownAlert` below the `StackNavigator`.
 
 > Inspired by: [RKDropdownAlert](https://github.com/cwRichardKim/RKDropdownAlert)
