@@ -5651,10 +5651,10 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-dropdownalert@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-dropdownalert/-/react-native-dropdownalert-5.0.0.tgz#04aa7e7e467fea2e986500c0cc6baaa20ff85df4"
-  integrity sha512-CA56F0Kex4bKzwaDwmKJ+RMhcpi3qcxCHJ4VJNzSL1SsW3JpmFenXKtMnE/hTQ0s63bi1uwrG4x2fMInl30L7w==
+react-native-dropdownalert@5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-dropdownalert/-/react-native-dropdownalert-5.1.0.tgz#970f1ba9120e8d4578b7bd29e90c00e5984fca22"
+  integrity sha512-xit8RMqdZN34y6E6o9yF6SrJrra1kNdTGV0+Q13kQo+ZH1Lt1ZIVgYr+4Wep9OYoJ0KryFFMbJ2ZEcW9xnnj8Q==
 
 react-native@0.72.3:
   version "0.72.3"
