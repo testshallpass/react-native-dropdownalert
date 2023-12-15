@@ -100,11 +100,24 @@ exports[`renders correctly 1`] = `
             "color": "teal",
             "name": "Cancel",
           },
+          {
+            "alertData": {
+              "message": "This demonstrates an info alert with bottom alert position.",
+              "title": "Info",
+              "type": "info",
+            },
+            "alertProps": {
+              "alertPosition": "bottom",
+              "infoColor": "green",
+            },
+            "color": "green",
+            "name": "Bottom",
+          },
         ]
       }
       getItem={[Function]}
       getItemCount={[Function]}
-      initialNumToRender={8}
+      initialNumToRender={9}
       keyExtractor={[Function]}
       onContentSizeChange={[Function]}
       onLayout={[Function]}
@@ -115,7 +128,7 @@ exports[`renders correctly 1`] = `
       onScrollEndDrag={[Function]}
       removeClippedSubviews={false}
       renderItem={[Function]}
-      scrollEventThrottle={50}
+      scrollEventThrottle={0.0001}
       stickyHeaderIndices={[]}
       viewabilityConfigCallbackPairs={[]}
     >
@@ -589,6 +602,65 @@ exports[`renders correctly 1`] = `
               }
             >
               Cancel
+            </Text>
+          </View>
+        </View>
+        <View
+          onFocusCapture={[Function]}
+          onLayout={[Function]}
+          style={null}
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": false,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "backgroundColor": "green",
+                "borderColor": "black",
+                "borderRadius": 8,
+                "borderWidth": 0.5,
+                "margin": 4,
+                "opacity": 1,
+                "padding": 12,
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "whitesmoke",
+                  "fontSize": 18,
+                  "fontWeight": "bold",
+                  "textAlign": "center",
+                }
+              }
+            >
+              Bottom
             </Text>
           </View>
         </View>
