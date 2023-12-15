@@ -30,7 +30,7 @@ type ListItemIndex = {
   index: number;
 };
 
-function App(): JSX.Element {
+function App(): React.JSX.Element {
   const defaultSelected: ListItem = {
     name: 'Default',
     color: DropdownAlertColor.Default,
@@ -147,7 +147,7 @@ function App(): JSX.Element {
     },
   ];
 
-  function _renderItem(listItemIndex: ListItemIndex) {
+  function _renderItem(listItemIndex: ListItemIndex): React.JSX.Element {
     const {item} = listItemIndex;
     return (
       <TouchableOpacity
@@ -159,7 +159,7 @@ function App(): JSX.Element {
     );
   }
 
-  function _onSelect(item: ListItem) {
+  function _onSelect(item: ListItem): void {
     setSelected(item);
     setTimeout(async () => {
       setProcessing(true);
