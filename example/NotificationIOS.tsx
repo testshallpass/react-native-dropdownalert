@@ -28,8 +28,7 @@ const NotificationIOS: React.FunctionComponent<NotificationIOSProps> = ({
 }) => {
   return (
     <SafeAreaView style={styles.safeView}>
-      <View
-        style={styles.view}>
+      <View style={styles.view}>
         <View style={styles.row}>
           <Image source={imageSrc} style={styles.image} />
           <View style={styles.column}>
