@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -35,15 +35,18 @@ function App(): React.JSX.Element {
     name: 'Default',
     color: DropdownAlertColor.Default,
   };
-  const [selected, setSelected] = useState(defaultSelected);
-  const [processing, setProcessing] = useState(false);
-  let alert = useRef(
+  const [selected, setSelected] = React.useState(defaultSelected);
+  let alert = React.useRef(
     (_data?: DropdownAlertData) => new Promise<DropdownAlertData>(res => res),
   );
-  let dismiss = useRef(() => {});
+  let dismiss = React.useRef(() => {});
   const reactNativeLogoSrc: ImageSourcePropType = {
-    uri: 'https://reactnative.dev/docs/assets/favicon.png',
+    uri: 'https://reactnative.dev/img/pwa/manifest-icon-512.png',
   };
+
+  React.useEffect(() => {
+    alert.current(selected.alertData);
+  }, [selected]);
 
   const items: ListItem[] = [
     {
@@ -152,8 +155,7 @@ function App(): React.JSX.Element {
     return (
       <TouchableOpacity
         style={[styles.item, {backgroundColor: item.color}]}
-        onPress={() => _onSelect(item)}
-        disabled={processing}>
+        onPress={() => _onSelect(item)}>
         <Text style={styles.name}>{item.name}</Text>
       </TouchableOpacity>
     );
@@ -161,11 +163,6 @@ function App(): React.JSX.Element {
 
   function _onSelect(item: ListItem): void {
     setSelected(item);
-    setTimeout(async () => {
-      setProcessing(true);
-      await alert.current(item.alertData);
-      setProcessing(false);
-    }, 10);
   }
 
   return (

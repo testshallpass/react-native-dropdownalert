@@ -61,9 +61,41 @@ example/jsconfig.json
 CHANGELOG.md
 
 # Yarn
+example/.yarn/*
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Expo
+example/.expo/
+example/dist/
+example/web-build/
+example/expo-env.d.ts
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+*.pem
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo

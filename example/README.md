@@ -1,23 +1,21 @@
 # DropdownAlertExample
 
+- Built with [Expo](https://expo.dev/).
+- Uses [yarn](https://yarnpkg.com/) v2 modern edition.
+- Refer to [Expo setup guide](https://docs.expo.dev/get-started/set-up-your-environment/) for help running this and local environment.
+- Use [Expo Go](https://expo.dev/go) option.
+
 ## Up and running
 
-Prerequisites
+### Prerequisites
 
-- Development machine is on MacOS.
-- Homebrew <https://brew.sh/>
-- Yarn package manager <https://yarnpkg.com/> `brew install yarn`
-- [Setup of development environment for iOS and Android](https://reactnative.dev/docs/environment-setup)
+- Have iOS simulator and Android emulator installed.
+- Have real mobile device.
+
+### Steps
 
 1. Open terminal.
 2. Change to example directory (`cd ~/example`).
-3. Run `yarn` to install Javascript dependencies.
-4. Run `yarn doctor` to assess development environment.
-5. Fix any development errors before proceeding to next step.
-6. Run `yarn ios:pod` to install Cocoapods dependencies.
-7. Run `yarn start` to start the Metro Bundler.
-8. Then enter `i` or `a` to run on iOS simulator or Android emulator.
-
-## References
-
-- <https://reactnative.dev/>
+3. Run `yarn install` to install dependencies.
+4. Run `yarn start` to start the development server.
+5. Enter `i` or `a` to run on iOS simulator or Android emulator.

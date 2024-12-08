@@ -7,7 +7,7 @@ import {
   Image,
   ImageSourcePropType,
 } from 'react-native';
-import {name} from './app.json';
+import {expo} from './app.json';
 
 type NotificationIOSProps = {
   imageSrc?: ImageSourcePropType;
@@ -21,7 +21,7 @@ const NotificationIOS: React.FunctionComponent<NotificationIOSProps> = ({
   imageSrc = {
     uri: 'https://reactnative.dev/docs/assets/favicon.png',
   },
-  title = name,
+  title = expo.name,
   subtitle = 'Information',
   body = 'Ipsum tempor tempor ea occaecat ipsum commodo do minim magna excepteur. Commodo non ex consectetur laboris sunt consequat laborum amet exercitation tempor anim sint cillum.',
   timestamp = 'now',

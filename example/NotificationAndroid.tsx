@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   LayoutAnimation,
 } from 'react-native';
-import {name} from './app.json';
+import {expo} from './app.json';
 const reactNativeLogoSrc: ImageSourcePropType = {
   uri: 'https://reactnative.dev/docs/assets/favicon.png',
 };
@@ -28,7 +28,7 @@ const NotificationAndroid: React.FunctionComponent<
 > = ({
   bigIcon = reactNativeLogoSrc,
   smallIcon = reactNativeLogoSrc,
-  appName = name,
+  appName = expo.name,
   contentTitle = 'Tap to expand',
   contentText = 'Ipsum tempor tempor ea occaecat ipsum commodo do minim magna excepteur. Commodo non ex consectetur laboris sunt consequat laborum amet exercitation tempor anim sint cillum.',
   timestamp = 'now',
