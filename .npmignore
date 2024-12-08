@@ -17,8 +17,9 @@ npm-debug.log
 .eslintignore
 .eslintrc.js
 babel.config.js
-jest.config.ts
+jest.config.js
 tsconfig.json
 README.md
 CHANGELOG.md
 MIGRATION.md
+.yarnrc.yml

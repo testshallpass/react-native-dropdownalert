@@ -59,3 +59,11 @@ coverage
 example/src
 example/jsconfig.json
 CHANGELOG.md
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

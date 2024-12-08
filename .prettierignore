@@ -9,4 +9,5 @@ LICENSE
 .gitignore
 .npmignore
 .eslintignore
-
+tsconfig.json
+.yarnrc.yml
