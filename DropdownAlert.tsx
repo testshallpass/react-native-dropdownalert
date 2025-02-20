@@ -1,4 +1,4 @@
-import React, {useState, useRef, useMemo, ReactNode} from 'react';
+import React, {useState, useRef, useMemo, ReactNode, JSX} from 'react';
 import {
   SafeAreaView,
   View,
@@ -254,7 +254,9 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   imageProps = undefined,
   cancelTouchableOpacityProps = undefined,
   cancelImageProps = undefined,
-  alert = () => {},
+  alert = (
+    _alertWithData: (data?: DropdownAlertData) => Promise<DropdownAlertData>,
+  ) => {},
   dismiss = () => {},
   springAnimationConfig = {
     toValue: 0,
