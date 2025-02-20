@@ -1,4 +1,4 @@
-import React, {useState, useRef, useMemo, ReactNode} from 'react';
+import React, {useState, useRef, useMemo, ReactNode, JSX} from 'react';
 import {
   SafeAreaView,
   View,
