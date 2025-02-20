@@ -254,9 +254,7 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   imageProps = undefined,
   cancelTouchableOpacityProps = undefined,
   cancelImageProps = undefined,
-  alert = (
-    _alertWithData: (data?: DropdownAlertData) => Promise<DropdownAlertData>,
-  ) => {},
+  alert = () => {},
   dismiss = () => {},
   springAnimationConfig = {
     toValue: 0,
