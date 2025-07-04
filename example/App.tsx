@@ -2,12 +2,10 @@ import React from 'react';
 import {
   StyleSheet,
   Text,
-  View,
   FlatList,
-  SafeAreaView,
   TouchableOpacity,
-  ImageSourcePropType,
   ColorValue,
+  SafeAreaView,
 } from 'react-native';
 import DropdownAlert, {
   DropdownAlertData,
@@ -18,36 +16,14 @@ import DropdownAlert, {
 import NotificationIOS from './NotificationIOS';
 import NotificationAndroid from './NotificationAndroid';
 
-type ListItem = {
+interface ListItem {
   name: string;
   alertData?: DropdownAlertData;
   alertProps?: DropdownAlertProps;
   color: ColorValue;
-};
+}
 
-type ListItemIndex = {
-  item: ListItem;
-  index: number;
-};
-
-function App(): React.JSX.Element {
-  const defaultSelected: ListItem = {
-    name: 'Default',
-    color: DropdownAlertColor.Default,
-  };
-  const [selected, setSelected] = React.useState(defaultSelected);
-  let alert = React.useRef(
-    (_data?: DropdownAlertData) => new Promise<DropdownAlertData>(res => res),
-  );
-  let dismiss = React.useRef(() => {});
-  const reactNativeLogoSrc: ImageSourcePropType = {
-    uri: 'https://reactnative.dev/img/pwa/manifest-icon-512.png',
-  };
-
-  React.useEffect(() => {
-    alert.current(selected.alertData);
-  }, [selected]);
-
+export default function App(): React.JSX.Element {
   const items: ListItem[] = [
     {
       name: 'Warn',
@@ -95,13 +71,18 @@ function App(): React.JSX.Element {
         title: 'Custom',
         message:
           'This demonstrates the ability to customize image, interval and style.',
-        source: reactNativeLogoSrc,
+        source: {
+          uri: 'https://reactnative.dev/img/pwa/manifest-icon-512.png',
+        },
         interval: 5000,
       },
       alertProps: {
-        alertViewStyle: styles.alertView,
+        alertViewStyle: {
+          padding: 8,
+          backgroundColor: '#6441A4',
+        },
       },
-      color: styles.alertView.backgroundColor,
+      color: '#6441A4',
     },
     {
       name: 'iOS notification',
@@ -149,53 +130,73 @@ function App(): React.JSX.Element {
       color: 'green',
     },
   ];
+  const [selected, setSelected] = React.useState<ListItem | undefined>();
+  let alert = React.useRef(
+    (_data?: DropdownAlertData) => new Promise<DropdownAlertData>(res => res),
+  );
+  let dismiss = React.useRef(() => {});
 
-  function _renderItem(listItemIndex: ListItemIndex): React.JSX.Element {
-    const {item} = listItemIndex;
+  React.useEffect(() => {
+    if (selected) {
+      if (
+        selected.alertProps?.alertPosition ||
+        selected.alertProps?.children ||
+        selected.alertProps?.showCancel
+      ) {
+        dismiss.current();
+      }
+      alert.current(selected.alertData);
+    }
+  }, [selected]);
+
+  function _renderItem(item: ListItem): React.JSX.Element {
     return (
       <TouchableOpacity
         style={[styles.item, {backgroundColor: item.color}]}
-        onPress={() => _onSelect(item)}>
+        onPress={() => setSelected(item)}>
         <Text style={styles.name}>{item.name}</Text>
       </TouchableOpacity>
     );
   }
 
-  function _onSelect(item: ListItem): void {
-    setSelected(item);
+  function _renderFooter(): React.JSX.Element {
+    return (
+      <TouchableOpacity style={styles.item} onPress={dismiss.current}>
+        <Text style={styles.name}>{'Dismiss'}</Text>
+      </TouchableOpacity>
+    );
   }
 
   return (
-    <View style={styles.view}>
-      <SafeAreaView>
-        <FlatList
-          keyExtractor={(_item, index) => `${index}`}
-          data={items}
-          initialNumToRender={items.length}
-          renderItem={_renderItem}
-        />
-      </SafeAreaView>
-      <DropdownAlert
-        alert={func => (alert.current = func)}
-        dismiss={func => (dismiss.current = func)}
-        {...selected.alertProps}
+    <SafeAreaView style={styles.view}>
+      <FlatList
+        keyExtractor={(_item, index) => `${index}`}
+        data={items}
+        initialNumToRender={items.length}
+        renderItem={({item}) => _renderItem(item)}
+        ListFooterComponent={_renderFooter}
       />
-    </View>
+      {selected && (
+        <DropdownAlert
+          alert={func => (alert.current = func)}
+          dismiss={func => (dismiss.current = func)}
+          {...selected.alertProps}
+        />
+      )}
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-    justifyContent: 'center',
     backgroundColor: '#F4F3E9',
   },
   item: {
-    padding: 12,
-    margin: 4,
+    padding: 8,
+    margin: 8,
     borderRadius: 8,
-    borderColor: 'black',
-    borderWidth: StyleSheet.hairlineWidth,
+    backgroundColor: 'black',
   },
   name: {
     fontSize: 18,
@@ -203,10 +204,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'whitesmoke',
   },
-  alertView: {
-    padding: 8,
-    backgroundColor: '#6441A4',
-  },
 });
-
-export default App;

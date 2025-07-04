@@ -2,6 +2,7 @@
   "name": "dropdownalertexample",
   "version": "1.0.0",
   "main": "index.ts",
+  "private": true,
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -9,16 +10,15 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "expo": "~52.0.17",
-    "react": "18.3.1",
-    "react-native": "0.76.3",
+    "expo": "~53.0.9",
+    "react": "19.0.0",
+    "react-native": "0.79.2",
     "react-native-dropdownalert": "5.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    "@types/react": "~18.3.12",
-    "typescript": "^5.3.3"
+    "@types/react": "~19.0.10",
+    "typescript": "^5.8.3"
   },
-  "private": true,
-  "packageManager": "yarn@4.5.1"
+  "packageManager": "yarn@4.9.2"
 }
