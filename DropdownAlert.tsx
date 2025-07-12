@@ -158,10 +158,10 @@ export type DropdownAlertProps = {
   activeStatusBarStyle?: StatusBarStyle;
   // StatusBarStyle when alert is dismissed and updateStatusBar must be true
   inactiveStatusBarStyle?: StatusBarStyle;
-  renderImage?: (data: DropdownAlertData) => JSX.Element;
-  renderCancel?: (data: DropdownAlertData, onCancel: () => void) => JSX.Element;
-  renderTitle?: (data: DropdownAlertData) => JSX.Element;
-  renderMessage?: (data: DropdownAlertData) => JSX.Element;
+  renderImage?: (data: DropdownAlertData) => React.JSX.Element;
+  renderCancel?: (data: DropdownAlertData, onCancel: () => void) => React.JSX.Element;
+  renderTitle?: (data: DropdownAlertData) => React.JSX.Element;
+  renderMessage?: (data: DropdownAlertData) => React.JSX.Element;
   titleTextProps?: TextProps;
   messageTextProps?: TextProps;
   animatedViewProps?: ViewProps;

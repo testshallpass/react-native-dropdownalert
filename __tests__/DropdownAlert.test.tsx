@@ -1,6 +1,13 @@
 import React from 'react';
-import {Image, LayoutChangeEvent, Pressable, Text, View} from 'react-native';
-import '@testing-library/jest-native/extend-expect';
+import {
+  Image,
+  LayoutChangeEvent,
+  Platform,
+  Pressable,
+  StatusBar,
+  Text,
+  View,
+} from 'react-native';
 import {
   render,
   act,
@@ -131,7 +138,7 @@ test('onDismissProgrammatic', async () => {
     />,
   );
   expect(component).toBeDefined();
-  await act(() => {
+  act(() => {
     alert({
       type: 'custom',
       title: DropDownAlertTestID.Title,
@@ -148,7 +155,7 @@ test('onDismissProgrammatic', async () => {
     dismiss();
     await delay();
   });
-  expect(_onDismissProgrammatic).toBeCalled();
+  expect(_onDismissProgrammatic).toHaveBeenCalled();
 }, 2000);
 
 test('onDismissPress', async () => {
@@ -180,7 +187,7 @@ test('onDismissPress', async () => {
     fireEvent.press(button);
     await delay();
   });
-  expect(_onDismissPress).toBeCalled();
+  expect(_onDismissPress).toHaveBeenCalled();
 }, 2000);
 
 test('onDismissCancel', async () => {
@@ -211,7 +218,7 @@ test('onDismissCancel', async () => {
     expect(cancelImage).toBeDefined();
     await delay();
   });
-  expect(_onDismissCancel).toBeCalled();
+  expect(_onDismissCancel).toHaveBeenCalled();
 }, 5500);
 
 test('renderImage, renderTitle, renderMessage and renderCancel props', async () => {
@@ -281,7 +288,7 @@ test('Animated.View onLayout function', async () => {
     <DropdownAlert alert={func => (alert = func)} dismissInterval={0} />,
   );
   expect(component).toBeDefined();
-  await act(() => {
+  act(() => {
     alert({type: DropdownAlertType.Warn, title: 'title', message: 'message'});
   });
   const height = 150;
@@ -289,8 +296,22 @@ test('Animated.View onLayout function', async () => {
   expect(animatedView).toBeDefined();
   const event: LayoutChangeEvent = {
     nativeEvent: {layout: {x: 0, y: 0, height, width: 100}},
-    currentTarget: 0,
-    target: 0,
+    currentTarget: {
+      measure: jest.fn(),
+      measureInWindow: jest.fn(),
+      measureLayout: jest.fn(),
+      setNativeProps: jest.fn(),
+      focus: jest.fn(),
+      blur: jest.fn(),
+    },
+    target: {
+      measure: jest.fn(),
+      measureInWindow: jest.fn(),
+      measureLayout: jest.fn(),
+      setNativeProps: jest.fn(),
+      focus: jest.fn(),
+      blur: jest.fn(),
+    },
     bubbles: false,
     cancelable: false,
     defaultPrevented: false,
@@ -319,17 +340,7 @@ test('Animated.View onLayout function', async () => {
 });
 
 test('it updates status bar on Android', async () => {
-  jest.mock('react-native/Libraries/Utilities/Platform', () => ({
-    OS: 'android',
-    select: () => null,
-  }));
-  const currentHeight = 20;
-  jest.mock('react-native/Libraries/Components/StatusBar/StatusBar', () => ({
-    currentHeight,
-    setBackgroundColor: jest.fn(),
-    setTranslucent: jest.fn(),
-    setBarStyle: jest.fn(),
-  }));
+  Platform.OS = 'android';
   let alert = (_data?: DropdownAlertData) =>
     new Promise<DropdownAlertData>(res => res);
   const component = render(
@@ -341,22 +352,12 @@ test('it updates status bar on Android', async () => {
   });
   const button = screen.getByTestId(DropDownAlertTestID.Alert);
   expect(button).toBeDefined();
-  expect(button).toHaveStyle({marginTop: currentHeight});
+  expect(button).toHaveStyle({marginTop: StatusBar.currentHeight});
   expect(component.toJSON()).toMatchSnapshot();
 }, 6000);
 
 test('it updates status bar with containerStyle undefined backgroundColor on Android', async () => {
-  jest.mock('react-native/Libraries/Utilities/Platform', () => ({
-    OS: 'android',
-    select: () => null,
-  }));
-  const currentHeight = 20;
-  jest.mock('react-native/Libraries/Components/StatusBar/StatusBar', () => ({
-    currentHeight,
-    setBackgroundColor: jest.fn(),
-    setTranslucent: jest.fn(),
-    setBarStyle: jest.fn(),
-  }));
+  Platform.OS = 'android';
   let alert = (_data?: DropdownAlertData) =>
     new Promise<DropdownAlertData>(res => res);
   const component = render(
@@ -372,7 +373,8 @@ test('it updates status bar with containerStyle undefined backgroundColor on And
   });
   const button = screen.getByTestId(DropDownAlertTestID.Alert);
   expect(button).toBeDefined();
-  expect(button).toHaveStyle({marginTop: currentHeight});
+  expect(button).toHaveStyle({marginTop: StatusBar.currentHeight});
+  expect(component.toJSON()).toMatchSnapshot();
 }, 6000);
 
 test('children prop', async () => {

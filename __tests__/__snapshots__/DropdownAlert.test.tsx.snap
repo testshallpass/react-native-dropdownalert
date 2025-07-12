@@ -797,7 +797,101 @@ exports[`it updates status bar on Android 1`] = `
     style={
       {
         "backgroundColor": "#000000",
-        "marginTop": 20,
+        "marginTop": null,
+        "opacity": 1,
+        "padding": 8,
+      }
+    }
+    testID="alert"
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+      testID="safeView"
+    >
+      <View
+        style={
+          {
+            "flex": 1,
+            "marginHorizontal": 8,
+          }
+        }
+        testID="textView"
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`it updates status bar with containerStyle undefined backgroundColor on Android 1`] = `
+<View
+  collapsable={false}
+  onLayout={[Function]}
+  onMoveShouldSetResponder={[Function]}
+  onMoveShouldSetResponderCapture={[Function]}
+  onResponderEnd={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderReject={[Function]}
+  onResponderRelease={[Function]}
+  onResponderStart={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  onStartShouldSetResponderCapture={[Function]}
+  style={
+    {
+      "elevation": 1,
+      "left": 0,
+      "position": "absolute",
+      "right": 0,
+      "top": 0,
+      "transform": [
+        {
+          "translateY": -99,
+        },
+      ],
+      "zIndex": 1,
+    }
+  }
+  testID="animatedView"
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": undefined,
+        "marginTop": null,
         "opacity": 1,
         "padding": 8,
       }
