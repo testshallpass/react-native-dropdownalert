@@ -2958,7 +2958,7 @@ __metadata:
     expo: "npm:~53.0.9"
     react: "npm:19.0.0"
     react-native: "npm:0.79.2"
-    react-native-dropdownalert: "npm:5.1.0"
+    react-native-dropdownalert: "npm:5.2.0"
     typescript: "npm:^5.8.3"
   languageName: unknown
   linkType: soft
@@ -5245,10 +5245,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-dropdownalert@npm:5.1.0":
-  version: 5.1.0
-  resolution: "react-native-dropdownalert@npm:5.1.0"
-  checksum: 10c0/0d6a721b53f8705dea13ce2017001066279751211f9f796f9c0024d931450b3a5f02a384393b9b881bf9c54d165b4a96ab4f13922353e138af763898901b5029
+"react-native-dropdownalert@npm:5.2.0":
+  version: 5.2.0
+  resolution: "react-native-dropdownalert@npm:5.2.0"
+  checksum: 10c0/8d2d2cc90400e2e797d997f75e2de83dc9cfc048c29f4897ccd0fa99630222025322e0d9287894299f2cfe1b8c630ef2a9559238fd078b7ebcd9c168c599715b
   languageName: node
   linkType: hard
 

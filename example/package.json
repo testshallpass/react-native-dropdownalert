@@ -13,7 +13,7 @@
     "expo": "~53.0.9",
     "react": "19.0.0",
     "react-native": "0.79.2",
-    "react-native-dropdownalert": "5.1.0"
+    "react-native-dropdownalert": "5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
