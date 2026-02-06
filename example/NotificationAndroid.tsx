@@ -3,13 +3,14 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   Image,
   ImageSourcePropType,
   TouchableOpacity,
   LayoutAnimation,
 } from 'react-native';
 import {expo} from './app.json';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 const reactNativeLogoSrc: ImageSourcePropType = {
   uri: 'https://reactnative.dev/docs/assets/favicon.png',
 };

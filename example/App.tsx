@@ -5,7 +5,6 @@ import {
   FlatList,
   TouchableOpacity,
   ColorValue,
-  SafeAreaView,
 } from 'react-native';
 import DropdownAlert, {
   DropdownAlertData,
@@ -15,6 +14,7 @@ import DropdownAlert, {
 } from 'react-native-dropdownalert';
 import NotificationIOS from './NotificationIOS';
 import NotificationAndroid from './NotificationAndroid';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface ListItem {
   name: string;

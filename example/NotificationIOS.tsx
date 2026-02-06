@@ -3,10 +3,10 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   Image,
   ImageSourcePropType,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {expo} from './app.json';
 
 type NotificationIOSProps = {

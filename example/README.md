@@ -2,20 +2,16 @@
 
 - Built with [Expo](https://expo.dev/).
 - Uses [yarn](https://yarnpkg.com/) v2 modern edition.
-- Refer to [Expo setup guide](https://docs.expo.dev/get-started/set-up-your-environment/) for help running this and local environment.
-- Use [Expo Go](https://expo.dev/go) option.
 
 ## Up and running
 
 ### Prerequisites
 
-- Have iOS simulator and Android emulator installed.
-- Have real mobile device.
+- Have setup local environment (e.g. simulator, emulator, etc) via [Expo's Setup Guide](https://docs.expo.dev/get-started/set-up-your-environment/).
 
 ### Steps
 
-1. Open terminal.
-2. Change to example directory (`cd ~/example`).
-3. Run `yarn install` to install dependencies.
-4. Run `yarn start` to start the development server.
-5. Enter `i` or `a` to run on iOS simulator or Android emulator.
+1. Open terminal to example directory (`cd ~/react-native-dropdownalert/example`).
+2. Run: `yarn install` to install example project dependencies.
+3. Run: `yarn start` to start the expo local development server.
+4. Follow on-screen instructions to run the app.
