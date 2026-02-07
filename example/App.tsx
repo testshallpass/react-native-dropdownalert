@@ -15,6 +15,7 @@ import DropdownAlert, {
 import NotificationIOS from './NotificationIOS';
 import NotificationAndroid from './NotificationAndroid';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Color } from './Color';
 
 interface ListItem {
   name: string;
@@ -131,10 +132,10 @@ export default function App(): React.JSX.Element {
     },
   ];
   const [selected, setSelected] = React.useState<ListItem | undefined>();
-  let alert = React.useRef(
-    (_data?: DropdownAlertData) => new Promise<DropdownAlertData>(res => res),
+  const alert = React.useRef(
+    (data?: DropdownAlertData) => new Promise(res => res(data)),
   );
-  let dismiss = React.useRef(() => {});
+  const dismiss = React.useRef(() => {});
 
   React.useEffect(() => {
     if (selected) {
@@ -152,8 +153,9 @@ export default function App(): React.JSX.Element {
   function _renderItem(item: ListItem): React.JSX.Element {
     return (
       <TouchableOpacity
-        style={[styles.item, {backgroundColor: item.color}]}
-        onPress={() => setSelected(item)}>
+        style={[styles.item, { backgroundColor: item.color }]}
+        onPress={() => setSelected(item)}
+      >
         <Text style={styles.name}>{item.name}</Text>
       </TouchableOpacity>
     );
@@ -173,7 +175,7 @@ export default function App(): React.JSX.Element {
         keyExtractor={(_item, index) => `${index}`}
         data={items}
         initialNumToRender={items.length}
-        renderItem={({item}) => _renderItem(item)}
+        renderItem={({ item }) => _renderItem(item)}
         ListFooterComponent={_renderFooter}
       />
       {selected && (
@@ -188,20 +190,20 @@ export default function App(): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-    backgroundColor: '#F4F3E9',
-  },
   item: {
-    padding: 8,
-    margin: 8,
+    backgroundColor: Color.black,
     borderRadius: 8,
-    backgroundColor: 'black',
+    margin: 8,
+    padding: 8,
   },
   name: {
+    color: Color.whiteSmoke,
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: 'whitesmoke',
+  },
+  view: {
+    backgroundColor: Color.brightWhite,
+    flex: 1,
   },
 });

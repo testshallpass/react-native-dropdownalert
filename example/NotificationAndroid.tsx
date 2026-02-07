@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,8 +8,9 @@ import {
   TouchableOpacity,
   LayoutAnimation,
 } from 'react-native';
-import {expo} from './app.json';
+import { expo } from './app.json';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Color } from './Color';
 
 const reactNativeLogoSrc: ImageSourcePropType = {
   uri: 'https://reactnative.dev/docs/assets/favicon.png',
@@ -46,7 +47,8 @@ const NotificationAndroid: React.FunctionComponent<
       <TouchableOpacity
         style={styles.button}
         onPress={_setIsExpanded}
-        activeOpacity={1}>
+        activeOpacity={1}
+      >
         <View style={styles.row}>
           <Image source={smallIcon} style={styles.smallIcon} />
           <Text style={styles.appName}>
@@ -79,7 +81,8 @@ const NotificationAndroid: React.FunctionComponent<
       <TouchableOpacity
         style={styles.button}
         onPress={_setIsExpanded}
-        activeOpacity={1}>
+        activeOpacity={1}
+      >
         <View style={styles.row}>
           <Image source={smallIcon} style={styles.smallIcon} />
           <View style={styles.column}>
@@ -93,7 +96,7 @@ const NotificationAndroid: React.FunctionComponent<
           <Image source={bigIcon} style={styles.bigIcon} />
           <Image
             source={require('./assets/arrowdown.png')}
-            style={[styles.expandIcon, {alignSelf: 'auto'}]}
+            style={styles.expandIcon}
           />
         </View>
       </TouchableOpacity>
@@ -108,70 +111,70 @@ const NotificationAndroid: React.FunctionComponent<
 };
 
 const styles = StyleSheet.create({
-  safeView: {
-    margin: 8,
+  appName: {
+    color: Color.white,
+    fontSize: 14,
+    fontWeight: '400',
+  },
+  bigIcon: {
+    borderRadius: 8,
+    height: 46,
+    marginHorizontal: 8,
+    width: 46,
   },
   button: {
-    padding: 12,
-    backgroundColor: '#1F89C7',
+    backgroundColor: Color.softBlue,
     borderRadius: 16,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  expandRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginLeft: 36,
+    padding: 12,
   },
   column: {
     flex: 1,
     flexDirection: 'column',
     marginLeft: 8,
   },
-  expandColumn: {
-    flex: 1,
-    flexDirection: 'column',
+  contentText: {
+    color: Color.white,
+    fontSize: 14,
+    fontWeight: '400',
+  },
+  contentTitle: {
+    color: Color.white,
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 4,
   },
   dot: {
     fontWeight: '600',
   },
-  appName: {
-    fontSize: 14,
-    fontWeight: '400',
-    color: 'white',
-  },
-  contentTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 4,
-    color: 'white',
-  },
-  contentText: {
-    fontSize: 14,
-    fontWeight: '400',
-    color: 'white',
-  },
-  smallIcon: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
-  },
-  bigIcon: {
-    width: 46,
-    height: 46,
-    borderRadius: 8,
-    marginHorizontal: 8,
+  expandColumn: {
+    flex: 1,
+    flexDirection: 'column',
   },
   expandIcon: {
-    width: 22,
-    height: 22,
-    backgroundColor: 'lightgray',
+    alignSelf: 'auto',
+    backgroundColor: Color.lightGray,
     borderRadius: 11,
-    alignSelf: 'flex-start',
+    height: 22,
+    width: 22,
+  },
+  expandRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: 36,
+  },
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  safeView: {
+    margin: 8,
+  },
+  smallIcon: {
+    borderRadius: 13,
+    height: 26,
+    width: 26,
   },
 });
 

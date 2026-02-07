@@ -7,7 +7,8 @@ import {
   ImageSourcePropType,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {expo} from './app.json';
+import { expo } from './app.json';
+import { Color } from './Color';
 
 type NotificationIOSProps = {
   imageSrc?: ImageSourcePropType;
@@ -52,52 +53,52 @@ const NotificationIOS: React.FunctionComponent<NotificationIOSProps> = ({
 };
 
 const styles = StyleSheet.create({
-  safeView: {
-    margin: 4,
-  },
-  view: {
-    padding: 12,
-    backgroundColor: 'gray',
-    borderRadius: 16,
-  },
-  innerRow: {
-    flexDirection: 'row',
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
+  body: {
+    color: Color.white,
+    fontSize: 14,
   },
   column: {
     flexDirection: 'column',
     flex: 1,
   },
+  image: {
+    borderRadius: 8,
+    height: 36,
+    marginRight: 8,
+    width: 36,
+  },
+  innerRow: {
+    flexDirection: 'row',
+  },
+  row: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    flex: 1,
+  },
+  safeView: {
+    margin: 4,
+  },
+  subtitle: {
+    color: Color.white,
+    fontSize: 14,
+    fontWeight: '500',
+  },
   timestamp: {
+    color: Color.white,
     fontSize: 12,
-    marginHorizontal: 6,
     fontWeight: '300',
-    color: 'white',
+    marginHorizontal: 6,
   },
   title: {
+    color: Color.white,
     flex: 1,
     fontSize: 14,
     fontWeight: '700',
-    color: 'white',
   },
-  subtitle: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: 'white',
-  },
-  body: {
-    fontSize: 14,
-    color: 'white',
-  },
-  image: {
-    width: 36,
-    height: 36,
-    marginRight: 8,
-    borderRadius: 8,
+  view: {
+    backgroundColor: Color.gray,
+    borderRadius: 16,
+    padding: 12,
   },
 });
 
