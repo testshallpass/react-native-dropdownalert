@@ -13,7 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Color } from './Color';
 
 const reactNativeLogoSrc: ImageSourcePropType = {
-  uri: 'https://reactnative.dev/docs/assets/favicon.png',
+  uri: 'https://reactnative.dev/img/pwa/manifest-icon-512.png',
 };
 
 type NotificationAndroidProps = {

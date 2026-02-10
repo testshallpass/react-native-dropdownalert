@@ -20,7 +20,7 @@ type NotificationIOSProps = {
 
 const NotificationIOS: React.FunctionComponent<NotificationIOSProps> = ({
   imageSrc = {
-    uri: 'https://reactnative.dev/docs/assets/favicon.png',
+    uri: 'https://reactnative.dev/img/pwa/manifest-icon-512.png',
   },
   title = expo.name,
   subtitle = 'Information',
