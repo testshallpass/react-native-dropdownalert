@@ -1,17 +1,21 @@
 # DropdownAlertExample
 
-- Built with [Expo](https://expo.dev/).
-- Uses [yarn](https://yarnpkg.com/) v2 modern edition.
+- Built with [Expo](https://docs.expo.dev/)
+- Uses [Continuous Native Generation](https://docs.expo.dev/workflow/continuous-native-generation/)
 
 ## Up and running
 
 ### Prerequisites
 
-- Have setup local environment (e.g. simulator, emulator, etc) via [Expo's Setup Guide](https://docs.expo.dev/get-started/set-up-your-environment/).
+- Have installed [`node`](https://nodejs.org/en/download)
+- Have installed [`yarn`](https://yarnpkg.com/getting-started/install)
+- Have setup local environment (e.g. simulator, emulator, device) with the [Expo Guide](https://docs.expo.dev/get-started/set-up-your-environment/)
 
 ### Steps
 
-1. Open terminal to example directory (`cd ~/react-native-dropdownalert/example`).
-2. Run: `yarn install` to install example project dependencies.
-3. Run: `yarn start` to start the expo local development server.
-4. Follow on-screen instructions to run the app.
+1. Open terminal then change to example directory
+2. Run: `yarn install` to install dependencies
+3. Run: `yarn doctor` to check local environment setup
+4. Address local environment issue(s) if needed otherwise continue to next step
+5. Run: `yarn start` to start Metro Bundler
+6. Follow on-screen instructions
