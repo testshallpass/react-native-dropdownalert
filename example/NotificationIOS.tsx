@@ -28,7 +28,7 @@ const NotificationIOS: React.FunctionComponent<NotificationIOSProps> = ({
   timestamp = 'now',
 }) => {
   return (
-    <SafeAreaView style={styles.safeView}>
+    <SafeAreaView>
       <View style={styles.view}>
         <View style={styles.row}>
           <Image source={imageSrc} style={styles.image} />
@@ -74,9 +74,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     flex: 1,
-  },
-  safeView: {
-    margin: 4,
   },
   subtitle: {
     color: Color.white,

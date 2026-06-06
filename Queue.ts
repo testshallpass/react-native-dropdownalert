@@ -1,4 +1,4 @@
-import {DropdownAlertData} from './DropdownAlert';
+import { DropdownAlertData } from './DropdownAlert';
 
 export default class Queue {
   #array: DropdownAlertData[];
@@ -10,9 +10,11 @@ export default class Queue {
   get first() {
     return this.#array[0];
   }
+
   get size() {
     return this.#array.length;
   }
+
   get isEmpty() {
     return this.size === 0;
   }
@@ -20,6 +22,7 @@ export default class Queue {
   enqueue(data: DropdownAlertData) {
     this.#array.push(data);
   }
+
   dequeue() {
     return this.#array.shift();
   }

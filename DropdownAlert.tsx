@@ -1,6 +1,5 @@
-import React, {useState, useRef, useMemo, ReactNode} from 'react';
+import React, { useState, useRef, useMemo, ReactNode } from 'react';
 import {
-  SafeAreaView,
   View,
   TouchableOpacity,
   Animated,
@@ -23,8 +22,11 @@ import {
   TouchableOpacityProps,
   ImageProps,
   useWindowDimensions,
+  type ScaledSize,
+  type PanResponderInstance,
 } from 'react-native';
 import Queue from './Queue';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 export enum DropdownAlertType {
   Info = 'info',
@@ -159,7 +161,10 @@ export type DropdownAlertProps = {
   // StatusBarStyle when alert is dismissed and updateStatusBar must be true
   inactiveStatusBarStyle?: StatusBarStyle;
   renderImage?: (data: DropdownAlertData) => React.JSX.Element;
-  renderCancel?: (data: DropdownAlertData, onCancel: () => void) => React.JSX.Element;
+  renderCancel?: (
+    data: DropdownAlertData,
+    onCancel: () => void,
+  ) => React.JSX.Element;
   renderTitle?: (data: DropdownAlertData) => React.JSX.Element;
   renderMessage?: (data: DropdownAlertData) => React.JSX.Element;
   titleTextProps?: TextProps;
@@ -174,7 +179,7 @@ export type DropdownAlertProps = {
   alert?: (
     func: (data?: DropdownAlertData) => Promise<DropdownAlertData>,
   ) => void;
-  dismiss?: (func: () => void) => void;
+  dismiss?: (func: () => Promise<void>) => void;
   springAnimationConfig?: Animated.SpringAnimationConfig;
   children?: ReactNode;
   alertPosition?: 'top' | 'bottom';
@@ -266,29 +271,27 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   children = undefined,
   alertPosition = DropdownAlertPosition.Top,
 }) => {
-  const windowDimensions = useWindowDimensions();
-  const isIOS = Platform.OS === 'ios';
-  const isAndroid = Platform.OS === 'android';
-  const isBelowIOS11 = isIOS && Number(Platform.Version) < 11;
-  const [dimValue, setDimValue] = useState(0);
-  const [height, setHeight] = useState(99);
+  const windowDimensions: ScaledSize = useWindowDimensions();
+  const isAndroid: boolean = Platform.OS === 'android';
+  const [dimValue, setDimValue] = useState<number>(0);
+  const [height, setHeight] = useState<number>(99);
   const defaultAlertData: DropdownAlertData = {
     type: '',
     title: '',
     message: '',
   };
-  const [alertData, setAlertData] = useState(defaultAlertData);
-  const alertDataRef = useRef(defaultAlertData);
-  const isLockRef = useRef(false);
-  const queue = useRef(new Queue());
-  const animatedValue = useRef(new Animated.Value(0));
-  const dismissTimeoutID = useRef(0);
-  const activeOpacity = onDismissPressDisabled || showCancel ? 1 : 0.95;
-  const onPress = onDismissPressDisabled
+  const [alertData, setAlertData] =
+    useState<DropdownAlertData>(defaultAlertData);
+  const [isAnimating, setIsAnimating] = useState<boolean>(false);
+  const queue = useRef<Queue>(new Queue());
+  const animatedValue = useRef<Animated.Value>(new Animated.Value(0));
+  const dismissTimeoutID = useRef<number>(0);
+  const activeOpacity: number = onDismissPressDisabled || showCancel ? 1 : 0.95;
+  const onPress: () => void = onDismissPressDisabled
     ? () => {}
     : () => _dismiss(DropdownAlertDismissAction.Press);
 
-  function _getPanResponder() {
+  function _getPanResponder(): PanResponderInstance {
     function _onDonePan(
       _event: GestureResponderEvent,
       gestureState: PanResponderGestureState,
@@ -342,7 +345,9 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     alertPosition,
   ]);
 
-  function _alertWithData(data?: DropdownAlertData) {
+  function _alertWithData(
+    data?: DropdownAlertData,
+  ): Promise<DropdownAlertData> {
     const dropdownAlertData: DropdownAlertData = {
       source: data?.source ? data.source : _getSourceForType(data?.type),
       interval: data?.interval ? data.interval : dismissInterval,
@@ -359,57 +364,70 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   }
   alert(_alertWithData);
 
-  async function _alert(data: DropdownAlertData) {
+  // starts > isAnimating > isWaitingForActionOrTimeout > isAnimating > finishes
+
+  // renders alert > updates status bar > animates on screen > setTimeout > isWaitingForActionOrTimeout ...
+  // ... > action or timeout occurs > clears timeout > updates status bar > animates off screen > invokes action callbacks
+  // ... > renders dimension value alert style position top or bottom
+  // ... > if more in queue continues to process them (fifo)
+
+  async function _alert(data: DropdownAlertData): Promise<void> {
+    if (isAnimating) {
+      console.warn('_alert called during animation');
+      return;
+    }
     setAlertData(data);
-    alertDataRef.current = data;
     _updateStatusBar(true, data.type);
     await _animate(DropdownAlertToValue.Alert);
+    if (data.resolve) {
+      data.resolve(data);
+    }
     if (data.interval && data.interval > 0) {
       _clearDismissTimeoutID();
-      const timeout = setTimeout(() => {
-        _dismiss(DropdownAlertDismissAction.Automatic);
-      }, data.interval);
+      const timeout = setTimeout(
+        () => _dismiss(DropdownAlertDismissAction.Automatic),
+        data.interval,
+      );
       dismissTimeoutID.current = Number(timeout);
     }
   }
 
-  async function _dismiss(action = DropdownAlertDismissAction.Programmatic) {
-    if (!queue.current.isEmpty && !isLockRef.current) {
-      _clearDismissTimeoutID();
-      _updateStatusBar(false);
-      isLockRef.current = true;
-      await _animate(DropdownAlertToValue.Dismiss);
-      if (alertDataRef.current.resolve) {
-        alertDataRef.current.resolve(alertDataRef.current);
-      }
-      switch (action) {
-        case DropdownAlertDismissAction.Automatic:
-          onDismissAutomatic(alertDataRef.current);
-          break;
-        case DropdownAlertDismissAction.Programmatic:
-          onDismissProgrammatic(alertDataRef.current);
-          break;
-        case DropdownAlertDismissAction.Cancel:
-          onDismissCancel(alertDataRef.current);
-          break;
-        case DropdownAlertDismissAction.Pan:
-          onDismissPanResponder(alertDataRef.current);
-          break;
-        case DropdownAlertDismissAction.Press:
-          onDismissPress(alertDataRef.current);
-          break;
-      }
-      setDimValue(0);
-      queue.current.dequeue();
-      if (!queue.current.isEmpty) {
-        _alert(queue.current.first);
-      }
-      isLockRef.current = false;
+  async function _dismiss(
+    action = DropdownAlertDismissAction.Programmatic,
+  ): Promise<void> {
+    if (isAnimating) {
+      console.warn('_dismiss called during animation');
+      return;
+    }
+    _clearDismissTimeoutID();
+    _updateStatusBar(false);
+    await _animate(DropdownAlertToValue.Dismiss);
+    switch (action) {
+      case DropdownAlertDismissAction.Automatic:
+        onDismissAutomatic(alertData);
+        break;
+      case DropdownAlertDismissAction.Programmatic:
+        onDismissProgrammatic(alertData);
+        break;
+      case DropdownAlertDismissAction.Cancel:
+        onDismissCancel(alertData);
+        break;
+      case DropdownAlertDismissAction.Pan:
+        onDismissPanResponder(alertData);
+        break;
+      case DropdownAlertDismissAction.Press:
+        onDismissPress(alertData);
+        break;
+    }
+    setDimValue(0);
+    queue.current.dequeue();
+    if (!queue.current.isEmpty) {
+      _alert(queue.current.first);
     }
   }
   dismiss(_dismiss);
 
-  function _updateStatusBar(active = false, type = '') {
+  function _updateStatusBar(active = false, type = ''): void {
     if (updateStatusBar && alertPosition === DropdownAlertPosition.Top) {
       if (isAndroid) {
         if (active) {
@@ -436,23 +454,29 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     }
   }
 
-  function _clearDismissTimeoutID() {
+  function _clearDismissTimeoutID(): void {
     if (dismissTimeoutID.current) {
       clearTimeout(dismissTimeoutID.current);
       dismissTimeoutID.current = 0;
     }
   }
 
-  function _animate(toValue = 0) {
-    springAnimationConfig.toValue = toValue;
-    return new Promise(resolve => {
-      Animated.spring(animatedValue.current, springAnimationConfig).start(
-        resolve,
-      );
+  function _animate(toValue = 0): Promise<void> {
+    return new Promise<void>(resolve => {
+      setIsAnimating(true);
+      Animated.spring(animatedValue.current, {
+        ...springAnimationConfig,
+        toValue,
+      }).start(() => {
+        setIsAnimating(false);
+        resolve();
+      });
     });
   }
 
-  function _getSourceForType(type: string | undefined) {
+  function _getSourceForType(
+    type: string | undefined,
+  ): ImageSourcePropType | undefined {
     switch (type) {
       case DropdownAlertType.Info:
         return infoImageSrc;
@@ -467,7 +491,9 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     }
   }
 
-  function _getBackgroundColorForType(type: string | undefined) {
+  function _getBackgroundColorForType(
+    type: string | undefined,
+  ): ColorValue | undefined {
     switch (type) {
       case DropdownAlertType.Info:
         return infoColor;
@@ -482,14 +508,16 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     }
   }
 
-  function _onLayout(event: LayoutChangeEvent) {
+  function _onLayout(event: LayoutChangeEvent): void {
     const eventHeight = event.nativeEvent.layout.height;
     if (eventHeight > height) {
       setHeight(eventHeight);
     }
   }
 
-  function _renderImage(source: ImageSourcePropType | undefined) {
+  function _renderImage(
+    source: ImageSourcePropType | undefined,
+  ): React.JSX.Element | null {
     if (renderImage) {
       return renderImage(alertData);
     }
@@ -506,7 +534,7 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     );
   }
 
-  function _renderTitle(title?: string) {
+  function _renderTitle(title?: string): React.JSX.Element | null {
     if (renderTitle) {
       return renderTitle(alertData);
     }
@@ -518,13 +546,14 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
         style={titleTextStyle}
         numberOfLines={titleNumberOfLines}
         testID={DropDownAlertTestID.Title}
-        {...titleTextProps}>
+        {...titleTextProps}
+      >
         {title}
       </Text>
     );
   }
 
-  function _renderMessage(message?: string) {
+  function _renderMessage(message?: string): React.JSX.Element | null {
     if (renderMessage) {
       return renderMessage(alertData);
     }
@@ -536,13 +565,14 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
         style={messageTextStyle}
         numberOfLines={messageNumberOfLines}
         testID={DropDownAlertTestID.Title}
-        {...messageTextProps}>
+        {...messageTextProps}
+      >
         {message}
       </Text>
     );
   }
 
-  function _renderCancel() {
+  function _renderCancel(): React.JSX.Element {
     const _onCancel = () => _dismiss(DropdownAlertDismissAction.Cancel);
     if (renderCancel) {
       return renderCancel(alertData, _onCancel);
@@ -552,7 +582,9 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
         testID={DropDownAlertTestID.Cancel}
         style={cancelViewStyle}
         onPress={_onCancel}
-        {...cancelTouchableOpacityProps}>
+        disabled={isAnimating}
+        {...cancelTouchableOpacityProps}
+      >
         {cancelImageSrc && (
           <Image
             testID={DropDownAlertTestID.CancelImage}
@@ -565,17 +597,17 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     );
   }
 
-  function _getViewAnimatedStyle() {
-    let viewStyle: ViewStyle = {
+  function _getViewAnimatedStyle(): ViewStyle[] {
+    const viewStyle: ViewStyle = {
       // https://github.com/microsoft/TypeScript/issues/11465
-      position: 'absolute' as 'absolute',
+      position: 'absolute' as const,
       top: dimValue,
       left: 0,
       right: 0,
       elevation,
       zIndex,
     };
-    let animatedInterpolateConfig = {
+    const animatedInterpolateConfig = {
       inputRange: [0, 1],
       outputRange: [0 - height, 0],
     };
@@ -585,7 +617,7 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
       animatedInterpolateConfig.outputRange[0] =
         windowDimensions.height - height;
     }
-    return [
+    const styles = [
       viewStyle,
       {
         transform: [
@@ -596,23 +628,22 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
           },
         ],
       },
-      animatedViewStyle,
     ];
+    if (animatedViewStyle) {
+      styles.push(animatedViewStyle);
+    }
+    return styles;
   }
 
-  function _renderAlert() {
+  function _renderAlert(): React.JSX.Element | ReactNode {
     if (children) {
       return children;
     }
-    let additionalAlertViewStyle: ViewStyle = {
+    const additionalAlertViewStyle: ViewStyle = {
       backgroundColor: _getBackgroundColorForType(alertData.type),
     };
     if (isAndroid && translucent) {
       additionalAlertViewStyle.marginTop = StatusBar.currentHeight;
-    }
-    let SafeView = SafeAreaView;
-    if (isBelowIOS11 || isAndroid) {
-      SafeView = View;
     }
     return (
       <TouchableOpacity
@@ -620,35 +651,43 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
         style={[alertViewStyle, additionalAlertViewStyle]}
         activeOpacity={activeOpacity}
         onPress={onPress}
-        disabled={onDismissPressDisabled}
-        {...alertTouchableOpacityProps}>
-        <SafeView
+        disabled={onDismissPressDisabled || isAnimating}
+        {...alertTouchableOpacityProps}
+      >
+        <View
           testID={DropDownAlertTestID.SafeView}
           style={safeViewStyle}
-          {...safeViewProps}>
+          {...safeViewProps}
+        >
           {_renderImage(alertData.source)}
           <View
             testID={DropDownAlertTestID.TextView}
             style={textViewStyle}
-            {...textViewProps}>
+            {...textViewProps}
+          >
             {_renderTitle(alertData.title)}
             {_renderMessage(alertData.message)}
           </View>
           {showCancel && _renderCancel()}
-        </SafeView>
+        </View>
       </TouchableOpacity>
     );
   }
 
   return (
-    <Animated.View
-      {...panResponder.panHandlers}
-      style={_getViewAnimatedStyle()}
-      onLayout={event => _onLayout(event)}
-      testID={DropDownAlertTestID.AnimatedView}
-      {...animatedViewProps}>
-      {_renderAlert()}
-    </Animated.View>
+    <SafeAreaProvider>
+      <SafeAreaView>
+        <Animated.View
+          {...panResponder.panHandlers}
+          style={_getViewAnimatedStyle()}
+          onLayout={event => _onLayout(event)}
+          testID={DropDownAlertTestID.AnimatedView}
+          {...animatedViewProps}
+        >
+          {_renderAlert()}
+        </Animated.View>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 

@@ -52,17 +52,14 @@ buck-out/
 */fastlane/Preview.html
 */fastlane/screenshots
 
-# custom
-jsconfig.json
+example/src/
+coverage/
 .vscode/
-coverage
-example/src
-example/jsconfig.json
 CHANGELOG.md
 
 # Yarn
-example/.yarn/*
-.yarn/*
+example/.yarn/
+.yarn/
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases

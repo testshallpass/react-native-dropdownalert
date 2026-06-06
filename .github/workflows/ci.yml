@@ -2,27 +2,36 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
-  
+    branches:
+      - main
+
 jobs:
-  test:
-    runs-on: macos-latest
+  eslint-prettier-test:
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Use Node.js
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '22.x'
 
-      - name: Enable corepack
+      - name: Corepack enable
         run: corepack enable
 
       - name: Install dependencies
-        run: yarn
+        run: yarn install
 
-      - name: Run tests
+      - name: Run eslint
+        run: yarn run eslint
+
+      - name: Run prettier
+        run: yarn run prettier
+
+      - name: Run unit tests
         run: yarn run test

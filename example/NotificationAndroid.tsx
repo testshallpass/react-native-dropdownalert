@@ -104,7 +104,7 @@ const NotificationAndroid: React.FunctionComponent<
   }
 
   return (
-    <SafeAreaView style={styles.safeView}>
+    <SafeAreaView>
       {isExpanded ? _renderExpand() : _renderNotExpand()}
     </SafeAreaView>
   );
@@ -167,9 +167,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  safeView: {
-    margin: 8,
   },
   smallIcon: {
     borderRadius: 13,
