@@ -26,6 +26,13 @@ import {
 } from 'react-native';
 import Queue from './Queue';
 
+// These setters were removed in RN 0.87. Keep them optional so older React Native
+// versions retain their status-bar updates without blocking newer alerts.
+const androidStatusBar = StatusBar as typeof StatusBar & {
+  setBackgroundColor?: (color: ColorValue, animated?: boolean) => void;
+  setTranslucent?: (translucent: boolean) => void;
+};
+
 export enum DropdownAlertType {
   Info = 'info',
   Warn = 'warn',
@@ -159,7 +166,10 @@ export type DropdownAlertProps = {
   // StatusBarStyle when alert is dismissed and updateStatusBar must be true
   inactiveStatusBarStyle?: StatusBarStyle;
   renderImage?: (data: DropdownAlertData) => React.JSX.Element;
-  renderCancel?: (data: DropdownAlertData, onCancel: () => void) => React.JSX.Element;
+  renderCancel?: (
+    data: DropdownAlertData,
+    onCancel: () => void,
+  ) => React.JSX.Element;
   renderTitle?: (data: DropdownAlertData) => React.JSX.Element;
   renderMessage?: (data: DropdownAlertData) => React.JSX.Element;
   titleTextProps?: TextProps;
@@ -422,10 +432,13 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
               backgroundColor = DropdownAlertColor.Default;
             }
           }
-          StatusBar.setBackgroundColor(backgroundColor, true);
-          StatusBar.setTranslucent(translucent);
+          androidStatusBar.setBackgroundColor?.(backgroundColor, true);
+          androidStatusBar.setTranslucent?.(translucent);
         } else {
-          StatusBar.setBackgroundColor(inactiveStatusBarBackgroundColor, true);
+          androidStatusBar.setBackgroundColor?.(
+            inactiveStatusBarBackgroundColor,
+            true,
+          );
         }
       }
       if (active) {
@@ -444,11 +457,11 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   }
 
   function _animate(toValue = 0) {
-    springAnimationConfig.toValue = toValue;
     return new Promise(resolve => {
-      Animated.spring(animatedValue.current, springAnimationConfig).start(
-        resolve,
-      );
+      Animated.spring(animatedValue.current, {
+        ...springAnimationConfig,
+        toValue,
+      }).start(resolve);
     });
   }
 
@@ -566,10 +579,14 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
   }
 
   function _getViewAnimatedStyle() {
-    let viewStyle: ViewStyle = {
+    const viewStyle: ViewStyle = {
       // https://github.com/microsoft/TypeScript/issues/11465
       position: 'absolute' as 'absolute',
-      top: dimValue,
+      top:
+        alertPosition === DropdownAlertPosition.Bottom ? undefined : dimValue,
+      ...(alertPosition === DropdownAlertPosition.Bottom
+        ? {bottom: dimValue}
+        : {}),
       left: 0,
       right: 0,
       elevation,
@@ -580,8 +597,6 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
       outputRange: [0 - height, 0],
     };
     if (alertPosition === DropdownAlertPosition.Bottom) {
-      viewStyle.top = undefined;
-      viewStyle.bottom = dimValue;
       animatedInterpolateConfig.outputRange[0] =
         windowDimensions.height - height;
     }
@@ -604,12 +619,10 @@ const DropdownAlert: React.FunctionComponent<DropdownAlertProps> = ({
     if (children) {
       return children;
     }
-    let additionalAlertViewStyle: ViewStyle = {
+    const additionalAlertViewStyle: ViewStyle = {
       backgroundColor: _getBackgroundColorForType(alertData.type),
+      ...(isAndroid && translucent ? {marginTop: StatusBar.currentHeight} : {}),
     };
-    if (isAndroid && translucent) {
-      additionalAlertViewStyle.marginTop = StatusBar.currentHeight;
-    }
     let SafeView = SafeAreaView;
     if (isBelowIOS11 || isAndroid) {
       SafeView = View;
